@@ -1,0 +1,121 @@
+---
+import { categories, products, menuNote } from '../data/menu';
+import Photo from './Photo.astro';
+
+const yen = (n: number) => n.toLocaleString('ja-JP');
+---
+
+<section class="section menu" id="menu" aria-labelledby="menu-title">
+  <div class="wrap">
+    <header class="section-head reveal">
+      <p class="eyebrow">Our Breads</p>
+      <h2 id="menu-title" class="h2">毎日のパン</h2>
+      <p class="section-sub">価格はすべて税込です（デモ用の架空価格）。</p>
+    </header>
+
+    <div class="filter reveal" role="group" aria-label="カテゴリで絞り込む">
+      {categories.map((c, i) => (
+        <button type="button" class="chip" data-filter={c} aria-pressed={i === 0 ? 'true' : 'false'}>{c}</button>
+      ))}
+    </div>
+    <p class="filter__status" role="status" aria-live="polite" data-filter-status>{products.length}点を表示しています</p>
+
+    <ul class="products">
+      {products.map((p) => {
+        const tags = p.tags.filter((t) => t !== p.category);
+        return (
+          <li class={`product${p.photo ? ' product--photo' : ' product--text'} reveal`} data-product-id={p.id} data-category={p.category} data-price={p.price}>
+            {p.photo && (
+              <div class="product__media">
+                <Photo name={p.photo} ratio="4 / 5" ratioSm="4 / 3" sizes="(min-width: 1000px) 33vw, (min-width: 640px) 50vw, 100vw" showCaption={false} />
+              </div>
+            )}
+            <div class="product__body">
+              <p class="product__meta">
+                <span class="product__cat">{p.category}</span>
+                {tags.map((t) => <span class="oval">{t}</span>)}
+              </p>
+              <h3 class="product__name">
+                <button type="button" class="product__open" data-open={p.id}>{p.name}</button>
+              </h3>
+              <p class="product__price"><span class="yen">¥</span>{yen(p.price)}<span class="tax">税込</span></p>
+              <p class="product__desc">{p.description}</p>
+            </div>
+          </li>
+        );
+      })}
+    </ul>
+    <p class="menu__note">{menuNote}</p>
+  </div>
+
+  <dialog class="modal" id="product-modal" aria-labelledby="modal-name">
+    <div class="modal__inner">
+      <button type="button" class="modal__close" data-close aria-label="閉じる">閉じる<span aria-hidden="true"> ×</span></button>
+      <div class="modal__media" data-modal-media></div>
+      <div class="modal__body">
+        <p class="product__meta" data-modal-meta></p>
+        <h3 class="modal__name" id="modal-name" data-modal-name></h3>
+        <p class="product__price" data-modal-price></p>
+        <p class="modal__desc" data-modal-desc></p>
+        <p class="modal__note">アレルゲン情報は掲載していません。価格・在庫はデモ用の固定値です。</p>
+      </div>
+    </div>
+  </dialog>
+</section>
+
+<script>
+  const section = document.getElementById('menu');
+  const items = Array.from(document.querySelectorAll<HTMLElement>('.product'));
+  const chips = Array.from(document.querySelectorAll<HTMLButtonElement>('.chip'));
+  const status = document.querySelector<HTMLElement>('[data-filter-status]');
+
+  chips.forEach((chip) =>
+    chip.addEventListener('click', () => {
+      const f = chip.dataset.filter ?? 'すべて';
+      chips.forEach((c) => c.setAttribute('aria-pressed', String(c === chip)));
+      let n = 0;
+      items.forEach((it) => {
+        const show = f === 'すべて' || it.dataset.category === f;
+        it.hidden = !show;
+        if (show) {
+          n++;
+          it.classList.add('is-in');
+        }
+      });
+      if (status) status.textContent = `${f}：${n}点を表示しています`;
+    }),
+  );
+
+  // 商品詳細モーダル(<dialog>: Esc・フォーカス管理・背景不活性は標準動作)
+  const modal = document.getElementById('product-modal') as HTMLDialogElement | null;
+  const q = (s: string) => modal?.querySelector<HTMLElement>(s);
+  section?.querySelectorAll<HTMLButtonElement>('[data-open]').forEach((btn) =>
+    btn.addEventListener('click', () => {
+      const card = btn.closest<HTMLElement>('.product');
+      if (!card || !modal) return;
+      const media = card.querySelector('.product__media .photo');
+      const mediaBox = q('[data-modal-media]');
+      if (mediaBox) {
+        mediaBox.replaceChildren(...(media ? [media.cloneNode(true)] : []));
+        mediaBox.hidden = !media;
+      }
+      const meta = q('[data-modal-meta]');
+      const srcMeta = card.querySelector('.product__meta');
+      if (meta && srcMeta) meta.innerHTML = srcMeta.innerHTML;
+      const name = q('[data-modal-name]');
+      if (name) name.textContent = btn.textContent;
+      const price = q('[data-modal-price]');
+      const srcPrice = card.querySelector('.product__price');
+      if (price && srcPrice) price.innerHTML = srcPrice.innerHTML;
+      const desc = q('[data-modal-desc]');
+      if (desc) desc.textContent = card.querySelector('.product__desc')?.textContent ?? '';
+      modal.showModal();
+      modal.scrollTop = 0;
+    }),
+  );
+  modal?.querySelector('[data-close]')?.addEventListener('click', () => modal.close());
+  // 背景(ダイアログ外)クリックで閉じる
+  modal?.addEventListener('click', (e) => {
+    if (e.target === modal) modal.close();
+  });
+</script>

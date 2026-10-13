@@ -1,0 +1,15 @@
+---
+// 小麦の線画(控えめな装飾。多用しない)
+interface Props { class?: string }
+const { class: className = '' } = Astro.props;
+---
+<svg class={`wheat ${className}`} viewBox="0 0 24 64" width="24" height="64" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" aria-hidden="true" focusable="false">
+  <path d="M12 62V18" />
+  <path d="M12 16c-3-2-3-6 0-9c3 3 3 7 0 9z" />
+  <path d="M12 26c-4 0-6-3-6-7c4 0 6 3 6 7z" />
+  <path d="M12 26c4 0 6-3 6-7c-4 0-6 3-6 7z" />
+  <path d="M12 36c-4 0-6-3-6-7c4 0 6 3 6 7z" />
+  <path d="M12 36c4 0 6-3 6-7c-4 0-6 3-6 7z" />
+  <path d="M12 46c-4 0-6-3-6-7c4 0 6 3 6 7z" />
+  <path d="M12 46c4 0 6-3 6-7c-4 0-6 3-6 7z" />
+</svg>

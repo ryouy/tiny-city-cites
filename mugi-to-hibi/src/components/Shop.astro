@@ -1,0 +1,27 @@
+---
+import { shopInfo, shopNote } from '../data/site';
+import Photo from './Photo.astro';
+import MapEmbed from './MapEmbed.astro';
+---
+
+<section class="section shop" id="shop" aria-labelledby="shop-title">
+  <div class="wrap shop__grid">
+    <div class="shop__text">
+      <header class="section-head reveal">
+        <p class="eyebrow">Shop Information</p>
+        <h2 id="shop-title" class="h2">店舗案内</h2>
+        <p class="section-sub">掲載内容はすべて架空の設定です。</p>
+      </header>
+      <dl class="info reveal">
+        {shopInfo.map((r) => (
+          <div class="info__row"><dt>{r.term}</dt><dd>{r.desc}</dd></div>
+        ))}
+      </dl>
+      <p class="shop__note reveal">{shopNote}</p>
+      <div class="reveal" style="margin-top:28px"><MapEmbed /></div>
+    </div>
+    <div class="shop__photo reveal">
+      <Photo name="exterior" ratio="3 / 2" ratioSm="3 / 2" sizes="(min-width: 900px) 45vw, 100vw" />
+    </div>
+  </div>
+</section>

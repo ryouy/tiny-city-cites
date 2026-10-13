@@ -1,0 +1,24 @@
+---
+import { site } from '../data/site';
+---
+
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <div class="site-footer__brand">
+      <p class="site-footer__name">{site.name}</p>
+      <p class="site-footer__sub">{site.reading}｜{site.subtitle}</p>
+    </div>
+    <nav aria-label="フッターナビゲーション">
+      <ul class="site-footer__nav">
+        {
+          site.nav.map((l) => (
+            <li>
+              <a href={l.href}>{l.en}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+    <p class="site-footer__disclaimer" set:html={site.disclaimerHtml} />
+  </div>
+</footer>

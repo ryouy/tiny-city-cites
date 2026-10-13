@@ -1,0 +1,53 @@
+---
+import { site } from '../data/site';
+import { findItem, yen } from '../data/menu';
+import Photo from './Photo.astro';
+const karaage = findItem('こめやの唐揚げ定食');
+---
+
+<section class="hero" id="top" aria-labelledby="hero-title">
+  <div class="container hero__grid">
+    <div class="hero__copy">
+      <p class="eyebrow">定食・丼・家庭料理 / 会津若松</p>
+      <h1 id="hero-title">
+        <span class="nb">おなかいっぱい、</span><span class="nb">心まで</span><span class="nb">あったかく。</span>
+      </h1>
+      <p class="hero__lead">{site.lead}</p>
+      <div class="hero__cta">
+        <a class="btn btn--primary" href="#menu">お品書きを見る</a>
+        <a class="btn btn--ghost" href="#hours">営業時間を見る</a>
+      </div>
+    </div>
+
+    <div class="hero__photo">
+      <figure class="plate">
+        <Photo name="hero" priority ratio="4 / 3" sizes="(min-width: 900px) 540px, 100vw" />
+        <figcaption class="plate__cap">
+          <span>{karaage.name}</span>
+          <span class="plate__price">{yen(karaage.price)}<small>税込</small></span>
+        </figcaption>
+      </figure>
+    </div>
+
+    <div class="hero__hours" aria-label="営業時間のサマリー">
+      <div class="noren">
+        <div class="noren__rod" aria-hidden="true"></div>
+        <ul class="noren__flaps">
+          {
+            site.hours.map((h) => (
+              <li class="flap">
+                <span class="flap__key">{h.key}</span>
+                <span class="flap__time">{h.open}–{h.close}</span>
+              </li>
+            ))
+          }
+          <li class="flap flap--off">
+            <span class="flap__key">休</span>
+            <span class="flap__time">日曜</span>
+          </li>
+        </ul>
+      </div>
+      <p class="noren__note">L.O. 昼 {site.hours[0].lastOrder} / 夜 {site.hours[1].lastOrder}</p>
+    </div>
+  </div>
+</section>

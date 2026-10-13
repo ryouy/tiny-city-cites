@@ -1,0 +1,120 @@
+---
+import { calendarConfig, specialClosures } from '../data/bakery';
+const payload = JSON.stringify({ ...calendarConfig, closures: specialClosures });
+const weekdays = ['日', '月', '火', '水', '木', '金', '土'];
+const order = Array.from({ length: 7 }, (_, i) => (i + calendarConfig.weekStart) % 7);
+---
+
+<section class="section calendar" id="calendar" aria-labelledby="calendar-title">
+  <div class="wrap">
+    <header class="section-head reveal">
+      <p class="eyebrow">Calendar</p>
+      <h2 id="calendar-title" class="h2">営業カレンダー</h2>
+      <p class="section-sub">毎週月曜・火曜が定休日です。臨時休業はサンプルの設定で、祝日などは反映していません。日付はお使いの端末の時刻で表示します。</p>
+    </header>
+
+    <div class="cal reveal" data-calendar data-config={payload}>
+      <div class="cal__bar">
+        <button type="button" class="cal__btn" data-prev aria-label="前の月">前の月</button>
+        <h3 class="cal__month" data-month aria-live="polite">&#12288;</h3>
+        <button type="button" class="cal__btn" data-next aria-label="次の月">次の月</button>
+      </div>
+      <table class="cal__table">
+        <caption class="sr-only" data-caption>月間営業カレンダー</caption>
+        <thead>
+          <tr>{order.map((d) => <th scope="col" abbr={`${weekdays[d]}曜日`}>{weekdays[d]}</th>)}</tr>
+        </thead>
+        <tbody data-body></tbody>
+      </table>
+      <noscript><p class="cal__nojs">JavaScriptが無効のため月間カレンダーを表示できません。営業は8:00–16:00、定休日は月曜日・火曜日です。</p></noscript>
+      <div class="cal__foot">
+        <ul class="legend" aria-label="凡例">
+          <li><span class="swatch swatch--open" aria-hidden="true"></span>通常営業</li>
+          <li><span class="swatch swatch--closed" aria-hidden="true"></span>定休日（月・火）</li>
+          <li><span class="swatch swatch--temp" aria-hidden="true"></span>臨時休業（サンプル）</li>
+          <li><span class="swatch swatch--today" aria-hidden="true"></span>今日</li>
+        </ul>
+        <button type="button" class="cal__btn cal__btn--today" data-today>今月に戻る</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  interface Cfg { closedWeekdays: number[]; weekStart: number; closures: { date: string; label: string }[] }
+  const root = document.querySelector<HTMLElement>('[data-calendar]');
+  if (root) {
+    const cfg: Cfg = JSON.parse(root.dataset.config ?? '{}');
+    const body = root.querySelector('[data-body]')!;
+    const monthEl = root.querySelector('[data-month]')!;
+    const captionEl = root.querySelector('[data-caption]')!;
+    const closures = new Map(cfg.closures.map((c) => [c.date, c.label]));
+    const now = new Date();
+    const todayKey = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+    let y = now.getFullYear();
+    let m = now.getMonth();
+
+    const render = () => {
+      const label = `${y}年${m + 1}月`;
+      monthEl.textContent = label;
+      captionEl.textContent = `${label}の営業カレンダー`;
+      const first = new Date(y, m, 1);
+      const days = new Date(y, m + 1, 0).getDate();
+      const lead = (first.getDay() - cfg.weekStart + 7) % 7;
+      const rows: HTMLTableRowElement[] = [];
+      let tr = document.createElement('tr');
+      const push = (td: HTMLTableCellElement) => {
+        tr.appendChild(td);
+        if (tr.children.length === 7) {
+          rows.push(tr);
+          tr = document.createElement('tr');
+        }
+      };
+      for (let i = 0; i < lead; i++) push(Object.assign(document.createElement('td'), { className: 'is-blank' }));
+      for (let d = 1; d <= days; d++) {
+        const date = new Date(y, m, d);
+        const key = `${y}-${String(m + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+        const temp = closures.get(key);
+        const regular = cfg.closedWeekdays.includes(date.getDay());
+        const state = temp ? '臨時休業（サンプル）' : regular ? '定休日' : '営業';
+        const td = document.createElement('td');
+        td.className = `day ${temp ? 'is-temp' : regular ? 'is-closed' : 'is-open'}${key === todayKey ? ' is-today' : ''}`;
+        const num = document.createElement('span');
+        num.className = 'day__num';
+        num.textContent = String(d);
+        const st = document.createElement('span');
+        st.className = 'day__state';
+        st.setAttribute('aria-hidden', 'true');
+        st.textContent = temp ? '臨時' : regular ? '休' : '';
+        const sr = document.createElement('span');
+        sr.className = 'sr-only';
+        sr.textContent = `${m + 1}月${d}日 ${state}${key === todayKey ? '（今日）' : ''}`;
+        td.append(num, st, sr);
+        if (key === todayKey) td.setAttribute('aria-current', 'date');
+        push(td);
+      }
+      if (tr.children.length) {
+        while (tr.children.length < 7) tr.appendChild(Object.assign(document.createElement('td'), { className: 'is-blank' }));
+        rows.push(tr);
+      }
+      body.replaceChildren(...rows);
+    };
+
+    root.querySelector('[data-prev]')?.addEventListener('click', () => {
+      m--;
+      if (m < 0) { m = 11; y--; }
+      render();
+    });
+    root.querySelector('[data-next]')?.addEventListener('click', () => {
+      m++;
+      if (m > 11) { m = 0; y++; }
+      render();
+    });
+    root.querySelector('[data-today]')?.addEventListener('click', () => {
+      y = now.getFullYear();
+      m = now.getMonth();
+      render();
+    });
+    render();
+  }
+</script>

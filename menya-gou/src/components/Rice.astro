@@ -1,0 +1,27 @@
+---
+import Photo from './Photo.astro';
+import { rice } from '../data/site';
+import { phrases } from '../lib/phrases';
+---
+
+<section class="rice" id="rice" aria-labelledby="rice-title">
+  <div class="rice__photo reveal">
+    <Photo name="rice" ratio="4 / 3" ratioWide="16 / 10" sizes="(min-width: 900px) 55vw, 100vw" />
+  </div>
+  <div class="rice__body reveal">
+    <p class="eyebrow eyebrow--light"><span>05</span>HOW TO ENJOY</p>
+    <h2 id="rice-title" class="h2 h2--light" set:html={phrases(rice.heading)} />
+    <p class="lead lead--light">{rice.body}</p>
+    <ol class="rice__steps">
+      {
+        rice.steps.map((s) => (
+          <li>
+            <span class="rice__no" aria-hidden="true">{s.no}</span>
+            <h3>{s.title}</h3>
+            <p>{s.body}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>

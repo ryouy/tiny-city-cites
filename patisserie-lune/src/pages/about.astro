@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHead from '../components/PageHead.astro';
+import Photo from '../components/Photo.astro';
+import Footer from '../components/Footer.astro';
+import { story, about } from '../data/site';
+const base = import.meta.env.BASE_URL;
+---
+
+<BaseLayout current="about" title="About｜PÂTISSERIE LUNE（架空店舗の制作デモ）" description="PÂTISSERIE LUNEのこだわりと、架空の店主ストーリー。旬の果物、軽やかなクリーム、甘さを抑えた焼き菓子。">
+  <main id="main">
+    <PageHead en="About" title={about.heading} lead="PÂTISSERIE LUNEのこだわりと、店名に込めた思い。" />
+    <div class="page-body">
+      <div class="wrap">
+        <div class="about-grid">
+          <div class="about-photo reveal"><Photo name="baker" ratio="4 / 5" sizes="(min-width: 900px) 40vw, 82vw" /></div>
+          <div class="reveal">
+            <p class="eyebrow">Our Story</p>
+            <h2 class="sec-title">{story.heading}</h2>
+            {story.paras.map((t) => <p class="lead" style="margin-top:1.4em">{t}</p>)}
+            <p class="lead" style="margin-top:1.4em">2022年10月、開業。</p>
+            <p class="fiction">{story.fiction}</p>
+          </div>
+        </div>
+        <ul class="points">
+          {story.points.map((p) => (
+            <li class="reveal">
+              <span class="en" lang="en">{p.en}</span>
+              <span class="ja">{p.ja}</span>
+              <p>{p.text}</p>
+            </li>
+          ))}
+        </ul>
+        <div class="cta-row" style="margin-top:64px">
+          <a class="btn" href={`${base}menu/`}>商品を見る</a>
+          <a class="btn btn--ghost" href={`${base}access/`}>営業情報</a>
+        </div>
+      </div>
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>

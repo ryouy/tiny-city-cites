@@ -1,0 +1,49 @@
+---
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
+import { photos, photoExts } from '../data/photos';
+import type { PhotoKey } from '../data/menu';
+
+interface Props {
+  name: PhotoKey;
+  /** ヒーローのみ true(eager + fetchpriority=high) */
+  priority?: boolean;
+  /** 枠のアスペクト比(CSS値)。省略時は写真定義の比率 */
+  ratio?: string;
+  /** 900px以上での比率 */
+  ratioWide?: string;
+  sizes?: string;
+  class?: string;
+}
+const { name, priority = false, ratio, ratioWide, sizes = '(min-width: 900px) 50vw, 100vw', class: extra = '' } = Astro.props;
+const def = photos[name];
+const aspect = ratio ?? `${def.width} / ${def.height}`;
+const style = `--ar:${aspect};${ratioWide ? `--ar-d:${ratioWide}` : ''}`;
+// ビルド時に public/images/menya-gou/ の実ファイルを確認(拡張子は webp/png/jpg/jpeg/avif のいずれか)。無ければプレースホルダー。
+const found = photoExts.map((e) => `${def.base}.${e}`).find((f) => existsSync(join(process.cwd(), 'public', 'images', 'menya-gou', f)));
+---
+
+{
+  found ? (
+    <img
+      class={`photo ${extra}`}
+      src={`${import.meta.env.BASE_URL}images/menya-gou/${found}`}
+      alt={def.alt}
+      width={def.width}
+      height={def.height}
+      sizes={sizes}
+      style={style}
+      loading={priority ? 'eager' : 'lazy'}
+      fetchpriority={priority ? 'high' : undefined}
+      decoding="async"
+    />
+  ) : (
+    <div class={`photo photo--ph tone-${def.tone} ${extra}`} style={style} role="img" aria-label={`画像準備中: ${def.shoot}`}>
+      <span class="ph__corner ph__corner--tl" aria-hidden="true"></span>
+      <span class="ph__corner ph__corner--br" aria-hidden="true"></span>
+      <span class="ph__tag">画像準備中</span>
+      <span class="ph__file" aria-hidden="true">{def.file}</span>
+      <span class="ph__shoot">撮影イメージ: {def.shoot}</span>
+    </div>
+  )
+}

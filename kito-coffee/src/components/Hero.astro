@@ -1,0 +1,18 @@
+---
+import Photo from './Photo.astro';
+import { photos } from '../data/photos';
+---
+
+<section class="hero" aria-labelledby="hero-title" id="top">
+  <Photo photo={photos.hero} ratio="16 / 9" ratioSm="4 / 5" fill eager sizes="100vw" class="hero__photo" />
+  <div class="hero__overlay" aria-hidden="true"></div>
+  <div class="container hero__inner">
+    <p class="eyebrow eyebrow--light">KITO COFFEE — AIZU, JAPAN</p>
+    <h1 id="hero-title" class="hero__title"><span class="nw">日常に、</span><span class="nw">少しだけ余白を。</span></h1>
+    <p class="hero__lead">一杯のコーヒーから始まる、心地よい時間。</p>
+    <div class="hero__cta">
+      <a class="btn btn--solid" href="#menu">メニューを見る</a>
+      <a class="btn btn--line" href="#about">KITOについて</a>
+    </div>
+  </div>
+</section>

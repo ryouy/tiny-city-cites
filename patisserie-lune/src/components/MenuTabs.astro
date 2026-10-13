@@ -1,0 +1,108 @@
+---
+import Photo from './Photo.astro';
+import { cutCakes, wholeCakes, bakedGoods, yen } from '../data/menu';
+
+const tabs = [
+  { id: 'cut', ja: 'ケーキ', en: 'Cut Cakes' },
+  { id: 'whole', ja: 'ホール', en: 'Whole Cakes' },
+  { id: 'baked', ja: '焼き菓子', en: 'Baked Goods' },
+];
+const no = (i: number) => `No.${String(i + 1).padStart(2, '0')}`;
+---
+
+<div class="menu-tabs" data-tabs>
+  <div class="tabs" role="tablist" aria-label="商品カテゴリ">
+    {tabs.map((t, i) => (
+      <button class="tab" role="tab" type="button" id={`tab-${t.id}`} aria-controls={`panel-${t.id}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}>
+        {t.ja}<em lang="en">{t.en}</em>
+      </button>
+    ))}
+  </div>
+
+  <section class="panel" role="tabpanel" id="panel-cut" aria-labelledby="tab-cut" tabindex="0">
+    <h2 class="panel__title"><em lang="en">Cut Cakes</em>カットケーキ</h2>
+    <ul class="items">
+      {cutCakes.map((c, i) => (
+        <li class={`item${c.photo ? ' item--photo' : ''}`}>
+          <div class="item__lead">
+            {c.photo ? <Photo name={c.photo} ratio="4 / 5" sizes="140px" /> : <span aria-hidden="true">{no(i)}</span>}
+          </div>
+          <div class="item__body">
+            <h3 class="item__name">{c.name}</h3>
+            <p class="item__desc">{c.desc}</p>
+            <p class="item__meta">アレルゲン例（架空データ）：{c.allergens}</p>
+          </div>
+          <p class="item__price">{yen(c.price)}<small>税込</small></p>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="panel" role="tabpanel" id="panel-whole" aria-labelledby="tab-whole" tabindex="0">
+    <h2 class="panel__title"><em lang="en">Whole Cakes</em>ホールケーキ</h2>
+    <div class="panel__banner"><Photo name="wholeCake" ratio="16 / 9" sizes="(min-width: 1280px) 1150px, 100vw" /></div>
+    <ul class="items">
+      {wholeCakes.map((w, i) => (
+        <li class="item">
+          <div class="item__lead"><span aria-hidden="true">{no(i)}</span></div>
+          <div class="item__body">
+            <h3 class="item__name">{w.name}</h3>
+            <p class="item__desc">{w.size}</p>
+            <p class="item__meta">{w.note}</p>
+          </div>
+          <p class="item__price">{yen(w.price)}<small>税込</small></p>
+        </li>
+      ))}
+    </ul>
+    <p class="notes-inline">ご予約は原則、受取希望日の3営業日前までを想定しています（デモ機能のため、実際の予約はできません）。</p>
+  </section>
+
+  <section class="panel" role="tabpanel" id="panel-baked" aria-labelledby="tab-baked" tabindex="0">
+    <h2 class="panel__title"><em lang="en">Baked Goods</em>焼き菓子</h2>
+    <div class="panel__banner"><Photo name="gift" ratio="16 / 9" sizes="(min-width: 1280px) 1150px, 100vw" /></div>
+    <ul class="items">
+      {bakedGoods.map((b, i) => (
+        <li class="item">
+          <div class="item__lead"><span aria-hidden="true">{no(i)}</span></div>
+          <div class="item__body">
+            <h3 class="item__name">{b.name}</h3>
+            <p class="item__desc">{b.desc}</p>
+          </div>
+          <p class="item__price">{yen(b.price)}<small>税込</small></p>
+        </li>
+      ))}
+    </ul>
+  </section>
+</div>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-tabs]');
+  if (root) {
+    const tabs = [...root.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
+    const panels = [...root.querySelectorAll<HTMLElement>('[role="tabpanel"]')];
+    const select = (i: number, focus = false) => {
+      tabs.forEach((t, j) => {
+        t.setAttribute('aria-selected', String(i === j));
+        t.tabIndex = i === j ? 0 : -1;
+      });
+      panels.forEach((p, j) => (p.hidden = i !== j));
+      if (focus) tabs[i].focus();
+    };
+    tabs.forEach((t, i) => {
+      t.addEventListener('click', () => select(i));
+      t.addEventListener('keydown', (e) => {
+        const n = tabs.length;
+        let to = -1;
+        if (e.key === 'ArrowRight') to = (i + 1) % n;
+        else if (e.key === 'ArrowLeft') to = (i - 1 + n) % n;
+        else if (e.key === 'Home') to = 0;
+        else if (e.key === 'End') to = n - 1;
+        if (to >= 0) {
+          e.preventDefault();
+          select(to, true);
+        }
+      });
+    });
+    select(Math.max(0, ['#cut', '#whole', '#baked'].indexOf(location.hash)));
+  }
+</script>

@@ -1,0 +1,49 @@
+---
+const steps = [
+  {
+    no: '01',
+    en: 'Consultation',
+    title: 'ご相談',
+    desc: 'お店の状況やホームページに掲載したい情報、ご希望を伺います。',
+  },
+  {
+    no: '02',
+    en: 'Planning & Design',
+    title: '構成・デザイン',
+    desc: '必要な情報を整理し、お店に合ったデザインをご提案します。',
+  },
+  {
+    no: '03',
+    en: 'Development',
+    title: '制作・確認',
+    desc: 'ホームページを制作し、内容をご確認いただきながら調整します。',
+  },
+  {
+    no: '04',
+    en: 'Launch & Support',
+    title: '公開・運用',
+    desc: '最終確認後に公開し、ご希望に応じて更新・保守をサポートします。',
+  },
+];
+---
+
+<section class="section" id="process" aria-labelledby="process-title">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="label">HOW IT WORKS</p>
+      <h2 class="heading" id="process-title">ご相談から公開まで。</h2>
+    </div>
+    <ol class="steps reveal">
+      {
+        steps.map((s) => (
+          <li class="step">
+            <span class="step__no" aria-hidden="true">{s.no}</span>
+            <span class="step__en">{s.en}</span>
+            <h3 class="step__title">{s.title}</h3>
+            <p class="step__desc">{s.desc}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>

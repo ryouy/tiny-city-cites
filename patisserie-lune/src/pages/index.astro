@@ -1,0 +1,132 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Photo from '../components/Photo.astro';
+import Footer from '../components/Footer.astro';
+import { hero, about, wholeCopy, giftCopy, infoRows } from '../data/site';
+import { cutCakes, wholeCakes, bakedGoods, yen } from '../data/menu';
+
+const base = import.meta.env.BASE_URL;
+const featured = cutCakes.filter((c) => c.photo);
+---
+
+<BaseLayout current="home">
+  <main id="main">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero__body">
+        <p class="hero__en" lang="en"><span>A LITTLE</span><span>MOMENT</span><span>OF JOY.</span></p>
+        <h1 id="hero-title">{hero.copy}</h1>
+        <p class="hero__sub">{hero.sub}</p>
+        <div class="cta-row">
+          <a class="btn" href="#cakes">ケーキを見る</a>
+          <a class="btn btn--ghost" href="#whole-cakes">ホールケーキのご案内</a>
+        </div>
+      </div>
+      <div class="hero__photo">
+        <Photo name="hero" priority ratio="5 / 4" sizes="(min-width: 900px) 58vw, 100vw" />
+        <p class="hero__badge" aria-label="開業 2022年10月"><span>Since</span><b>2022.10</b></p>
+      </div>
+    </section>
+
+    <section class="sec story" id="about" aria-labelledby="about-title">
+      <span class="ghost" aria-hidden="true">Lune</span>
+      <div class="wrap story__grid">
+        <div class="story__photo reveal"><Photo name="shop" ratio="4 / 5" sizes="(min-width: 900px) 40vw, 80vw" /></div>
+        <div class="story__text reveal">
+          <p class="eyebrow">Our Story</p>
+          <h2 class="sec-title" id="about-title">{about.heading}</h2>
+          <p class="lead">{about.body}</p>
+          <a class="tlink" href={`${base}about/`}>店主のはなし <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec cakes" id="cakes" aria-labelledby="cakes-title" style="padding-top:0">
+      <div class="wrap">
+        <div class="cakes__head reveal">
+          <div>
+            <p class="eyebrow">Cut Cakes</p>
+            <h2 class="sec-title" id="cakes-title">カットケーキ</h2>
+          </div>
+          <a class="tlink" href={`${base}menu/`}>すべての商品を見る <span aria-hidden="true">→</span></a>
+        </div>
+        <ul class="cakes__list">
+          {featured.map((c, i) => (
+            <li class="cake reveal">
+              <Photo name={c.photo!} ratio="4 / 5" label={`No.0${i + 1}`} sizes="(min-width: 900px) 40vw, 90vw" />
+              <div class="cake__cap">
+                <span class="cake__no" aria-hidden="true">No.0{i + 1}</span>
+                <h3 class="cake__name">{c.name}</h3>
+                <span class="cake__price">{yen(c.price)}<small class="tax">税込</small></span>
+                <p class="cake__desc">{c.desc}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+        <p class="notes-inline reveal">価格はすべて税込・架空の設定です。</p>
+      </div>
+    </section>
+
+    <section class="sec whole" id="whole-cakes" aria-labelledby="whole-title">
+      <div class="wrap whole__grid">
+        <div class="whole__photo reveal"><Photo name="wholeCake" ratio="1 / 1" sizes="(min-width: 900px) 50vw, 100vw" /></div>
+        <div class="whole__body reveal">
+          <p class="eyebrow">Whole Cakes</p>
+          <h2 class="sec-title" id="whole-title">{wholeCopy.heading}</h2>
+          <p class="lead">{wholeCopy.body}</p>
+          <ul class="price-lines">
+            {wholeCakes.map((w) => (
+              <li>
+                <span class="price-lines__name">{w.name}<small>{w.size}｜{w.note}</small></span>
+                <span class="num">{yen(w.price)}<small class="tax">税込</small></span>
+              </li>
+            ))}
+          </ul>
+          <div class="cta-row"><a class="btn" href={`${base}order/`}>ホールケーキのご案内へ</a></div>
+          <p class="demo-note">{wholeCopy.note}</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec on-dark" id="gifts" aria-labelledby="gift-title">
+      <div class="wrap gift__grid">
+        <div class="gift__photo reveal"><Photo name="gift" ratio="5 / 4" sizes="(min-width: 900px) 50vw, 100vw" /></div>
+        <div class="gift__body reveal">
+          <p class="eyebrow">Baked Goods &amp; Gifts</p>
+          <h2 class="sec-title" id="gift-title">{giftCopy.heading}</h2>
+          <p class="lead">{giftCopy.body}</p>
+          <ul class="gift-list">
+            {bakedGoods.map((b) => (
+              <li>
+                <span class="gift-list__name">{b.name}</span>
+                <span class="num">{yen(b.price)}<small class="tax">税込</small></span>
+                <span class="gift-list__desc">{b.desc}</span>
+              </li>
+            ))}
+          </ul>
+          <a class="tlink" href={`${base}menu/`}>焼き菓子の一覧へ <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec info" id="info" aria-labelledby="info-title">
+      <div class="wrap">
+        <div class="reveal">
+          <p class="eyebrow">Shop Information</p>
+          <h2 class="sec-title" id="info-title">店舗案内</h2>
+        </div>
+        <div class="info__grid">
+          <p class="hours reveal">10:00–18:00<small>火曜日・水曜日は定休日です。<br />商品売切れ時は早仕舞いの場合があります。</small></p>
+          <div class="reveal">
+            <dl class="dl">
+              {infoRows.filter((r) => r.k !== '営業時間' && r.k !== '定休日').map((r) => (
+                <div><dt>{r.k}</dt><dd>{r.v.map((t) => <span>{t}</span>)}</dd></div>
+              ))}
+            </dl>
+            <a class="tlink" href={`${base}access/`}>営業情報・FAQ・エリアの目安 <span aria-hidden="true">→</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>

@@ -1,0 +1,24 @@
+---
+import { commitments } from '../data/site';
+---
+
+<section class="section commitment" id="commitment" aria-labelledby="commitment-title">
+  <div class="wrap">
+    <header class="section-head reveal">
+      <p class="eyebrow">Our Commitment</p>
+      <h2 id="commitment-title" class="h2">三つのこだわり</h2>
+    </header>
+    <ol class="commit-list">
+      {commitments.map((c, i) => (
+        <li class="commit reveal">
+          <span class="commit__no" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+          <div>
+            <p class="commit__en">{c.en}</p>
+            <h3 class="commit__title">{c.title}</h3>
+            <p>{c.body}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>

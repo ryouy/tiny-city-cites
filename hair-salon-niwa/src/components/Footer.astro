@@ -1,0 +1,24 @@
+---
+import { site, nav, path, bandParts } from '../data/site';
+---
+
+<footer class="site-footer">
+  <div class="wrap site-footer__grid">
+    <div class="site-footer__brand">
+      <p class="site-footer__mark">{site.wordmark}</p>
+      <p class="site-footer__copy">{site.copy}</p>
+      <p class="site-footer__small">{site.name}（{site.kana}）</p>
+    </div>
+    <nav aria-label="フッターナビゲーション">
+      <ul class="site-footer__nav">
+        {nav.map((n) => <li><a href={n.href}>{n.label}<span>{n.ja}</span></a></li>)}
+        <li><a href={path('reserve')}>Reservation Demo<span>{site.cta}</span></a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="wrap site-footer__notice">
+    <p class="site-footer__band">{bandParts[0]}｜<wbr />{bandParts[1]}</p>
+    <p>{site.disclaimer}</p>
+    <p>本サイトの予約デモはブラウザ内の動作のみで、予約の確定・外部送信・保存・メール送信は一切行いません。</p>
+  </div>
+</footer>

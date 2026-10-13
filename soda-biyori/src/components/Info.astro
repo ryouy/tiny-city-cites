@@ -1,0 +1,27 @@
+---
+import MapEmbed from './MapEmbed.astro';
+import { infoRows } from '../data/site';
+import { setNote } from '../data/menu';
+---
+
+<section class="section info" id="info" aria-labelledby="info-title">
+  <div class="container info__grid">
+    <div class="info__copy reveal">
+      <p class="eyebrow">Shop Info</p>
+      <h2 id="info-title" class="h2"><span class="nw">また来たくなる、</span><span class="nw">いつもの場所。</span></h2>
+      <p>気の向くままに立ち寄って、ちょっとひと休み。週末の街歩きにも、ふだんの午後にも。</p>
+      <p class="info__set"><b>セット</b>{setNote}</p>
+      <div class="info__map"><MapEmbed /></div>
+    </div>
+    <dl class="info__list reveal">
+      {
+        infoRows.map((r) => (
+          <div class="info__row">
+            <dt>{r.k}</dt>
+            <dd>{r.v.map((line, i) => (i === 0 ? <strong>{line}</strong> : <span>{line}</span>))}</dd>
+          </div>
+        ))
+      }
+    </dl>
+  </div>
+</section>

@@ -1,0 +1,27 @@
+---
+import { takeout, yen } from '../data/menu';
+import { stories, site } from '../data/site';
+import Photo from './Photo.astro';
+---
+
+<section class="takeaway" id="takeaway" aria-labelledby="takeaway-title">
+  <div class="container takeaway__grid reveal">
+    <div>
+      <p class="eyebrow eyebrow--on-dark">お持ち帰り</p>
+      <h2 id="takeaway-title" class="h2 h2--on-dark">{stories.takeaway.heading}</h2>
+      <p class="body body--on-dark">{stories.takeaway.body}</p>
+      <ul class="bento">
+        {
+          takeout.map((i) => (
+            <li class="bento__row">
+              <span class="bento__name">{i.name}</span>
+              <span class="bento__price">{yen(i.price)}</span>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="takeaway__note">価格は税込です。お持ち帰り: {site.takeout}</p>
+    </div>
+    <Photo name="gingerPork" ratio="4 / 3" sizes="(min-width: 900px) 480px, 100vw" />
+  </div>
+</section>

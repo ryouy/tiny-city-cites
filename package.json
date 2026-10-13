@@ -1,0 +1,19 @@
+{
+  "name": "small-biz",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22.12.0" },
+  "scripts": {
+    "build": "node scripts/build-all.mjs",
+    "serve": "npm run build && npm --prefix machi-studio run preview -- --port 4321",
+    "dev:main": "npm --prefix machi-studio run dev",
+    "dev:kito": "npm --prefix kito-coffee run dev -- --port 4401",
+    "dev:komeya": "npm --prefix komeya run dev -- --port 4402",
+    "dev:akari": "npm --prefix akari run dev -- --port 4403",
+    "dev:mugi": "npm --prefix mugi-to-hibi run dev -- --port 4404",
+    "dev:menya": "npm --prefix menya-gou run dev -- --port 4405",
+    "dev:soda": "npm --prefix soda-biyori run dev -- --port 4406",
+    "dev:niwa": "npm --prefix hair-salon-niwa run dev -- --port 4407",
+    "dev:lune": "npm --prefix patisserie-lune run dev -- --port 4408"
+  }
+}

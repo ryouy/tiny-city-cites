@@ -1,0 +1,19 @@
+---
+import Photo from './Photo.astro';
+import { photos } from '../data/photos';
+---
+
+<section class="section about" id="about" aria-labelledby="about-title">
+  <div class="container about__grid">
+    <div class="about__photo reveal">
+      <Photo photo={photos.interior} ratio="4 / 5" ratioSm="4 / 5" sizes="(min-width: 900px) 42vw, 100vw" />
+    </div>
+    <div class="about__text reveal">
+      <p class="eyebrow">About</p>
+      <h2 id="about-title" class="h2"><span class="nw">コーヒーを、</span><span class="nw">もっと自分らしく。</span></h2>
+      <p class="prose">
+        朝の始まりに。仕事の合間に。何もしない午後に。<span class="nw">KITO COFFEEは、</span>一杯のコーヒーとともに、日常に小さな余白を届けるコーヒースタンドです。木の温もりと自然光に包まれた空間で、お気に入りの一杯を、思い思いの時間とともにお楽しみください。
+      </p>
+    </div>
+  </div>
+</section>

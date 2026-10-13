@@ -1,0 +1,114 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHead from '../components/PageHead.astro';
+import StyleTile from '../components/StyleTile.astro';
+import Photo from '../components/Photo.astro';
+import { hairStyles, styleFilters, stylesNote } from '../data/styles';
+import { byId } from '../data/services';
+import { site, path } from '../data/site';
+---
+
+<BaseLayout page="Styles｜スタイルギャラリー" description="HAIR SALON niwa（架空店舗デモ）のスタイルギャラリー。Short / Bob / Medium / Long / Men's のサンプルスタイルを、カテゴリで絞り込めます。">
+  <PageHead en="Styles" ja="スタイルギャラリー（サンプル）" lead="縦長の写真で、日々の暮らしになじむスタイルを。カテゴリで絞り込み、写真を選ぶと詳細と関連メニューを表示します。" />
+  <div class="page-body">
+    <div class="wrap">
+      <div class="filter" role="group" aria-label="カテゴリで絞り込み" id="filter">
+        {styleFilters.map((f, i) => <button type="button" data-filter={f} aria-pressed={i === 0 ? 'true' : 'false'}>{f}</button>)}
+      </div>
+      <p class="filter-status" id="filter-status" role="status" aria-live="polite">全{hairStyles.length}スタイルを表示中</p>
+      <ul class="style-grid style-grid--page" id="grid">
+        {hairStyles.map((s) => (
+          <li data-cat={s.category}><StyleTile style={s} asButton sizes="(min-width: 768px) 33vw, 50vw" /></li>
+        ))}
+      </ul>
+      <ul class="note-list"><li>{stylesNote}</li><li>掲載写真は権利確認済みの素材のみを使用する前提です。実在顧客のビフォーアフター写真は掲載しません。</li></ul>
+    </div>
+  </div>
+
+  {hairStyles.map((s) => (
+    <dialog class="modal" id={`m-${s.id}`} aria-labelledby={`t-${s.id}`}>
+      <button type="button" class="modal__close" data-close aria-label="閉じる">CLOSE</button>
+      <div class="modal__inner">
+        <div class="modal__media"><Photo name={s.photo} ratio="3 / 4" sizes="(min-width: 768px) 420px, 100vw" /></div>
+        <div class="modal__body">
+          <p class="eyebrow">{s.category}</p>
+          <h2 id={`t-${s.id}`}>{s.name}</h2>
+          <p class="modal__comment">{s.comment}</p>
+          <div class="modal__rel">
+            <h3>Related Menu</h3>
+            <ul class="mlist">
+              {s.related.map((id) => {
+                const m = byId(id)!;
+                return (
+                  <li class="mrow">
+                    <span class="mrow__name">{m.name}</span>
+                    <span class="mrow__meta"><span>{m.duration}</span><span>{m.note}</span></span>
+                    <span class="mrow__price">{m.price}</span>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+          <div class="modal__cta">
+            <a class="btn btn--solid" href={`${path('reserve')}?menu=${s.related[0]}`}>{site.cta}</a>
+            <a class="textlink" href={path('menu')}>メニュー・料金</a>
+          </div>
+          <p class="modal__note">サンプルデータです。仕上がりをお約束するものではありません。</p>
+        </div>
+      </div>
+    </dialog>
+  ))}
+</BaseLayout>
+
+<script>
+  const grid = document.getElementById('grid')!;
+  const items = [...grid.querySelectorAll<HTMLElement>('li')];
+  const buttons = [...document.querySelectorAll<HTMLButtonElement>('#filter button')];
+  const status = document.getElementById('filter-status')!;
+
+  const apply = (f: string, push = true) => {
+    let n = 0;
+    items.forEach((li) => {
+      const show = f === 'All' || li.dataset.cat === f;
+      li.hidden = !show;
+      if (show) n++;
+    });
+    buttons.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.filter === f)));
+    status.textContent = f === 'All' ? `全${n}スタイルを表示中` : `${f}：${n}スタイルを表示中`;
+    if (push) {
+      const u = new URL(location.href);
+      if (f === 'All') u.searchParams.delete('c');
+      else u.searchParams.set('c', f);
+      history.replaceState(null, '', u);
+    }
+  };
+  buttons.forEach((b) => b.addEventListener('click', () => apply(b.dataset.filter ?? 'All')));
+  const q = new URL(location.href).searchParams.get('c');
+  if (q && buttons.some((b) => b.dataset.filter === q)) apply(q, false);
+
+  // モーダル(<dialog>: Esc・フォーカストラップはブラウザ標準。背景クリックと戻りフォーカスを補う)
+  let opener: HTMLElement | null = null;
+  const open = (id: string, from?: HTMLElement) => {
+    const d = document.getElementById(`m-${id}`) as HTMLDialogElement | null;
+    if (!d || d.open) return;
+    opener = from ?? null;
+    d.showModal();
+    history.replaceState(null, '', `#${id}`);
+  };
+  grid.addEventListener('click', (e) => {
+    const b = (e.target as HTMLElement).closest<HTMLButtonElement>('button[data-style]');
+    if (b) open(b.dataset.style!, b);
+  });
+  document.querySelectorAll<HTMLDialogElement>('dialog.modal').forEach((d) => {
+    d.addEventListener('click', (e) => {
+      if (e.target === d || (e.target as HTMLElement).closest('[data-close]')) d.close();
+    });
+    d.addEventListener('close', () => {
+      history.replaceState(null, '', location.pathname + location.search);
+      opener?.focus();
+      opener = null;
+    });
+  });
+  const h = location.hash.replace('#', '');
+  if (/^style\d+$/.test(h)) open(h, document.querySelector<HTMLElement>(`button[data-style="${h}"]`) ?? undefined);
+</script>

@@ -1,0 +1,39 @@
+---
+import { site } from '../config/site';
+const cta = site.contact.instagramUrl || '#contact';
+const external = Boolean(site.contact.instagramUrl);
+---
+
+<section class="hero" id="top" aria-labelledby="hero-title">
+  <div class="container hero__main">
+    <p class="label">WEB DESIGN STUDIO / AIZU, JAPAN</p>
+    <h1 class="hero__title" id="hero-title">
+      <span class="nowrap">小さなお店に、</span><br />
+      <span class="nowrap">ちょうどいいWebを。</span>
+    </h1>
+    <div class="hero__lead">
+      <strong>{site.subtagline}</strong>
+      <p>
+        <span>飲食店や個人商店に向けて、見やすく、使いやすいホームページを制作しています。</span>
+      </p>
+    </div>
+    <div class="hero__actions">
+      <a
+        class="btn btn--light"
+        href={cta}
+        target={external ? '_blank' : undefined}
+        rel={external ? 'noopener noreferrer' : undefined}>制作について相談する</a
+      >
+      <a class="link-arrow" href="#services">サービスを見る →</a>
+    </div>
+  </div>
+  <div class="hero__foot">
+    <div class="container">
+      <ul aria-hidden="true">
+        <li>Design</li>
+        <li>Launch</li>
+        <li>Care</li>
+      </ul>
+    </div>
+  </div>
+</section>

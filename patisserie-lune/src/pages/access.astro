@@ -1,0 +1,52 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHead from '../components/PageHead.astro';
+import MapEmbed from '../components/MapEmbed.astro';
+import Footer from '../components/Footer.astro';
+import { infoRows, faq } from '../data/site';
+---
+
+<BaseLayout current="access" title="Access｜PÂTISSERIE LUNE（架空店舗の制作デモ）" description="PÂTISSERIE LUNEの営業時間・定休日・駐車場・お支払い方法とFAQ。架空店舗のため、具体的な住所・電話番号は設けていません。">
+  <main id="main">
+    <PageHead en="Access" title="営業情報・アクセス" lead="営業時間や定休日、受取方法などをまとめています。" />
+    <div class="page-body">
+      <div class="wrap access-grid">
+        <div>
+          <h2 class="h-sub"><em lang="en">Information</em>店舗情報</h2>
+          <dl class="dl">
+            {infoRows.map((r) => (
+              <div><dt>{r.k}</dt><dd>{r.v.map((t) => <span>{t}</span>)}</dd></div>
+            ))}
+          </dl>
+          <div style="margin-top:56px">
+            <h2 class="h-sub"><em lang="en">FAQ</em>よくあるご質問</h2>
+            <div class="faq">
+              {faq.map((f) => (
+                <details>
+                  <summary>{f.q}</summary>
+                  <p>{f.a}</p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </div>
+        <div class="access-side">
+          <div>
+            <h2 class="h-sub"><em lang="en">Area</em>エリアの目安</h2>
+            <MapEmbed />
+          </div>
+          <div>
+            <h2 class="h-sub"><em lang="en">Contact</em>お問い合わせ</h2>
+            <div class="contact-row">
+              <button class="btn btn--ghost" type="button" disabled>電話（デモのため利用不可）</button>
+              <button class="btn btn--ghost" type="button" disabled>メール（デモのため利用不可）</button>
+              <button class="btn btn--ghost" type="button" disabled>SNS（デモのため利用不可）</button>
+            </div>
+            <p class="contact-note">架空店舗のため、電話・メール・SNSの連絡先は設けていません。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>

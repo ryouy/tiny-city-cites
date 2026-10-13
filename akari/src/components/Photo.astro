@@ -1,0 +1,64 @@
+---
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
+import { imageDir, photos, type PhotoKey } from '../data/photos';
+
+interface Props {
+  name: PhotoKey;
+  /** CSS aspect-ratio 形式 例: "4 / 5" */
+  ratio?: string;
+  /** モバイル(〜767px)での比率 */
+  ratioSm?: string;
+  eager?: boolean;
+  /** true なら親要素いっぱいに広げる(ヒーロー用) */
+  fill?: boolean;
+  sizes?: string;
+  class?: string;
+}
+const {
+  name,
+  ratio = '4 / 3',
+  ratioSm,
+  eager = false,
+  fill = false,
+  sizes = '100vw',
+  class: className = '',
+} = Astro.props;
+const photo = photos[name];
+
+// ビルド時に実ファイルの有無を判定する(無ければ「画像準備中」の枠を出す)
+const exists = existsSync(join(process.cwd(), 'public', imageDir, photo.file));
+const style = `--r:${ratio};--r-sm:${ratioSm ?? ratio}`;
+const cls = ['photo', `tone-${photo.tone}`, fill ? 'photo--fill' : '', className].filter(Boolean).join(' ');
+---
+
+{
+  exists ? (
+    <div class={cls} style={style}>
+      <img
+        src={`${import.meta.env.BASE_URL}${imageDir.slice(1)}${photo.file}`}
+        alt={photo.alt}
+        width={photo.width}
+        height={photo.height}
+        sizes={sizes}
+        loading={eager ? 'eager' : 'lazy'}
+        fetchpriority={eager ? 'high' : undefined}
+        decoding={eager ? 'sync' : 'async'}
+      />
+    </div>
+  ) : (
+    <div
+      class={`${cls} photo--placeholder`}
+      style={style}
+      role="img"
+      aria-label={`画像準備中：${photo.shot}`}
+    >
+      <span class="photo__frame" aria-hidden="true" />
+      <span class="photo__meta" aria-hidden="true">
+        <span class="photo__status">画像準備中</span>
+        <span class="photo__label">{photo.label}</span>
+        <span class="photo__shot">{photo.shot}</span>
+      </span>
+    </div>
+  )
+}

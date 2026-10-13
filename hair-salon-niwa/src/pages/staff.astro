@@ -1,0 +1,35 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHead from '../components/PageHead.astro';
+import Photo from '../components/Photo.astro';
+import { staff, staffNote } from '../data/staff';
+import { path, site } from '../data/site';
+---
+
+<BaseLayout page="Staff｜スタッフ紹介" description="HAIR SALON niwa（架空店舗デモ）のスタイリスト紹介。プロフィールや得意なスタイル、メッセージを掲載（すべて架空の人物）。">
+  <PageHead en="Staff" ja="スタイリスト紹介（架空の人物）" lead={staffNote} />
+  <div class="page-body">
+    <div class="wrap">
+      {staff.map((p) => (
+        <section class="profile" aria-label={`${p.name}のプロフィール`}>
+          <div class="stylist__media">
+            <Photo name={p.photo} ratio="4 / 5" sizes="(min-width: 960px) 40vw, 100vw" label={p.role} />
+          </div>
+          <div class="profile__text">
+            <p class="stylist__badge">架空の人物（デモ）</p>
+            <h2>{p.name}</h2>
+            <p class="stylist__en">{p.en}</p>
+            <p class="stylist__role">{p.role}</p>
+            <dl class="stylist__dl">
+              <div><dt>経験</dt><dd>{p.career}</dd></div>
+              <div><dt>得意</dt><dd><ul>{p.strengths.map((s) => <li>{s}</li>)}</ul></dd></div>
+            </dl>
+            <blockquote class="profile__q">{p.message}</blockquote>
+            <p class="profile__cta"><a class="textlink" href={`${path('reserve')}?staff=${p.id}`}>{p.name}で{site.cta}</a></p>
+          </div>
+        </section>
+      ))}
+      <div class="band-photo"><Photo name="hands" ratio="21 / 8" sizes="100vw" label="Hands" /></div>
+    </div>
+  </div>
+</BaseLayout>

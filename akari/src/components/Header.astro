@@ -1,0 +1,60 @@
+---
+import { site } from '../data/site';
+---
+
+<div class="site-top" data-site-top>
+  <p class="demo-band">{site.band}</p>
+  <header class="site-header">
+    <a class="logo" href="#top" aria-label={`${site.name} トップへ`}>
+      <span class="logo__mark" aria-hidden="true">灯</span>
+      <span class="logo__text">
+        <span class="logo__name">{site.name}</span>
+        <span class="logo__en" aria-hidden="true">{site.nameEn}</span>
+      </span>
+    </a>
+    <a class="reserve-link" href={site.reserveCta.href}>{site.reserveCta.label}</a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+      <span class="nav-toggle__label">Menu</span>
+      <span class="nav-toggle__bars" aria-hidden="true"></span>
+    </button>
+    <nav id="site-nav" class="site-nav" aria-label="メインメニュー">
+      <ul>
+        {
+          site.nav.map((n) => (
+            <li>
+              <a href={n.href}>{n.label}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </header>
+</div>
+
+<script>
+  const top = document.querySelector<HTMLElement>('[data-site-top]');
+  const toggle = document.querySelector<HTMLButtonElement>('.nav-toggle');
+  const nav = document.getElementById('site-nav');
+
+  const setMenu = (open: boolean) => {
+    if (!toggle || !top) return;
+    toggle.setAttribute('aria-expanded', String(open));
+    const label = toggle.querySelector('.nav-toggle__label');
+    if (label) label.textContent = open ? 'Close' : 'Menu';
+    top.classList.toggle('menu-open', open);
+    document.documentElement.classList.toggle('menu-lock', open);
+  };
+  toggle?.addEventListener('click', () => setMenu(toggle.getAttribute('aria-expanded') !== 'true'));
+  nav?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
+  document.querySelector('.reserve-link')?.addEventListener('click', () => setMenu(false));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && toggle?.getAttribute('aria-expanded') === 'true') {
+      setMenu(false);
+      toggle.focus();
+    }
+  });
+  // PC幅に戻ったらメニュー状態を解除
+  window.matchMedia('(min-width: 1024px)').addEventListener('change', (e) => {
+    if (e.matches) setMenu(false);
+  });
+</script>

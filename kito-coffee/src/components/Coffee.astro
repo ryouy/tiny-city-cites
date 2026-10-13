@@ -1,0 +1,22 @@
+---
+import Photo from './Photo.astro';
+import { photos } from '../data/photos';
+---
+
+<section class="section coffee" id="coffee" aria-labelledby="coffee-title">
+  <div class="coffee__stage reveal">
+    <Photo photo={photos.pourOver} ratio="21 / 9" ratioSm="4 / 3" sizes="100vw" />
+  </div>
+  <div class="container coffee__grid">
+    <div class="coffee__text reveal">
+      <p class="eyebrow">Coffee</p>
+      <h2 id="coffee-title" class="h2"><span class="nw">一杯に、</span><span class="nw">丁寧な理由がある。</span></h2>
+      <p class="prose">
+        豆は国内の専門ロースターから厳選。産地や焙煎度によって異なる個性を大切にしながら、挽き目と湯温を調整し、<span class="nw">一杯ずつ</span>ハンドドリップで抽出します。やさしい甘み、香ばしい余韻。その日の気分に合うコーヒーをお選びください。
+      </p>
+    </div>
+    <div class="coffee__side reveal">
+      <Photo photo={photos.blend} ratio="1 / 1" ratioSm="1 / 1" sizes="(min-width: 900px) 28vw, 70vw" />
+    </div>
+  </div>
+</section>

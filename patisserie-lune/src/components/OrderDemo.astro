@@ -1,0 +1,149 @@
+---
+import { wholeCakes, wholeGroups, yen } from '../data/menu';
+const sizeData = wholeCakes.map((w) => ({ id: w.id, group: w.group, name: w.name, size: w.size, price: w.price, note: w.note }));
+---
+
+<form class="order" id="order-demo" novalidate data-sizes={JSON.stringify(sizeData)}>
+  <div class="order__form">
+    <fieldset>
+      <legend><em>01</em>商品</legend>
+      <div class="opts opts--2" role="radiogroup">
+        {wholeGroups.map((g, i) => (
+          <div class="opt">
+            <input type="radio" name="product" id={`p-${g.key}`} value={g.key} checked={i === 0} />
+            <label for={`p-${g.key}`}>{g.name}</label>
+          </div>
+        ))}
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend><em>02</em>サイズ</legend>
+      <div class="opts opts--2" role="radiogroup">
+        {wholeCakes.map((w) => (
+          <div class="opt" data-group={w.group}>
+            <input type="radio" name="size" id={`s-${w.id}`} value={w.id} />
+            <label for={`s-${w.id}`}><span>{w.size}<small> {w.note}</small></span><span class="num">{yen(w.price)}</span></label>
+          </div>
+        ))}
+      </div>
+    </fieldset>
+
+    <div class="field">
+      <label for="f-date">受取希望日<span class="req">必須</span></label>
+      <select id="f-date" name="date" aria-describedby="f-date-hint f-date-err" required>
+        <option value="">選択してください</option>
+      </select>
+      <p class="hint" id="f-date-hint">デモ用ロジックです。定休日（火曜・水曜）を除き、今日を含まず営業日を3日数えた日以降から選べます。祝日・臨時休業には対応していません。</p>
+      <p class="err" id="f-date-err" role="alert"></p>
+      <noscript><p class="noscript">受取日の選択にはJavaScriptが必要です（デモ機能）。</p></noscript>
+    </div>
+
+    <div class="field">
+      <label for="f-msg">メッセージプレート（任意）</label>
+      <textarea id="f-msg" name="message" maxlength="40" aria-describedby="f-msg-hint"></textarea>
+      <p class="hint" id="f-msg-hint">ケーキに添えるメッセージの文面を入力する想定です（40文字まで・デモ）。</p>
+    </div>
+
+    <div class="field">
+      <label for="f-name">お名前<span class="req">必須</span></label>
+      <input type="text" id="f-name" name="name" autocomplete="off" aria-describedby="f-name-err" required />
+      <p class="err" id="f-name-err" role="alert"></p>
+    </div>
+  </div>
+
+  <aside class="summary" aria-labelledby="sum-title">
+    <h2 id="sum-title"><em lang="en">Summary</em>ご相談内容（デモ）</h2>
+    <dl>
+      <div><dt>商品</dt><dd data-out="product">—</dd></div>
+      <div><dt>サイズ</dt><dd data-out="size">—</dd></div>
+      <div><dt>受取日</dt><dd data-out="date">未選択</dd></div>
+      <div><dt>メッセージ</dt><dd data-out="message">なし</dd></div>
+    </dl>
+    <p class="summary__total"><span>合計（税込）</span><span class="num" data-out="total" aria-live="polite">—</span></p>
+    <button class="btn" type="submit">予約内容を確認する（デモ）</button>
+    <div class="result" role="status" hidden>
+      <b>デモのため予約されません。</b>
+      入力内容は外部に送信・保存されていません。このサイトでは実際の予約・注文は受け付けていません。
+    </div>
+  </aside>
+</form>
+
+<script>
+  interface Size { id: string; group: string; name: string; size: string; price: number; note: string }
+  const form = document.getElementById('order-demo') as HTMLFormElement | null;
+  if (form) {
+    const sizes: Size[] = JSON.parse(form.dataset.sizes ?? '[]');
+    const out = (k: string) => form.querySelector<HTMLElement>(`[data-out="${k}"]`)!;
+    const dateSel = form.querySelector<HTMLSelectElement>('#f-date')!;
+    const nameIn = form.querySelector<HTMLInputElement>('#f-name')!;
+    const msg = form.querySelector<HTMLTextAreaElement>('#f-msg')!;
+    const result = form.querySelector<HTMLElement>('.result')!;
+    const sizeOpts = [...form.querySelectorAll<HTMLElement>('.opt[data-group]')];
+    const yen = (n: number) => `${n.toLocaleString('en-US')}円`;
+    const wk = ['日', '月', '火', '水', '木', '金', '土'];
+
+    // 受取日候補(デモ用ロジック): 火・水は定休日。今日を除き営業日を3日数えた日以降を30日分。
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    let open = 0;
+    for (let i = 1; i <= 60 && dateSel.options.length < 31; i++) {
+      const d = new Date(today);
+      d.setDate(today.getDate() + i);
+      const dow = d.getDay();
+      if (dow === 2 || dow === 3) continue;
+      open++;
+      if (open < 3) continue;
+      const o = document.createElement('option');
+      o.value = `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
+      o.textContent = `${d.getMonth() + 1}月${d.getDate()}日（${wk[dow]}）`;
+      dateSel.appendChild(o);
+    }
+
+    const productVal = () => form.querySelector<HTMLInputElement>('input[name="product"]:checked')!.value;
+    const sizeInput = () => form.querySelector<HTMLInputElement>('input[name="size"]:checked');
+
+    const refresh = () => {
+      const g = productVal();
+      sizeOpts.forEach((o) => {
+        const show = o.dataset.group === g;
+        o.hidden = !show;
+        if (!show) o.querySelector('input')!.checked = false;
+      });
+      if (!sizeInput()) {
+        const first = sizeOpts.find((o) => o.dataset.group === g)?.querySelector('input');
+        if (first) first.checked = true;
+      }
+      const s = sizes.find((x) => x.id === sizeInput()?.value);
+      out('product').textContent = s?.name ?? '—';
+      out('size').textContent = s ? `${s.size}（${s.note}）` : '—';
+      out('total').textContent = s ? yen(s.price) : '—';
+      out('date').textContent = dateSel.value ? dateSel.selectedOptions[0].textContent : '未選択';
+      out('message').textContent = msg.value.trim() || 'なし';
+      result.hidden = true;
+    };
+    form.addEventListener('change', refresh);
+    form.addEventListener('input', refresh);
+    refresh();
+
+    const setErr = (el: HTMLElement, text: string) => {
+      const e = form.querySelector<HTMLElement>(`#${el.id}-err`)!;
+      e.textContent = text;
+      if (text) el.setAttribute('aria-invalid', 'true');
+      else el.removeAttribute('aria-invalid');
+    };
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      setErr(nameIn, nameIn.value.trim() ? '' : 'お名前を入力してください。');
+      setErr(dateSel, dateSel.value ? '' : '受取希望日を選択してください。');
+      const bad = form.querySelector<HTMLElement>('[aria-invalid="true"]');
+      if (bad) {
+        result.hidden = true;
+        // 先頭のエラー項目へフォーカス(DOM順: 受取日 → お名前)
+        (dateSel.getAttribute('aria-invalid') ? dateSel : nameIn).focus();
+        return;
+      }
+      result.hidden = false;
+    });
+  }
+</script>

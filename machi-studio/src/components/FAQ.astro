@@ -1,0 +1,43 @@
+---
+const faqs = [
+  {
+    q: 'ホームページの知識がなくても依頼できますか？',
+    a: 'はい。掲載する情報や必要なページ構成など、ご相談しながら進めます。',
+  },
+  {
+    q: 'スマートフォンでも見られますか？',
+    a: 'はい。スマートフォン・タブレット・パソコンで見やすいデザインを基本としています。',
+  },
+  {
+    q: 'まだ掲載する写真が揃っていません。',
+    a: '写真や文章など、必要な素材についてご相談しながら整理できます。撮影代行の提供は現時点では未定です。',
+  },
+  {
+    q: 'Instagramだけで営業していますが、ホームページは必要ですか？',
+    a: 'Instagramとホームページは役割が異なります。ホームページでは営業時間、メニュー、アクセス情報などを整理して掲載できます。',
+  },
+  {
+    q: '公開後に内容を変更できますか？',
+    a: 'はい。内容に応じて更新対応が可能です。保守契約の有無や作業範囲については事前にご案内します。',
+  },
+];
+---
+
+<section class="section section--white" id="faq" aria-labelledby="faq-title">
+  <div class="container split">
+    <div class="reveal">
+      <p class="label">FAQ</p>
+      <h2 class="heading" id="faq-title">よくあるご質問</h2>
+    </div>
+    <div class="faq reveal">
+      {
+        faqs.map((f) => (
+          <details>
+            <summary>{f.q}</summary>
+            <p class="faq__a">{f.a}</p>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>

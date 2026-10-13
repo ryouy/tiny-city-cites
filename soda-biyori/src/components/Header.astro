@@ -1,0 +1,24 @@
+---
+import { site, nav } from '../data/site';
+---
+
+<p class="demo-band">{site.bandNote}<span class="demo-band__more">｜実在の店舗ではありません</span></p>
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a class="brand" href="#top" aria-label={`${site.name} ページ上部へ`}>
+      <span class="brand__en">SODA BIYORI</span>
+      <span class="brand__ja">喫茶 ソーダ日和</span>
+    </a>
+
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+      <span class="nav-toggle__bars" aria-hidden="true"></span>
+      <span class="nav-toggle__label">メニュー</span>
+    </button>
+
+    <nav class="site-nav" id="site-nav" aria-label="メインナビゲーション">
+      <ul>
+        {nav.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+      </ul>
+    </nav>
+  </div>
+</header>

@@ -1,0 +1,26 @@
+---
+import { site, nav } from '../data/site';
+const base = import.meta.env.BASE_URL;
+---
+
+<footer class="site-footer">
+  <div class="wrap site-footer__grid">
+    <div class="site-footer__brand">
+      <p class="site-footer__logo">PÂTISSERIE <b>LUNE</b></p>
+      <p class="site-footer__kana">{site.kana}</p>
+      <p class="site-footer__tag">{site.tagline}</p>
+    </div>
+    <nav class="site-footer__nav" aria-label="フッターナビゲーション">
+      <ul>
+        <li><a href={base}>トップへ戻る</a></li>
+        {nav.map((n) => <li><a href={`${base}${n.href}`}>{n.label}</a></li>)}
+      </ul>
+    </nav>
+    <div class="site-footer__note">
+      <p class="site-footer__badge">{site.demoBadge}</p>
+      <p>{site.disclaimer}</p>
+      <p>第三者の商標・写真・ロゴ・SNS投稿は使用していません。電話・メール・SNSの連絡先は、架空店舗のため設けていません。</p>
+    </div>
+  </div>
+  <p class="site-footer__copy">Demo site. Not a real shop.</p>
+</footer>

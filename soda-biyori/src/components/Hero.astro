@@ -1,0 +1,45 @@
+---
+import Photo from './Photo.astro';
+import { site } from '../data/site';
+// 気泡の位置・大きさ・速度(装飾。aria-hidden)
+const bubbles = [
+  { x: 4, s: 18, d: 14, o: 0 }, { x: 12, s: 34, d: 19, o: 5 }, { x: 24, s: 12, d: 12, o: 9 },
+  { x: 38, s: 26, d: 17, o: 2 }, { x: 51, s: 16, d: 13, o: 7 }, { x: 63, s: 40, d: 21, o: 11 },
+  { x: 74, s: 14, d: 12, o: 3 }, { x: 83, s: 28, d: 18, o: 8 }, { x: 92, s: 20, d: 15, o: 1 },
+];
+---
+
+<section class="hero" id="top" aria-labelledby="hero-title">
+  <div class="hero__bubbles" aria-hidden="true">
+    {bubbles.map((b) => <i style={`--x:${b.x}%;--s:${b.s}px;--d:${b.d}s;--o:-${b.o}s`}></i>)}
+  </div>
+  <div class="container hero__grid">
+    <div class="hero__copy">
+      <p class="eyebrow">Retro Pop Kissa — <span class="nw">Aizu-Wakamatsu</span></p>
+      <h1 id="hero-title" class="hero__title">
+        <span class="nw">今日も、</span>
+        <span class="nw">ちょっと</span>
+        <span class="nw hero__mark">ごきげん。</span>
+      </h1>
+      <p class="hero__sub">{site.sub}</p>
+      <p class="hero__lead">
+        色とりどりのクリームソーダ、ちょっぴり固めのプリン、喫茶店のナポリタン。ここは、いつもの一日を少しだけ楽しくする、小さな喫茶店。
+      </p>
+      <p class="hero__cta">
+        <a class="btn btn--solid" href="#menu">メニューを見る</a>
+        <a class="btn" href="#about">お店について</a>
+      </p>
+    </div>
+    <div class="hero__visual">
+      <div class="hero__frame">
+        <Photo name="hero" priority ratio="4 / 5" sizes="(min-width: 900px) 520px, 90vw" label="No.01" />
+      </div>
+      <p class="sticker sticker--hero" aria-hidden="true">
+        <span>SODA</span>
+        <b>11–19</b>
+        <span>BIYORI</span>
+      </p>
+    </div>
+  </div>
+</section>
+<div class="awning" aria-hidden="true"></div>

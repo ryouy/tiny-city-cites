@@ -1,0 +1,31 @@
+---
+import { site, nav } from '../data/site';
+---
+
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a class="brand" href="#top" aria-label={`${site.name} ページ上部へ`}>
+      <span class="seal" aria-hidden="true">米</span>
+      <span class="brand__text">
+        <span class="brand__kana">お食事処</span>
+        <span class="brand__name">こめや</span>
+      </span>
+    </a>
+
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+      <span class="nav-toggle__bars" aria-hidden="true"></span>
+      <span class="nav-toggle__label">メニュー</span>
+    </button>
+
+    <nav class="site-nav" id="site-nav" aria-label="メインナビゲーション">
+      <ul>
+        {nav.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+      </ul>
+      <p class="site-nav__hours">
+        {site.hours.map((h) => <span><b>{h.key}</b> {h.open}–{h.close}</span>)}
+        <span>日曜休</span>
+      </p>
+    </nav>
+  </div>
+</header>
+<p class="demo-note">架空店舗のデモサイトです。実在する店舗ではありません。</p>

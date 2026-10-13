@@ -1,0 +1,26 @@
+---
+import Photo from './Photo.astro';
+import { site } from '../data/site';
+---
+
+<section class="hero" id="top" aria-labelledby="hero-title">
+  <div class="hero__photo">
+    <Photo name="hero" priority ratio="4 / 3" ratioWide="auto" sizes="(min-width: 900px) 62vw, 100vw" class="photo--fill" />
+    <span class="steam" aria-hidden="true"><i></i><i></i><i></i></span>
+  </div>
+  <div class="hero__body">
+    <p class="hero__kana"><span class="hero__en">{site.en}</span><span>{site.kana}</span></p>
+    <h1 id="hero-title" class="hero__title">
+      <span class="hero__line">濃厚、</span>
+      <span class="hero__line hero__line--accent">一直線。</span>
+    </h1>
+    <p class="hero__lead">{site.heroLead}</p>
+    <p class="hero__cta">
+      <a class="btn btn--red" href="#menu">お品書きを見る</a>
+      <a class="btn btn--line" href="#information">営業案内</a>
+    </p>
+    <p class="hero__meta">
+      <span>豚骨醤油</span><span>中太ストレート麺</span><span>鶏油</span>
+    </p>
+  </div>
+</section>

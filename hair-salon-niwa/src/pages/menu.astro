@@ -1,0 +1,93 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHead from '../components/PageHead.astro';
+import { categories, services, menuNotes, priceRange } from '../data/services';
+import { site, path } from '../data/site';
+---
+
+<BaseLayout page="Menu｜メニュー・料金" description="HAIR SALON niwa（架空店舗デモ）のメニューと税込料金。Cut / Color / Perm / Care / Set をカテゴリで切り替えて、料金と所要時間の目安を確認できます。">
+  <PageHead en="Menu" ja="メニュー・料金（税込）" lead={`${priceRange}。料金はデモ用の架空設定です。メニューを選ぶと、料金と所要時間の目安を表示します。`} />
+  <div class="page-body">
+    <div class="wrap">
+      <div class="menu-layout">
+        <div class="menu-main">
+          <div class="tabs" role="tablist" aria-label="メニューカテゴリ" id="tabs">
+            {categories.map((c, i) => (
+              <button type="button" role="tab" id={`tab-${c.key}`} aria-controls={`panel-${c.key}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1} data-key={c.key}>{c.key}</button>
+            ))}
+          </div>
+          {categories.map((c, i) => (
+            <section class="tabpanel" role="tabpanel" id={`panel-${c.key}`} aria-labelledby={`tab-${c.key}`} hidden={i !== 0 ? true : undefined}>
+              <h2 class="tabpanel__title">{c.key}｜{c.ja}</h2>
+              <ul class="mlist">
+                {services.filter((s) => s.category === c.key).map((m) => (
+                  <li>
+                    <button type="button" class="mrow mrow--btn" aria-pressed="false" data-id={m.id} data-name={m.name} data-price={m.price} data-duration={m.duration} data-note={m.note}>
+                      <span class="mrow__name">{m.name}</span>
+                      <span class="mrow__meta"><span>{m.duration}</span><span>{m.note}</span></span>
+                      <span class="mrow__price">{m.price}</span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ))}
+          <ul class="note-list">
+            {menuNotes.map((n) => <li>{n}</li>)}
+          </ul>
+        </div>
+        <aside class="menu-side" aria-label="選択中のメニュー">
+          <div class="picker" id="picker" aria-live="polite">
+            <p class="picker__label">Selected</p>
+            <p class="picker__empty" id="picker-empty">メニューを選ぶと、料金と所要時間の目安をここに表示します。</p>
+            <div id="picker-body" hidden>
+              <p class="picker__name" id="p-name"></p>
+              <p class="picker__price" id="p-price"></p>
+              <div class="picker__meta"><span id="p-duration"></span><span id="p-note"></span></div>
+              <p class="picker__cta"><a class="btn btn--solid" id="p-cta" href={path('reserve')}>{site.cta}</a></p>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  const tabs = [...document.querySelectorAll<HTMLButtonElement>('#tabs [role=tab]')];
+  const panels = [...document.querySelectorAll<HTMLElement>('.tabpanel')];
+  const select = (i: number, focus = false) => {
+    tabs.forEach((t, j) => {
+      t.setAttribute('aria-selected', String(i === j));
+      t.tabIndex = i === j ? 0 : -1;
+    });
+    panels.forEach((p, j) => (p.hidden = i !== j));
+    if (focus) tabs[i].focus();
+  };
+  tabs.forEach((t, i) => {
+    t.addEventListener('click', () => select(i));
+    t.addEventListener('keydown', (e) => {
+      const k = e.key;
+      if (k === 'ArrowRight') { e.preventDefault(); select((i + 1) % tabs.length, true); }
+      else if (k === 'ArrowLeft') { e.preventDefault(); select((i - 1 + tabs.length) % tabs.length, true); }
+      else if (k === 'Home') { e.preventDefault(); select(0, true); }
+      else if (k === 'End') { e.preventDefault(); select(tabs.length - 1, true); }
+    });
+  });
+
+  const rows = [...document.querySelectorAll<HTMLButtonElement>('.mrow--btn')];
+  const $ = (id: string) => document.getElementById(id)!;
+  const base = (document.getElementById('p-cta') as HTMLAnchorElement).getAttribute('href')!;
+  rows.forEach((r) =>
+    r.addEventListener('click', () => {
+      rows.forEach((x) => x.setAttribute('aria-pressed', String(x === r)));
+      $('picker-empty').hidden = true;
+      $('picker-body').hidden = false;
+      $('p-name').textContent = r.dataset.name ?? '';
+      $('p-price').textContent = r.dataset.price ?? '';
+      $('p-duration').textContent = `所要時間の目安：${r.dataset.duration}`;
+      $('p-note').textContent = `備考：${r.dataset.note}`;
+      ($('p-cta') as HTMLAnchorElement).href = `${base}?menu=${r.dataset.id}`;
+    }),
+  );
+</script>

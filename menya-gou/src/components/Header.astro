@@ -1,0 +1,24 @@
+---
+import { site, nav } from '../data/site';
+---
+
+<header class="site-header">
+  <p class="demo-band" role="note">{site.disclaimer}</p>
+  <div class="bar">
+    <a class="brand" href="#top" aria-label={`${site.name} ページ先頭へ`}>
+      <span class="brand__mark" aria-hidden="true">豪</span>
+      <span class="brand__text">
+        <span class="brand__en">{site.en}</span>
+        <span class="brand__ja">{site.name}</span>
+      </span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="メニューを開く">
+      <span class="nav-toggle__bars" aria-hidden="true"></span>
+    </button>
+    <nav id="site-nav" class="site-nav" aria-label="メインメニュー">
+      <ul>
+        {nav.map((n) => <li><a href={n.href}>{n.label}</a></li>)}
+      </ul>
+    </nav>
+  </div>
+</header>

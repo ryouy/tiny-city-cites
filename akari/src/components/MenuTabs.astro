@@ -1,0 +1,89 @@
+---
+import { menu, yen } from '../data/menu';
+---
+
+<div class="menu-tabs" data-menu-tabs>
+  <div class="tablist" role="tablist" aria-label="お品書きのカテゴリ">
+    {
+      menu.map((c, i) => (
+        <button
+          class="tab"
+          type="button"
+          role="tab"
+          id={`tab-${c.id}`}
+          aria-controls={`panel-${c.id}`}
+          aria-selected={i === 0 ? 'true' : 'false'}
+          tabindex={i === 0 ? 0 : -1}
+        >
+          <span class="tab__ja">{c.label}</span>
+          <span class="tab__en" aria-hidden="true">{c.en}</span>
+        </button>
+      ))
+    }
+  </div>
+  {
+    menu.map((c, i) => (
+      <div
+        class="tabpanel"
+        role="tabpanel"
+        id={`panel-${c.id}`}
+        aria-labelledby={`tab-${c.id}`}
+        hidden={i !== 0}
+        data-first={i === 0 ? '' : undefined}
+      >
+        <h3 class="tabpanel__title">
+          {c.label}
+          <span lang="en">{c.en}</span>
+        </h3>
+        <ul class="dishes">
+          {c.items.map((it) => (
+            <li class="dish">
+              <div class="dish__body">
+                <p class="dish__name">{it.name}</p>
+                <p class="dish__desc">{it.desc}</p>
+              </div>
+              <p class="dish__price">
+                <span class="sr-only">税込 </span>
+                {yen(it.price)}
+                {it.from && <span class="dish__from">〜</span>}
+              </p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))
+  }
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-menu-tabs]').forEach((root) => {
+    const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>('[role="tab"]'));
+    const panels = Array.from(root.querySelectorAll<HTMLElement>('[role="tabpanel"]'));
+    const select = (i: number, focus = false) => {
+      tabs.forEach((t, j) => {
+        const on = i === j;
+        t.setAttribute('aria-selected', String(on));
+        t.tabIndex = on ? 0 : -1;
+        if (on && focus) t.focus();
+      });
+      panels.forEach((p, j) => {
+        p.hidden = i !== j;
+      });
+    };
+    tabs.forEach((t, i) => {
+      t.addEventListener('click', () => select(i));
+      t.addEventListener('keydown', (e) => {
+        const n = tabs.length;
+        let next = -1;
+        if (e.key === 'ArrowRight') next = (i + 1) % n;
+        else if (e.key === 'ArrowLeft') next = (i - 1 + n) % n;
+        else if (e.key === 'Home') next = 0;
+        else if (e.key === 'End') next = n - 1;
+        if (next >= 0) {
+          e.preventDefault();
+          select(next, true);
+        }
+      });
+    });
+  });
+</script>

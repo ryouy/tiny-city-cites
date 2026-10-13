@@ -1,0 +1,18 @@
+---
+interface Props {
+  en: string;
+  title: string;
+  lead?: string;
+}
+const { en, title, lead } = Astro.props;
+const base = import.meta.env.BASE_URL;
+---
+
+<header class="page-head">
+  <div class="wrap">
+    <a class="back" href={base}><span aria-hidden="true">←</span> トップへ戻る</a>
+    <p class="eyebrow">{en}</p>
+    <h1>{title}</h1>
+    {lead && <p class="page-head__lead">{lead}</p>}
+  </div>
+</header>

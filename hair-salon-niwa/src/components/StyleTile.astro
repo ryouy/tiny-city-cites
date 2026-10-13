@@ -1,0 +1,24 @@
+---
+import Photo from './Photo.astro';
+import type { HairStyle } from '../data/styles';
+interface Props { style: HairStyle; href?: string; ratio?: string; sizes?: string; label?: string; asButton?: boolean }
+const { style, href, ratio = '3 / 4', sizes = '(min-width: 960px) 25vw, 50vw', label, asButton = false } = Astro.props;
+---
+
+{
+  asButton ? (
+    <button class="style-tile style-tile--btn" type="button" data-style={style.id} aria-haspopup="dialog">
+      <div class="style-tile__img"><Photo name={style.photo} {ratio} {sizes} {label} /></div>
+      <p class="style-tile__cat">{style.category}</p>
+      <p class="style-tile__name">{style.name}</p>
+      <p class="style-tile__comment">{style.comment}</p>
+    </button>
+  ) : (
+    <a class="style-tile" href={href}>
+      <div class="style-tile__img"><Photo name={style.photo} {ratio} {sizes} {label} /></div>
+      <p class="style-tile__cat">{style.category}</p>
+      <p class="style-tile__name">{style.name}</p>
+      <p class="style-tile__comment">{style.comment}</p>
+    </a>
+  )
+}

@@ -1,0 +1,261 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Photo from '../components/Photo.astro';
+import MapEmbed from '../components/MapEmbed.astro';
+import MenuTabs from '../components/MenuTabs.astro';
+import ReservationDialog from '../components/ReservationDialog.astro';
+import { site } from '../data/site';
+import { courses, courseNote } from '../data/course';
+import { yen } from '../data/menu';
+
+const [h1a, h1b] = site.hero.h1.split('、');
+const seatsTotal = site.space.seats.reduce((s, x) => s + x.count, 0);
+---
+
+<BaseLayout>
+  <Header />
+  <main id="main">
+    <!-- Hero -->
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <Photo name="hero" fill eager ratio="16 / 9" sizes="100vw" />
+      <div class="hero__shade" aria-hidden="true"></div>
+      <h1 class="hero__title" id="hero-title">
+        <span class="nw">{h1a}、</span><span class="nw">{h1b}</span>
+      </h1>
+      <div class="hero__inner">
+        <p class="eyebrow hero__sub" lang="en">{site.hero.sub}</p>
+        <p class="hero__body">{site.hero.body}</p>
+        <div class="hero__cta">
+          <a class="btn btn--solid" href={site.hero.ctas[0].href}>{site.hero.ctas[0].label}</a>
+          <a class="btn btn--ghost" href={site.hero.ctas[1].href}>{site.hero.ctas[1].label}</a>
+        </div>
+      </div>
+      <p class="hero__scroll" aria-hidden="true">Scroll</p>
+    </section>
+
+    <!-- Philosophy -->
+    <section class="section about" id="about" aria-labelledby="about-title">
+      <div class="wrap about__grid">
+        <div class="about__text reveal">
+          <p class="eyebrow" lang="en">Philosophy</p>
+          <h2 class="h2" id="about-title">火が引き出す、<span class="nw">素材の旨み。</span></h2>
+          <span class="rule" aria-hidden="true"></span>
+          <p class="lead">{site.about.body}</p>
+          <div class="story">
+            <p class="story__lead">{site.about.lead}</p>
+            <p>{site.about.story}</p>
+          </div>
+          <p class="owner"><span class="owner__tag">店主（架空設定）</span>{site.about.owner}</p>
+        </div>
+        <div class="about__photo reveal">
+          <Photo name="yakitori" ratio="4 / 5" ratioSm="4 / 5" sizes="(min-width: 960px) 40vw, 100vw" />
+        </div>
+        <p class="vlabel about__v" aria-hidden="true">灯について</p>
+      </div>
+    </section>
+
+    <!-- Menu -->
+    <section class="section section--alt menu" id="menu" aria-labelledby="menu-title">
+      <div class="wrap">
+        <div class="menu__top">
+          <header class="section-head reveal">
+            <p class="eyebrow" lang="en">Menu</p>
+            <h2 class="h2" id="menu-title">お品書き</h2>
+            <span class="rule" aria-hidden="true"></span>
+            <p class="section-head__note">{site.priceNote}</p>
+          </header>
+          <div class="menu-photos reveal">
+            <div class="menu-photos__a"><Photo name="basashi" ratio="4 / 5" sizes="(min-width: 768px) 25vw, 50vw" /></div>
+            <div class="menu-photos__b"><Photo name="donabe" ratio="4 / 5" sizes="(min-width: 768px) 25vw, 50vw" /></div>
+          </div>
+        </div>
+        <div class="reveal">
+          <MenuTabs />
+        </div>
+      </div>
+    </section>
+
+    <!-- Sake -->
+    <section class="section sake" id="sake" aria-labelledby="sake-title">
+      <div class="wrap sake__grid">
+        <div class="sake__photo reveal">
+          <Photo name="sake" ratio="3 / 2" ratioSm="3 / 2" sizes="(min-width: 960px) 55vw, 100vw" />
+        </div>
+        <div class="sake__text reveal">
+          <p class="eyebrow" lang="en">Sake</p>
+          <h2 class="h2" id="sake-title">今夜の一杯に、<span class="nw">会津の地酒を。</span></h2>
+          <span class="rule" aria-hidden="true"></span>
+          <p class="lead">{site.sake.body}</p>
+          <p class="fine">{site.sake.note}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Course -->
+    <section class="section section--alt course" id="course" aria-labelledby="course-title">
+      <div class="wrap">
+        <header class="section-head reveal">
+          <p class="eyebrow" lang="en">Course</p>
+          <h2 class="h2" id="course-title">コースのご案内</h2>
+          <p class="section-head__note">{courseNote}</p>
+        </header>
+        <div class="courses">
+          {
+            courses.map((c, i) => (
+              <article class="course-item reveal" aria-labelledby={`course-${c.id}`}>
+                <p class="course-item__no" aria-hidden="true" lang="en">{String(i + 1).padStart(2, '0')}</p>
+                <h3 class="course-item__name" id={`course-${c.id}`}>{c.name}</h3>
+                <p class="course-item__price">
+                  <span class="sr-only">税込 </span>
+                  <span class="course-item__num">{yen(c.price)}</span>
+                  <span class="course-item__unit">／1名（税込）</span>
+                </p>
+                <ul class="course-item__list">
+                  {c.items.map((it) => (
+                    <li>{it}</li>
+                  ))}
+                </ul>
+                <p class="course-item__cond">{c.condition}</p>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Space -->
+    <section class="section space" id="space" aria-labelledby="space-title">
+      <div class="wrap">
+        <header class="space__head reveal">
+          <p class="eyebrow" lang="en">Space</p>
+          <h2 class="h2" id="space-title">火を眺める、<span class="nw">穏やかな時間。</span></h2>
+          <span class="rule" aria-hidden="true"></span>
+          <p class="lead">{site.space.body}</p>
+        </header>
+      </div>
+      <div class="space__wide reveal">
+        <Photo name="counter" ratio="21 / 9" ratioSm="4 / 3" sizes="100vw" />
+      </div>
+      <div class="wrap space__lower">
+        <div class="seats reveal">
+          <h3 class="seats__title">
+            <span class="seats__total">{seatsTotal}</span>
+            <span class="seats__total-label">席</span>
+            <span class="sr-only">（内訳は以下）</span>
+          </h3>
+          <ul class="seats__list">
+            {
+              site.space.seats.map((s) => (
+                <li>
+                  <span class="seats__name">{s.name}</span>
+                  <span class="seats__count">
+                    {s.count}
+                    <small>席</small>
+                  </span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+        <div class="space__photo reveal">
+          <Photo name="semiPrivate" ratio="4 / 3" sizes="(min-width: 960px) 45vw, 100vw" />
+        </div>
+      </div>
+    </section>
+
+    <!-- Reservation -->
+    <section class="section section--alt reservation" id="reservation" aria-labelledby="reservation-title">
+      <div class="wrap reservation__grid">
+        <div class="reservation__intro reveal">
+          <p class="eyebrow" lang="en">Reservation</p>
+          <h2 class="h2" id="reservation-title">{site.reservation.heading}</h2>
+          <span class="rule" aria-hidden="true"></span>
+          <p class="lead">{site.reservation.lead}</p>
+          <button class="btn btn--solid" type="button" data-open-demo aria-haspopup="dialog">
+            {site.reservation.demoButton}
+          </button>
+          <p class="notice">{site.reservation.demoNotice}</p>
+        </div>
+        <div class="reservation__body reveal">
+          <h3 class="sub-h">ご予約の想定フロー</h3>
+          <ol class="steps">
+            {
+              site.reservation.steps.map((s, i) => (
+                <li>
+                  <span class="steps__no" aria-hidden="true" lang="en">{String(i + 1).padStart(2, '0')}</span>
+                  <div>
+                    <p class="steps__title">{s.title}</p>
+                    <p class="steps__text">{s.text}</p>
+                  </div>
+                </li>
+              ))
+            }
+          </ol>
+          <dl class="facts">
+            {
+              site.reservation.facts.map((f) => (
+                <div>
+                  <dt>{f.term}</dt>
+                  <dd>{f.desc}</dd>
+                </div>
+              ))
+            }
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <!-- Shop info -->
+    <section class="section info" id="info" aria-labelledby="info-title">
+      <div class="wrap info__grid">
+        <div class="info__main reveal">
+          <p class="eyebrow" lang="en">Information</p>
+          <h2 class="h2" id="info-title">営業情報</h2>
+          <span class="rule" aria-hidden="true"></span>
+          <dl class="spec">
+            {
+              site.info.map((row) => (
+                <div>
+                  <dt>{row.term}</dt>
+                  <dd>{row.desc}</dd>
+                </div>
+              ))
+            }
+          </dl>
+          <p class="fine">電話番号・詳細な住所・SNSは、架空店舗のため掲載していません。</p>
+          <div style="margin-top: 28px;"><MapEmbed /></div>
+        </div>
+        <div class="info__photo reveal">
+          <Photo name="exterior" ratio="3 / 2" ratioSm="3 / 2" sizes="(min-width: 960px) 40vw, 100vw" />
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer__grid">
+      <div>
+        <p class="footer__name">{site.name}</p>
+        <p class="footer__en" lang="en">{site.nameEn}</p>
+      </div>
+      <div>
+        <p class="footer__disclaimer">{site.disclaimer}</p>
+        <p class="footer__note">掲載の店舗情報・メニュー・価格・人物はすべて創作です。</p>
+      </div>
+      <nav aria-label="フッターメニュー">
+        <ul class="footer__nav">
+          {
+            site.nav.map((n) => (
+              <li>
+                <a href={n.href}>{n.label}</a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+    </div>
+  </footer>
+
+  <ReservationDialog />
+</BaseLayout>

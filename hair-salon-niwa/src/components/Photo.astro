@@ -1,0 +1,56 @@
+---
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
+import { photos, photoExts, type PhotoKey } from '../data/photos';
+
+interface Props {
+  name: PhotoKey;
+  /** ヒーローのみ true(eager + fetchpriority=high) */
+  priority?: boolean;
+  /** 枠のアスペクト比(CSS値)。省略時は 4 / 5 */
+  ratio?: string;
+  sizes?: string;
+  /** プレースホルダーに表示する見出し(例: 01) */
+  label?: string;
+  /** 撮影イメージのキャプションを右下に寄せる(ヒーローの文字パネルと重ならないように) */
+  captionRight?: boolean;
+}
+const { name, priority = false, ratio = '4 / 5', sizes = '(min-width: 900px) 520px, 100vw', label, captionRight = false } = Astro.props;
+const def = photos[name];
+const base = import.meta.env.BASE_URL;
+// ビルド時に public/images/hair-salon-niwa/ の実ファイル(webp/png/jpg/jpeg/avif)を確認。無ければプレースホルダー。
+const found = photoExts.map((e) => `${def.base}.${e}`).find((f) => existsSync(join(process.cwd(), 'public', 'images', 'hair-salon-niwa', f)));
+---
+
+{
+  found ? (
+    <img
+      class="photo"
+      src={`${base}images/hair-salon-niwa/${found}`}
+      alt={def.alt}
+      width={def.width}
+      height={def.height}
+      sizes={sizes}
+      style={`aspect-ratio:${ratio}`}
+      loading={priority ? 'eager' : 'lazy'}
+      fetchpriority={priority ? 'high' : undefined}
+      decoding="async"
+    />
+  ) : (
+    <div class={`photo photo--ph tone-${def.tone}${captionRight ? ' photo--cap-right' : ''}`} style={`aspect-ratio:${ratio}`} role="img" aria-label={`画像準備中。撮影イメージ: ${def.shoot}`}>
+      {def.person ? (
+        <img class="photo__sil" src={`${base}images/hair-salon-niwa/niwa-staff-placeholder.svg`} alt="" width="400" height="500" loading="lazy" />
+      ) : (
+        <svg class="photo__strands" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+          <path d="M-5 20C25 10 45 40 70 30S100 25 108 32" />
+          <path d="M-5 32C22 24 42 52 68 43S98 38 108 46" />
+          <path d="M-5 44C20 38 40 64 66 56S96 52 108 60" />
+          <path d="M-5 56C18 52 38 76 64 69S94 66 108 74" />
+        </svg>
+      )}
+      <span class="photo__tag">画像準備中</span>
+      {label && <span class="photo__no">{label}</span>}
+      <span class="photo__shoot"><b>撮影イメージ</b>{def.shoot}</span>
+    </div>
+  )
+}

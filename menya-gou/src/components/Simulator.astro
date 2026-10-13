@@ -1,0 +1,88 @@
+---
+import { custom, preferences } from '../data/site';
+import { phrases } from '../lib/phrases';
+---
+
+<section class="custom" id="custom" aria-labelledby="custom-title">
+  <div class="container custom__grid">
+    <div class="custom__intro reveal">
+      <p class="eyebrow eyebrow--dark"><span>04</span>CUSTOM</p>
+      <h2 id="custom-title" class="h2 h2--dark" set:html={phrases(custom.heading)} />
+      <p class="lead lead--dark">{custom.body}</p>
+      <p class="custom__note">{custom.note}</p>
+    </div>
+
+    <form class="sim reveal" data-sim aria-labelledby="sim-title" onsubmit="return false">
+      <h3 id="sim-title" class="sim__title">お好みシミュレーター</h3>
+      {
+        preferences.map((p) => (
+          <fieldset class="sim__group">
+            <legend>{p.label}</legend>
+            <div class="sim__opts">
+              {p.options.map((o) => (
+                <label class="sim__opt">
+                  <input type="radio" name={p.id} value={o} checked={o === 'ふつう'} />
+                  <span>{o}</span>
+                </label>
+              ))}
+            </div>
+          </fieldset>
+        ))
+      }
+
+      <div class="sim__result">
+        <p class="sim__label">選んだ組み合わせ</p>
+        <p class="sim__summary" data-summary aria-live="polite">麺 ふつう ／ 味 ふつう ／ 油 ふつう</p>
+        <p class="sim__label">注文時の伝え方</p>
+        <p class="sim__say" data-say tabindex="-1" aria-live="polite">麺ふつう、味ふつう、油ふつうでお願いします。</p>
+        <div class="sim__actions">
+          <button class="btn btn--gold" type="button" data-copy>伝え方をコピー</button>
+          <button class="btn btn--line-dark" type="button" data-reset>すべて「ふつう」に戻す</button>
+        </div>
+        <p class="sim__status" data-status role="status"></p>
+        <p class="sim__disc">{custom.disclaimer}</p>
+      </div>
+    </form>
+  </div>
+</section>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('[data-sim]');
+  if (form) {
+    const summary = form.querySelector<HTMLElement>('[data-summary]')!;
+    const say = form.querySelector<HTMLElement>('[data-say]')!;
+    const status = form.querySelector<HTMLElement>('[data-status]')!;
+    const groups = [
+      { name: 'noodle', short: '麺' },
+      { name: 'taste', short: '味' },
+      { name: 'oil', short: '油' },
+    ];
+    const val = (name: string) => form.querySelector<HTMLInputElement>(`input[name="${name}"]:checked`)?.value ?? 'ふつう';
+    const sentence = () => `${groups.map((g) => `${g.short}${val(g.name)}`).join('、')}でお願いします。`;
+    const update = () => {
+      summary.textContent = groups.map((g) => `${g.short} ${val(g.name)}`).join(' ／ ');
+      say.textContent = sentence();
+      status.textContent = '';
+    };
+    form.addEventListener('change', update);
+    form.querySelector('[data-reset]')?.addEventListener('click', () => {
+      form.querySelectorAll<HTMLInputElement>('input[type="radio"]').forEach((r) => (r.checked = r.value === 'ふつう'));
+      update();
+    });
+    form.querySelector('[data-copy]')?.addEventListener('click', async () => {
+      const text = sentence();
+      try {
+        await navigator.clipboard.writeText(text);
+        status.textContent = 'コピーしました。';
+      } catch {
+        // Clipboard API が使えない場合は文章を選択状態にして手動コピーを案内
+        const range = document.createRange();
+        range.selectNodeContents(say);
+        const sel = window.getSelection();
+        sel?.removeAllRanges();
+        sel?.addRange(range);
+        status.textContent = 'コピーできませんでした。選択された文章をそのままコピーしてください。';
+      }
+    });
+  }
+</script>

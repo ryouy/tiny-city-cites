@@ -1,0 +1,51 @@
+---
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
+import { photos, photoExts } from '../data/photos';
+import type { PhotoKey } from '../data/menu';
+
+interface Props {
+  name: PhotoKey;
+  /** ヒーローのみ true(eager + fetchpriority=high) */
+  priority?: boolean;
+  /** 枠のアスペクト比(CSS値)。省略時は 4 / 5 */
+  ratio?: string;
+  sizes?: string;
+  /** プレースホルダーに表示する番号(例: No.01) */
+  label?: string;
+}
+const { name, priority = false, ratio = '4 / 5', sizes = '(min-width: 900px) 50vw, 100vw', label } = Astro.props;
+const def = photos[name];
+// ビルド時に public/images/patisserie-lune/ の実ファイル(webp/png/jpg/jpeg/avif)を確認。無ければプレースホルダー。
+const found = photoExts
+  .map((e) => `${def.base}.${e}`)
+  .find((f) => existsSync(join(process.cwd(), 'public', 'images', 'patisserie-lune', f)));
+---
+
+{
+  found ? (
+    <img
+      class="photo"
+      src={`${import.meta.env.BASE_URL}images/patisserie-lune/${found}`}
+      alt={def.alt}
+      width={def.width}
+      height={def.height}
+      sizes={sizes}
+      style={`aspect-ratio:${ratio}`}
+      loading={priority ? 'eager' : 'lazy'}
+      fetchpriority={priority ? 'high' : undefined}
+      decoding="async"
+    />
+  ) : (
+    <div class={`photo photo--ph tone-${def.tone}`} style={`aspect-ratio:${ratio}`} role="img" aria-label={`画像準備中。撮影イメージ: ${def.shoot}`}>
+      <svg class="photo__plate" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false">
+        <circle cx="50" cy="50" r="40" />
+        <circle cx="50" cy="50" r="29" />
+        <circle cx="50" cy="50" r="1.2" />
+      </svg>
+      <span class="photo__tag">画像準備中</span>
+      {label && <span class="photo__no" aria-hidden="true">{label}</span>}
+      <span class="photo__shoot"><b>撮影イメージ</b>{def.shoot}</span>
+    </div>
+  )
+}

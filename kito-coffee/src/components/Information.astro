@@ -1,0 +1,27 @@
+---
+import { site } from '../data/site';
+import MapEmbed from './MapEmbed.astro';
+---
+
+<section class="section information" id="information" aria-labelledby="information-title">
+  <div class="container information__grid">
+    <header class="information__head reveal">
+      <p class="eyebrow">Information</p>
+      <h2 id="information-title" class="h2">店舗情報</h2>
+      <p class="information__sub">{site.name}<br />{site.subtitle}</p>
+    </header>
+    <dl class="info-list reveal">
+      {
+        site.info.map((row) => (
+          <div class="info-list__row">
+            <dt>{row.term}</dt>
+            <dd>{row.desc}</dd>
+          </div>
+        ))
+      }
+    </dl>
+    <div class="information__map reveal" style="grid-column: 1 / -1;">
+      <MapEmbed />
+    </div>
+  </div>
+</section>

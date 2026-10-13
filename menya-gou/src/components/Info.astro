@@ -1,0 +1,58 @@
+---
+import Photo from './Photo.astro';
+import MapEmbed from './MapEmbed.astro';
+import { info } from '../data/site';
+import { phrases } from '../lib/phrases';
+---
+
+<section class="info" id="information" aria-labelledby="info-title">
+  <div class="container">
+    <div class="info__head reveal">
+      <p class="eyebrow"><span>06</span>INFORMATION</p>
+      <h2 id="info-title" class="h2" set:html={phrases(info.heading)} />
+      <p class="lead">{info.body}</p>
+    </div>
+
+    <div class="info__hours reveal">
+      <h3 class="visually-hidden">営業時間</h3>
+      <ul class="hours">
+        {
+          info.hours.map((h) => (
+            <li class="hours__row">
+              <span class="hours__label">{h.label}</span>
+              <span class="hours__time">{h.time}</span>
+              <span class="hours__lo">L.O. {h.lo}</span>
+            </li>
+          ))
+        }
+        <li class="hours__row hours__row--off">
+          <span class="hours__label">休</span>
+          <span class="hours__time">{info.holiday}</span>
+          <span class="hours__lo">定休日</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="info__grid">
+      <div class="info__col reveal">
+        <h3 class="info__sub">店舗情報</h3>
+        <dl class="spec">
+          {
+            info.rows.map((r) => (
+              <div class="spec__row">
+                <dt>{r.dt}</dt>
+                <dd>{r.dd}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </div>
+      <div class="info__col reveal">
+        <Photo name="interior" ratio="4 / 3" sizes="(min-width: 900px) 40vw, 100vw" />
+        <h3 class="info__sub info__sub--map">エリア</h3>
+        <p class="info__area">{info.area}</p>
+        <MapEmbed />
+      </div>
+    </div>
+  </div>
+</section>

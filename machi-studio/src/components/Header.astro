@@ -1,0 +1,34 @@
+---
+import { site } from '../config/site';
+
+const links = [
+  { href: '#about', en: 'About', ja: 'スタジオについて' },
+  { href: '#services', en: 'Services', ja: 'サービス' },
+  ...(site.works.show ? [{ href: '#works', en: 'Works', ja: '制作' }] : []),
+  { href: '#contact', en: 'Contact', ja: 'お問い合わせ' },
+];
+---
+
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a class="logo" href="#top" aria-label={`${site.name} ページ上部へ`}>{site.name}</a>
+
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+      <span class="nav-toggle-label">Menu</span>
+    </button>
+
+    <nav class="site-nav" id="site-nav" aria-label="メインナビゲーション">
+      <ul>
+        {
+          links.map((l) => (
+            <li>
+              <a href={l.href}>
+                {l.en} <small>{l.ja}</small>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</header>
