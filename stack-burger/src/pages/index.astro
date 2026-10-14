@@ -7,8 +7,8 @@ import MapEmbed from '../components/MapEmbed.astro';
 import { site } from '../data/site';
 import { photoFile } from '../lib/photo-file';
 
-// メニュー下の写真列は、3枚そろったときだけ表示(未配置のときは枠を出さない)
-const menuPhotos = (['classic', 'bacon', 'fries'] as const);
+// メニュー下の写真列は、4枚そろったときだけ表示(未配置のときは枠を出さない)
+const menuPhotos = (['double', 'classic', 'bacon', 'fries'] as const);
 const showMenuPhotos = menuPhotos.every((k) => photoFile(k));
 ---
 
@@ -48,7 +48,7 @@ const showMenuPhotos = menuPhotos.every((k) => photoFile(k));
     {showMenuPhotos && (
       <div class="wrap">
         <div class="menu-photos">
-          {menuPhotos.map((k) => <figure><Photo name={k} ratio="4 / 5" sizes="(min-width: 900px) 400px, 33vw" /></figure>)}
+          {menuPhotos.map((k) => <figure><Photo name={k} ratio="4 / 5" sizes="(min-width: 900px) 300px, 50vw" /></figure>)}
         </div>
       </div>
     )}

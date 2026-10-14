@@ -37,7 +37,7 @@ npm run verify     # 仕様書のメニュー・価格・営業情報・文言�
 | `hero-burger` | Hero と Signature(全幅で切り出し。被写体は中央付近に) |
 | `griddle` | OUR STYLE(全幅・3:2) |
 | `interior` | お店について(16:9) |
-| `classic` / `bacon` / `fries` | メニュー下の写真列(4:5)。3枚そろったときだけ表示 |
+| `double` / `classic` / `bacon` / `fries` | メニュー下の写真列(4:5)。4枚そろったときだけ表示 |
 
 写真を置いた場合、文字が読めるよう黒の半透明の膜が自動で重なります。構図に合わせて `src/pages/index.astro` の `<Photo pos="...">`(object-position)を調整してください。
 

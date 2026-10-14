@@ -99,7 +99,8 @@ button { font: inherit; color: inherit; }
 .addons__title { font-size: 1.0625rem; font-weight: 900; padding-bottom: 8px; border-bottom: 2px solid var(--ink); }
 .addons .prow { padding: 12px 0; }
 .addons .prow__price { font-size: 1.25rem; }
-.menu-photos { margin-top: clamp(40px, 6vw, 72px); display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.menu-photos { margin-top: clamp(40px, 6vw, 72px); display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+@media (min-width: 700px) { .menu-photos { grid-template-columns: repeat(4, 1fr); } }
 
 /* Build Your Stack */
 .build { background: var(--ink); color: #fff; padding-block: clamp(48px, 8vw, 96px); }
