@@ -34,3 +34,7 @@ npm run serve   # ビルド後 http://localhost:4321 で配信
 ## 画像の追加
 
 各サイトの `public/images/<名前>/` に写真を置きます（拡張子は webp / png / jpg のどれでも自動で使われます）。PNG はサイズが大きいため、置いたあとに `npm run images` を実行すると WebP に変換され、元のファイルは削除されます。
+
+## Vercel でのデプロイ
+
+ルートの `vercel.json` に設定があります（Install: `scripts/install-all.mjs`、Build: `npm run build`、Output: `tiny-city-cites/dist`）。Root Directory はリポジトリのルートのままにし、Node.js は 22.x、環境変数 `SITE_URL` に公開URLを設定してください。

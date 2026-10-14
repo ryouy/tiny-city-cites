@@ -1,0 +1,7 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "installCommand": "node scripts/install-all.mjs",
+  "buildCommand": "npm run build",
+  "outputDirectory": "tiny-city-cites/dist"
+}
