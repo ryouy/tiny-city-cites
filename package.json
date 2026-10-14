@@ -14,6 +14,8 @@
     "dev:menya": "npm --prefix menya-gou run dev -- --port 4405",
     "dev:soda": "npm --prefix soda-biyori run dev -- --port 4406",
     "dev:niwa": "npm --prefix hair-salon-niwa run dev -- --port 4407",
-    "dev:lune": "npm --prefix patisserie-lune run dev -- --port 4408"
+    "dev:lune": "npm --prefix patisserie-lune run dev -- --port 4408",
+    "dev:burger": "npm --prefix stack-burger run dev -- --port 4409",
+    "dev:trattoria": "npm --prefix trattoria-machi run dev -- --port 4410"
   }
 }

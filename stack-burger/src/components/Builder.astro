@@ -1,0 +1,119 @@
+---
+import { burgers, toppings, setOption, largeFries, yen } from '../data/menu';
+const data = {
+  burgers: burgers.map((b) => ({ id: b.id, name: b.name, price: b.price, setEligible: b.setEligible ?? false })),
+  toppings: toppings.map((t) => ({ id: t.id, price: t.price })),
+  set: setOption.price,
+  large: largeFries.price,
+};
+---
+
+<div class="builder" data-builder>
+  <script type="application/json" id="builder-data" set:html={JSON.stringify(data)} />
+  <p class="builder__demo"><b>デモ</b>金額を試算するだけの画面です。注文はできません。</p>
+
+  <form class="builder__form" onsubmit="return false" autocomplete="off">
+    <fieldset class="bf">
+      <legend><span class="bf__no">1</span>ベースを選ぶ</legend>
+      <div class="bf__opts bf__opts--base">
+        {burgers.map((b, i) => (
+          <label class="opt">
+            <input type="radio" name="base" value={b.id} checked={i === 0} />
+            <span class="opt__box"><span class="opt__name">{b.name}</span><span class="opt__price">{yen(b.price)}</span></span>
+          </label>
+        ))}
+      </div>
+    </fieldset>
+
+    <fieldset class="bf">
+      <legend><span class="bf__no">2</span>トッピング(複数可)</legend>
+      <div class="bf__opts">
+        {toppings.map((t) => (
+          <label class="opt">
+            <input type="checkbox" name="topping" value={t.id} />
+            <span class="opt__box"><span class="opt__name">{t.label}</span><span class="opt__price">＋{yen(t.price)}</span></span>
+          </label>
+        ))}
+      </div>
+    </fieldset>
+
+    <fieldset class="bf" data-set-field>
+      <legend><span class="bf__no">3</span>セットにする</legend>
+      <div class="bf__opts">
+        <label class="opt">
+          <input type="checkbox" name="set" value="set" />
+          <span class="opt__box"><span class="opt__name">セット(ポテト＋ドリンク)</span><span class="opt__price">＋{yen(setOption.price)}</span></span>
+        </label>
+        <label class="opt" data-large>
+          <input type="checkbox" name="large" value="large" disabled />
+          <span class="opt__box"><span class="opt__name">{largeFries.label}</span><span class="opt__price">＋{yen(largeFries.price)}</span></span>
+        </label>
+      </div>
+      <p class="bf__hint" data-set-hint>対象ドリンク：{setOption.drinks.join('／')}(ドリンクの選択は金額に影響しません)。ポテト大盛りはセットのときのみ選べます。</p>
+    </fieldset>
+  </form>
+
+  <div class="builder__sum" aria-live="polite" aria-atomic="true">
+    <p class="builder__label">合計(税込・参考)</p>
+    <p class="builder__total" data-total>¥980</p>
+    <p class="builder__line" data-line>クラシック・スマッシュ</p>
+    <div class="builder__actions">
+      <button type="button" class="btn btn--mustard" data-confirm>金額を確認する</button>
+      <button type="button" class="btn btn--ghost" data-reset>リセット</button>
+    </div>
+    <p class="builder__msg" data-msg hidden><b>これは注文ではありません。</b>デモの参考計算です。注文の確定・決済・情報の送信は行いません。</p>
+  </div>
+</div>
+
+<script>
+  interface BData {
+    burgers: { id: string; name: string; price: number; setEligible: boolean }[];
+    toppings: { id: string; price: number }[];
+    set: number;
+    large: number;
+  }
+  const root = document.querySelector<HTMLElement>('[data-builder]');
+  const raw = document.getElementById('builder-data')?.textContent;
+  if (root && raw) {
+    const data: BData = JSON.parse(raw);
+    const form = root.querySelector<HTMLFormElement>('form')!;
+    const totalEl = root.querySelector<HTMLElement>('[data-total]')!;
+    const lineEl = root.querySelector<HTMLElement>('[data-line]')!;
+    const msg = root.querySelector<HTMLElement>('[data-msg]')!;
+    const hint = root.querySelector<HTMLElement>('[data-set-hint]')!;
+    const setBox = form.querySelector<HTMLInputElement>('input[name="set"]')!;
+    const largeBox = form.querySelector<HTMLInputElement>('input[name="large"]')!;
+    const hintDefault = hint.textContent ?? '';
+    const yen = (n: number) => `¥${n.toLocaleString('en-US')}`;
+
+    const update = () => {
+      const baseId = form.querySelector<HTMLInputElement>('input[name="base"]:checked')?.value;
+      const base = data.burgers.find((b) => b.id === baseId) ?? data.burgers[0];
+      // セット対象外(キッズ)のときはセットを外して無効化
+      setBox.disabled = !base.setEligible;
+      if (!base.setEligible) setBox.checked = false;
+      largeBox.disabled = !setBox.checked;
+      if (!setBox.checked) largeBox.checked = false;
+      hint.textContent = base.setEligible ? hintDefault : `${base.name}はセット対象外のため、セットは選べません。`;
+
+      const picked = Array.from(form.querySelectorAll<HTMLInputElement>('input[name="topping"]:checked')).map((i) => i.value);
+      const topSum = data.toppings.filter((t) => picked.includes(t.id)).reduce((s, t) => s + t.price, 0);
+      const total = base.price + topSum + (setBox.checked ? data.set : 0) + (largeBox.checked ? data.large : 0);
+      totalEl.textContent = yen(total);
+      const parts = [base.name];
+      if (picked.length) parts.push(`トッピング${picked.length}点`);
+      if (setBox.checked) parts.push(largeBox.checked ? 'セット(ポテト大盛り)' : 'セット');
+      lineEl.textContent = parts.join(' ＋ ');
+      msg.hidden = true;
+    };
+    form.addEventListener('change', update);
+    root.querySelector('[data-reset]')?.addEventListener('click', () => {
+      form.reset();
+      update();
+    });
+    root.querySelector('[data-confirm]')?.addEventListener('click', () => {
+      msg.hidden = false;
+    });
+    update();
+  }
+</script>

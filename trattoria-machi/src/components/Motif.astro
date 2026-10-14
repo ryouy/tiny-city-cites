@@ -1,0 +1,10 @@
+---
+// 手描き風の小さなモチーフ(仕様書 §6: 葉・トマト)。装飾のため aria-hidden。
+interface Props { kind: 'leaf' | 'tomato' | 'sprig'; class?: string }
+const { kind, class: cls } = Astro.props;
+---
+<svg class={`motif motif--${kind} ${cls ?? ''}`} viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+  {kind === 'leaf' && (<><path d="M8 40C8 20 20 8 40 8c0 20-12 32-32 32z" /><path d="M8 40C16 30 24 22 34 14" /></>)}
+  {kind === 'tomato' && (<><path d="M24 14c-9 0-16 6-16 15s7 14 16 14 16-5 16-14-7-15-16-15z" /><path d="M24 14l-5-5M24 14l6-4M24 14v-6M24 14l-8 2M24 14l9 2" /><path d="M16 26c0-3 2-5 4-6" /></>)}
+  {kind === 'sprig' && (<><path d="M6 42C16 30 26 20 42 8" /><path d="M16 32c-1-6 1-9 5-11-1 6-2 9-5 11zM24 24c-1-6 1-9 5-11-1 6-2 9-5 11zM12 38c-6 0-8-3-9-6 6 0 8 3 9 6zM20 30c-6 0-8-3-9-6 6 0 8 3 9 6z" /></>)}
+</svg>

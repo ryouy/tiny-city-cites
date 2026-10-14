@@ -8,7 +8,7 @@ import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const demos = ['kito-coffee', 'komeya', 'akari', 'mugi-to-hibi', 'menya-gou', 'soda-biyori', 'hair-salon-niwa', 'patisserie-lune']; // 追加時はここに足す
+const demos = ['kito-coffee', 'komeya', 'akari', 'mugi-to-hibi', 'menya-gou', 'soda-biyori', 'hair-salon-niwa', 'patisserie-lune', 'stack-burger', 'trattoria-machi']; // 追加時はここに足す
 const main = resolve(root, 'machi-studio');
 
 const run = (cwd, env = {}) =>

@@ -1,0 +1,64 @@
+---
+import { sharing } from '../data/menu';
+import { pasta, pizza } from '../data/menu';
+---
+
+<form class="slip" data-setsim onsubmit="return false" novalidate>
+  <header class="slip__head">
+    <p class="slip__eyebrow">SHARING DINNER ／ 2名向け</p>
+    <h3 class="slip__title">{sharing.name}</h3>
+    <p class="slip__price"><span>{sharing.price}</span><small>（{sharing.unit}・固定価格）</small></p>
+    <p class="slip__content">{sharing.content}</p>
+  </header>
+
+  <p class="slip__demo"><strong>これは注文・予約ではありません。</strong>組み合わせを見てみるためのデモで、送信や保存はされません。</p>
+
+  <fieldset>
+    <legend>パスタ 1皿</legend>
+    {pasta.map((p, i) => (
+      <label class="opt"><input type="radio" name="pasta" value={p.name} checked={i === 0} /><span>{p.name}</span></label>
+    ))}
+  </fieldset>
+  <fieldset>
+    <legend>ピッツァ 1枚</legend>
+    {pizza.map((p, i) => (
+      <label class="opt"><input type="radio" name="pizza" value={p.name} checked={i === 0} /><span>{p.name}</span></label>
+    ))}
+  </fieldset>
+  <fieldset class="slip__drinks">
+    <legend>ソフトドリンク 2杯</legend>
+    {[1, 2].map((n) => (
+      <label class="sel">
+        <span>{n}杯目</span>
+        <select name={`drink${n}`}>
+          {sharing.softDrinks.map((d, i) => <option value={d} selected={i === n - 1}>{d}</option>)}
+        </select>
+      </label>
+    ))}
+  </fieldset>
+
+  <div class="slip__out" aria-live="polite">
+    <p class="slip__outlabel">選んだ組み合わせ（例）</p>
+    <ul>
+      <li>前菜盛り合わせ</li>
+      <li data-out="pasta">パスタ：{pasta[0].name}</li>
+      <li data-out="pizza">ピッツァ：{pizza[0].name}</li>
+      <li data-out="drinks">ソフトドリンク：{sharing.softDrinks[0]}・{sharing.softDrinks[1]}</li>
+    </ul>
+    <p class="slip__total"><span>合計（固定価格）</span><b>{sharing.price}</b></p>
+  </div>
+</form>
+
+<script>
+  document.querySelectorAll<HTMLFormElement>('[data-setsim]').forEach((f) => {
+    const out = (k: string) => f.querySelector<HTMLElement>(`[data-out="${k}"]`)!;
+    const v = (n: string) => (f.elements.namedItem(n) as RadioNodeList | HTMLSelectElement).value;
+    const render = () => {
+      out('pasta').textContent = `パスタ：${v('pasta')}`;
+      out('pizza').textContent = `ピッツァ：${v('pizza')}`;
+      out('drinks').textContent = `ソフトドリンク：${v('drink1')}・${v('drink2')}`;
+    };
+    f.addEventListener('change', render);
+    render();
+  });
+</script>

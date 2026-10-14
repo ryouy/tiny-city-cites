@@ -1,4 +1,4 @@
-# machi studio. 公式Webサイト
+# tiny city cites 公式Webサイト
 
 小さなお店に、ちょうどいいWebを。 — Astro + TypeScript による静的シングルページサイト。
 
@@ -35,9 +35,9 @@ Node.js 22.12 以上が必要です。
 
 ## 公開前チェックリスト
 
-- [ ] `contact.instagramUrl` を設定（未設定のままだと CTA は問い合わせ欄へ移動し、「準備中」と表示されます）
+- [x] `contact.instagramUrl` は設定済み（https://www.instagram.com/tiny_city_cites/）
 - [ ] `SITE_URL` を設定
-- [ ] ブランド名・商標・ドメイン・Instagram ID の重複確認
+- [ ] ブランド名「tiny city cites」・商標・ドメインの重複確認
 - [ ] 料金（金額・税込表示・作業範囲・ドメイン費用）を確定してから `pricing.show` を有効化
 - [ ] 「ご相談・お見積もりは無料です。」を実際に提供するか確認
 - [ ] FAQ・サービス内容が実際に提供できる範囲と一致しているか確認

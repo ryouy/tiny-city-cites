@@ -1,5 +1,5 @@
 /**
- * machi studio. — サイト設定
+ * tiny city cites — サイト設定
  *
  * ブランド情報・連絡先・表示切り替えはすべてここで管理します。
  * 空文字("")の項目は「未設定」として扱われ、サイト上には表示されません。
@@ -16,14 +16,13 @@ export type WorkItem = {
 };
 
 export const site = {
-  name: 'machi studio.',
-  nameKana: 'マチスタジオ',
-  tagline: '小さなお店に、ちょうどいいWebを。',
+  name: 'tiny city cites',
+    tagline: '小さなお店に、ちょうどいいWebを。',
   subtagline: 'お店の魅力が、まっすぐ伝わる場所を。',
 
-  title: 'machi studio. | 飲食店・個人商店のホームページ制作',
+  title: 'tiny city cites | 飲食店・個人商店のホームページ制作',
   description:
-    'machi studio. は、会津若松を拠点に飲食店・カフェ・個人商店のホームページを制作する個人Webデザインスタジオです。小さなお店に、ちょうどいいWebを。',
+    'tiny city cites は、会津若松を拠点に飲食店・カフェ・個人商店のホームページを制作する個人Webデザインスタジオです。小さなお店に、ちょうどいいWebを。',
 
   /** 公開URL（例: "https://machi-studio.pages.dev"）。末尾スラッシュなし。確定後に設定。
    *  canonical / OGP URL / sitemap.xml に使われます。環境変数 SITE_URL でも上書き可。 */
@@ -32,9 +31,9 @@ export const site = {
   /** 連絡先。個人の電話番号は公開しない方針。 */
   contact: {
     /** Instagram のプロフィールまたはDMのURL。未設定の間はCTAが問い合わせセクションへ移動します。 */
-    instagramUrl: '',
+    instagramUrl: 'https://www.instagram.com/tiny_city_cites/',
     /** Instagram ID（表示用。例: "@machi_studio"） */
-    instagramHandle: '',
+    instagramHandle: '@tiny_city_cites',
     /** メールアドレス（任意） */
     email: '',
   },
@@ -133,6 +132,22 @@ export const site = {
         summary:
           '洋菓子店を想定した、架空店舗のデモサイトです。ご注文画面は試作で、実際には注文されません。実在する店舗ではありません。',
         url: '/demos/patisserie-lune/',
+      },
+      {
+        title: 'STACK BURGER',
+        category: 'ハンバーガー店',
+        kind: 'Demo',
+        summary:
+          '鉄板で焼くスマッシュバーガーの店を想定した、架空店舗のデモサイトです。金額を試算できる画面は試作で、注文はできません。実在する店舗ではありません。',
+        url: '/demos/stack-burger/',
+      },
+      {
+        title: 'トラットリア まちの灯',
+        category: 'イタリアン',
+        kind: 'Demo',
+        summary:
+          '家族経営の大衆イタリアンを想定した、架空店舗のデモサイトです。実在する店舗ではありません。',
+        url: '/demos/trattoria-machi/',
       },
     ] as WorkItem[],
   },
