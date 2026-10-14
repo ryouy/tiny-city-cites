@@ -1,65 +1,45 @@
 ---
-import Photo from './Photo.astro';
-import { categories, itemsByCategory, panelPhotos, menuNotes, setOption, largeFries, toppings, yen } from '../data/menu';
+import { categories, itemsByCategory, menuNotes, setOption, largeFries, toppings, yen } from '../data/menu';
 ---
 
 <div class="menu" data-menu>
   <div class="menu__tabs" role="tablist" aria-label="メニューのカテゴリ">
     {categories.map((c, i) => (
       <button type="button" role="tab" id={`tab-${c.id}`} class="menu__tab" aria-controls={`panel-${c.id}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}>
-        <span class="menu__tab-en">{c.label}</span>
-        <span class="menu__tab-ja">{c.ja}</span>
+        {c.label}
       </button>
     ))}
   </div>
 
   {categories.map((c) => (
     <div class="menu__panel" role="tabpanel" id={`panel-${c.id}`} aria-labelledby={`tab-${c.id}`} data-panel={c.id}>
-      <div class="menu__grid">
-        <ol class="menu__list">
-          {itemsByCategory[c.id].map((it, n) => (
-            <li class="mi">
-              <span class="mi__no" aria-hidden="true">{String(n + 1).padStart(2, '0')}</span>
-              <div class="mi__body">
-                <h3 class="mi__name">
-                  {it.name}
-                  {it.badge && <span class="mi__badge">{it.badge}</span>}
-                </h3>
-                {it.desc && <p class="mi__desc">{it.desc}</p>}
-              </div>
-              <p class="mi__price"><span class="visually-hidden">税込</span>{yen(it.price)}</p>
-            </li>
-          ))}
-        </ol>
-        <div class={`menu__side menu__side--${panelPhotos[c.id].length || 0}`}>
-          {panelPhotos[c.id].length > 0 ? (
-            panelPhotos[c.id].map((k) => (
-              <figure class="menu__fig"><Photo name={k} ratio="4 / 5" sizes="(min-width: 900px) 280px, 46vw" /></figure>
-            ))
-          ) : (
-            <div class="menu__drinkblock">
-              <p class="menu__drinkblock-big" aria-hidden="true">COLD<br />DRINKS</p>
-              <p class="menu__drinkblock-note">セットのドリンクは、コーラ／オレンジジュース／アイスコーヒーから選べます。</p>
+      <ul class="ptable">
+        {itemsByCategory[c.id].map((it) => (
+          <li class="prow">
+            <div class="prow__body">
+              <h3 class="prow__name">
+                {it.name}
+                {it.badge && <span class="prow__badge">{it.badge}</span>}
+              </h3>
+              {it.desc && <p class="prow__desc">{it.desc}</p>}
             </div>
-          )}
-        </div>
-      </div>
-      {c.id === 'burgers' && (
-        <p class="menu__note">{menuNotes.badge}</p>
-      )}
+            <p class="prow__price"><span class="visually-hidden">税込</span>{yen(it.price)}</p>
+          </li>
+        ))}
+      </ul>
+      {c.id === 'burgers' && <p class="menu__note">{menuNotes.badge}</p>}
     </div>
   ))}
 
-  <aside class="addons" aria-label="セットと追加トッピング">
-    <h3 class="addons__title">SETS <span>&amp;</span> ADD-ONS</h3>
-    <ul class="addons__list">
-      <li><span>バーガーに追加：ポテト＋対象ドリンク</span><b>＋{yen(setOption.price)}</b></li>
-      <li><span>ポテト大盛り(セットのとき)</span><b>＋{yen(largeFries.price)}</b></li>
-      {toppings.map((t) => <li><span>{t.label}</span><b>＋{yen(t.price)}</b></li>)}
+  <div class="addons">
+    <h3 class="addons__title">セット・追加</h3>
+    <ul class="ptable">
+      <li class="prow"><div class="prow__body"><p class="prow__name">バーガーに追加：ポテト＋対象ドリンク</p><p class="prow__desc">対象ドリンク：{setOption.drinks.join('／')}。{setOption.excluded}</p></div><p class="prow__price">＋{yen(setOption.price)}</p></li>
+      <li class="prow"><div class="prow__body"><p class="prow__name">ポテト大盛り(セットのとき)</p></div><p class="prow__price">＋{yen(largeFries.price)}</p></li>
+      {toppings.map((t) => <li class="prow"><div class="prow__body"><p class="prow__name">{t.label}</p></div><p class="prow__price">＋{yen(t.price)}</p></li>)}
     </ul>
-    <p class="addons__note">セット対象ドリンク：{setOption.drinks.join('／')}。{setOption.excluded}</p>
-  </aside>
-  <p class="menu__foot">{menuNotes.tax}{menuNotes.fictional}</p>
+    <p class="menu__note">{menuNotes.tax}</p>
+  </div>
 </div>
 
 <script>

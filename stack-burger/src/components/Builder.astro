@@ -10,11 +10,9 @@ const data = {
 
 <div class="builder" data-builder>
   <script type="application/json" id="builder-data" set:html={JSON.stringify(data)} />
-  <p class="builder__demo"><b>デモ</b>金額を試算するだけの画面です。注文はできません。</p>
-
   <form class="builder__form" onsubmit="return false" autocomplete="off">
     <fieldset class="bf">
-      <legend><span class="bf__no">1</span>ベースを選ぶ</legend>
+      <legend>ベース</legend>
       <div class="bf__opts bf__opts--base">
         {burgers.map((b, i) => (
           <label class="opt">
@@ -26,7 +24,7 @@ const data = {
     </fieldset>
 
     <fieldset class="bf">
-      <legend><span class="bf__no">2</span>トッピング(複数可)</legend>
+      <legend>トッピング</legend>
       <div class="bf__opts">
         {toppings.map((t) => (
           <label class="opt">
@@ -38,7 +36,7 @@ const data = {
     </fieldset>
 
     <fieldset class="bf" data-set-field>
-      <legend><span class="bf__no">3</span>セットにする</legend>
+      <legend>セット</legend>
       <div class="bf__opts">
         <label class="opt">
           <input type="checkbox" name="set" value="set" />
@@ -49,7 +47,7 @@ const data = {
           <span class="opt__box"><span class="opt__name">{largeFries.label}</span><span class="opt__price">＋{yen(largeFries.price)}</span></span>
         </label>
       </div>
-      <p class="bf__hint" data-set-hint>対象ドリンク：{setOption.drinks.join('／')}(ドリンクの選択は金額に影響しません)。ポテト大盛りはセットのときのみ選べます。</p>
+      <p class="bf__hint" data-set-hint>対象ドリンク：{setOption.drinks.join('／')}。ポテト大盛りはセットのときのみ。</p>
     </fieldset>
   </form>
 
@@ -58,10 +56,10 @@ const data = {
     <p class="builder__total" data-total>¥980</p>
     <p class="builder__line" data-line>クラシック・スマッシュ</p>
     <div class="builder__actions">
-      <button type="button" class="btn btn--mustard" data-confirm>金額を確認する</button>
-      <button type="button" class="btn btn--ghost" data-reset>リセット</button>
+      <button type="button" class="btn btn--solid" data-confirm>金額を確認する</button>
+      <button type="button" class="btn btn--line-light" data-reset>リセット</button>
     </div>
-    <p class="builder__msg" data-msg hidden><b>これは注文ではありません。</b>デモの参考計算です。注文の確定・決済・情報の送信は行いません。</p>
+    <p class="builder__msg" data-msg hidden><b>これは注文ではありません。</b>参考計算のみで、注文・決済・送信はしません。</p>
   </div>
 </div>
 

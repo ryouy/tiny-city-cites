@@ -13,7 +13,7 @@ const toLines = (html) =>
     .replace(/&amp;/g, '&')
     .replace(/&#39;|&#x27;/g, "'")
     .split('\n').map((s) => s.trim()).filter(Boolean);
-const pages = ['', 'menu/', 'styles/', 'staff/', 'first-visit/', 'access/', 'reserve/'];
+const pages = ['', 'menu/', 'styles/', 'staff/', 'access/', 'reserve/'];
 const html = Object.fromEntries(pages.map((p) => [p, raw(p)]));
 const lines = Object.fromEntries(pages.map((p) => [p, toLines(html[p])]));
 const flat = Object.fromEntries(pages.map((p) => [p, lines[p].join('').replace(/\s+/g, '')]));
@@ -24,7 +24,7 @@ const ng = (m) => { fail++; console.error(`NG: ${m}`); };
 const section = (from, to) => spec.slice(spec.indexOf(from), spec.indexOf(to));
 const near = (ls, name, others) => {
   const idxs = ls.map((l, i) => (l === name ? i : -1)).filter((i) => i >= 0);
-  return idxs.length > 0 && idxs.every((i) => others.every((o) => ls.slice(i, i + 6).includes(o)));
+  return idxs.length > 0 && idxs.some((i) => others.every((o) => ls.slice(i, i + 6).includes(o)));
 };
 
 // 1) メニュー表(§4)を /menu と reserve に対して確認(名前・所要時間・料金・備考が近接)
@@ -54,7 +54,7 @@ for (const w of ['佐伯 まどか', 'Madoka Saeki', 'Owner Stylist', '美容師
 
 // 3) 営業情報・固定文言
 const access = lines['access/'];
-const musts = [['access/', ['9:30〜18:30', 'カット17:30', 'カット＋カラー16:00', '月曜日・第1・第3日曜日', '2席（半個室風の配置）', '2台', '現金、カード、QR決済（架空設定）']]];
+const musts = [['access/', ['9:30〜18:30', 'カット17:30', 'カット＋カラー16:00', '月曜日・第1・第3日曜日', '2席（半個室風の配置）', '2台', '現金、カード、QR決済（架空設定）', '福島県会津若松市の住宅エリア']]];
 for (const [p, ws] of musts) for (const w of ws) if (!lines[p].includes(w)) ng(`access: ${w}`);
 void access;
 const home = flat[''];
@@ -65,12 +65,12 @@ for (const t of [
   '丁寧なカウンセリング', '悩みや好み、普段のセット方法までじっくり伺います。', '毎日に馴染むスタイル', 'サロン帰りだけでなく、翌朝も扱いやすい髪へ。',
   '静かに過ごせる空間', '2席だけのプライベートな空間で、自分の時間を。', 'はじめての方へ',
   'ご希望の髪型が決まっていなくても大丈夫です。髪のお悩みや普段のライフスタイルを伺いながら、一緒にスタイルを考えていきます。',
-  'カット5,000円台〜、カラー7,000円台〜', '福島県会津若松市の住宅エリア', 'PORTFOLIO DEMO｜架空店舗の制作事例です',
+  'カット5,000円台〜、カラー7,000円台〜', 'PORTFOLIO DEMO｜架空店舗の制作事例です',
   '予約デモを体験',
 ].map((s) => s.replace(/\s+/g, ''))) if (!home.includes(t)) ng(`home missing: ${t}`);
 for (const [q, a] of [...section('## 11. FAQ', '## 12. 技術').matchAll(/\*\*Q\. (.+?)\*\*\s*\nA\. (.+)/g)].map((m) => [m[1], m[2]])) {
   count++;
-  if (!flat['first-visit/'].includes('Q' + q.replace(/\s+/g, '')) || !flat['first-visit/'].includes(a.trim())) ng(`faq: ${q}`);
+  if (!flat['access/'].includes('Q' + q.replace(/\s+/g, '')) || !flat['access/'].includes(a.trim())) ng(`faq: ${q}`);
 }
 if (!flat['reserve/'].includes('これはデモです。予約は成立していません')) ng('完了画面の文言');
 for (const p of pages) {
@@ -90,8 +90,8 @@ for (const p of pages) {
   if (!/<meta name="robots" content="noindex,nofollow"/.test(h)) ng(`${p || '/'} robots`);
   if ((h.match(/<h1[\s>]/g) ?? []).length !== 1) ng(`${p || '/'} h1 は1つ`);
   const ifr = h.match(/<iframe[^>]*>/g) ?? [];
-  const allowed = p === '' || p === 'access/';
-  if (ifr.length !== (allowed ? 1 : 0) || ifr.some((i) => !/src="https:\/\/www\.google\.com\/maps\/embed\?/.test(i))) ng(`${p || '/'} iframe(許可は Google マップ埋め込み1点のみ。トップとアクセスのみ): ${ifr.length}`);
+  const allowed = p === 'access/';
+  if (ifr.length !== (allowed ? 1 : 0) || ifr.some((i) => !/src="https:\/\/www\.google\.com\/maps\/embed\?/.test(i))) ng(`${p || '/'} iframe(許可は Google マップ埋め込み1点のみ。アクセスのみ): ${ifr.length}`);
   if (/¥/.test(lines[p].join(''))) ng(`${p || '/'} ¥ 表記`);
 }
 

@@ -9,7 +9,7 @@ export default [
   ...astro.configs.recommended,
   {
     // Node 実行ファイル(設定)用のグローバル
-    files: ['astro.config.mjs'],
-    languageOptions: { globals: { process: 'readonly' } },
+    files: ['astro.config.mjs', 'scripts/*.mjs'],
+    languageOptions: { globals: { process: 'readonly', console: 'readonly' } },
   },
 ];

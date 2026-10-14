@@ -1,3 +1,5 @@
+import type { PhotoKey } from './photos';
+
 export interface MenuItem {
   id: string;
   name: string;
@@ -10,7 +12,8 @@ export interface MenuItem {
 export interface MenuCategory {
   id: string;
   label: string;
-  en: string;
+  /** このカテゴリで添える写真(順に表示) */
+  photos: readonly { key: PhotoKey; pos: string }[];
   items: readonly MenuItem[];
 }
 
@@ -18,7 +21,7 @@ export const menu: readonly MenuCategory[] = [
   {
     id: 'sumibi',
     label: '炭火料理',
-    en: 'Charcoal Grill',
+    photos: [{ key: 'hero', pos: '78% 60%' }],
     items: [
       { id: 'yakitori5', name: '炭火焼き鳥五本盛り', price: 1200, desc: 'その日のおすすめを、炭火で香ばしく。' },
       { id: 'atsuyage', name: '炭焼き厚揚げ', price: 650, desc: '外は香ばしく、中はふっくら。薬味を添えて。' },
@@ -29,7 +32,10 @@ export const menu: readonly MenuCategory[] = [
   {
     id: 'seasonal',
     label: '季節の一品',
-    en: 'Seasonal',
+    photos: [
+      { key: 'basashi', pos: '50% 50%' },
+      { key: 'donabe', pos: '50% 60%' },
+    ],
     items: [
       { id: 'basashi', name: '会津馬刺し', price: 1680, desc: '赤身の旨みを味わう一皿。' },
       { id: 'dashi', name: 'だし巻き玉子', price: 780, desc: '出汁を含ませ、ふっくら焼き上げました。' },
@@ -40,7 +46,7 @@ export const menu: readonly MenuCategory[] = [
   {
     id: 'drink',
     label: 'お飲み物',
-    en: 'Drinks',
+    photos: [{ key: 'sake', pos: '42% 60%' }],
     items: [
       { id: 'sake3', name: '会津地酒 飲み比べ三種', price: 1500, desc: '風味の異なる三杯を少しずつ。' },
       { id: 'sakeglass', name: '日本酒 グラス', price: 700, from: true, desc: '銘柄・仕入れ状況により変わります（架空の目安）。' },

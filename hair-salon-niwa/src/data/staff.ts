@@ -7,7 +7,6 @@ export interface Staff {
   career: string;
   strengths: string[];
   message: string;
-  photo: 'staffSaeki' | 'staffTakano';
 }
 
 export const staff: Staff[] = [
@@ -19,7 +18,6 @@ export const staff: Staff[] = [
     career: '美容師歴12年（架空）',
     strengths: ['骨格に馴染むショート・ボブ', '柔らかなカラー'],
     message: '髪を整えることが、毎日の気持ちを少し前向きにする。そんな時間をお届けできたらうれしいです。',
-    photo: 'staffSaeki',
   },
   {
     id: 'takano',
@@ -29,8 +27,7 @@ export const staff: Staff[] = [
     career: '美容師歴7年（架空）',
     strengths: ['ナチュラルなレイヤー', 'メンズカット', '頭皮ケア'],
     message: 'がんばりすぎない、自然な似合わせを一緒に探しましょう。',
-    photo: 'staffTakano',
   },
 ];
 
-export const staffNote = 'スタッフの名前・経歴・メッセージはすべて創作（架空の人物）です。実在の人物とは関係ありません。';
+export const staffNote = 'スタッフはすべて架空の人物です。';

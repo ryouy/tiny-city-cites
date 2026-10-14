@@ -1,21 +1,22 @@
 ---
-import { site } from '../data/site';
+import { site, pages, url } from '../data/site';
 import { menuDisclaimer } from '../data/menu';
 ---
 
 <footer class="site-footer">
-  <div class="checker" aria-hidden="true"></div>
   <div class="container site-footer__inner">
     <div>
       <p class="site-footer__brand serif">SODA BIYORI</p>
       <p class="site-footer__ja">{site.name}</p>
+      <ul class="site-footer__nav">
+        <li><a href={url()}>トップ</a></li>
+        {pages.map((p) => <li><a href={url(p.path)}>{p.label}</a></li>)}
+      </ul>
     </div>
     <div class="site-footer__legal">
       <p class="site-footer__disc">{site.disclaimer}</p>
-      <p>Web制作ポートフォリオ用の非公式デモ。{menuDisclaimer}</p>
-      <p>
-        書体は Zen Maru Gothic・DM Serif Display（SIL Open Font License、Google Fonts）。写真は準備中で、掲載する際は生成画像または商用利用の権利を確認した素材のみを使用します。
-      </p>
+      <p>{menuDisclaimer}</p>
+      <p>書体は Zen Maru Gothic・DM Serif Display（SIL Open Font License、Google Fonts）を使用しています。</p>
     </div>
   </div>
 </footer>

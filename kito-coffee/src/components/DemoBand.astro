@@ -2,7 +2,4 @@
 import { site } from '../data/site';
 ---
 
-<p class="demo-band" role="note">
-  <span class="demo-band__tag">DEMO</span>
-  <span set:html={site.disclaimerHtml} />
-</p>
+<p class="demo-band" role="note" set:html={site.disclaimerHtml} />

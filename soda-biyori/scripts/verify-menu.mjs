@@ -4,13 +4,21 @@ import { readFileSync } from 'node:fs';
 
 const specPath = process.argv[2] ?? '../siyosyo/SODA_BIYORI_Claude_Code.md';
 const spec = readFileSync(specPath, 'utf8');
-const rawHtml = readFileSync('dist/index.html', 'utf8');
-const text = rawHtml
-  .replace(/<script[\s\S]*?<\/script>/g, '')
-  .replace(/<style[\s\S]*?<\/style>/g, '')
-  .replace(/<[^>]+>/g, '\n')
-  .replace(/&amp;/g, '&');
-const lines = text.split('\n').map((s) => s.trim()).filter(Boolean);
+// 3ページ構成: dist/index.html(トップ)・dist/menu/index.html・dist/shop/index.html
+const pageFiles = { home: 'dist/index.html', menu: 'dist/menu/index.html', shop: 'dist/shop/index.html' };
+const toText = (h) =>
+  h
+    .replace(/<script[\s\S]*?<\/script>/g, '')
+    .replace(/<style[\s\S]*?<\/style>/g, '')
+    .replace(/<[^>]+>/g, '\n')
+    .replace(/&amp;/g, '&');
+const raws = Object.fromEntries(Object.entries(pageFiles).map(([k, f]) => [k, readFileSync(f, 'utf8')]));
+const texts = Object.fromEntries(Object.entries(raws).map(([k, h]) => [k, toText(h)]));
+const rawHtml = Object.values(raws).join('\n');
+const text = Object.values(texts).join('\n');
+const toLines = (t) => t.split('\n').map((s) => s.trim()).filter(Boolean);
+const lines = toLines(texts.menu); // メニュー表はメニューページで検査
+const homeLines = toLines(texts.home);
 
 let fail = 0;
 let count = 0;
@@ -35,7 +43,8 @@ for (const row of sec.split('\n')) {
   if (desc && cells[1].startsWith('sweet') || cells[1].startsWith('food')) descs.push([name, desc]);
   if (cells[1].startsWith('soda')) {
     // 色・内容を ／ 区切りで: メニュー表では「／」連結、パネルでは個別項目として存在
-    for (const part of desc.split('／')) if (!lines.includes(part.trim())) ng(`soda note ${name} -> ${part}`);
+    for (const part of desc.split('／')) if (!homeLines.includes(part.trim())) ng(`soda note(トップ) ${name} -> ${part}`);
+    if (!lines.includes(desc)) ng(`soda desc(メニュー) ${name} -> ${desc}`);
   }
 }
 for (const [name, desc] of descs) if (!lines.includes(desc)) ng(`desc ${name} -> ${desc}`);
@@ -44,13 +53,13 @@ for (const [name, desc] of descs) if (!lines.includes(desc)) ng(`desc ${name} ->
 const musts = [
   '11:00–19:00', 'フードL.O. 18:00', 'ドリンク・スイーツL.O. 18:30', '月曜日', '26席', '2名席×7卓、4名席×3卓',
   '専用駐車場はありません', '900〜1,800円', '全席禁煙', '現金・クレジットカード・交通系電子マネー・QR決済（架空設定）',
-  '福島県会津若松市の商店街近く', '2025.4',
+  '福島県会津若松市の商店街近く', '2025年4月',
   'フードに対象ドリンクを付けると、ドリンク代から150円引き（クリームソーダは対象外）。',
   '架空のメニューです。アレルゲン情報は掲載していません。',
   'このサイトはWeb制作ポートフォリオ用の架空店舗デモです。実在の店舗ではありません。',
   'ソーダの泡みたいに、気持ちが弾む喫茶時間。',
   '春のおすすめソーダ（サンプル）', '季節のケーキ便り（サンプル）', '営業日のご案内（サンプル）',
-  'サンプル情報', 'メニューを見る', 'お店について',
+  'サンプル情報', 'メニューを見る', 'お店について', '実際の注文はできません。',
 ];
 for (const m of musts) if (!text.includes(m)) ng(`missing: ${m}`);
 // 見出しは複数 span に分割されているため、連結テキストで確認
@@ -66,11 +75,19 @@ const bad = [
   [/〒|\d{2,4}-\d{2,4}-\d{3,4}/, '郵便番号/電話番号らしき文字列'],
 ];
 for (const [re, label] of bad) if (re.test(rawHtml)) ng(`forbidden: ${label}`);
-if (!/<meta name="robots" content="noindex,nofollow"/.test(rawHtml)) ng('robots noindex');
 // iframe は地図埋め込み(1点)のみ許可
 const iframes = rawHtml.match(/<iframe[^>]*>/g) ?? [];
 if (iframes.length !== 1 || !/src="https:\/\/www\.google\.com\/maps\/embed\?/.test(iframes[0])) ng(`iframe は Google マップ埋め込み1点のみ許可 (found ${iframes.length})`);
-if ((rawHtml.match(/<h1[\s>]/g) ?? []).length !== 1) ng('h1 は1つ');
+for (const [k, h] of Object.entries(raws)) {
+  if ((h.match(/<h1[\s>]/g) ?? []).length !== 1) ng(`${k}: h1 は1つ`);
+  if (!/<meta name="robots" content="noindex,nofollow"/.test(h)) ng(`${k}: robots noindex`);
+  if (!/<title>[^<]+<\/title>/.test(h) || !/<meta name="description" content="[^"]+"/.test(h)) ng(`${k}: title/description`);
+  if (!/aria-current="page"/.test(h)) ng(`${k}: 現在ページ表示(aria-current)`);
+}
+const titles = Object.values(raws).map((h) => h.match(/<title>([^<]+)<\/title>/)?.[1]);
+if (new Set(titles).size !== titles.length) ng('title が重複');
+// 内部リンクが3ページに届くこと
+for (const p of ['menu/', 'shop/']) if (!raws.home.includes(`href="/${p}"`) && !raws.home.includes(`${p}"`)) ng(`トップから ${p} へのリンク`);
 // 外部 http(s) リンク(<a href>)がないこと
 if (/<a [^>]*href="https?:/.test(rawHtml)) ng('外部リンク(a)');
 

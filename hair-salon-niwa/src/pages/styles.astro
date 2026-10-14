@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import PageHead from '../components/PageHead.astro';
 import StyleTile from '../components/StyleTile.astro';
 import Photo from '../components/Photo.astro';
 import { hairStyles, styleFilters, stylesNote } from '../data/styles';
@@ -8,34 +7,34 @@ import { byId } from '../data/services';
 import { site, path } from '../data/site';
 ---
 
-<BaseLayout page="Styles｜スタイルギャラリー" description="HAIR SALON niwa（架空店舗デモ）のスタイルギャラリー。Short / Bob / Medium / Long / Men's のサンプルスタイルを、カテゴリで絞り込めます。">
-  <PageHead en="Styles" ja="スタイルギャラリー（サンプル）" lead="縦長の写真で、日々の暮らしになじむスタイルを。カテゴリで絞り込み、写真を選ぶと詳細と関連メニューを表示します。" />
-  <div class="page-body">
-    <div class="wrap">
+<BaseLayout page="スタイル" description="HAIR SALON niwa（架空店舗デモ）のスタイルギャラリー。Short / Bob / Medium / Long / Men's のサンプルスタイルを、カテゴリで絞り込めます。">
+  <div class="wrap stylespage">
+    <div class="stylespage__head">
+      <h1 class="ptitle">スタイル</h1>
       <div class="filter" role="group" aria-label="カテゴリで絞り込み" id="filter">
         {styleFilters.map((f, i) => <button type="button" data-filter={f} aria-pressed={i === 0 ? 'true' : 'false'}>{f}</button>)}
       </div>
-      <p class="filter-status" id="filter-status" role="status" aria-live="polite">全{hairStyles.length}スタイルを表示中</p>
-      <ul class="style-grid style-grid--page" id="grid">
-        {hairStyles.map((s) => (
-          <li data-cat={s.category}><StyleTile style={s} asButton sizes="(min-width: 768px) 33vw, 50vw" /></li>
-        ))}
-      </ul>
-      <ul class="note-list"><li>{stylesNote}</li><li>掲載写真は権利確認済みの素材のみを使用する前提です。実在顧客のビフォーアフター写真は掲載しません。</li></ul>
     </div>
+    <p class="filter-status" id="filter-status" role="status" aria-live="polite">全{hairStyles.length}スタイルを表示中</p>
+    <ul class="grid" id="grid">
+      {hairStyles.map((s) => (
+        <li data-cat={s.category}><StyleTile style={s} asButton sizes="(min-width: 1000px) 30vw, 50vw" /></li>
+      ))}
+    </ul>
+    <p class="note">{stylesNote}</p>
   </div>
 
   {hairStyles.map((s) => (
     <dialog class="modal" id={`m-${s.id}`} aria-labelledby={`t-${s.id}`}>
-      <button type="button" class="modal__close" data-close aria-label="閉じる">CLOSE</button>
+      <button type="button" class="modal__close" data-close aria-label="閉じる">閉じる</button>
       <div class="modal__inner">
-        <div class="modal__media"><Photo name={s.photo} ratio="3 / 4" sizes="(min-width: 768px) 420px, 100vw" /></div>
+        <div class="modal__media"><Photo name={s.photo} ratio="3 / 4" sizes="(min-width: 768px) 420px, 100vw" position="50% 30%" /></div>
         <div class="modal__body">
-          <p class="eyebrow">{s.category}</p>
+          <p class="modal__cat">{s.category}</p>
           <h2 id={`t-${s.id}`}>{s.name}</h2>
           <p class="modal__comment">{s.comment}</p>
           <div class="modal__rel">
-            <h3>Related Menu</h3>
+            <h3>関連メニュー</h3>
             <ul class="mlist">
               {s.related.map((id) => {
                 const m = byId(id)!;
@@ -53,7 +52,6 @@ import { site, path } from '../data/site';
             <a class="btn btn--solid" href={`${path('reserve')}?menu=${s.related[0]}`}>{site.cta}</a>
             <a class="textlink" href={path('menu')}>メニュー・料金</a>
           </div>
-          <p class="modal__note">サンプルデータです。仕上がりをお約束するものではありません。</p>
         </div>
       </div>
     </dialog>

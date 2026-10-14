@@ -6,14 +6,13 @@ const order = Array.from({ length: 7 }, (_, i) => (i + calendarConfig.weekStart)
 ---
 
 <section class="section calendar" id="calendar" aria-labelledby="calendar-title">
-  <div class="wrap">
-    <header class="section-head reveal">
-      <p class="eyebrow">Calendar</p>
+  <div class="wrap calendar__grid">
+    <div class="calendar__intro">
       <h2 id="calendar-title" class="h2">営業カレンダー</h2>
-      <p class="section-sub">毎週月曜・火曜が定休日です。臨時休業はサンプルの設定で、祝日などは反映していません。日付はお使いの端末の時刻で表示します。</p>
-    </header>
+      <p>毎週月曜・火曜が定休日です。臨時休業はサンプルの設定で、祝日などは反映していません。日付はお使いの端末の時刻で表示します。</p>
+    </div>
 
-    <div class="cal reveal" data-calendar data-config={payload}>
+    <div class="cal" data-calendar data-config={payload}>
       <div class="cal__bar">
         <button type="button" class="cal__btn" data-prev aria-label="前の月">前の月</button>
         <h3 class="cal__month" data-month aria-live="polite">&#12288;</h3>

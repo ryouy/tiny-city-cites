@@ -5,14 +5,14 @@ import MenuTabs from '../components/MenuTabs.astro';
 import Footer from '../components/Footer.astro';
 ---
 
-<BaseLayout current="menu" hideDock title="Menu｜PÂTISSERIE LUNE（架空店舗の制作デモ）" description="PÂTISSERIE LUNEの商品一覧。カットケーキ、ホールケーキ、焼き菓子。価格はすべて税込・架空の設定です。">
+<BaseLayout current="menu" title="メニュー｜PÂTISSERIE LUNE（架空店舗の制作デモ）" description="PÂTISSERIE LUNEのカットケーキ、ホールケーキ、焼き菓子の一覧。価格はすべて税込です。">
   <main id="main">
-    <PageHead en="Menu" title="商品一覧" lead="カットケーキ、ホールケーキ、焼き菓子。価格はすべて税込です。" />
+    <PageHead title="商品一覧" />
     <div class="page-body">
       <div class="wrap">
         <MenuTabs />
         <ul class="notes">
-          <li>商品・価格はすべて架空の設定です。表示価格はすべて税込です。</li>
+          <li>表示価格はすべて税込です。</li>
           <li>アレルゲン表示は架空データです（デザイン検証用の仮データで、実際の食品表示ではありません）。</li>
           <li>季節商品は架空の販売例です。在庫情報はリアルタイムで表示していません。</li>
         </ul>

@@ -1,58 +1,53 @@
 ---
 import Photo from './Photo.astro';
-import { sodas, menuTaxNote } from '../data/menu';
+import { sodas } from '../data/menu';
 ---
 
-<section class="section soda" id="menu" aria-labelledby="soda-title" style={`--soda:${sodas[0].color}`}>
+<section class="section soda" aria-labelledby="soda-title" style={`--soda:${sodas[0].color}`}>
   <div class="container">
-    <header class="soda__head reveal">
-      <p class="eyebrow">Cream Soda Collection</p>
-      <h2 id="soda-title" class="h2">
-        <span class="nw">色で選ぶ？</span> <span class="nw">気分で選ぶ？</span>
-      </h2>
-      <p>メロン、いちご、青空、ゆうやけ。お気に入りの色を見つけたら、今日はきっとソーダ日和。</p>
-    </header>
+    <h2 id="soda-title" class="h2">
+      <span class="nw">色で選ぶ？</span> <span class="nw">気分で選ぶ？</span>
+    </h2>
+    <p class="soda__lead">メロン、いちご、青空、ゆうやけ。お気に入りの色を見つけたら、今日はきっとソーダ日和。</p>
 
-    <div class="soda__form">
-      <fieldset class="picker">
-        <legend class="picker__legend">クリームソーダの色を選ぶ（5色）</legend>
-        <div class="picker__list">
-          {
-            sodas.map((s, i) => (
-              <div class="picker__opt">
-                <input type="radio" name="soda" id={s.id} value={s.id} checked={i === 0} data-color={s.color} />
-                <label for={s.id} style={`--c:${s.color}`}>
-                  <span class="picker__dot" aria-hidden="true"></span>
-                  <span class="picker__name">{s.colorName}</span>
-                </label>
-              </div>
-            ))
-          }
-        </div>
-      </fieldset>
-
-      <div class="soda__stage" aria-live="polite">
+    <fieldset class="picker">
+      <legend class="picker__legend">クリームソーダの色を選ぶ（5色）</legend>
+      <div class="picker__list">
         {
-          sodas.map((s) => (
-            <article class="soda__panel" data-for={s.id} aria-labelledby={`${s.id}-name`}>
-              <div class="soda__photo">
-                <Photo name={s.photo} ratio="4 / 5" sizes="(min-width: 900px) 440px, 90vw" />
-              </div>
-              <div class="soda__info">
-                <p class="badge">{s.badge}</p>
-                <h3 id={`${s.id}-name`} class="soda__name">{s.name}</h3>
-                <p class="soda__price"><span class="serif">{s.price}</span><small>（税込）</small></p>
-                <ul class="soda__notes">
-                  {s.notes.map((n) => <li>{n}</li>)}
-                </ul>
-                {s.id === 'soda-05' && <p class="soda__sample">※ 季節ごとの色・味は決まっていません。掲載はサンプル情報です。</p>}
-              </div>
-            </article>
+          sodas.map((s, i) => (
+            <div class="picker__opt">
+              <input type="radio" name="soda" id={s.id} value={s.id} checked={i === 0} data-color={s.color} />
+              <label for={s.id} style={`--c:${s.color}`}>
+                <span class="picker__dot" aria-hidden="true"></span>
+                <span class="picker__name">{s.colorName}</span>
+              </label>
+            </div>
           ))
         }
       </div>
+    </fieldset>
+
+    <div class="soda__stage" aria-live="polite">
+      {
+        sodas.map((s) => (
+          <article class="soda__panel" data-for={s.id} aria-labelledby={`${s.id}-name`}>
+            <div class="soda__photo">
+              <Photo name={s.photo} ratio="4 / 5" pos="50% 40%" sizes="(min-width: 900px) 380px, 90vw" />
+            </div>
+            <div class="soda__info">
+              <p class="badge">{s.badge}</p>
+              <h3 id={`${s.id}-name`} class="soda__name">{s.name}</h3>
+              <p class="soda__price"><span class="serif">{s.price}</span><small>（税込）</small></p>
+              <ul class="soda__notes">
+                {s.notes.map((n) => <li>{n}</li>)}
+              </ul>
+              {s.id === 'soda-05' && <p class="soda__sample">掲載はサンプル情報です。</p>}
+            </div>
+          </article>
+        ))
+      }
     </div>
-    <p class="soda__note">{menuTaxNote}注文ボタンはありません。</p>
+    <p class="soda__note">実際の注文はできません。</p>
   </div>
 </section>
 

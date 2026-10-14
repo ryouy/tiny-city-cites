@@ -14,11 +14,12 @@ interface Props {
   ratioWide?: string;
   sizes?: string;
   class?: string;
+  pos?: string;
 }
-const { name, priority = false, ratio, ratioWide, sizes = '(min-width: 900px) 50vw, 100vw', class: extra = '' } = Astro.props;
+const { name, priority = false, ratio, ratioWide, sizes = '(min-width: 900px) 50vw, 100vw', class: extra = '', pos = 'center' } = Astro.props;
 const def = photos[name];
 const aspect = ratio ?? `${def.width} / ${def.height}`;
-const style = `--ar:${aspect};${ratioWide ? `--ar-d:${ratioWide}` : ''}`;
+const style = `--ar:${aspect};object-position:${pos};${ratioWide ? `--ar-d:${ratioWide}` : ''}`;
 // ビルド時に public/images/menya-gou/ の実ファイルを確認(拡張子は webp/png/jpg/jpeg/avif のいずれか)。無ければプレースホルダー。
 const found = photoExts.map((e) => `${def.base}.${e}`).find((f) => existsSync(join(process.cwd(), 'public', 'images', 'menya-gou', f)));
 ---
@@ -39,11 +40,7 @@ const found = photoExts.map((e) => `${def.base}.${e}`).find((f) => existsSync(jo
     />
   ) : (
     <div class={`photo photo--ph tone-${def.tone} ${extra}`} style={style} role="img" aria-label={`画像準備中: ${def.shoot}`}>
-      <span class="ph__corner ph__corner--tl" aria-hidden="true"></span>
-      <span class="ph__corner ph__corner--br" aria-hidden="true"></span>
       <span class="ph__tag">画像準備中</span>
-      <span class="ph__file" aria-hidden="true">{def.file}</span>
-      <span class="ph__shoot">撮影イメージ: {def.shoot}</span>
     </div>
   )
 }

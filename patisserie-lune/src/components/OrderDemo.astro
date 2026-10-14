@@ -1,4 +1,5 @@
 ---
+import Photo from './Photo.astro';
 import { wholeCakes, wholeGroups, yen } from '../data/menu';
 const sizeData = wholeCakes.map((w) => ({ id: w.id, group: w.group, name: w.name, size: w.size, price: w.price, note: w.note }));
 ---
@@ -6,8 +7,8 @@ const sizeData = wholeCakes.map((w) => ({ id: w.id, group: w.group, name: w.name
 <form class="order" id="order-demo" novalidate data-sizes={JSON.stringify(sizeData)}>
   <div class="order__form">
     <fieldset>
-      <legend><em>01</em>商品</legend>
-      <div class="opts opts--2" role="radiogroup">
+      <legend>商品</legend>
+      <div class="opts opts--3" role="radiogroup">
         {wholeGroups.map((g, i) => (
           <div class="opt">
             <input type="radio" name="product" id={`p-${g.key}`} value={g.key} checked={i === 0} />
@@ -18,12 +19,12 @@ const sizeData = wholeCakes.map((w) => ({ id: w.id, group: w.group, name: w.name
     </fieldset>
 
     <fieldset>
-      <legend><em>02</em>サイズ</legend>
+      <legend>サイズ</legend>
       <div class="opts opts--2" role="radiogroup">
         {wholeCakes.map((w) => (
           <div class="opt" data-group={w.group}>
             <input type="radio" name="size" id={`s-${w.id}`} value={w.id} />
-            <label for={`s-${w.id}`}><span>{w.size}<small> {w.note}</small></span><span class="num">{yen(w.price)}</span></label>
+            <label for={`s-${w.id}`}><span>{w.size}<small>{w.note}</small></span><span class="num">{yen(w.price)}</span></label>
           </div>
         ))}
       </div>
@@ -34,15 +35,15 @@ const sizeData = wholeCakes.map((w) => ({ id: w.id, group: w.group, name: w.name
       <select id="f-date" name="date" aria-describedby="f-date-hint f-date-err" required>
         <option value="">選択してください</option>
       </select>
-      <p class="hint" id="f-date-hint">デモ用ロジックです。定休日（火曜・水曜）を除き、今日を含まず営業日を3日数えた日以降から選べます。祝日・臨時休業には対応していません。</p>
+      <p class="hint" id="f-date-hint">火曜・水曜は定休日です。受取日は3営業日後から選べます（デモ用ロジック。祝日・臨時休業には対応していません。）</p>
       <p class="err" id="f-date-err" role="alert"></p>
       <noscript><p class="noscript">受取日の選択にはJavaScriptが必要です（デモ機能）。</p></noscript>
     </div>
 
     <div class="field">
-      <label for="f-msg">メッセージプレート（任意）</label>
+      <label for="f-msg">メッセージプレート<span class="opt-tag">任意</span></label>
       <textarea id="f-msg" name="message" maxlength="40" aria-describedby="f-msg-hint"></textarea>
-      <p class="hint" id="f-msg-hint">ケーキに添えるメッセージの文面を入力する想定です（40文字まで・デモ）。</p>
+      <p class="hint" id="f-msg-hint">40文字まで</p>
     </div>
 
     <div class="field">
@@ -53,7 +54,8 @@ const sizeData = wholeCakes.map((w) => ({ id: w.id, group: w.group, name: w.name
   </div>
 
   <aside class="summary" aria-labelledby="sum-title">
-    <h2 id="sum-title"><em lang="en">Summary</em>ご相談内容（デモ）</h2>
+    <Photo name="wholeCake" ratio="16 / 9" position="50% 45%" sizes="(min-width: 900px) 380px, 100vw" />
+    <h2 id="sum-title">ご予約内容</h2>
     <dl>
       <div><dt>商品</dt><dd data-out="product">—</dd></div>
       <div><dt>サイズ</dt><dd data-out="size">—</dd></div>
@@ -61,7 +63,7 @@ const sizeData = wholeCakes.map((w) => ({ id: w.id, group: w.group, name: w.name
       <div><dt>メッセージ</dt><dd data-out="message">なし</dd></div>
     </dl>
     <p class="summary__total"><span>合計（税込）</span><span class="num" data-out="total" aria-live="polite">—</span></p>
-    <button class="btn" type="submit">予約内容を確認する（デモ）</button>
+    <button class="btn" type="submit">予約内容を確認する</button>
     <div class="result" role="status" hidden>
       <b>デモのため予約されません。</b>
       入力内容は外部に送信・保存されていません。このサイトでは実際の予約・注文は受け付けていません。

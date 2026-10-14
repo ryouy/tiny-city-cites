@@ -1,3 +1,8 @@
+/** 内部リンク用。BASE_PATH 付きビルドでも動くよう BASE_URL を基準にする */
+export const url = (path = '') => `${import.meta.env.BASE_URL.replace(/\/$/, '')}/${path}`;
+
+export type PageKey = 'home' | 'menu' | 'story' | 'information';
+
 export const site = {
   name: 'KITO COFFEE',
   reading: 'キト コーヒー',
@@ -12,10 +17,9 @@ export const site = {
   disclaimerHtml:
     'このWebサイトはWeb制作ポートフォリオ用の<span class="nw">架空店舗デモです。</span>実在する店舗・商品・<span class="nw">サービスではありません。</span>',
   nav: [
-    { href: '#about', en: 'About', ja: 'KITOについて' },
-    { href: '#coffee', en: 'Coffee', ja: 'コーヒー' },
-    { href: '#menu', en: 'Menu', ja: 'メニュー' },
-    { href: '#information', en: 'Information', ja: '店舗情報' },
+    { key: 'menu', path: 'menu/', label: 'メニュー', note: 'コーヒー・ドリンク・お菓子の全品' },
+    { key: 'story', path: 'story/', label: 'ストーリー', note: 'KITOのこと、コーヒーとお菓子、店主のこと' },
+    { key: 'information', path: 'information/', label: '店舗情報', note: '営業時間・座席・支払い・地図・Gallery' },
   ],
   info: [
     { term: '所在地', desc: '福島県会津若松市（架空設定）' },

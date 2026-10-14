@@ -2,6 +2,7 @@
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { imageDir, type PhotoDef } from '../data/photos';
+import { url } from '../data/site';
 
 interface Props {
   photo: PhotoDef;
@@ -14,8 +15,8 @@ interface Props {
   fill?: boolean;
   sizes?: string;
   class?: string;
-  /** 可視キャプションを出すか(プレースホルダー時の撮影イメージ) */
-  showCaption?: boolean;
+  /** 切り抜きの基準位置 (object-position) */
+  pos?: string;
 }
 const {
   photo,
@@ -25,12 +26,12 @@ const {
   fill = false,
   sizes = '100vw',
   class: className = '',
-  showCaption = true,
+  pos,
 } = Astro.props;
 
 // ビルド時に実ファイルの有無を判定する
 const exists = existsSync(join(process.cwd(), 'public', imageDir, photo.file));
-const style = `--r:${ratio};--r-sm:${ratioSm ?? ratio}`;
+const style = `--r:${ratio};--r-sm:${ratioSm ?? ratio}${pos ? `;--pos:${pos}` : ''}`;
 const cls = ['photo', `tone-${photo.tone}`, fill ? 'photo--fill' : '', className].filter(Boolean).join(' ');
 ---
 
@@ -38,7 +39,7 @@ const cls = ['photo', `tone-${photo.tone}`, fill ? 'photo--fill' : '', className
   exists ? (
     <div class={cls} style={style}>
       <img
-        src={`${import.meta.env.BASE_URL}${imageDir.slice(1)}${photo.file}`}
+        src={url(`${imageDir.slice(1)}${photo.file}`)}
         alt={photo.alt}
         width={photo.width}
         height={photo.height}
@@ -49,18 +50,8 @@ const cls = ['photo', `tone-${photo.tone}`, fill ? 'photo--fill' : '', className
       />
     </div>
   ) : (
-    <div
-      class={`${cls} photo--placeholder`}
-      style={style}
-      role="img"
-      aria-label={`画像準備中：${photo.shot}`}
-    >
-      <span class="photo__frame" aria-hidden="true" />
-      <span class="photo__meta" aria-hidden="true">
-        <span class="photo__label">{photo.label}</span>
-        <span class="photo__status">画像準備中</span>
-        {showCaption && <span class="photo__shot">{photo.shot}</span>}
-      </span>
+    <div class={`${cls} photo--placeholder`} style={style} role="img" aria-label={`画像準備中：${photo.alt}`}>
+      <span class="photo__status" aria-hidden="true">画像準備中</span>
     </div>
   )
 }

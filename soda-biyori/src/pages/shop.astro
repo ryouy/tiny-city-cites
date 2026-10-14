@@ -1,0 +1,63 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Photo from '../components/Photo.astro';
+import MapEmbed from '../components/MapEmbed.astro';
+import Gallery from '../components/Gallery.astro';
+import { pageMeta, infoRows, ownerStory } from '../data/site';
+import { setNote } from '../data/menu';
+---
+
+<BaseLayout title={pageMeta.shop.title} description={pageMeta.shop.description}>
+  <Header current="shop" />
+  <main id="main">
+    <section class="shop-head">
+      <div class="container shop-head__grid">
+        <div>
+          <h1 class="page-head__title">お店のこと</h1>
+          <h2 class="shop-head__h">懐かしいのに、なんだか新しい。</h2>
+          <p>
+            レトロなグラス、赤いさくらんぼ、ゆったりと流れる午後。ソーダ日和は、昔ながらの喫茶店のおいしさと、ときめきを詰め込んだ場所です。ひとりでも、友だちとでも、思い思いの時間をお楽しみください。
+          </p>
+        </div>
+        <div class="shop-head__photo"><Photo name="interior" ratio="4 / 3" priority sizes="(min-width: 900px) 600px, 92vw" /></div>
+      </div>
+    </section>
+
+    <section class="owner" aria-labelledby="owner-h">
+      <div class="container owner__grid">
+        <h2 id="owner-h" class="h2">店主のこと</h2>
+        <div class="owner__text">
+          {ownerStory.map((t) => <p>{t}</p>)}
+        </div>
+      </div>
+    </section>
+
+    <section class="info" id="info" aria-labelledby="info-h">
+      <div class="container info__grid">
+        <div class="info__side">
+          <h2 id="info-h" class="h2">また来たくなる、いつもの場所。</h2>
+          <p>気の向くままに立ち寄って、ちょっとひと休み。週末の街歩きにも、ふだんの午後にも。</p>
+          <div class="info__map"><MapEmbed /></div>
+        </div>
+        <div>
+          <dl class="info__list">
+            {
+              infoRows.map((r) => (
+                <div class="info__row">
+                  <dt>{r.k}</dt>
+                  <dd>{r.v.map((line, i) => (i === 0 ? <strong>{line}</strong> : <span>{line}</span>))}</dd>
+                </div>
+              ))
+            }
+          </dl>
+          <p class="info__set"><b>セット</b>{setNote}</p>
+        </div>
+      </div>
+    </section>
+
+    <Gallery />
+  </main>
+  <Footer />
+</BaseLayout>

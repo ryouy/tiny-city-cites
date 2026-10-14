@@ -1,205 +1,91 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Photo from '../components/Photo.astro';
-import Motif from '../components/Motif.astro';
-import MenuTabs from '../components/MenuTabs.astro';
-import SetSim from '../components/SetSim.astro';
 import MapEmbed from '../components/MapEmbed.astro';
-import { site, hero, sections, hours, info, access, news, reservation } from '../data/site';
-import { lunch, todaysPasta, pizza, pasta, antipasti } from '../data/menu';
-
-// 句読点ごとに折り返し単位(nowrap)へ分け、見出しの不自然な改行を防ぐ
-const clauses = (s: string) => s.match(/[^、。]+[、。]?/g) ?? [s];
-const featured = lunch.slice(0, 4);
-const kids = lunch[4];
-const price = (items: { name: string; price: string }[], n: string) => items.find((i) => i.name === n)!.price;
+import { hero, hoursBand, sections, info, access } from '../data/site';
+const base = import.meta.env.BASE_URL;
+const menu = `${base}menu/`;
 ---
 
-<BaseLayout>
+<BaseLayout current="top">
   <main id="main">
-    <!-- Hero -->
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero__text">
         <p class="hero__eyebrow">{hero.eyebrow}</p>
-        <h1 id="hero-title">{clauses(hero.h1).map((c) => <span class="nw">{c}</span>)}</h1>
+        <h1 id="hero-title">{hero.h1.split('、').map((t, i) => <span>{i === 0 ? `${t}、` : t}</span>)}</h1>
         <p class="hero__lead">{hero.lead}</p>
-        <div class="hero__cta">
-          {hero.ctas.map((c) => <a class={`btn ${c.primary ? '' : 'btn--line'}`} href={c.href}>{c.label}</a>)}
-        </div>
+        <p class="hero__cta">
+          <a class="btn" href={menu}>メニューを見る</a>
+          <a class="btn btn--ghost" href="#about">お店について</a>
+        </p>
       </div>
       <div class="hero__photo">
-        <Photo name="hero" ratio="4 / 3" priority sizes="(min-width: 900px) 58vw, 100vw" label="No.01" />
-        <p class="stamp" aria-hidden="true"><b>ランチ<br />あり</b><small>11:30〜</small></p>
-      </div>
-    </section>
-    <div class="hero__spacer" aria-hidden="true"></div>
-    <section class="facts" aria-label="営業時間と予算の目安">
-      <ul>
-        {hero.facts.map((f) => <li><dl><dt>{f.k}</dt><dd><span>{f.v}</span></dd></dl></li>)}
-      </ul>
-    </section>
-    <aside class="news" aria-label="お知らせ">
-      <div class="wrap">
-        {news.map((n) => (
-          <>
-            <span class="news__tag">お知らせ</span>
-            <span>{n.text}</span>
-            <span class="news__note">（架空のサンプルです）</span>
-          </>
-        ))}
-      </div>
-    </aside>
-
-    <!-- About / Intro -->
-    <section class="sec" id="about" aria-labelledby="about-title">
-      <div class="wrap about__grid">
-        <div class="reveal">
-          <p class="eyebrow">ABOUT</p>
-          <h2 id="about-title" class="about__copy">{clauses(site.brandCopy).map((c) => <span class="nw">{c}</span>)}</h2>
-        </div>
-        <div class="reveal">
-          <p class="about__body">{site.brandBody}</p>
-          <p class="about__marks"><Motif kind="tomato" /><Motif kind="leaf" /><Motif kind="sprig" /></p>
-        </div>
+        <Photo name="hero" priority ratio="16 / 9" sizes="(min-width: 900px) 58vw, 100vw" />
       </div>
     </section>
 
-    <!-- Lunch -->
-    <section class="sec lunch" id="lunch" aria-labelledby="lunch-title">
-      <div class="wrap lunch__grid">
-        <div class="lunch__photo reveal">
-          <Photo name="pastaCream" label="No.02" sizes="(min-width: 900px) 40vw, 100vw" />
-          <p class="lunch__tag"><b>{todaysPasta.tag}</b>{todaysPasta.name}</p>
-        </div>
-        <div class="reveal">
-          <p class="eyebrow">LUNCH</p>
-          <h2 id="lunch-title" class="h2">{clauses(sections.lunch.h2).map((c) => <span class="nw">{c}</span>)}</h2>
-          <p class="lede">{sections.lunch.body}</p>
-          <p class="lunch__time"><b>{hours.lunch.replace('ランチ ', '')}</b><span>ランチ営業（ランチメニューの提供 {hours.lunchServe}）</span></p>
-          <ul class="dishes">
-            {featured.map((d) => (
-              <li>
-                <span class="dishes__name">{d.name}</span>
-                <span class="dishes__price">{d.price}</span>
-                <span class="dishes__desc">{d.desc}</span>
-              </li>
-            ))}
-          </ul>
-          <p class="lunch__note">価格はすべて税込です。本日のパスタは更新していないため、デモでは例として「{todaysPasta.name}」を表示しています。</p>
-          <p class="lunch__more"><a class="btn btn--line" href="#menu">ランチメニューを見る</a></p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Dinner -->
-    <section class="sec sec--olive" id="dinner" aria-labelledby="dinner-title">
-      <div class="wrap">
-        <div class="dinner__head reveal">
-          <p class="eyebrow">DINNER</p>
-          <h2 id="dinner-title" class="h2">{clauses(sections.dinner.h2).map((c) => <span class="nw">{c}</span>)}</h2>
-          <p class="lede">{sections.dinner.body}</p>
-          <p class="dinner__times"><b>{hours.dinner.replace('ディナー ', '')}</b><span>ディナー営業</span></p>
-          <p class="dinner__reserve"><button type="button" class="btn btn--cream" data-open-resv>ご予約について（デモ）</button></p>
-        </div>
-        <div class="collage reveal">
-          <figure class="c1"><Photo name="pizza" label="No.03" sizes="(min-width: 720px) 44vw, 100vw" /><figcaption><span>マルゲリータ</span><span>{price(pizza, 'マルゲリータ')}</span></figcaption></figure>
-          <figure class="c2"><Photo name="pastaTomato" label="No.04" sizes="(min-width: 720px) 30vw, 50vw" /><figcaption><span>揚げなすとモッツァレラ</span><span>{price(pasta, '揚げなすとモッツァレラのトマトソース')}</span></figcaption></figure>
-          <figure class="c3"><Photo name="antipasti" label="No.05" sizes="(min-width: 720px) 30vw, 50vw" /><figcaption><span>前菜3種盛り合わせ</span><span>{price(antipasti, '前菜3種盛り合わせ')}</span></figcaption></figure>
-        </div>
-        <div class="dinner__body" style="margin-top:64px">
-          <div class="reveal">
-            <p class="eyebrow">PIZZA &amp; PASTA</p>
-            <h3 class="h2">ディナー単品</h3>
-            <p class="lede">2名向けの「おふたりセット」は、伝票風のパネルで組み合わせを確かめられます（注文・予約の確定はできません）。</p>
-            <h4 class="dlist__h">Pizza</h4>
-            <ul class="dlist">{pizza.map((i) => <li><span>{i.name}</span><b>{i.price}</b></li>)}</ul>
-            <h4 class="dlist__h">Pasta</h4>
-            <ul class="dlist">{pasta.map((i) => <li><span>{i.name}</span><b>{i.price}</b></li>)}</ul>
-            <p class="dlist__note">価格はすべて税込です。詳しい説明は下のメニュー表をご覧ください。</p>
-          </div>
-          <div class="reveal">
-            <SetSim />
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Menu -->
-    <section class="sec menu" id="menu" aria-labelledby="menu-title">
-      <div class="wrap menu__grid">
-        <div class="menu__photo reveal">
-          <Photo name="tiramisu" label="No.06" sizes="(min-width: 900px) 30vw, 100vw" />
-        </div>
-        <div class="reveal">
-          <p class="eyebrow">MENU</p>
-          <h2 id="menu-title" class="h2">メニュー<span class="nw">・価格表</span></h2>
-          <MenuTabs />
-        </div>
-      </div>
-    </section>
-
-    <!-- Family -->
-    <section class="sec family" aria-labelledby="family-title">
-      <div class="family__photo reveal"><Photo name="interior" ratio="3 / 2" label="No.07" sizes="(min-width: 900px) 58vw, 100vw" /></div>
-      <div class="family__text reveal">
-        <p class="eyebrow">FAMILY</p>
-        <h2 id="family-title" class="h2">{clauses(sections.family.h2).map((c) => <span class="nw">{c}</span>)}</h2>
-        <p class="lede">{sections.family.body}</p>
-        <p class="family__plate"><b>{kids.name}</b><span class="p">{kids.price}</span><small>{kids.desc}</small></p>
-        <ul class="family__list">
-          <li>子連れ歓迎。キッズプレートあり</li>
-          <li>席数 28席（2人席4卓、4人席5卓）</li>
-          <li>駐車場 6台（架空設定）</li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- Story -->
-    <section class="sec story" id="story" aria-labelledby="story-title">
-      <div class="wrap story__grid">
-        <div class="reveal">
-          <p class="eyebrow">STORY</p>
-          <h2 id="story-title" class="h2">{clauses(sections.story.h2).map((c) => <span class="nw">{c}</span>)}</h2>
-          <p class="lede">{sections.story.body}</p>
-        </div>
-        <div class="reveal">
-          <p class="story__detail">{sections.story.detail}</p>
-          <p class="story__note">{sections.story.note}</p>
-          <p style="margin-top:22px"><Motif kind="sprig" /></p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Information + Access -->
-    <section class="sec info" id="info" aria-labelledby="info-title">
-      <div class="wrap info__grid">
-        <div class="reveal">
-          <p class="eyebrow">INFO</p>
-          <h2 id="info-title" class="h2">店舗案内</h2>
-          <dl class="itable">
-            {info.map((r) => <div><dt>{r.dt}</dt><dd>{r.dd.map((d) => <span style="display:block">{d}</span>)}</dd></div>)}
+    <section class="hoursband" aria-label="営業時間と予算">
+      <div class="wrap hoursband__in">
+        {hoursBand.map((h) => (
+          <dl>
+            <dt>{h.k}</dt>
+            <dd class="hoursband__time">{h.time}</dd>
+            <dd>予算 {h.budget}</dd>
           </dl>
+        ))}
+        <p class="hoursband__more">定休日 月曜日<br /><a href="#info">店舗案内</a></p>
+      </div>
+    </section>
+
+    <section class="meals wrap" aria-label="ランチとディナー">
+      <article id="lunch" class="meal">
+        <Photo name="pastaCream" ratio="3 / 2" sizes="(min-width: 900px) 46vw, 100vw" />
+        <h2>{sections.lunch.h2}</h2>
+        <p>{sections.lunch.body}</p>
+        <p class="meal__time">{sections.lunch.serve}</p>
+        <a class="textlink" href={`${menu}#lunch`}>ランチメニューを見る</a>
+      </article>
+      <article id="dinner" class="meal">
+        <Photo name="pizza" ratio="3 / 2" sizes="(min-width: 900px) 46vw, 100vw" />
+        <h2>{sections.dinner.h2}</h2>
+        <p>{sections.dinner.body}</p>
+        <p class="meal__time">ディナー 17:30–21:00（L.O.20:30）</p>
+        <a class="textlink" href={`${menu}#pasta`}>ディナーメニューを見る</a>
+      </article>
+    </section>
+
+    <section id="about" class="about">
+      <div class="wrap about__in">
+        <div class="about__photo"><Photo name="interior" ratio="3 / 2" sizes="(min-width: 900px) 52vw, 100vw" /></div>
+        <div class="about__text">
+          <h2>{sections.story.h2}</h2>
+          <p>{sections.story.body}</p>
+          <p>{sections.story.detail}</p>
+          <p class="about__note">{sections.story.note}</p>
+          <h3>{sections.family.h2}</h3>
+          <p>{sections.family.body}</p>
         </div>
-        <div class="access reveal" id="access">
-          <p class="eyebrow">ACCESS</p>
-          <h2 class="h2">アクセス</h2>
-          <p class="access__lead">{access.lead}</p>
-          <p class="access__body">{access.body}</p>
+      </div>
+    </section>
+
+    <section id="info" class="info wrap">
+      <h2>店舗案内</h2>
+      <div class="info__grid">
+        <dl class="info__list">
+          {info.map((r) => (
+            <div>
+              <dt>{r.dt}</dt>
+              <dd>{r.dd.map((d) => <span>{d}</span>)}</dd>
+            </div>
+          ))}
+        </dl>
+        <div class="info__access">
+          <h3>アクセス</h3>
+          <p><strong>{access.lead}</strong></p>
+          <p>{access.body}</p>
           <MapEmbed />
-          <div class="reserve-note">
-            <p><strong>{reservation.title}</strong><br />{reservation.body[1]}</p>
-            <button type="button" class="btn btn--line btn--sm" data-open-resv>くわしく見る</button>
-          </div>
         </div>
       </div>
     </section>
   </main>
-
-  <dialog id="resv-dialog" aria-labelledby="resv-title">
-    <div class="dlg">
-      <h2 id="resv-title">{reservation.title}</h2>
-      {reservation.body.map((p) => <p>{p}</p>)}
-      <button type="button" class="btn" data-close>閉じる</button>
-    </div>
-  </dialog>
 </BaseLayout>

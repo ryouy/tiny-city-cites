@@ -1,55 +1,51 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import PageHead from '../components/PageHead.astro';
 import { categories, services, menuNotes, priceRange } from '../data/services';
 import { site, path } from '../data/site';
+import Photo from '../components/Photo.astro';
 ---
 
-<BaseLayout page="Menu｜メニュー・料金" description="HAIR SALON niwa（架空店舗デモ）のメニューと税込料金。Cut / Color / Perm / Care / Set をカテゴリで切り替えて、料金と所要時間の目安を確認できます。">
-  <PageHead en="Menu" ja="メニュー・料金（税込）" lead={`${priceRange}。料金はデモ用の架空設定です。メニューを選ぶと、料金と所要時間の目安を表示します。`} />
-  <div class="page-body">
-    <div class="wrap">
-      <div class="menu-layout">
-        <div class="menu-main">
-          <div class="tabs" role="tablist" aria-label="メニューカテゴリ" id="tabs">
-            {categories.map((c, i) => (
-              <button type="button" role="tab" id={`tab-${c.key}`} aria-controls={`panel-${c.key}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1} data-key={c.key}>{c.key}</button>
-            ))}
-          </div>
-          {categories.map((c, i) => (
-            <section class="tabpanel" role="tabpanel" id={`panel-${c.key}`} aria-labelledby={`tab-${c.key}`} hidden={i !== 0 ? true : undefined}>
-              <h2 class="tabpanel__title">{c.key}｜{c.ja}</h2>
-              <ul class="mlist">
-                {services.filter((s) => s.category === c.key).map((m) => (
-                  <li>
-                    <button type="button" class="mrow mrow--btn" aria-pressed="false" data-id={m.id} data-name={m.name} data-price={m.price} data-duration={m.duration} data-note={m.note}>
-                      <span class="mrow__name">{m.name}</span>
-                      <span class="mrow__meta"><span>{m.duration}</span><span>{m.note}</span></span>
-                      <span class="mrow__price">{m.price}</span>
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </section>
-          ))}
-          <ul class="note-list">
-            {menuNotes.map((n) => <li>{n}</li>)}
-          </ul>
-        </div>
-        <aside class="menu-side" aria-label="選択中のメニュー">
-          <div class="picker" id="picker" aria-live="polite">
-            <p class="picker__label">Selected</p>
-            <p class="picker__empty" id="picker-empty">メニューを選ぶと、料金と所要時間の目安をここに表示します。</p>
-            <div id="picker-body" hidden>
-              <p class="picker__name" id="p-name"></p>
-              <p class="picker__price" id="p-price"></p>
-              <div class="picker__meta"><span id="p-duration"></span><span id="p-note"></span></div>
-              <p class="picker__cta"><a class="btn btn--solid" id="p-cta" href={path('reserve')}>{site.cta}</a></p>
-            </div>
-          </div>
-        </aside>
+<BaseLayout page="メニュー・料金" description="HAIR SALON niwa（架空店舗デモ）のメニューと税込料金。カット・カラー・パーマ・ケア・セットをカテゴリで切り替えて、料金と所要時間の目安を確認できます。">
+  <div class="wrap menupage">
+    <div class="menupage__main">
+      <h1 class="ptitle">メニュー・料金</h1>
+      <p class="ptitle__note">{priceRange}</p>
+      <div class="tabs" role="tablist" aria-label="メニューカテゴリ" id="tabs">
+        {categories.map((c, i) => (
+          <button type="button" role="tab" id={`tab-${c.key}`} aria-controls={`panel-${c.key}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1} data-key={c.key}>{c.ja}</button>
+        ))}
       </div>
+      {categories.map((c, i) => (
+        <section class="tabpanel" role="tabpanel" id={`panel-${c.key}`} aria-labelledby={`tab-${c.key}`} hidden={i !== 0 ? true : undefined}>
+          <ul class="mlist">
+            {services.filter((s) => s.category === c.key).map((m) => (
+              <li>
+                <button type="button" class="mrow mrow--btn" aria-pressed="false" data-id={m.id} data-name={m.name} data-price={m.price} data-duration={m.duration} data-note={m.note}>
+                  <span class="mrow__name">{m.name}</span>
+                  <span class="mrow__meta"><span>{m.duration}</span><span>{m.note}</span></span>
+                  <span class="mrow__price">{m.price}</span>
+                </button>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
+      <ul class="note-list">
+        {menuNotes.map((n) => <li>{n}</li>)}
+      </ul>
     </div>
+    <aside class="menupage__side" aria-label="選択中のメニュー">
+      <div class="picker" id="picker" aria-live="polite">
+        <p class="picker__empty" id="picker-empty">メニューを選ぶと、料金と所要時間の目安を表示します。</p>
+        <div id="picker-body" hidden>
+          <p class="picker__name" id="p-name"></p>
+          <p class="picker__price" id="p-price"></p>
+          <div class="picker__meta"><span id="p-duration"></span><span id="p-note"></span></div>
+          <p class="picker__cta"><a class="btn btn--solid" id="p-cta" href={path('reserve')}>{site.cta}</a></p>
+        </div>
+      </div>
+      <Photo name="hands" ratio="4 / 5" sizes="(min-width: 900px) 30vw, 100vw" position="40% 40%" />
+    </aside>
   </div>
 </BaseLayout>
 

@@ -1,0 +1,63 @@
+---
+import { site } from '../config/site';
+const { operator, location } = site;
+---
+
+<section class="section" id="about" aria-labelledby="about-title">
+  <div class="container split">
+    <div class="reveal">
+      <p class="label">ABOUT THE STUDIO</p>
+      <h2 class="heading" id="about-title">お店らしさを、<br />Webで伝える。</h2>
+    </div>
+    <div class="reveal">
+      <div class="prose">
+        <p>
+          {site.name} は、地域の小さなお店に向けたWeb制作サービスです。
+        </p>
+        <p>
+          お店ごとの雰囲気や大切にしていることを丁寧に整理し、訪れる人に分かりやすく伝わるホームページを制作します。
+        </p>
+        <p>
+          必要以上に複雑なものではなく、そのお店に本当に必要なものを。<br />
+          デザインから公開後の運用まで、<span class="nowrap">一つひとつ</span>丁寧に取り組みます。
+        </p>
+      </div>
+
+      <dl class="facts">
+        <div class="facts__row">
+          <dt>Based in</dt>
+          <dd>
+            {location.current}を拠点に活動しています。
+          </dd>
+        </div>
+        <div class="facts__row">
+          <dt>Operator</dt>
+          <dd>
+            {
+              (operator.name || operator.title) && (
+                <>
+                  {operator.name}
+                  {operator.title && <small>{operator.title}</small>}
+                  <br />
+                </>
+              )
+            }
+            {operator.bio}
+          </dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+
+  <figure class="about-photo reveal">
+    <img
+      src="/images/20251122_140921.webp"
+      alt="黄色く色づいた銀杏の大木と、茅葺き屋根の建物"
+      width="1972"
+      height="1695"
+      loading="lazy"
+      decoding="async"
+    />
+    <figcaption class="label">NOV 2025</figcaption>
+  </figure>
+</section>

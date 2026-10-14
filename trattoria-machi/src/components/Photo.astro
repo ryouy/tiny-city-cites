@@ -8,15 +8,15 @@ interface Props {
   name: PhotoKey;
   /** ヒーローのみ true(eager + fetchpriority=high) */
   priority?: boolean;
-  /** 枠のアスペクト比(CSS値)。CSS 変数 --r として渡し、文脈ごとに上書き可 */
+  /** 枠のアスペクト比(CSS値)。文脈ごとに CSS 側で上書きしてもよい */
   ratio?: string;
   sizes?: string;
-  /** プレースホルダーに表示する番号(例: No.01) */
-  label?: string;
+  /** object-position(被写体の位置に合わせて指定) */
+  pos?: string;
 }
-const { name, priority = false, ratio = '4 / 5', sizes = '(min-width: 900px) 50vw, 100vw', label } = Astro.props;
+const { name, priority = false, ratio = '4 / 5', sizes = '(min-width: 900px) 50vw, 100vw', pos = '50% 50%' } = Astro.props;
 const def = photos[name];
-// ビルド時に public/images/trattoria-machi/ の実ファイル(webp/png/jpg/jpeg/avif)を確認。無ければプレースホルダー。
+// ビルド時に public/images/trattoria-machi/ の実ファイル(webp/png/jpg/jpeg/avif)を確認。無ければ控えめなプレースホルダー。
 const found = photoExts
   .map((e) => `${def.base}.${e}`)
   .find((f) => existsSync(join(process.cwd(), 'public', 'images', 'trattoria-machi', f)));
@@ -31,21 +31,14 @@ const found = photoExts
       width={def.width}
       height={def.height}
       sizes={sizes}
-      style={`--r:${ratio}`}
+      style={`--r:${ratio};--pos:${pos}`}
       loading={priority ? 'eager' : 'lazy'}
       fetchpriority={priority ? 'high' : undefined}
       decoding="async"
     />
   ) : (
-    <div class={`photo photo--ph tone-${def.tone}`} style={`--r:${ratio}`} role="img" aria-label={`画像準備中。撮影イメージ: ${def.shoot}`}>
-      <svg class="photo__plate" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false">
-        <circle cx="50" cy="50" r="42" />
-        <circle cx="50" cy="50" r="31" stroke-dasharray="1.5 2.5" />
-        <path d="M30 70 Q50 20 72 34" />
-      </svg>
+    <div class={`photo photo--ph tone-${def.tone}`} style={`--r:${ratio}`} role="img" aria-label={`${def.alt}（画像準備中。${def.shoot}）`}>
       <span class="photo__tag">画像準備中</span>
-      {label && <span class="photo__no" aria-hidden="true">{label}</span>}
-      <span class="photo__shoot"><b>撮影イメージ</b>{def.shoot}</span>
     </div>
   )
 }

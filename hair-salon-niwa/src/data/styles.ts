@@ -25,4 +25,4 @@ export const hairStyles: HairStyle[] = [
 
 export const featuredStyleIds = ['style01', 'style02', 'style03', 'style04'];
 
-export const stylesNote = 'スタイルはサンプルデータです。仕上がりや効果をお約束するものではありません。髪質・状態により再現性は異なります。';
+export const stylesNote = 'スタイルはサンプルです。仕上がりをお約束するものではありません。髪質・状態により異なります。';

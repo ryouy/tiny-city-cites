@@ -1,20 +1,23 @@
 ---
-import { site } from '../data/site';
+import { site, url, type PageKey } from '../data/site';
+
+interface Props {
+  current: PageKey;
+}
+const { current } = Astro.props;
 ---
 
-<header class="site-header" data-site-header>
+<header class="site-header">
   <div class="container site-header__inner">
-    <a class="logo" href="#top" aria-label={`${site.name} ページ上部へ`}>{site.name}</a>
-    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
-      <span class="nav-toggle__label">Menu</span>
-      <span class="nav-toggle__bars" aria-hidden="true"></span>
-    </button>
-    <nav class="site-nav" id="site-nav" aria-label="メインナビゲーション">
+    <a class="logo" href={url()} aria-current={current === 'home' ? 'page' : undefined}>{site.name}</a>
+    <nav class="site-nav" aria-label="メインナビゲーション">
       <ul>
         {
           site.nav.map((l) => (
             <li>
-              <a href={l.href}>{l.en}</a>
+              <a href={url(l.path)} aria-current={current === l.key ? 'page' : undefined}>
+                {l.label}
+              </a>
             </li>
           ))
         }

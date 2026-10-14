@@ -1,0 +1,130 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Photo from '../components/Photo.astro';
+import { pageMeta } from '../data/site';
+import { sodas, sweets, foods, drinks, setNote, menuDisclaimer, menuTaxNote } from '../data/menu';
+---
+
+<BaseLayout title={pageMeta.menu.title} description={pageMeta.menu.description}>
+  <Header current="menu" />
+  <main id="main">
+    <section class="page-head">
+      <div class="container">
+        <h1 class="page-head__title">メニュー</h1>
+        <p class="page-head__note">{menuTaxNote}{menuDisclaimer}</p>
+        <ul class="jump" aria-label="メニューの項目">
+          <li><a href="#soda">クリームソーダ</a></li>
+          <li><a href="#sweets">スイーツ</a></li>
+          <li><a href="#food">フード</a></li>
+          <li><a href="#drink">ドリンク</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="menu-sec" id="soda" aria-labelledby="soda-h">
+      <div class="container menu-sec__grid">
+        <h2 id="soda-h" class="h2">クリームソーダ</h2>
+        <ul class="menu-list menu-list--thumb">
+          {
+            sodas.map((s) => (
+              <li class="menu-row" style={`--c:${s.color}`}>
+                <span class="menu-row__thumb"><Photo name={s.photo} ratio="1 / 1" pos="50% 38%" sizes="72px" /></span>
+                <span class="menu-row__body">
+                  <span class="menu-row__head">
+                    <span class="menu-row__name">{s.name}</span>
+                    <span class="menu-row__leader" aria-hidden="true"></span>
+                    <span class="menu-row__price serif">{s.price}</span>
+                  </span>
+                  <span class="menu-row__desc"><span class="badge">{s.badge}</span>{s.notes.join('／')}</span>
+                </span>
+              </li>
+            ))
+          }
+        </ul>
+        <p class="menu-sec__foot">季節のクリームソーダはサンプル情報です。</p>
+      </div>
+    </section>
+
+    <section class="menu-sec menu-sec--paper" id="sweets" aria-labelledby="sweets-h">
+      <div class="container menu-sec__grid menu-sec__grid--photo">
+        <div class="menu-sec__photo"><Photo name="pudding" ratio="5 / 4" sizes="(min-width: 900px) 520px, 92vw" /></div>
+        <div>
+          <h2 id="sweets-h" class="h2">スイーツ</h2>
+          <p class="menu-sec__lead"><b>プリンは、ちょっぴり固めがいい。</b>スプーンを入れると、むっちりとした食感。ほろ苦いカラメルと、優しい卵の風味。懐かしい味を、ゆっくりどうぞ。</p>
+          <ul class="menu-list">
+            {
+              sweets.map((s) => (
+                <li class="menu-row">
+                  <span class="menu-row__body">
+                    <span class="menu-row__head">
+                      <span class="menu-row__name">{s.name}</span>
+                      <span class="menu-row__leader" aria-hidden="true"></span>
+                      <span class="menu-row__price serif">{s.price}</span>
+                    </span>
+                    <span class="menu-row__desc">{s.desc}</span>
+                  </span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="menu-sec menu-sec--dark" id="food" aria-labelledby="food-h">
+      <div class="container menu-sec__grid menu-sec__grid--photo menu-sec__grid--rev">
+        <div>
+          <h2 id="food-h" class="h2">フード</h2>
+          <p class="menu-sec__lead"><b>おなかがすいたら、喫茶ごはん。</b>鉄板ナポリタンにオムライス、厚焼きたまごサンド。見た目も味も、あの頃のわくわくを。</p>
+          <ul class="menu-list">
+            {
+              foods.map((s) => (
+                <li class="menu-row">
+                  <span class="menu-row__body">
+                    <span class="menu-row__head">
+                      <span class="menu-row__name">{s.name}</span>
+                      <span class="menu-row__leader" aria-hidden="true"></span>
+                      <span class="menu-row__price serif">{s.price}</span>
+                    </span>
+                    <span class="menu-row__desc">{s.desc}</span>
+                  </span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+        <div class="menu-sec__photos">
+          <Photo name="napolitan" ratio="5 / 4" sizes="(min-width: 900px) 520px, 92vw" />
+          <div class="menu-sec__photo2"><Photo name="omelette" ratio="1 / 1" sizes="(min-width: 900px) 240px, 50vw" /></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="menu-sec" id="drink" aria-labelledby="drink-h">
+      <div class="container menu-sec__grid">
+        <h2 id="drink-h" class="h2">コーヒー・紅茶</h2>
+        <div>
+          <ul class="menu-list menu-list--cols">
+            {
+              drinks.map((d) => (
+                <li class="menu-row">
+                  <span class="menu-row__body">
+                    <span class="menu-row__head">
+                      <span class="menu-row__name">{d.name}</span>
+                      <span class="menu-row__leader" aria-hidden="true"></span>
+                      <span class="menu-row__price serif">{d.price}</span>
+                    </span>
+                  </span>
+                </li>
+              ))
+            }
+          </ul>
+          <p class="menu-sec__set"><b>セット</b>{setNote}</p>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>

@@ -3,22 +3,20 @@ import { signatures, findItem, yen } from '../data/menu';
 import Photo from './Photo.astro';
 ---
 
-<section class="section signature" id="signature" aria-labelledby="signature-title">
+<section class="signature" id="signature" aria-labelledby="signature-title">
   <div class="container">
-    <p class="eyebrow">名物料理</p>
-    <h2 id="signature-title" class="h2">まずは、この2品から。</h2>
+    <h2 id="signature-title" class="h2">名物料理</h2>
     <ul class="sig-list">
       {
-        signatures.map((s, i) => {
+        signatures.map((s) => {
           const item = findItem(s.menuName);
           return (
             <li class="sig reveal">
               <Photo name={s.photo} ratio="4 / 3" sizes="(min-width: 900px) 540px, 100vw" />
               <div class="sig__body">
-                <p class="sig__no" aria-hidden="true">{`0${i + 1}`}</p>
                 <h3 class="sig__name">{item.name}</h3>
                 <p class="sig__price">{yen(item.price)}<small>税込</small></p>
-                <p class="body">{s.copy}</p>
+                <p>{s.copy}</p>
               </div>
             </li>
           );

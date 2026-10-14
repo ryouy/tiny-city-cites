@@ -1,35 +1,29 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import PageHead from '../components/PageHead.astro';
 import Photo from '../components/Photo.astro';
 import { staff, staffNote } from '../data/staff';
 import { path, site } from '../data/site';
 ---
 
-<BaseLayout page="Staff｜スタッフ紹介" description="HAIR SALON niwa（架空店舗デモ）のスタイリスト紹介。プロフィールや得意なスタイル、メッセージを掲載（すべて架空の人物）。">
-  <PageHead en="Staff" ja="スタイリスト紹介（架空の人物）" lead={staffNote} />
-  <div class="page-body">
-    <div class="wrap">
+<BaseLayout page="スタッフ" description="HAIR SALON niwa（架空店舗デモ）のスタイリスト紹介。プロフィールや得意なスタイル、メッセージを掲載（すべて架空の人物）。">
+  <div class="wrap staffpage">
+    <div class="staffpage__media"><Photo name="hands" ratio="4 / 5" sizes="(min-width: 900px) 44vw, 100vw" position="40% 40%" /></div>
+    <div class="staffpage__text">
+      <h1 class="ptitle">スタッフ</h1>
+      <p class="ptitle__note">{staffNote}</p>
       {staff.map((p) => (
-        <section class="profile" aria-label={`${p.name}のプロフィール`}>
-          <div class="stylist__media">
-            <Photo name={p.photo} ratio="4 / 5" sizes="(min-width: 960px) 40vw, 100vw" label={p.role} />
-          </div>
-          <div class="profile__text">
-            <p class="stylist__badge">架空の人物（デモ）</p>
-            <h2>{p.name}</h2>
-            <p class="stylist__en">{p.en}</p>
-            <p class="stylist__role">{p.role}</p>
-            <dl class="stylist__dl">
-              <div><dt>経験</dt><dd>{p.career}</dd></div>
-              <div><dt>得意</dt><dd><ul>{p.strengths.map((s) => <li>{s}</li>)}</ul></dd></div>
-            </dl>
-            <blockquote class="profile__q">{p.message}</blockquote>
-            <p class="profile__cta"><a class="textlink" href={`${path('reserve')}?staff=${p.id}`}>{p.name}で{site.cta}</a></p>
-          </div>
+        <section class="profile" aria-labelledby={`p-${p.id}`}>
+          <h2 id={`p-${p.id}`}>{p.name}</h2>
+          <p class="profile__en">{p.en}</p>
+          <p class="profile__role">{p.role}</p>
+          <dl class="info info--small">
+            <div><dt>経験</dt><dd><p>{p.career}</p></dd></div>
+            <div><dt>得意</dt><dd>{p.strengths.map((s) => <p>{s}</p>)}</dd></div>
+          </dl>
+          <blockquote>{p.message}</blockquote>
+          <p><a class="textlink" href={`${path('reserve')}?staff=${p.id}`}>{p.name}で{site.cta}</a></p>
         </section>
       ))}
-      <div class="band-photo"><Photo name="hands" ratio="21 / 8" sizes="100vw" label="Hands" /></div>
     </div>
   </div>
 </BaseLayout>

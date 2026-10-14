@@ -3,34 +3,14 @@ import { stories } from '../data/site';
 import Photo from './Photo.astro';
 ---
 
-<section class="section about" id="about" aria-labelledby="about-title">
-  <div class="container about__grid reveal">
-    <div>
-      <p class="eyebrow">こめやについて</p>
+<section class="about" id="about" aria-labelledby="about-title">
+  <div class="container about__grid">
+    <Photo name="rice" ratio="4 / 3" sizes="(min-width: 900px) 400px, 100vw" />
+    <div class="about__text">
       <h2 id="about-title" class="h2">{stories.about.heading}</h2>
-      <p class="body">{stories.about.body}</p>
-    </div>
-    <Photo name="interior" ratio="4 / 3" sizes="(min-width: 900px) 480px, 100vw" />
-  </div>
-
-  <div class="rice">
-    <div class="container rice__grid reveal">
-      <Photo name="rice" ratio="4 / 3" sizes="(min-width: 900px) 480px, 100vw" />
-      <div>
-        <h3 class="h2 h2--on-dark">{stories.rice.heading}</h3>
-        <p class="body body--on-dark">{stories.rice.body}</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="container family reveal">
-    <div class="family__year" aria-hidden="true">
-      <span>1998</span>
-      <small>4月 開業</small>
-    </div>
-    <div>
-      <h3 class="h3">{stories.family.heading}</h3>
-      <p class="body">{stories.family.body}</p>
+      <p>{stories.about.body}</p>
+      <p><b>{stories.rice.heading}</b>{stories.rice.body}</p>
+      <p><b>{stories.family.heading}</b>{stories.family.body}</p>
     </div>
   </div>
 </section>

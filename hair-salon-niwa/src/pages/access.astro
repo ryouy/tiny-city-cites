@@ -1,20 +1,29 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import PageHead from '../components/PageHead.astro';
 import AccessInfo from '../components/AccessInfo.astro';
+import MapEmbed from '../components/MapEmbed.astro';
 import { path, site } from '../data/site';
+import { faq } from '../data/faq';
 ---
 
-<BaseLayout page="Access｜アクセス・店舗情報" description="HAIR SALON niwa（架空店舗デモ）の営業時間・定休日・駐車場・所在エリア。架空設定のため住所・電話番号は掲載していません。">
-  <PageHead en="Access" ja="アクセス・店舗情報（架空設定）" lead="住所・電話番号は設定していません（架空店舗のため）。完全予約制です。" />
-  <div class="page-body">
-    <div class="wrap">
+<BaseLayout page="アクセス・店舗情報" description="HAIR SALON niwa（架空店舗デモ）の営業時間・定休日・駐車場・所在エリアと、よくある質問。架空設定のため住所・電話番号は掲載していません。">
+  <div class="wrap accesspage">
+    <div>
+      <h1 class="ptitle">アクセス・店舗情報</h1>
       <AccessInfo />
-      <ul class="note-list">
-        <li>最終受付の時刻は目安です。施術内容により変動します。</li>
-        <li>すべて架空の設定です。実際の営業案内として使用しないでください。</li>
-      </ul>
-      <p style="margin-top:40px"><a class="btn btn--solid" href={path('reserve')}>{site.cta}</a></p>
+      <p class="more"><a class="btn btn--solid" href={path('reserve')}>{site.cta}</a></p>
     </div>
+    <div class="accesspage__map"><MapEmbed /></div>
   </div>
+  <section class="wrap faqsec" id="faq" aria-labelledby="faq-h">
+    <h2 id="faq-h">よくある質問</h2>
+    <div class="faq">
+      {faq.map((f) => (
+        <details>
+          <summary><span class="faq__q"><i aria-hidden="true">Q</i><span>{f.q}</span></span></summary>
+          <p class="faq__a">{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
 </BaseLayout>

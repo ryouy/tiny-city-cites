@@ -33,5 +33,18 @@ for (const row of section.split('\n')) {
 for (const must of ['定食にはごはん・味噌汁・小鉢・漬物が付きます。', '+¥100', '税込', 'L.O. 14:00', 'L.O. 19:30', '11:00–14:30', '17:00–20:00', '毎週日曜', 'このWebサイトはWeb制作ポートフォリオ用の架空店舗デモです。実在する店舗・商品・サービスではありません。']) {
   if (!text.includes(must)) { fail++; console.error(`NG missing: ${must}`); }
 }
+// 追加検査: noindex / 禁止要素 / 看板コピー / 物語の原文
+const must2 = ['<meta name="robots" content="noindex,nofollow">'];
+for (const m of must2) if (!html.includes(m)) { fail++; console.error(`NG missing html: ${m}`); }
+for (const m of spec.matchAll(/^- \*\*(.+?)\*\*: `(.+?)`$/gm)) {
+  if (!text.includes(m[2])) { fail++; console.error(`NG signature copy: ${m[1]}`); }
+}
+for (const m of spec.matchAll(/^(?:見出し|本文): `(.+?)`$/gm)) {
+  if (!text.includes(m[1])) { fail++; console.error(`NG story text: ${m[1].slice(0, 20)}...`); }
+}
+if ((html.match(/<h1[\s>]/g) ?? []).length !== 1) { fail++; console.error('NG: h1 must be exactly one'); }
+for (const bad of [/href="tel:/i, /href="mailto:/i, /<form[\s>]/i, /Since\s?\d/i, /Our Story/i, /itemtype=|application\/ld\+json/i, /rel="canonical"/i, /(instagram|twitter|facebook)\.com/i]) {
+  if (bad.test(html)) { fail++; console.error(`NG forbidden pattern: ${bad}`); }
+}
 console.log(`\n${count} items checked, ${fail} failures`);
 process.exit(fail ? 1 : 0);

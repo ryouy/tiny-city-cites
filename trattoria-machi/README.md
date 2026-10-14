@@ -10,17 +10,21 @@
 npm install
 npm run dev        # 開発サーバー
 npm run build      # dist/ に静的出力
-npm run preview -- --port 4410
+npm run preview -- --port 4420
 npm run check      # astro check(型チェック)
 npm run lint       # eslint
-npm run verify     # 仕様書とビルド結果(dist/index.html)の突き合わせ。先に build すること
+npm run verify     # 仕様書とビルド結果(dist/index.html と dist/menu/index.html)の突き合わせ。先に build すること
 ```
 Node 22 系。
 
+## ページ構成
+- `/` トップ: ヒーロー、営業時間と予算、ランチ・ディナーの紹介、お店のこと、店舗案内と地図
+- `/menu/` お品書き: ランチ・パスタ・ピッツァ・前菜・ドルチェとドリンクの価格表(写真つき)、おふたりセットの組み合わせデモ。カテゴリはページ内リンク
+
 ## データ編集
-- `src/data/site.ts` 店舗情報・見出し・本文・お知らせ(架空サンプル)・予約デモ文言
+- `src/data/site.ts` 店舗情報・見出し・本文・営業情報
 - `src/data/menu.ts` メニュー・価格(税込)・2名セット
-- `src/data/photos.ts` 画像定義(ファイル名・alt・撮影イメージ)
+- `src/data/photos.ts` 画像定義(ファイル名・alt・撮影イメージ。撮影イメージはプレースホルダーの alt に使用)
 ページは配列から描画されます。
 
 ## 画像の差し替え
@@ -28,13 +32,13 @@ Node 22 系。
 
 | ファイル名(拡張子は任意) | 比率 | 用途 |
 |---|---|---|
-| hero-table | 16:9 | ヒーロー(デスクトップは縦長、モバイルは正方形に切り出し) |
-| pasta-cream | 4:5 | ランチ(本日のパスタの一例) |
-| pizza-margherita | 4:5 | ディナー |
-| pasta-tomato | 4:5 | ディナー |
-| antipasti | 4:5 | ディナー |
-| tiramisu | 4:5 | メニュー(モバイルは 3:2 に切り出し) |
-| interior | 3:2 | ファミリー(店内) |
+| hero-table | 16:9 | トップのヒーロー(横長に切り出し。被写体位置は Photo の pos で調整) |
+| pasta-cream | 4:5 | トップ(ランチ)・お品書き(ランチ) |
+| pizza-margherita | 4:5 | トップ(ディナー)・お品書き(ピッツァ) |
+| pasta-tomato | 4:5 | お品書き(パスタ) |
+| antipasti | 4:5 | お品書き(前菜) |
+| tiramisu | 4:5 | お品書き(ドルチェとドリンク) |
+| interior | 3:2 | トップ(お店のこと) |
 
 `public/og.png`(1200x630)は Chrome ヘッドレスで作成した自作画像です。
 

@@ -1,4 +1,4 @@
-// 店舗マスターデータ(すべて架空)。仕様書 §1・§2 に基づく。住所・電話・SNS・地図は設定しない。
+// 店舗マスターデータ(すべて架空)。仕様書 §1・§2 に基づく。住所・電話・SNSは設定しない。
 export const site = {
   name: '麦と日々',
   kana: 'むぎとひび',
@@ -7,26 +7,52 @@ export const site = {
   copy: 'パンのある日々を、もっと豊かに。',
   title: '麦と日々｜天然酵母と、季節のパン。（架空店舗のデモサイト）',
   description:
-    '国産小麦と自家製天然酵母。会津の小さな工房から、毎日の食卓へ。架空のベーカリー「麦と日々」の制作実績用デモサイトです。',
+    '国産小麦と自家製天然酵母。会津の小さな工房から、毎日の食卓へ。営業時間8:00–16:00、月・火曜定休。架空のベーカリー「麦と日々」の制作実績用デモサイトです。',
   disclaimer:
     'このWebサイトは架空店舗「麦と日々」の制作実績用デモです。実際の店舗・販売・予約は行っていません。',
   bandText: '架空店舗のデモサイト｜実際の店舗・販売・予約は行っていません',
 } as const;
 
-export const nav = [
-  { label: 'こだわり', href: '#commitment' },
-  { label: 'パン', href: '#menu' },
-  { label: '焼き上がり', href: '#today' },
-  { label: '営業日', href: '#calendar' },
-  { label: '店舗案内', href: '#shop' },
-] as const;
+/** 内部リンク用。BASE_URL(末尾スラッシュの有無どちらでも)を基準にする */
+export const href = (path = '') => {
+  const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+  return `${base}/${path}`;
+};
+
+export type PageKey = 'home' | 'breads' | 'shop';
+
+export const pages = {
+  home: {
+    title: site.title,
+    description: site.description,
+  },
+  breads: {
+    title: 'パン｜麦と日々（架空店舗のデモサイト）',
+    description:
+      '麦と日々のパン8種類。食事パン・菓子パン・惣菜パン・季節限定・焼き菓子。価格は税込。架空店舗のデモサイトです。',
+  },
+  shop: {
+    title: 'お店のこと｜麦と日々（架空店舗のデモサイト）',
+    description:
+      '麦と日々のこだわり、営業カレンダー、店舗案内。営業時間8:00–16:00、定休日は月曜日・火曜日。架空店舗のデモサイトです。',
+  },
+} as const;
+
+/** ヘッダー・フッター共通のナビ。current はそのページを開いているとき aria-current="page" にする */
+export const nav: { label: string; path: string; current?: PageKey }[] = [
+  { label: 'パン', path: 'breads/', current: 'breads' },
+  { label: '焼き上がり', path: '#today' },
+  { label: '営業日', path: 'shop/#calendar' },
+  { label: 'お店のこと', path: 'shop/', current: 'shop' },
+];
 
 export const hero = {
   label: 'BAKED WITH CARE, EVERY DAY.',
   lead: '国産小麦と自家製天然酵母。会津の小さな工房から、毎日の食卓へ。',
-  note: '8:00–16:00（売り切れ次第終了）／月・火曜定休／持ち帰り専門',
-  ctaPrimary: { label: '今日のパンを見る', href: '#today' },
-  ctaSecondary: { label: 'お店について', href: '#about' },
+  hours: '8:00–16:00',
+  hoursNote: '（売り切れ次第終了）',
+  closed: '月曜日・火曜日',
+  takeout: '持ち帰り専門',
 } as const;
 
 export const about = {
@@ -40,9 +66,9 @@ export const about = {
 } as const;
 
 export const commitments = [
-  { title: '国産小麦', en: 'Domestic wheat', body: '小麦そのものの風味を感じられるよう、パンに合わせて粉を選んでいます。' },
-  { title: '自家製天然酵母', en: 'Natural leaven', body: '発酵に時間をかけ、奥行きのある香りと味わいを育てます。' },
-  { title: '毎朝焼きたて', en: 'Baked every morning', body: 'その日の分を少しずつ。焼き上がりに合わせて店頭に並べます。' },
+  { title: '国産小麦', body: '小麦そのものの風味を感じられるよう、パンに合わせて粉を選んでいます。' },
+  { title: '自家製天然酵母', body: '発酵に時間をかけ、奥行きのある香りと味わいを育てます。' },
+  { title: '毎朝焼きたて', body: 'その日の分を少しずつ。焼き上がりに合わせて店頭に並べます。' },
 ] as const;
 
 export const news = [
@@ -50,21 +76,20 @@ export const news = [
   { text: '今週の焼き上がり時間を更新しました。' },
 ] as const;
 
-/** 店舗案内(表示順どおり)。住所・電話・地図・SNSは載せない。 */
+/** 店舗案内(表示順どおり)。住所・電話・SNSは載せない。 */
 export const shopInfo = [
-  { term: 'エリア', desc: '福島県会津若松市郊外・住宅地（架空）' },
-  { term: 'オープン', desc: '2022年10月（架空）' },
+  { term: 'エリア', desc: '福島県会津若松市郊外・住宅地' },
+  { term: 'オープン', desc: '2022年10月' },
   { term: '営業時間', desc: '8:00–16:00（売り切れ次第終了）' },
   { term: '定休日', desc: '月曜日・火曜日' },
   { term: 'ご利用', desc: '持ち帰り専門（イートインはありません）' },
-  { term: '駐車場', desc: '3台（架空）' },
-  { term: 'お支払い', desc: '現金、クレジットカード、主要QRコード決済（架空）' },
+  { term: '駐車場', desc: '3台' },
+  { term: 'お支払い', desc: '現金、クレジットカード、主要QRコード決済' },
   { term: '予算目安', desc: '600–1,500円' },
   {
     term: 'お取り置き',
-    desc: 'パンのお取り置きは前日15:00まで、店頭で相談（架空の運用ルール）。デモのため、連絡の窓口は設けていません。',
+    desc: 'パンのお取り置きは前日15:00まで、店頭で相談。デモのため、連絡の窓口は設けていません。',
   },
 ] as const;
 
-export const shopNote =
-  '詳細な住所・電話番号・SNSは、架空店舗のため掲載していません。';
+export const shopNote = '詳細な住所・電話番号・SNSは、架空店舗のため掲載していません。';

@@ -6,14 +6,12 @@ interface Props {
   title?: string;
   description?: string;
   /** 現在のページ(ナビの現在地表示) */
-  current?: 'home' | 'about' | 'menu' | 'order' | 'access';
-  /** モバイル固定の「商品を見る」を隠す(メニューページ) */
-  hideDock?: boolean;
+  current?: 'home' | 'about' | 'menu' | 'order';
 }
-const { title = site.title, description = site.description, current = 'home', hideDock = false } = Astro.props;
+const { title = site.title, description = site.description, current = 'home' } = Astro.props;
 const base = import.meta.env.BASE_URL;
 const href = (p: string) => `${base}${p}`;
-const currentKey: Record<string, string> = { about: 'about/', menu: 'menu/', order: 'order/', access: 'access/' };
+const currentKey: Record<string, string> = { about: 'about/', menu: 'menu/', order: 'order/' };
 ---
 
 <!doctype html>
@@ -41,7 +39,7 @@ const currentKey: Record<string, string> = { about: 'about/', menu: 'menu/', ord
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap"
     />
     <script is:inline>
       document.documentElement.classList.add('js');
@@ -53,35 +51,25 @@ const currentKey: Record<string, string> = { about: 'about/', menu: 'menu/', ord
     <div class="top">
       <p class="demo-band"><span>{site.demoBadge}</span></p>
       <header class="site-header">
-        <a class="logo" href={href('')} aria-label="PÂTISSERIE LUNE トップページへ">
-          <span class="logo__pre">PÂTISSERIE</span>
-          <span class="logo__main">LUNE</span>
-        </a>
+        <a class="logo" href={href('')} aria-label="PÂTISSERIE LUNE トップページへ">PÂTISSERIE <b>LUNE</b></a>
         <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
-          <span class="nav-toggle__label">Menu</span>
+          <span class="nav-toggle__label">メニュー</span>
           <span class="nav-toggle__bars" aria-hidden="true"><i></i><i></i></span>
         </button>
         <nav id="site-nav" class="site-nav" aria-label="メインナビゲーション">
           <ul>
-            <li class="site-nav__home"><a href={href('')} aria-current={current === 'home' ? 'page' : undefined}>LUNE<small>トップへ</small></a></li>
+            <li class="site-nav__home"><a href={href('')} aria-current={current === 'home' ? 'page' : undefined}>トップ</a></li>
             {nav.map((n) => (
               <li>
                 <a href={href(n.href)} aria-current={currentKey[current] === n.href ? 'page' : undefined}>{n.label}</a>
               </li>
             ))}
           </ul>
-          <a class="btn btn--sm site-nav__cta" href={href('order/')}>ホールケーキを見る</a>
         </nav>
       </header>
     </div>
 
     <slot />
-
-    {!hideDock && (
-      <div class="dock">
-        <a href={href('menu/')}>商品を見る</a>
-      </div>
-    )}
 
     <script>
       const toggle = document.querySelector<HTMLButtonElement>('.nav-toggle');
@@ -108,7 +96,7 @@ const currentKey: Record<string, string> = { about: 'about/', menu: 'menu/', ord
       });
       desktop.addEventListener('change', () => setOpen(false));
 
-      // スクロール表示(見た目の補助。reduced-motion では即表示)
+      // 写真のふわっと表示(reduced-motion では即表示)
       const items = document.querySelectorAll<HTMLElement>('.reveal');
       if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         items.forEach((el) => el.classList.add('is-in'));

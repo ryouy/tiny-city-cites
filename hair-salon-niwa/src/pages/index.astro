@@ -2,140 +2,99 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Photo from '../components/Photo.astro';
 import StyleTile from '../components/StyleTile.astro';
-import AccessInfo from '../components/AccessInfo.astro';
-import StaffBlock from '../components/StaffBlock.astro';
-import { site, about, concepts, firstVisit, facts, path } from '../data/site';
+import { site, about, concepts, firstVisit, infoRows, path } from '../data/site';
 import { previewIds, priceRange, byId } from '../data/services';
 import { hairStyles, featuredStyleIds } from '../data/styles';
 import { staff } from '../data/staff';
-
 const preview = previewIds.map((id) => byId(id)!);
 const featured = featuredStyleIds.map((id) => hairStyles.find((s) => s.id === id)!);
+const hours = infoRows.filter((r) => ['営業時間', '定休日'].includes(r.k));
 ---
 
 <BaseLayout>
   <section class="hero" aria-labelledby="hero-h">
-    <div class="wrap">
-      <div class="hero__grid">
-        <p class="hero__side" aria-hidden="true">Since 2024.6</p>
-        <div class="hero__media">
-          <Photo name="hero" priority ratio="3 / 2" sizes="(min-width: 1240px) 900px, 100vw" label="Hero" captionRight />
-        </div>
-        <div class="hero__text">
-          <p class="hero__en" lang="en">{site.heroEn}</p>
-          <h1 id="hero-h"><span class="nw">髪から、</span><span class="nw">日々を心地よく。</span></h1>
-          <p class="hero__sub">{site.heroSub}</p>
-          <div class="hero__cta">
-            <a class="btn btn--solid" href="#menu">メニュー・料金を見る</a>
-            <a class="textlink" href="#styles">スタイルを見る</a>
-          </div>
-        </div>
+    <div class="hero__media">
+      <Photo name="hero" priority ratio="3 / 2" sizes="100vw" position="50% 60%" />
+    </div>
+    <div class="wrap hero__text">
+      <div>
+        <p class="hero__en" lang="en">{site.heroEn}</p>
+        <h1 id="hero-h"><span class="nw">髪から、</span><span class="nw">日々を心地よく。</span></h1>
       </div>
-      <ul class="facts reveal">
-        {facts.map((f) => <li><span class="facts__n">{f.n}</span><span class="facts__l">{f.l}</span></li>)}
+      <div>
+        <p class="hero__sub">{site.heroSub}</p>
+        <p class="hero__cta">
+          <a class="btn btn--solid" href={path('menu')}>メニュー・料金を見る</a>
+          <a class="textlink" href={path('styles')}>スタイルを見る</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section about" aria-labelledby="about-h">
+    <div class="wrap about__grid">
+      <div class="about__media"><Photo name="interior" ratio="4 / 5" sizes="(min-width: 900px) 40vw, 100vw" position="50% 40%" /></div>
+      <div class="about__text">
+        <h2 id="about-h">{about.heading}</h2>
+        <p>{about.body}</p>
+        <dl class="concepts">
+          {concepts.map((c) => <div><dt>{c.title}</dt><dd>{c.body}</dd></div>)}
+        </dl>
+        <h3 class="first">{firstVisit.heading}</h3>
+        <p>{firstVisit.body}</p>
+        <p><a class="textlink" href={`${path('access')}#faq`}>よくある質問</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tight" aria-labelledby="styles-h">
+    <div class="wrap">
+      <div class="row-head">
+        <h2 id="styles-h">スタイル</h2>
+        <a class="textlink" href={path('styles')}>すべて見る</a>
+      </div>
+      <ul class="feat">
+        {featured.map((s) => <li><StyleTile style={s} href={`${path('styles')}#${s.id}`} sizes="(min-width: 900px) 25vw, 50vw" /></li>)}
       </ul>
     </div>
   </section>
 
-  <section class="section" id="about" aria-labelledby="about-h">
-    <div class="wrap">
-      <div class="about">
-        <div class="about__media reveal"><Photo name="interior" ratio="4 / 5" sizes="(min-width: 960px) 40vw, 90vw" label="Interior" /></div>
-        <div class="about__text reveal">
-          <p class="eyebrow">About</p>
-          <h2 id="about-h"><span class="nw">背伸びをしない、</span><span class="nw">自分らしいきれい。</span></h2>
-          <p class="lead">{about.body}</p>
-          <p class="about__story">{about.story}</p>
-        </div>
-      </div>
-      <div class="concepts-wrap">
-        <ol class="concepts reveal" aria-label="niwaの3つの約束">
-          {concepts.map((c) => (
-            <li>
-              <span class="concepts__no" aria-hidden="true">{c.no}</span>
-              <h3>{c.title}</h3>
-              <p>{c.body}</p>
+  <section class="section menu-prev" aria-labelledby="menu-h">
+    <div class="wrap menu-prev__grid">
+      <div>
+        <h2 id="menu-h">メニュー・料金</h2>
+        <p class="menu-prev__range">{priceRange}</p>
+        <ul class="mlist">
+          {preview.map((m) => (
+            <li class="mrow">
+              <span class="mrow__name">{m.name}</span>
+              <span class="mrow__meta"><span>{m.duration}</span><span>{m.note}</span></span>
+              <span class="mrow__price">{m.price}</span>
             </li>
           ))}
-        </ol>
+        </ul>
+        <p class="more"><a class="textlink" href={path('menu')}>メニュー・料金をすべて見る</a></p>
       </div>
+      <div class="menu-prev__media"><Photo name="hands" ratio="4 / 5" sizes="(min-width: 900px) 36vw, 100vw" position="40% 40%" /></div>
     </div>
   </section>
 
-  <section class="section section--surface" id="styles" aria-labelledby="styles-h">
-    <div class="wrap">
-      <div class="sec-head">
-        <div class="sh"><h2 class="sh__en" id="styles-h" lang="en">Featured Styles</h2><p class="sh__ja">スタイルギャラリー（サンプル）</p></div>
-        <a class="textlink" href={path('styles')}>すべてのスタイルを見る</a>
+  <section class="section section--tight bottom" aria-labelledby="bottom-h">
+    <div class="wrap bottom__grid">
+      <div>
+        <h2 id="bottom-h">スタッフ</h2>
+        <ul class="plain">
+          {staff.map((p) => <li><strong>{p.name}</strong> {p.role}</li>)}
+        </ul>
+        <p class="more"><a class="textlink" href={path('staff')}>スタッフ紹介</a></p>
       </div>
-      <ul class="style-grid style-grid--home">
-        {featured.map((s) => (
-          <li class="reveal"><StyleTile style={s} href={`${path('styles')}#${s.id}`} /></li>
-        ))}
-      </ul>
-    </div>
-  </section>
-
-  <section class="section" id="menu" aria-labelledby="menu-h">
-    <div class="wrap">
-      <div class="menu-prev">
-        <div class="menu-prev__intro">
-          <div class="sh"><h2 class="sh__en" id="menu-h" lang="en">Menu</h2><p class="sh__ja">メニュー・料金（税込）</p></div>
-          <p class="price-lead">{priceRange}</p>
-          <div class="menu-prev__media reveal"><Photo name="hands" ratio="4 / 5" sizes="320px" label="Hands" /></div>
-        </div>
-        <div class="menu-prev__list">
-          <ul class="mlist reveal">
-            {preview.map((m) => (
-              <li class="mrow">
-                <span class="mrow__name">{m.name}</span>
-                <span class="mrow__meta"><span>{m.duration}</span><span>{m.note}</span></span>
-                <span class="mrow__price">{m.price}</span>
-              </li>
-            ))}
-          </ul>
-          <p class="menu-prev__note">料金は税込のデモ用の架空設定です。「〜」表記は追加料金がかかる場合があります。所要時間は目安です。</p>
-          <p class="menu-prev__more"><a class="textlink" href={path('menu')}>メニュー・料金のすべて</a></p>
-        </div>
+      <div>
+        <h2 class="h2-like">営業時間</h2>
+        <dl class="info info--small">
+          {hours.map((r) => <div><dt>{r.k}</dt><dd>{r.v.map((l) => <p>{l}</p>)}</dd></div>)}
+        </dl>
+        <p class="more"><a class="textlink" href={path('access')}>アクセス・店舗情報</a></p>
       </div>
-    </div>
-  </section>
-
-  <section class="section section--surface" id="stylists" aria-labelledby="staff-h">
-    <div class="wrap">
-      <div class="sec-head">
-        <div class="sh"><h2 class="sh__en" id="staff-h" lang="en">Stylists</h2><p class="sh__ja">スタイリスト（すべて架空の人物）</p></div>
-        <a class="textlink" href={path('staff')}>スタッフ紹介</a>
-      </div>
-      <div class="stylists">
-        {staff.map((p) => <article class="stylist reveal"><StaffBlock person={p} /></article>)}
-      </div>
-    </div>
-  </section>
-
-  <section class="section on-dark" id="first-visit" aria-labelledby="fv-h">
-    <div class="wrap">
-      <div class="fv">
-        <div class="fv__text reveal">
-          <p class="eyebrow">First Visit</p>
-          <h2 id="fv-h">{firstVisit.heading}</h2>
-          <p class="fv__body">{firstVisit.body}</p>
-          <div class="fv__cta">
-            <a class="btn btn--solid" href={path('reserve')}>{site.cta}</a>
-            <a class="textlink" href={path('first-visit')}>来店の流れとFAQ</a>
-          </div>
-        </div>
-        <p class="fv__en" aria-hidden="true" lang="en">Welcome.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="access" aria-labelledby="access-h">
-    <div class="wrap">
-      <div class="sec-head">
-        <div class="sh"><h2 class="sh__en" id="access-h" lang="en">Access</h2><p class="sh__ja">店舗情報（架空設定）</p></div>
-      </div>
-      <AccessInfo more={path('access')} />
     </div>
   </section>
 </BaseLayout>

@@ -6,18 +6,12 @@ import Footer from '../components/Footer.astro';
 import { wholeCopy } from '../data/site';
 ---
 
-<BaseLayout current="order" title="Whole Cakes｜PÂTISSERIE LUNE（架空店舗の制作デモ）" description="ホールケーキのご案内と予約フローのデモ。サイズ・商品・受取日・メッセージプレートの流れを体験できますが、実際の予約・注文は受け付けていません。">
+<BaseLayout current="order" title="ホールケーキ｜PÂTISSERIE LUNE（架空店舗の制作デモ）" description="PÂTISSERIE LUNEのホールケーキ。商品とサイズ、受取希望日、メッセージプレートを選べます。予約機能はデモで、送信されません。">
   <main id="main">
-    <PageHead en="Whole Cakes" title={wholeCopy.heading} lead={wholeCopy.body} />
+    <PageHead title={wholeCopy.heading} lead={wholeCopy.body} />
     <div class="page-body">
       <div class="wrap">
-        <p class="demo-note" style="margin-top:0">{wholeCopy.note} 以下は、ブラウザ内だけで動くデモです。</p>
-        <ol class="flow" style="margin-top:40px">
-          <li><div><b>商品とサイズ</b><span>デコレーションとサイズを選びます。</span></div></li>
-          <li><div><b>受取希望日</b><span>定休日を除く営業日から選びます。</span></div></li>
-          <li><div><b>メッセージプレート</b><span>添えたい文面を入力します（任意）。</span></div></li>
-          <li><div><b>内容の確認</b><span>デモのため、ここで終了します。送信はされません。</span></div></li>
-        </ol>
+        <p class="demo-note">{wholeCopy.note}</p>
         <OrderDemo />
       </div>
     </div>

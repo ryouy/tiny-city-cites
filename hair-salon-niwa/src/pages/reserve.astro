@@ -1,9 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import PageHead from '../components/PageHead.astro';
 import { staff } from '../data/staff';
 import { categories, services } from '../data/services';
-import { path, bandParts } from '../data/site';
+import { path } from '../data/site';
 
 const stepNames = [
   { en: 'Staff', ja: 'スタッフ' },
@@ -14,25 +13,21 @@ const stepNames = [
 const times = ['09:30', '11:00', '13:30', '15:00'];
 ---
 
-<BaseLayout page="Reservation Demo｜予約デモ" description="HAIR SALON niwa（架空店舗デモ）の予約デモ。スタッフ、メニュー、日時を選ぶ流れを体験できますが、予約は成立せず、入力内容は送信・保存されません。">
-  <PageHead en="Reservation Demo" ja="予約デモ（予約は成立しません）" />
+<BaseLayout page="予約デモ" description="HAIR SALON niwa（架空店舗デモ）の予約デモ。スタッフ、メニュー、日時を選ぶ流れを体験できますが、予約は成立せず、入力内容は送信・保存されません。">
   <div class="page-body">
-    <div class="wrap">
-      <div class="demo-box" role="note">
-        <strong>{bandParts[0]}｜<wbr />{bandParts[1]}</strong>
-        <span>これは予約デモです。入力内容は送信・保存されず、予約は成立しません。選択できる日時はすべてダミーです。</span>
-      </div>
+    <div class="wrap wrap--narrow">
+      <h1 class="ptitle">予約デモ</h1>
+      <p class="ptitle__note">入力内容は送信・保存されません。予約は成立しません。</p>
 
       <div class="wiz" id="wiz" data-labels={JSON.stringify(stepNames.map((s) => s.ja))}>
         <ol class="wiz__steps" id="wiz-steps" aria-label="進行状況">
           {stepNames.map((s, i) => (
-            <li aria-current={i === 0 ? 'step' : undefined}><b>{String(i + 1).padStart(2, '0')}</b><span>{s.ja}</span></li>
+            <li aria-current={i === 0 ? 'step' : undefined}>{s.ja}</li>
           ))}
         </ol>
 
         <section class="wiz__panel" data-step="0" aria-labelledby="w0">
           <h2 id="w0" tabindex="-1">担当スタッフを選ぶ</h2>
-          <p class="wiz__hint">スタッフはすべて架空の人物です。</p>
           <fieldset>
             <legend class="visually-hidden">担当スタッフ</legend>
             <div class="opt-list">
@@ -46,12 +41,11 @@ const times = ['09:30', '11:00', '13:30', '15:00'];
 
         <section class="wiz__panel" data-step="1" aria-labelledby="w1" hidden>
           <h2 id="w1" tabindex="-1">メニューを選ぶ</h2>
-          <p class="wiz__hint">料金は税込・デモ用の架空設定です。「〜」は追加料金がかかる場合があります。所要時間は目安です。</p>
           <fieldset>
             <legend class="visually-hidden">メニュー</legend>
             {categories.map((c) => (
               <div>
-                <h3 class="cat-title">{c.key}｜{c.ja}</h3>
+                <h3 class="cat-title">{c.ja}</h3>
                 <div class="opt-list">
                   {services.filter((s) => s.category === c.key).map((m) => (
                     <label class="opt"><input type="radio" name="menu" value={m.id} data-label={m.name} data-price={m.price} data-duration={m.duration} data-note={m.note} /><span class="opt__box"><span class="opt__name">{m.name}</span><span class="opt__sub">{m.duration}／{m.note}</span><span class="opt__price">{m.price}</span></span></label>
@@ -64,13 +58,13 @@ const times = ['09:30', '11:00', '13:30', '15:00'];
 
         <section class="wiz__panel" data-step="2" aria-labelledby="w2" hidden>
           <h2 id="w2" tabindex="-1">希望日・時刻とお名前</h2>
-          <p class="wiz__hint">日時はダミーです（月曜日・第1・第3日曜日を除いた日付を表示）。実際の空き状況とは関係ありません。</p>
+          <p class="wiz__hint">日時はダミーです。</p>
           <fieldset>
             <legend class="sub-h">希望日</legend>
             <div class="dates" id="dates"></div>
           </fieldset>
           <fieldset>
-            <legend class="sub-h" style="margin-top:44px">希望時刻（ダミー枠）</legend>
+            <legend class="sub-h" >希望時刻</legend>
             <div class="times">
               {times.map((t) => (
                 <label class="opt"><input type="radio" name="time" value={t} data-label={t} /><span class="opt__box"><b>{t}</b></span></label>
@@ -80,14 +74,13 @@ const times = ['09:30', '11:00', '13:30', '15:00'];
           <div class="field">
             <label for="f-name">お名前（デモ用）</label>
             <input id="f-name" type="text" name="demo-name" autocomplete="off" maxlength="30" placeholder="例：デモ 太郎" />
-            <small>架空の名前で構いません。実名・連絡先は入力しないでください。入力内容は送信も保存もされません。</small>
+            <small>架空の名前で構いません。</small>
           </div>
         </section>
 
         <section class="wiz__panel" data-step="3" aria-labelledby="w3" hidden>
           <h2 id="w3" tabindex="-1">内容を確認する</h2>
-          <p class="wiz__hint">以下はデモ上の選択内容です。「デモを完了する」を押しても、予約は成立しません。</p>
-          <dl class="confirm">
+                    <dl class="confirm">
             <div><dt>スタッフ</dt><dd id="c-staff"></dd></div>
             <div><dt>メニュー</dt><dd id="c-menu"></dd></div>
             <div><dt>料金・所要</dt><dd id="c-price"></dd></div>
@@ -99,7 +92,6 @@ const times = ['09:30', '11:00', '13:30', '15:00'];
         <section class="wiz__panel done" id="wiz-done" aria-labelledby="w4" hidden>
           <h2 id="w4" tabindex="-1">デモ体験は以上です</h2>
           <p class="done__big">これはデモです。予約は成立していません</p>
-          <p class="wiz__hint" style="margin-top:12px">入力内容は送信・保存されていません。実際の営業案内として使用しないでください。</p>
           <div class="wiz__nav">
             <button type="button" class="btn btn--solid" id="restart">最初からやり直す</button>
             <a class="btn btn--line" href={path()}>トップへ戻る</a>

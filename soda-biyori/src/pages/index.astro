@@ -2,29 +2,31 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Hero from '../components/Hero.astro';
-import About from '../components/About.astro';
 import SodaSelector from '../components/SodaSelector.astro';
-import Features from '../components/Features.astro';
-import MenuTabs from '../components/MenuTabs.astro';
-import Seasonal from '../components/Seasonal.astro';
 import News from '../components/News.astro';
-import Gallery from '../components/Gallery.astro';
-import Info from '../components/Info.astro';
+import Photo from '../components/Photo.astro';
 import Footer from '../components/Footer.astro';
+import { pageMeta, url } from '../data/site';
 ---
 
-<BaseLayout>
-  <Header />
+<BaseLayout title={pageMeta.home.title} description={pageMeta.home.description}>
+  <Header current="home" />
   <main id="main">
     <Hero />
-    <About />
     <SodaSelector />
-    <Features />
-    <MenuTabs />
-    <Seasonal />
     <News />
-    <Gallery />
-    <Info />
+    <section class="section guide" aria-label="ページ案内">
+      <div class="container guide__grid reveal">
+        <a class="guide__tile" href={url('menu/')}>
+          <Photo name="pudding" ratio="4 / 3" sizes="(min-width: 900px) 560px, 92vw" />
+          <span class="guide__label"><b>メニュー</b><span>クリームソーダ・スイーツ・フード・ドリンク</span></span>
+        </a>
+        <a class="guide__tile" href={url('shop/')}>
+          <Photo name="interior" ratio="4 / 3" sizes="(min-width: 900px) 560px, 92vw" />
+          <span class="guide__label"><b>お店のこと</b><span>店主のこと・営業時間・地図</span></span>
+        </a>
+      </div>
+    </section>
   </main>
   <Footer />
 </BaseLayout>

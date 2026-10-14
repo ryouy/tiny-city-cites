@@ -1,8 +1,10 @@
 ---
+import Photo from './Photo.astro';
 import { menu, yen } from '../data/menu';
 ---
 
 <div class="menu-tabs" data-menu-tabs>
+  <div class="menu-tabs__head"><slot name="head" /></div>
   <div class="tablist" role="tablist" aria-label="お品書きのカテゴリ">
     {
       menu.map((c, i) => (
@@ -15,50 +17,61 @@ import { menu, yen } from '../data/menu';
           aria-selected={i === 0 ? 'true' : 'false'}
           tabindex={i === 0 ? 0 : -1}
         >
-          <span class="tab__ja">{c.label}</span>
-          <span class="tab__en" aria-hidden="true">{c.en}</span>
+          {c.label}
         </button>
       ))
     }
   </div>
-  {
-    menu.map((c, i) => (
-      <div
-        class="tabpanel"
-        role="tabpanel"
-        id={`panel-${c.id}`}
-        aria-labelledby={`tab-${c.id}`}
-        hidden={i !== 0}
-        data-first={i === 0 ? '' : undefined}
-      >
-        <h3 class="tabpanel__title">
-          {c.label}
-          <span lang="en">{c.en}</span>
-        </h3>
-        <ul class="dishes">
-          {c.items.map((it) => (
-            <li class="dish">
-              <div class="dish__body">
-                <p class="dish__name">{it.name}</p>
-                <p class="dish__desc">{it.desc}</p>
+  <div class="panels">
+    {
+      menu.map((c, i) => (
+        <div
+          class="tabpanel"
+          role="tabpanel"
+          id={`panel-${c.id}`}
+          aria-labelledby={`tab-${c.id}`}
+          hidden={i !== 0}
+        >
+          <h3 class="tabpanel__title">{c.label}</h3>
+          <ul class="dishes">
+            {c.items.map((it) => (
+              <li class="dish">
+                <div class="dish__body">
+                  <p class="dish__name">{it.name}</p>
+                  <p class="dish__desc">{it.desc}</p>
+                </div>
+                <p class="dish__price">
+                  <span class="sr-only">税込 </span>
+                  {yen(it.price)}
+                  {it.from && <span class="dish__from">〜</span>}
+                </p>
+              </li>
+            ))}
+          </ul>
+          <div class={`dish-photos dish-photos--${c.photos.length}`}>
+            {c.photos.map((p) => (
+              <div class="dish-photos__item">
+                <Photo name={p.key} fill pos={p.pos} sizes="(min-width: 900px) 24vw, 100vw" />
               </div>
-              <p class="dish__price">
-                <span class="sr-only">税込 </span>
-                {yen(it.price)}
-                {it.from && <span class="dish__from">〜</span>}
-              </p>
-            </li>
-          ))}
-        </ul>
-      </div>
-    ))
-  }
+            ))}
+          </div>
+        </div>
+      ))
+    }
+  </div>
 </div>
 
 <script>
   document.querySelectorAll<HTMLElement>('[data-menu-tabs]').forEach((root) => {
+    const list = root.querySelector<HTMLElement>('[role="tablist"]');
     const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>('[role="tab"]'));
     const panels = Array.from(root.querySelectorAll<HTMLElement>('[role="tabpanel"]'));
+    // PC幅では縦並び(Up/Down)、狭い幅では横並び(Left/Right)。どちらの矢印でも移動できる
+    const mq = window.matchMedia('(min-width: 900px)');
+    const setOrientation = () => list?.setAttribute('aria-orientation', mq.matches ? 'vertical' : 'horizontal');
+    setOrientation();
+    mq.addEventListener('change', setOrientation);
+
     const select = (i: number, focus = false) => {
       tabs.forEach((t, j) => {
         const on = i === j;
@@ -75,8 +88,8 @@ import { menu, yen } from '../data/menu';
       t.addEventListener('keydown', (e) => {
         const n = tabs.length;
         let next = -1;
-        if (e.key === 'ArrowRight') next = (i + 1) % n;
-        else if (e.key === 'ArrowLeft') next = (i - 1 + n) % n;
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') next = (i + 1) % n;
+        else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') next = (i - 1 + n) % n;
         else if (e.key === 'Home') next = 0;
         else if (e.key === 'End') next = n - 1;
         if (next >= 0) {

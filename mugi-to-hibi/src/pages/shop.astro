@@ -1,0 +1,62 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Photo from '../components/Photo.astro';
+import Calendar from '../components/Calendar.astro';
+import MapEmbed from '../components/MapEmbed.astro';
+import { pages, about, commitments, shopInfo, shopNote } from '../data/site';
+---
+
+<BaseLayout current="shop" title={pages.shop.title} description={pages.shop.description}>
+  <div class="wrap page-head">
+    <h1 class="page-title">お店のこと</h1>
+    <ul class="jump" aria-label="このページの内容">
+      <li><a href="#about">お店について</a></li>
+      <li><a href="#commitment">こだわり</a></li>
+      <li><a href="#calendar">営業カレンダー</a></li>
+      <li><a href="#info">店舗案内</a></li>
+    </ul>
+  </div>
+
+  <section class="section about" id="about" aria-labelledby="about-title">
+    <div class="wrap about__grid">
+      <Photo name="process" ratio="3 / 2" ratioSm="3 / 2" sizes="(min-width: 900px) 55vw, 100vw" class="reveal" />
+      <div class="about__text">
+        <h2 id="about-title" class="h2">{about.heading}</h2>
+        <p class="about__lead">{about.body}</p>
+        <p>{about.story}</p>
+        <p class="about__owner">{about.owner}<small>{about.ownerNote}</small></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section commitment" id="commitment" aria-labelledby="commitment-title">
+    <div class="wrap commit__grid">
+      <h2 id="commitment-title" class="h2">こだわり</h2>
+      <dl class="commit">
+        {commitments.map((c) => (
+          <div class="commit__row"><dt>{c.title}</dt><dd>{c.body}</dd></div>
+        ))}
+      </dl>
+    </div>
+  </section>
+
+  <Calendar />
+
+  <section class="section shop" id="info" aria-labelledby="shop-title">
+    <div class="wrap">
+      <h2 id="shop-title" class="h2">店舗案内</h2>
+      <Photo name="exterior" ratio="21 / 9" ratioSm="3 / 2" sizes="100vw" class="shop__photo reveal" />
+      <div class="shop__grid">
+        <div>
+          <dl class="info">
+            {shopInfo.map((r) => (
+              <div class="info__row"><dt>{r.term}</dt><dd>{r.desc}</dd></div>
+            ))}
+          </dl>
+          <p class="shop__note">{shopNote}</p>
+        </div>
+        <MapEmbed />
+      </div>
+    </div>
+  </section>
+</BaseLayout>

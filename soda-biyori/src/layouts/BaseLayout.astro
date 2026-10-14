@@ -1,13 +1,13 @@
 ---
 import '../styles/global.css';
-import { site } from '../data/site';
+import { site, pageMeta } from '../data/site';
 
 interface Props {
   title?: string;
   description?: string;
 }
-const { title = site.title, description = site.description } = Astro.props;
-const base = import.meta.env.BASE_URL;
+const { title = pageMeta.home.title, description = pageMeta.home.description } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 ---
 
 <!doctype html>
@@ -45,29 +45,6 @@ const base = import.meta.env.BASE_URL;
     <a class="skip-link" href="#main">本文へスキップ</a>
     <slot />
     <script>
-      const toggle = document.querySelector<HTMLButtonElement>('.nav-toggle');
-      const nav = document.getElementById('site-nav');
-      const header = document.querySelector<HTMLElement>('.site-header');
-      const desktop = window.matchMedia('(min-width: 900px)');
-
-      const setOpen = (open: boolean, returnFocus = false) => {
-        if (!toggle || !nav) return;
-        toggle.setAttribute('aria-expanded', String(open));
-        nav.classList.toggle('is-open', open);
-        if (!open && returnFocus) toggle.focus();
-      };
-      toggle?.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
-      nav?.addEventListener('click', (e) => {
-        if ((e.target as HTMLElement).closest('a')) setOpen(false);
-      });
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && toggle?.getAttribute('aria-expanded') === 'true') setOpen(false, true);
-      });
-      document.addEventListener('click', (e) => {
-        if (toggle?.getAttribute('aria-expanded') === 'true' && header && !header.contains(e.target as Node)) setOpen(false);
-      });
-      desktop.addEventListener('change', () => setOpen(false));
-
       // スクロール表示(見た目の補助。reduced-motion では即表示)
       const items = document.querySelectorAll<HTMLElement>('.reveal');
       if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {

@@ -5,114 +5,104 @@ import Menu from '../components/Menu.astro';
 import Builder from '../components/Builder.astro';
 import MapEmbed from '../components/MapEmbed.astro';
 import { site } from '../data/site';
-import { steps } from '../data/steps';
+import { photoFile } from '../lib/photo-file';
 
-const ticker = 'SMASH IT. STACK IT. LOVE IT.';
+// メニュー下の写真列は、3枚そろったときだけ表示(未配置のときは枠を出さない)
+const menuPhotos = (['classic', 'bacon', 'fries'] as const);
+const showMenuPhotos = menuPhotos.every((k) => photoFile(k));
 ---
 
 <BaseLayout>
-  <section class="hero" id="top" aria-labelledby="hero-title">
-    <div class="wrap hero__in">
-      <div class="hero__photo">
-        <div class="hero__photo-block" aria-hidden="true"></div>
-        <figure class="hero__fig zoomable"><Photo name="hero" priority ratio="4 / 5" sizes="(min-width: 900px) 560px, 100vw" /></figure>
+  <section class="poster poster--hero" id="top" aria-labelledby="hero-title">
+    <Photo name="hero" fill priority pos="50% 55%" sizes="100vw" />
+    <div class="wrap poster__in">
+      <h1 id="hero-title" class="hero__title"><span class="nw">かぶりつけ、</span><span class="nw">うまさを重ねろ。</span></h1>
+      <p class="hero__lead">{site.hero.lead}</p>
+      <div class="hero__cta">
+        <a class="btn btn--solid" href={site.hero.cta1.href}>{site.hero.cta1.label}</a>
+        <a class="btn btn--line-light" href={site.hero.cta2.href}>{site.hero.cta2.label}</a>
       </div>
-      <div class="hero__copy">
-        <p class="hero__eyebrow">{site.hero.eyebrow}</p>
-        <h1 id="hero-title" class="hero__title"><span class="nw">かぶりつけ、</span><span class="nw">うまさを重ねろ。</span></h1>
-        <p class="hero__lead">{site.hero.lead}</p>
-        <div class="hero__cta">
-          <a class="btn btn--red" href={site.hero.cta1.href}>{site.hero.cta1.label}</a>
-          <a class="btn btn--line" href={site.hero.cta2.href}>{site.hero.cta2.label}</a>
+    </div>
+  </section>
+
+  <section class="poster poster--sig" id="signature" aria-labelledby="sig-title">
+    <Photo name="signature" fill pos="50% 45%" sizes="100vw" />
+    <div class="wrap poster__in">
+      <div class="sig reveal">
+        <p class="sig__price">{site.signature.price}</p>
+        <h2 id="sig-title" class="sig__h2"><span class="nw">迷ったら、</span><span class="nw">ダブルで。</span></h2>
+        <p class="sig__name">{site.signature.name}</p>
+        <p>{site.signature.body}</p>
+        <p class="note">{site.signature.note}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="menu-sec" id="menu" aria-labelledby="menu-title">
+    <div class="wrap menu-sec__in">
+      <h2 id="menu-title" class="menu-sec__h">MENU</h2>
+      <div class="menu-sec__body">
+        <Menu />
+      </div>
+    </div>
+    {showMenuPhotos && (
+      <div class="wrap">
+        <div class="menu-photos">
+          {menuPhotos.map((k) => <figure><Photo name={k} ratio="4 / 5" sizes="(min-width: 900px) 400px, 33vw" /></figure>)}
         </div>
       </div>
-    </div>
-    <div class="stripes" aria-hidden="true"><i></i><i></i><i></i></div>
+    )}
   </section>
 
-  <div class="ticker" aria-hidden="true">
-    <div class="ticker__track">
-      {Array.from({ length: 8 }).map(() => <span>{ticker}</span>)}
-    </div>
-  </div>
-
-  <section class="about sec" id="about" aria-labelledby="about-title">
-    <div class="wrap about__in">
-      <p class="label reveal">ABOUT</p>
-      <h2 id="about-title" class="h2 reveal">ひと口で<wbr />わかる、<span class="nw">鉄板のうまさ。</span></h2>
-      <div class="about__text reveal">
-        <p class="about__lead">{site.about.body}</p>
-        <p>{site.about.concept}</p>
-        <p>{site.about.story}<span class="note">{site.about.storyNote}</span></p>
-      </div>
-      <figure class="about__fig reveal"><Photo name="interior" ratio="16 / 9" sizes="(min-width: 1240px) 1240px, 100vw" /></figure>
-    </div>
-  </section>
-
-  <section class="sig" id="signature" aria-labelledby="sig-title">
-    <div class="wrap sig__in">
-      <figure class="sig__fig zoomable reveal"><Photo name="signature" zoom ratio="1 / 1" sizes="(min-width: 900px) 560px, 100vw" /></figure>
-      <div class="sig__copy reveal">
-        <p class="sig__tag">SIGNATURE <span>｜ ¥1,380</span></p>
-        <h2 id="sig-title" class="h2 h2--big"><span class="nw">迷ったら、</span><span class="nw">ダブルで。</span></h2>
-        <p class="sig__name">ダブルチーズ・スタック</p>
-        <p>{site.signature.body}</p>
-        <p class="sig__note">{site.signature.note}</p>
-        <a class="btn btn--cream" href="#menu">MENUを見る</a>
-      </div>
-    </div>
-  </section>
-
-  <section class="menu-sec sec" id="menu" aria-labelledby="menu-title">
+  <section class="build" id="build" aria-labelledby="build-title">
     <div class="wrap">
-      <p class="label reveal">MENU</p>
-      <h2 id="menu-title" class="h2 reveal">メニュー</h2>
-      <Menu />
-    </div>
-  </section>
-
-  <section class="build sec" id="build" aria-labelledby="build-title">
-    <div class="wrap">
-      <p class="label reveal">BUILD YOUR STACK</p>
-      <h2 id="build-title" class="h2 reveal"><span class="nw">自分好みの</span><span class="nw">スタックを試算。</span></h2>
-      <p class="build__lead reveal">ベース・トッピング・セットを選ぶと、税込の参考金額が変わります。</p>
+      <div class="build__head">
+        <h2 id="build-title">Build Your Stack</h2>
+        <p>金額の参考計算です。注文はできません。</p>
+      </div>
       <Builder />
     </div>
   </section>
 
-  <section class="style sec" id="our-style" aria-labelledby="style-title">
-    <div class="wrap">
-      <p class="label label--mustard">OUR STYLE</p>
-      <h2 id="style-title" class="h2 h2--cream">鉄板で、<span class="nw">3ステップ。</span></h2>
-      <figure class="style__fig zoomable"><Photo name="griddle" ratio="3 / 2" sizes="(min-width: 1240px) 1240px, 100vw" /></figure>
-      <ol class="steps">
-        {steps.map((s) => (
-          <li class="step">
-            <span class="step__no" aria-hidden="true">{s.no}</span>
-            <p class="step__en">{s.en}</p>
-            <h3 class="step__title">{s.title}</h3>
-            <p class="step__body">{s.body}</p>
-          </li>
-        ))}
-      </ol>
+  <section class="poster poster--style" id="our-style" aria-labelledby="style-title">
+    <Photo name="griddle" fill pos="50% 50%" sizes="100vw" />
+    <div class="wrap poster__in">
+      <div class="style reveal">
+        <h2 id="style-title" class="style__h2">{site.ourStyle.h2}</h2>
+        <p class="style__body">{site.ourStyle.body}</p>
+        <ul class="style__steps">
+          {site.ourStyle.steps.map((s) => (
+            <li><b>{s.title}</b><span>{s.body}</span></li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="about" aria-labelledby="about-title">
+    <figure class="about__fig"><Photo name="interior" ratio="16 / 9" sizes="100vw" /></figure>
+    <div class="wrap about__in">
+      <h2 id="about-title" class="about__h2">{site.about.h2}</h2>
+      <div class="about__text">
+        <p>{site.about.concept}</p>
+        <p>{site.about.story}</p>
+      </div>
     </div>
   </section>
 
   <section class="take" id="takeout" aria-labelledby="take-title">
     <div class="wrap take__in">
-      <p class="take__big" aria-hidden="true">TAKE<br />OUT</p>
-      <div class="take__copy">
-        <h2 id="take-title" class="h2"><span class="nw">好きな場所で、</span><span class="nw">思いきり。</span></h2>
+      <h2 id="take-title" class="take__h2"><span class="nw">好きな場所で、</span><span class="nw">思いきり。</span></h2>
+      <div class="take__text">
         <p>{site.takeout.body}</p>
-        <p class="take__note"><b>{site.takeout.note}</b></p>
+        <p class="take__note">{site.takeout.note}</p>
       </div>
     </div>
   </section>
 
-  <section class="info sec" id="info" aria-labelledby="info-title">
+  <section class="info" id="info" aria-labelledby="info-title">
     <div class="wrap">
-      <p class="label">INFO</p>
-      <h2 id="info-title" class="h2"><span class="nw">今日のごはんは、</span><span class="nw">バーガーにしよう。</span></h2>
+      <h2 id="info-title" class="info__h2"><span class="nw">今日のごはんは、</span><span class="nw">バーガーにしよう。</span></h2>
       <p class="info__lead">{site.visit.body}</p>
       <div class="info__grid">
         <dl class="info__dl">
@@ -123,7 +113,7 @@ const ticker = 'SMASH IT. STACK IT. LOVE IT.';
         </dl>
         <div class="info__side">
           <div class="notice">
-            <p class="notice__title">{site.noticeTitle}</p>
+            <h3 class="notice__title">{site.noticeTitle}</h3>
             <p>{site.noticeBody}</p>
           </div>
           <MapEmbed />

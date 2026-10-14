@@ -12,10 +12,9 @@ export const site = {
 } as const;
 
 export const nav = [
-  { href: 'about/', label: 'About' },
-  { href: 'menu/', label: 'Menu' },
-  { href: 'order/', label: 'Whole Cakes' },
-  { href: 'access/', label: 'Access' },
+  { href: 'menu/', label: 'メニュー' },
+  { href: 'order/', label: 'ホールケーキ' },
+  { href: 'about/', label: '店舗案内' },
 ];
 
 export const hero = {
@@ -41,17 +40,12 @@ export const giftCopy = {
 };
 
 export const story = {
-  heading: '月明かりのような、小さな特別感を。',
   paras: [
     '店主はパティスリーで経験を積み、故郷の会津に戻って独立しました。店名のLUNEはフランス語で「月」。月明かりのように、日々の暮らしの中の小さな特別感を届けたいという思いを込めて名付けました。',
     '旬の果物と、素材の味を引き立てる軽やかなクリーム、甘さを抑えた焼き菓子。それがPÂTISSERIE LUNEの特徴です。',
+    '2022年10月、開業。',
   ],
   fiction: '店主の経歴・物語はすべて創作であり、実在人物の経歴ではありません。',
-  points: [
-    { en: 'Seasonal Fruit', ja: '旬の果物', text: '季節ごとの果実を、ケーキやタルトの主役に。' },
-    { en: 'Light Cream', ja: '軽やかなクリーム', text: '素材の味を引き立てる、軽やかな口当たり。' },
-    { en: 'Gentle Sweetness', ja: '甘さを抑えた焼き菓子', text: '素材の風味が広がる、やさしい甘さの焼き菓子。' },
-  ],
 };
 
 export const infoRows: { k: string; v: string[] }[] = [
@@ -62,7 +56,7 @@ export const infoRows: { k: string; v: string[] }[] = [
   { k: 'ご予算', v: ['カットケーキ500〜850円', 'ギフト1,000円〜'] },
   { k: 'ご予約', v: ['ホールケーキのみ', '原則、受取希望日の3営業日前までを想定'] },
   { k: 'お支払い', v: ['現金・クレジットカード・一部QR決済（架空設定）'] },
-  { k: 'エリア', v: ['福島県会津若松市の閑静な住宅地', '架空設定のため、具体的な住所は設けていません'] },
+  { k: 'エリア', v: ['福島県会津若松市の閑静な住宅地', '具体的な住所は設けていません'] },
 ];
 
 export const faq: { q: string; a: string }[] = [

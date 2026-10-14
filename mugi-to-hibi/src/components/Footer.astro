@@ -1,19 +1,21 @@
 ---
-import { site, nav } from '../data/site';
-import Wheat from './Wheat.astro';
+import { site, nav, href, type PageKey } from '../data/site';
+
+interface Props { current: PageKey }
+const { current } = Astro.props;
 ---
 
 <footer class="site-footer">
   <div class="wrap">
-    <Wheat class="footer__wheat" />
-    <p class="footer__name"><span>{site.name}</span> <small>{site.en}</small></p>
-    <p class="footer__disclaimer">{site.disclaimer}</p>
+    <p class="footer__name">{site.name}<small>{site.en}</small></p>
     <nav aria-label="フッターナビゲーション">
       <ul class="footer__nav">
-        {nav.map((n) => <li><a href={n.href}>{n.label}</a></li>)}
-        <li><a href="#top">ページの先頭へ</a></li>
+        <li><a href={href()} aria-current={current === 'home' ? 'page' : undefined}>トップ</a></li>
+        {nav.map((n) => (
+          <li><a href={href(n.path)} aria-current={n.current === current ? 'page' : undefined}>{n.label}</a></li>
+        ))}
       </ul>
     </nav>
-    <p class="footer__copy">店名・人物・所在地・商品・営業条件はすべて架空の設定です。実在の店舗・ブランドとは関係ありません。</p>
+    <p class="footer__disclaimer">{site.disclaimer}</p>
   </div>
 </footer>

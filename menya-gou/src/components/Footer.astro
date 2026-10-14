@@ -3,20 +3,9 @@ import { site } from '../data/site';
 ---
 
 <footer class="site-footer">
-  <div class="container footer__grid">
-    <div>
-      <p class="footer__en">{site.en}</p>
-      <p class="footer__name">{site.name}</p>
-      <p class="footer__kana">{site.kana}</p>
-    </div>
-    <div>
-      <p class="footer__disc">{site.disclaimer}</p>
-      <p class="footer__small">掲載の店舗情報・メニュー・価格はすべて架空の設定です。電話番号・住所・予約フォーム・SNSは設けていません。</p>
-      <p class="footer__small">© 2026 MENYA GOU (demo)</p>
-    </div>
+  <div class="container">
+    <p class="footer__name">{site.name}<span>{site.en}</span></p>
+    <p class="footer__disc">{site.disclaimer}</p>
+    <p class="footer__small">掲載の店舗情報・メニュー・価格はすべて架空の設定です。電話番号・住所・予約フォーム・SNSは設けていません。</p>
   </div>
 </footer>
-<nav class="dock" aria-label="クイックリンク">
-  <a href="#menu">お品書き</a>
-  <a href="#information">営業時間</a>
-</nav>

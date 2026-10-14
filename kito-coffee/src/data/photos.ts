@@ -4,10 +4,6 @@ export interface PhotoDef {
   /** public/images/kito/ 内のファイル名 */
   file: string;
   alt: string;
-  /** 撮影イメージ(プレースホルダーのキャプション) */
-  shot: string;
-  /** プレースホルダーの英字ラベル */
-  label: string;
   tone: Tone;
   /** 元画像の想定ピクセルサイズ(CLS防止用の intrinsic size) */
   width: number;
@@ -16,58 +12,46 @@ export interface PhotoDef {
 
 export const photos = {
   hero: {
-    file: 'hero.png',
+    file: 'hero.webp',
     alt: '自然光が差し込む、木のカウンターのあるカフェの店内',
-    shot: 'カフェ全景。自然光と木のカウンター（横長）',
-    label: 'The Room',
     tone: 'dark',
-    width: 2400,
-    height: 1350,
+    width: 1672,
+    height: 941,
   },
   pourOver: {
-    file: 'pour-over.png',
+    file: 'pour-over.webp',
     alt: 'ドリッパーにお湯を注ぐ手元',
-    shot: '手注ぎドリップの寄り',
-    label: 'Pour-over',
     tone: 'deep',
-    width: 2000,
-    height: 1333,
+    width: 1536,
+    height: 1024,
   },
   blend: {
-    file: 'blend.png',
+    file: 'blend.webp',
     alt: '陶器のカップに注がれたコーヒー',
-    shot: '陶器カップのコーヒー',
-    label: 'The Cup',
     tone: 'mid',
-    width: 1600,
-    height: 1600,
+    width: 1254,
+    height: 1254,
   },
   cheesecake: {
-    file: 'cheesecake.png',
+    file: 'cheesecake.webp',
     alt: '香ばしく焼き上げたバスクチーズケーキ',
-    shot: 'バスクチーズケーキ',
-    label: 'Basque Cheesecake',
     tone: 'warm',
-    width: 1800,
-    height: 1350,
+    width: 1448,
+    height: 1086,
   },
   interior: {
-    file: 'interior.png',
+    file: 'interior.webp',
     alt: '木の温もりと自然光に包まれた店内の様子',
-    shot: '空間の引き写真',
-    label: 'Interior',
     tone: 'light',
-    width: 1600,
-    height: 2000,
+    width: 1122,
+    height: 1402,
   },
   sweets: {
-    file: 'sweets.png',
+    file: 'sweets.webp',
     alt: '焼き菓子とカフェラテ',
-    shot: '焼き菓子とカフェラテ',
-    label: 'Sweets & Latte',
     tone: 'mid',
-    width: 1600,
-    height: 1200,
+    width: 1448,
+    height: 1086,
   },
 } as const satisfies Record<string, PhotoDef>;
 

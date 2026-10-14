@@ -3,75 +3,75 @@ import Photo from './Photo.astro';
 import { cutCakes, wholeCakes, bakedGoods, yen } from '../data/menu';
 
 const tabs = [
-  { id: 'cut', ja: 'ケーキ', en: 'Cut Cakes' },
-  { id: 'whole', ja: 'ホール', en: 'Whole Cakes' },
-  { id: 'baked', ja: '焼き菓子', en: 'Baked Goods' },
+  { id: 'cut', ja: 'ケーキ' },
+  { id: 'whole', ja: 'ホール' },
+  { id: 'baked', ja: '焼き菓子' },
 ];
-const no = (i: number) => `No.${String(i + 1).padStart(2, '0')}`;
 ---
 
 <div class="menu-tabs" data-tabs>
   <div class="tabs" role="tablist" aria-label="商品カテゴリ">
     {tabs.map((t, i) => (
       <button class="tab" role="tab" type="button" id={`tab-${t.id}`} aria-controls={`panel-${t.id}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}>
-        {t.ja}<em lang="en">{t.en}</em>
+        {t.ja}
       </button>
     ))}
   </div>
 
   <section class="panel" role="tabpanel" id="panel-cut" aria-labelledby="tab-cut" tabindex="0">
-    <h2 class="panel__title"><em lang="en">Cut Cakes</em>カットケーキ</h2>
-    <ul class="items">
-      {cutCakes.map((c, i) => (
-        <li class={`item${c.photo ? ' item--photo' : ''}`}>
-          <div class="item__lead">
-            {c.photo ? <Photo name={c.photo} ratio="4 / 5" sizes="140px" /> : <span aria-hidden="true">{no(i)}</span>}
-          </div>
-          <div class="item__body">
-            <h3 class="item__name">{c.name}</h3>
-            <p class="item__desc">{c.desc}</p>
-            <p class="item__meta">アレルゲン例（架空データ）：{c.allergens}</p>
-          </div>
-          <p class="item__price">{yen(c.price)}<small>税込</small></p>
+    <h2 class="visually-hidden">カットケーキ</h2>
+    <ul class="grid">
+      {cutCakes.map((c) => (
+        <li class="card">
+          {c.photo ? (
+            <Photo name={c.photo} ratio="4 / 5" sizes="(min-width: 900px) 33vw, (min-width: 560px) 50vw, 100vw" />
+          ) : (
+            <div class="photo photo--ph" style="aspect-ratio:4 / 5" aria-hidden="true"><span>画像準備中</span></div>
+          )}
+          <h3 class="card__name">{c.name}</h3>
+          <p class="card__desc">{c.desc}</p>
+          <p class="card__meta">アレルゲン例：{c.allergens}</p>
+          <p class="price">{yen(c.price)}<small>税込</small></p>
         </li>
       ))}
     </ul>
   </section>
 
   <section class="panel" role="tabpanel" id="panel-whole" aria-labelledby="tab-whole" tabindex="0">
-    <h2 class="panel__title"><em lang="en">Whole Cakes</em>ホールケーキ</h2>
-    <div class="panel__banner"><Photo name="wholeCake" ratio="16 / 9" sizes="(min-width: 1280px) 1150px, 100vw" /></div>
-    <ul class="items">
-      {wholeCakes.map((w, i) => (
-        <li class="item">
-          <div class="item__lead"><span aria-hidden="true">{no(i)}</span></div>
-          <div class="item__body">
-            <h3 class="item__name">{w.name}</h3>
-            <p class="item__desc">{w.size}</p>
-            <p class="item__meta">{w.note}</p>
-          </div>
-          <p class="item__price">{yen(w.price)}<small>税込</small></p>
-        </li>
-      ))}
-    </ul>
-    <p class="notes-inline">ご予約は原則、受取希望日の3営業日前までを想定しています（デモ機能のため、実際の予約はできません）。</p>
+    <h2 class="visually-hidden">ホールケーキ</h2>
+    <div class="split">
+      <div class="split__photo"><Photo name="wholeCake" ratio="1 / 1" sizes="(min-width: 900px) 45vw, 100vw" /></div>
+      <div>
+        <ul class="rows">
+          {wholeCakes.map((w) => (
+            <li class="row">
+              <h3 class="row__name">{w.name}</h3>
+              <p class="row__sub">{w.size}</p>
+              <p class="row__meta">{w.note}</p>
+              <p class="price">{yen(w.price)}<small>税込</small></p>
+            </li>
+          ))}
+        </ul>
+        <p class="panel__note">ご予約は原則、受取希望日の3営業日前までを想定しています（デモ機能のため、実際の予約はできません）。</p>
+        <a class="btn" href={`${import.meta.env.BASE_URL}order/`}>ホールケーキを見る</a>
+      </div>
+    </div>
   </section>
 
   <section class="panel" role="tabpanel" id="panel-baked" aria-labelledby="tab-baked" tabindex="0">
-    <h2 class="panel__title"><em lang="en">Baked Goods</em>焼き菓子</h2>
-    <div class="panel__banner"><Photo name="gift" ratio="16 / 9" sizes="(min-width: 1280px) 1150px, 100vw" /></div>
-    <ul class="items">
-      {bakedGoods.map((b, i) => (
-        <li class="item">
-          <div class="item__lead"><span aria-hidden="true">{no(i)}</span></div>
-          <div class="item__body">
-            <h3 class="item__name">{b.name}</h3>
-            <p class="item__desc">{b.desc}</p>
-          </div>
-          <p class="item__price">{yen(b.price)}<small>税込</small></p>
-        </li>
-      ))}
-    </ul>
+    <h2 class="visually-hidden">焼き菓子</h2>
+    <div class="split">
+      <div class="split__photo"><Photo name="gift" ratio="1 / 1" position="45% 50%" sizes="(min-width: 900px) 45vw, 100vw" /></div>
+      <ul class="rows">
+        {bakedGoods.map((b) => (
+          <li class="row">
+            <h3 class="row__name">{b.name}</h3>
+            <p class="row__sub">{b.desc}</p>
+            <p class="price">{yen(b.price)}<small>税込</small></p>
+          </li>
+        ))}
+      </ul>
+    </div>
   </section>
 </div>
 

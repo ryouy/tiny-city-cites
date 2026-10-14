@@ -1,19 +1,20 @@
 ---
-import { site } from '../data/site';
+import { site, url } from '../data/site';
 ---
 
 <footer class="site-footer">
   <div class="container site-footer__inner">
-    <div class="site-footer__brand">
+    <div>
       <p class="site-footer__name">{site.name}</p>
-      <p class="site-footer__sub">{site.reading}｜{site.subtitle}</p>
+      <p class="site-footer__sub">{site.subtitle}</p>
     </div>
     <nav aria-label="フッターナビゲーション">
       <ul class="site-footer__nav">
+        <li><a href={url()}>トップ</a></li>
         {
           site.nav.map((l) => (
             <li>
-              <a href={l.href}>{l.en}</a>
+              <a href={url(l.path)}>{l.label}</a>
             </li>
           ))
         }

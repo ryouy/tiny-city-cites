@@ -1,21 +1,12 @@
 ---
 import { infoRows } from '../data/site';
-import MapEmbed from './MapEmbed.astro';
-interface Props { more?: string }
-const { more } = Astro.props;
 ---
 
-<div class="access">
-  <dl class="info access__info">
-    {infoRows.map((r) => (
-      <div>
-        <dt>{r.k}</dt>
-        <dd>{r.v.map((line) => <p>{line}</p>)}</dd>
-      </div>
-    ))}
-  </dl>
-  <div class="access__aside">
-    <MapEmbed />
-    {more && <p class="access__more"><a class="textlink" href={more}>アクセスの詳細</a></p>}
-  </div>
-</div>
+<dl class="info">
+  {infoRows.map((r) => (
+    <div>
+      <dt>{r.k}</dt>
+      <dd>{r.v.map((line) => <p>{line}</p>)}</dd>
+    </div>
+  ))}
+</dl>

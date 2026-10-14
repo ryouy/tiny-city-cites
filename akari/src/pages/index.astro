@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
+import SectionNav from '../components/SectionNav.astro';
 import Photo from '../components/Photo.astro';
 import MapEmbed from '../components/MapEmbed.astro';
 import MenuTabs from '../components/MenuTabs.astro';
@@ -15,96 +16,77 @@ const seatsTotal = site.space.seats.reduce((s, x) => s + x.count, 0);
 
 <BaseLayout>
   <Header />
+  <SectionNav />
   <main id="main">
     <!-- Hero -->
     <section class="hero" id="top" aria-labelledby="hero-title">
-      <Photo name="hero" fill eager ratio="16 / 9" sizes="100vw" />
+      <Photo name="hero" fill eager pos="62% 55%" sizes="100vw" />
       <div class="hero__shade" aria-hidden="true"></div>
-      <h1 class="hero__title" id="hero-title">
-        <span class="nw">{h1a}、</span><span class="nw">{h1b}</span>
-      </h1>
-      <div class="hero__inner">
-        <p class="eyebrow hero__sub" lang="en">{site.hero.sub}</p>
+      <div class="wrap hero__inner">
+        <p class="hero__sub" lang="en">{site.hero.sub}</p>
+        <h1 class="hero__title" id="hero-title">
+          <span class="nw">{h1a}、</span><span class="nw">{h1b}</span>
+        </h1>
         <p class="hero__body">{site.hero.body}</p>
         <div class="hero__cta">
           <a class="btn btn--solid" href={site.hero.ctas[0].href}>{site.hero.ctas[0].label}</a>
           <a class="btn btn--ghost" href={site.hero.ctas[1].href}>{site.hero.ctas[1].label}</a>
         </div>
       </div>
-      <p class="hero__scroll" aria-hidden="true">Scroll</p>
     </section>
 
-    <!-- Philosophy -->
-    <section class="section about" id="about" aria-labelledby="about-title">
-      <div class="wrap about__grid">
-        <div class="about__text reveal">
-          <p class="eyebrow" lang="en">Philosophy</p>
+    <!-- 灯について: 左に文章、右は画面端まで写真 -->
+    <section class="screen about" id="about" aria-labelledby="about-title">
+      <div class="about__text">
+        <div class="about__text-inner reveal">
           <h2 class="h2" id="about-title">火が引き出す、<span class="nw">素材の旨み。</span></h2>
-          <span class="rule" aria-hidden="true"></span>
           <p class="lead">{site.about.body}</p>
-          <div class="story">
-            <p class="story__lead">{site.about.lead}</p>
-            <p>{site.about.story}</p>
-          </div>
-          <p class="owner"><span class="owner__tag">店主（架空設定）</span>{site.about.owner}</p>
+          <p class="story">{site.about.story}</p>
+          <p class="owner">{site.about.owner}</p>
         </div>
-        <div class="about__photo reveal">
-          <Photo name="yakitori" ratio="4 / 5" ratioSm="4 / 5" sizes="(min-width: 960px) 40vw, 100vw" />
-        </div>
-        <p class="vlabel about__v" aria-hidden="true">灯について</p>
+      </div>
+      <div class="about__photo">
+        <Photo name="yakitori" fill pos="50% 55%" sizes="(min-width: 900px) 45vw, 100vw" />
       </div>
     </section>
 
-    <!-- Menu -->
-    <section class="section section--alt menu" id="menu" aria-labelledby="menu-title">
+    <!-- お品書き: 画面内のタブで切り替え -->
+    <section class="screen screen--alt menu" id="menu" aria-labelledby="menu-title">
       <div class="wrap">
-        <div class="menu__top">
-          <header class="section-head reveal">
-            <p class="eyebrow" lang="en">Menu</p>
+        <MenuTabs>
+          <Fragment slot="head">
             <h2 class="h2" id="menu-title">お品書き</h2>
-            <span class="rule" aria-hidden="true"></span>
-            <p class="section-head__note">{site.priceNote}</p>
-          </header>
-          <div class="menu-photos reveal">
-            <div class="menu-photos__a"><Photo name="basashi" ratio="4 / 5" sizes="(min-width: 768px) 25vw, 50vw" /></div>
-            <div class="menu-photos__b"><Photo name="donabe" ratio="4 / 5" sizes="(min-width: 768px) 25vw, 50vw" /></div>
-          </div>
-        </div>
-        <div class="reveal">
-          <MenuTabs />
-        </div>
+            <p class="note">{site.priceNote}</p>
+          </Fragment>
+        </MenuTabs>
       </div>
     </section>
 
-    <!-- Sake -->
-    <section class="section sake" id="sake" aria-labelledby="sake-title">
-      <div class="wrap sake__grid">
-        <div class="sake__photo reveal">
-          <Photo name="sake" ratio="3 / 2" ratioSm="3 / 2" sizes="(min-width: 960px) 55vw, 100vw" />
-        </div>
-        <div class="sake__text reveal">
-          <p class="eyebrow" lang="en">Sake</p>
+    <!-- 地酒: 左に写真 -->
+    <section class="screen sake" id="sake" aria-labelledby="sake-title">
+      <div class="sake__photo">
+        <Photo name="sake" fill pos="45% 55%" sizes="(min-width: 900px) 55vw, 100vw" />
+      </div>
+      <div class="sake__text">
+        <div class="sake__text-inner reveal">
           <h2 class="h2" id="sake-title">今夜の一杯に、<span class="nw">会津の地酒を。</span></h2>
-          <span class="rule" aria-hidden="true"></span>
           <p class="lead">{site.sake.body}</p>
           <p class="fine">{site.sake.note}</p>
         </div>
       </div>
     </section>
 
-    <!-- Course -->
-    <section class="section section--alt course" id="course" aria-labelledby="course-title">
+    <!-- コース: 写真なし、文字だけで見せる -->
+    <section class="screen screen--alt course" id="course" aria-labelledby="course-title">
       <div class="wrap">
-        <header class="section-head reveal">
-          <p class="eyebrow" lang="en">Course</p>
+        <header class="course__head">
           <h2 class="h2" id="course-title">コースのご案内</h2>
-          <p class="section-head__note">{courseNote}</p>
+          <p class="note">{courseNote}</p>
         </header>
         <div class="courses">
           {
-            courses.map((c, i) => (
-              <article class="course-item reveal" aria-labelledby={`course-${c.id}`}>
-                <p class="course-item__no" aria-hidden="true" lang="en">{String(i + 1).padStart(2, '0')}</p>
+            courses.map((c) => (
+              <article class="course-item" aria-labelledby={`course-${c.id}`}>
                 <h3 class="course-item__name" id={`course-${c.id}`}>{c.name}</h3>
                 <p class="course-item__price">
                   <span class="sr-only">税込 </span>
@@ -124,70 +106,59 @@ const seatsTotal = site.space.seats.reduce((s, x) => s + x.count, 0);
       </div>
     </section>
 
-    <!-- Space -->
-    <section class="section space" id="space" aria-labelledby="space-title">
-      <div class="wrap">
-        <header class="space__head reveal">
-          <p class="eyebrow" lang="en">Space</p>
+    <!-- お席: 写真2枚+席数 -->
+    <section class="screen space" id="space" aria-labelledby="space-title">
+      <div class="space__photos">
+        <div class="space__counter">
+          <Photo name="counter" fill pos="62% 50%" sizes="(min-width: 900px) 65vw, 100vw" />
+        </div>
+        <div class="space__semi">
+          <Photo name="semiPrivate" fill pos="40% 50%" sizes="(min-width: 900px) 35vw, 100vw" />
+        </div>
+      </div>
+      <div class="wrap space__body">
+        <div class="space__text">
           <h2 class="h2" id="space-title">火を眺める、<span class="nw">穏やかな時間。</span></h2>
-          <span class="rule" aria-hidden="true"></span>
           <p class="lead">{site.space.body}</p>
-        </header>
-      </div>
-      <div class="space__wide reveal">
-        <Photo name="counter" ratio="21 / 9" ratioSm="4 / 3" sizes="100vw" />
-      </div>
-      <div class="wrap space__lower">
-        <div class="seats reveal">
-          <h3 class="seats__title">
-            <span class="seats__total">{seatsTotal}</span>
-            <span class="seats__total-label">席</span>
+        </div>
+        <div class="seats">
+          <p class="seats__total">
+            <span class="seats__num">{seatsTotal}</span><span class="seats__unit">席</span>
             <span class="sr-only">（内訳は以下）</span>
-          </h3>
+          </p>
           <ul class="seats__list">
             {
               site.space.seats.map((s) => (
                 <li>
                   <span class="seats__name">{s.name}</span>
-                  <span class="seats__count">
-                    {s.count}
-                    <small>席</small>
-                  </span>
+                  <span class="seats__count">{s.count}席</span>
                 </li>
               ))
             }
           </ul>
         </div>
-        <div class="space__photo reveal">
-          <Photo name="semiPrivate" ratio="4 / 3" sizes="(min-width: 960px) 45vw, 100vw" />
-        </div>
       </div>
     </section>
 
-    <!-- Reservation -->
-    <section class="section section--alt reservation" id="reservation" aria-labelledby="reservation-title">
+    <!-- ご予約案内 -->
+    <section class="screen screen--alt reservation" id="reservation" aria-labelledby="reservation-title">
       <div class="wrap reservation__grid">
-        <div class="reservation__intro reveal">
-          <p class="eyebrow" lang="en">Reservation</p>
+        <div class="reservation__intro">
           <h2 class="h2" id="reservation-title">{site.reservation.heading}</h2>
-          <span class="rule" aria-hidden="true"></span>
           <p class="lead">{site.reservation.lead}</p>
           <button class="btn btn--solid" type="button" data-open-demo aria-haspopup="dialog">
             {site.reservation.demoButton}
           </button>
           <p class="notice">{site.reservation.demoNotice}</p>
         </div>
-        <div class="reservation__body reveal">
+        <div class="reservation__body">
           <h3 class="sub-h">ご予約の想定フロー</h3>
           <ol class="steps">
             {
-              site.reservation.steps.map((s, i) => (
+              site.reservation.steps.map((s) => (
                 <li>
-                  <span class="steps__no" aria-hidden="true" lang="en">{String(i + 1).padStart(2, '0')}</span>
-                  <div>
-                    <p class="steps__title">{s.title}</p>
-                    <p class="steps__text">{s.text}</p>
-                  </div>
+                  <p class="steps__title">{s.title}</p>
+                  <p class="steps__text">{s.text}</p>
                 </li>
               ))
             }
@@ -206,13 +177,11 @@ const seatsTotal = site.space.seats.reduce((s, x) => s + x.count, 0);
       </div>
     </section>
 
-    <!-- Shop info -->
-    <section class="section info" id="info" aria-labelledby="info-title">
+    <!-- 営業情報 -->
+    <section class="screen info" id="info" aria-labelledby="info-title">
       <div class="wrap info__grid">
-        <div class="info__main reveal">
-          <p class="eyebrow" lang="en">Information</p>
+        <div class="info__main">
           <h2 class="h2" id="info-title">営業情報</h2>
-          <span class="rule" aria-hidden="true"></span>
           <dl class="spec">
             {
               site.info.map((row) => (
@@ -223,11 +192,13 @@ const seatsTotal = site.space.seats.reduce((s, x) => s + x.count, 0);
               ))
             }
           </dl>
-          <p class="fine">電話番号・詳細な住所・SNSは、架空店舗のため掲載していません。</p>
-          <div style="margin-top: 28px;"><MapEmbed /></div>
         </div>
-        <div class="info__photo reveal">
-          <Photo name="exterior" ratio="3 / 2" ratioSm="3 / 2" sizes="(min-width: 960px) 40vw, 100vw" />
+        <div class="info__side">
+          <div class="info__photo">
+            <Photo name="exterior" fill pos="55% 45%" sizes="(min-width: 900px) 40vw, 100vw" />
+          </div>
+          <MapEmbed />
+          <p class="fine">電話番号・詳細な住所・SNSは掲載していません。</p>
         </div>
       </div>
     </section>

@@ -1,56 +1,51 @@
 ---
 import { site } from '../data/site';
-import Photo from './Photo.astro';
 import MapEmbed from './MapEmbed.astro';
 ---
 
-<section class="section info" id="info" aria-labelledby="info-title">
+<section class="info" id="info" aria-labelledby="info-title">
   <div class="container">
-    <p class="eyebrow">店舗案内</p>
     <h2 id="info-title" class="h2">店舗案内</h2>
 
     <div class="info__grid">
-      <div class="hours" id="hours">
-        <h3 class="h3">営業時間</h3>
-        <table class="hours__table">
-          <caption class="sr-only">営業時間とラストオーダー</caption>
-          <thead>
-            <tr><th scope="col"><span class="sr-only">時間帯</span></th><th scope="col">営業</th><th scope="col">ラストオーダー</th></tr>
-          </thead>
-          <tbody>
-            {
-              site.hours.map((h) => (
-                <tr>
-                  <th scope="row">{h.key}</th>
-                  <td class="hours__time">{h.open}–{h.close}</td>
-                  <td>L.O. {h.lastOrder}</td>
-                </tr>
-              ))
-            }
-            <tr class="hours__off">
-              <th scope="row">定休日</th>
-              <td colspan="2">{site.closed}</td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="info__main">
+        <div class="hours" id="hours">
+          <h3 class="h3">営業時間</h3>
+          <table class="hours__table">
+            <caption class="sr-only">営業時間とラストオーダー</caption>
+            <thead>
+              <tr><th scope="col"><span class="sr-only">時間帯</span></th><th scope="col">営業</th><th scope="col">ラストオーダー</th></tr>
+            </thead>
+            <tbody>
+              {
+                site.hours.map((h) => (
+                  <tr>
+                    <th scope="row">{h.key}</th>
+                    <td class="hours__time">{h.open}–{h.close}</td>
+                    <td>L.O. {h.lastOrder}</td>
+                  </tr>
+                ))
+              }
+              <tr class="hours__off">
+                <th scope="row">定休日</th>
+                <td colspan="2">{site.closed}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <dl class="facts">
+          <div class="wide"><dt>席数</dt><dd>{site.seats.total}席<small>({site.seats.detail})</small></dd></div>
+          <div><dt>駐車場</dt><dd>{site.parking}</dd></div>
+          <div><dt>お支払い</dt><dd>{site.payment}</dd></div>
+          <div class="wide"><dt>ご予算の目安</dt><dd>{site.budget}</dd></div>
+          <div class="wide"><dt>ご予約</dt><dd>{site.reservation}</dd></div>
+          <div class="wide"><dt>所在地</dt><dd>{site.area}<small>(詳細な住所は掲載していません)</small></dd></div>
+        </dl>
       </div>
 
-      <dl class="facts">
-        <div><dt>席数</dt><dd>{site.seats.total}席<small>({site.seats.detail})</small></dd></div>
-        <div><dt>駐車場</dt><dd>{site.parking}</dd></div>
-        <div><dt>お支払い</dt><dd>{site.payment}</dd></div>
-        <div><dt>ご予算の目安</dt><dd>{site.budget}</dd></div>
-        <div><dt>ご予約</dt><dd>{site.reservation}</dd></div>
-        <div><dt>所在地</dt><dd>{site.area}<small>(詳細な住所は掲載していません)</small></dd></div>
-        <div><dt>開業</dt><dd>{site.since}</dd></div>
-      </dl>
-
-      <div class="info__map" style="grid-column: 1 / -1;">
+      <div class="info__map">
         <MapEmbed />
-      </div>
-
-      <div class="info__photo">
-        <Photo name="noren" ratio="16 / 9" sizes="(min-width: 900px) 360px, 100vw" />
       </div>
     </div>
   </div>

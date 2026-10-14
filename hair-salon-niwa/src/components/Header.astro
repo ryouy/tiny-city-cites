@@ -7,23 +7,16 @@ const isCur = (href: string) => href.replace(/\/$/, '') === current;
 <div class="top">
   <p class="band">{bandParts[0]}｜<wbr />{bandParts[1]}</p>
   <header class="site-header">
-    <a class="brand" href={path()} aria-label={`${site.name} トップへ`}>
-      <span class="brand__mark">{site.wordmark}</span>
-      <span class="brand__sub">HAIR SALON</span>
-    </a>
+    <a class="brand" href={path()} aria-label={`${site.name} トップへ`}>{site.wordmark}</a>
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="メニューを開く">
       <span class="nav-toggle__bars" aria-hidden="true"></span>
     </button>
     <nav id="site-nav" class="site-nav" aria-label="主要ナビゲーション">
       <ul>
         {nav.map((n) => (
-          <li>
-            <a href={n.href} aria-current={isCur(n.href) ? 'page' : undefined}>
-              <span class="en">{n.label}</span><span class="ja">{n.ja}</span>
-            </a>
-          </li>
+          <li><a href={n.href} aria-current={isCur(n.href) ? 'page' : undefined}>{n.label}</a></li>
         ))}
-        <li class="site-nav__cta"><a class="btn btn--solid" href={path('reserve')}>{site.cta}</a></li>
+        <li class="site-nav__cta"><a class="btn btn--solid" href={path('reserve')} aria-current={isCur(path('reserve')) ? 'page' : undefined}>{site.cta}</a></li>
       </ul>
     </nav>
   </header>

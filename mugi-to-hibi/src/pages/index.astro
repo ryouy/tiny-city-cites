@@ -1,26 +1,98 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Header from '../components/Header.astro';
-import Hero from '../components/Hero.astro';
-import Story from '../components/Story.astro';
-import Commitment from '../components/Commitment.astro';
-import Menu from '../components/Menu.astro';
-import Today from '../components/Today.astro';
-import Calendar from '../components/Calendar.astro';
-import Shop from '../components/Shop.astro';
-import Footer from '../components/Footer.astro';
+import Photo from '../components/Photo.astro';
+import { pages, hero, news, href } from '../data/site';
+import { bakeSchedule, todayNotice } from '../data/bakery';
+import { products } from '../data/menu';
+
+const picks = products.filter((p) => p.tags.includes('人気') && p.photo);
+const yen = (n: number) => n.toLocaleString('ja-JP');
 ---
 
-<BaseLayout>
-  <Header />
-  <main id="main" tabindex="-1">
-    <Hero />
-    <Story />
-    <Commitment />
-    <Menu />
-    <Today />
-    <Calendar />
-    <Shop />
-  </main>
-  <Footer />
+<BaseLayout current="home" title={pages.home.title} description={pages.home.description}>
+  <section class="hero" aria-labelledby="hero-title">
+    <Photo name="hero" ratio="21 / 9" ratioSm="2 / 1" eager sizes="100vw" class="hero__photo" />
+    <div class="wrap hero__body">
+      <div class="hero__head">
+        <p class="hero__label">{hero.label}</p>
+        <h1 id="hero-title" class="hero__title">
+          <span class="nb">パンのある日々を、</span><span class="nb">もっと豊かに。</span>
+        </h1>
+      </div>
+      <dl class="hours">
+        <div class="hours__row"><dt>営業時間</dt><dd>{hero.hours}<span class="nb hours__note">{hero.hoursNote}</span></dd></div>
+        <div class="hours__row"><dt>定休日</dt><dd>{hero.closed}</dd></div>
+        <div class="hours__row hours__row--sub"><dt>ご利用</dt><dd>{hero.takeout}</dd></div>
+      </dl>
+      <div class="hero__tail">
+        <p class="hero__lead">{hero.lead}</p>
+        <div class="hero__cta">
+          <a class="btn btn--solid" href={href('breads/')}>今日のパンを見る</a>
+          <a class="btn btn--line" href={href('shop/')}>お店について</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section today" id="today" aria-labelledby="today-title">
+    <div class="wrap today__grid">
+      <div>
+        <h2 id="today-title" class="h2">今日の焼き上がり</h2>
+        <p class="notice" role="note">{todayNotice}</p>
+        <table class="bake">
+          <caption class="sr-only">今日の焼き上がり予定（架空のサンプル）</caption>
+          <thead class="sr-only"><tr><th scope="col">時間</th><th scope="col">商品</th><th scope="col">表示</th></tr></thead>
+          <tbody>
+            {bakeSchedule.map((r) => (
+              <tr>
+                <th scope="row" class="bake__time">{r.time}</th>
+                <td class="bake__items">{r.items}</td>
+                <td class="bake__status">{r.status}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <aside class="news" aria-labelledby="news-title">
+        <h3 id="news-title" class="news__title">お知らせ<small>（デモ用サンプル）</small></h3>
+        <ul>
+          {news.map((n) => <li>{n.text}</li>)}
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section picks" aria-labelledby="picks-title">
+    <div class="wrap">
+      <div class="picks__head">
+        <h2 id="picks-title" class="h2">おすすめのパン</h2>
+        <a class="more" href={href('breads/')}>パンをすべて見る</a>
+      </div>
+      <ul class="picks__list">
+        {picks.map((p) => (
+          <li class="pick reveal">
+            <a href={href(`breads/#${p.id}`)}>
+              <Photo name={p.photo!} ratio="4 / 5" ratioSm="4 / 5" sizes="(min-width: 900px) 33vw, 50vw" />
+              <span class="pick__name">{p.name}</span>
+              <span class="pick__price">¥{yen(p.price)}<small>税込</small></span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section guide" aria-labelledby="guide-title">
+    <div class="wrap guide__grid">
+      <Photo name="exterior" ratio="3 / 2" ratioSm="3 / 2" sizes="(min-width: 900px) 50vw, 100vw" class="reveal" />
+      <div>
+        <h2 id="guide-title" class="h2">お店のこと</h2>
+        <ul class="guide__links">
+          <li><a href={href('shop/#about')}>お店について・こだわり</a></li>
+          <li><a href={href('shop/#calendar')}>営業カレンダー</a></li>
+          <li><a href={href('shop/#info')}>店舗案内・地図</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
 </BaseLayout>

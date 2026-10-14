@@ -13,12 +13,22 @@ npm run build      # dist/ に静的出力
 npm run preview    # ビルド結果の確認（例: npm run preview -- --port 4406）
 npm run check      # astro check（型検査）
 npm run lint       # eslint
-npm run verify     # 仕様書のメニュー・価格・営業情報と dist/index.html を突き合わせ（要 build）
+npm run verify     # 仕様書のメニュー・価格・営業情報と dist 内の全3ページを突き合わせ（要 build）
 ```
+
+## ページ構成
+
+| URL | ファイル | 内容 |
+|---|---|---|
+| `/` | `src/pages/index.astro` | ヒーロー、クリームソーダの色の選択（5色）、お知らせ、他ページへの案内 |
+| `/menu/` | `src/pages/menu.astro` | クリームソーダ・スイーツ・フード・コーヒー・紅茶の全メニュー（税込） |
+| `/shop/` | `src/pages/shop.astro` | お店のこと、店主のこと、営業情報・地図、ギャラリー |
+
+内部リンクは `src/data/site.ts` の `url()`（`import.meta.env.BASE_URL` 基準）で生成します。ナビは `pages` 配列、各ページの title/description は `pageMeta` で編集します。
 
 ## データの編集
 
-- `src/data/site.ts` … 店舗設定・営業情報・お知らせ（サンプル）・店主設定
+- `src/data/site.ts` … 店舗設定・営業情報・お知らせ（サンプル）・店主のこと・ページ別 title/description
 - `src/data/menu.ts` … クリームソーダ・スイーツ・フード・ドリンクと価格（税込・仕様書 §3 と一致させる）
 - `src/data/photos.ts` … 画像のベース名・alt・撮影イメージ・推奨サイズ
 
@@ -26,18 +36,18 @@ npm run verify     # 仕様書のメニュー・価格・営業情報と dist/in
 
 ## 画像の差し替え
 
-`public/images/soda-biyori/` に下表のファイルを置くと、ビルド時に自動でプレースホルダー（「画像準備中」表示）から実画像へ切り替わります。拡張子は `webp` / `png` / `jpg` / `jpeg` / `avif` のいずれでも可（同じベース名）。生成画像、または商用利用の権利を確認した素材のみを使用してください。
+`public/images/soda-biyori/` に下表のファイルを置くと、ビルド時に自動でプレースホルダー（単色面＋小さな「画像準備中」）から実画像へ切り替わります。拡張子は `webp` / `png` / `jpg` / `jpeg` / `avif` のいずれでも可（同じベース名）。生成画像、または商用利用の権利を確認した素材のみを使用してください。
 
 | ファイル（ベース名） | 推奨比率 | 用途 |
 |---|---|---|
-| `hero-cream-soda` | 4:5（1200×1500） | ヒーロー、メロンソーダ（セレクター）、ギャラリー |
+| `hero-cream-soda` | 4:5（1200×1500） | ヒーロー、メロンソーダ（セレクター・メニュー） |
 | `soda-ichigo` | 4:5 | いちごソーダ、ギャラリー |
 | `soda-aozora` | 4:5 | 青空ソーダ、ギャラリー |
 | `soda-yuyake` | 4:5 | ゆうやけソーダ、ギャラリー |
-| `pudding` | 5:4（1500×1200） | プリン特集、ギャラリー |
-| `napolitan` | 5:4 | 喫茶ごはん、ギャラリー |
-| `omelette-rice` | 5:4（表示は正方形にトリミング） | 喫茶ごはん、ギャラリー |
-| `shop-interior` | 5:4（表示は4:5・4:3にトリミング） | コンセプト、ギャラリー |
+| `pudding` | 5:4（1500×1200） | メニュー（スイーツ）、トップ案内、ギャラリー |
+| `napolitan` | 5:4 | メニュー（フード）、ギャラリー |
+| `omelette-rice` | 5:4（表示は正方形にトリミング） | メニュー（フード）、ギャラリー |
+| `shop-interior` | 5:4（表示は4:5・4:3にトリミング） | お店のこと、トップ案内、ギャラリー |
 | `soda-kisetsu`（任意・仕様書に指定なし） | 4:5 | 季節のクリームソーダ（セレクター） |
 
 ## メインサイトへの同居ビルド

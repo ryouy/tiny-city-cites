@@ -23,4 +23,4 @@ export const courses: readonly Course[] = [
   },
 ];
 
-export const courseNote = 'コース内容は季節や仕入れで変わります（架空店舗設定）。';
+export const courseNote = 'コース内容は季節や仕入れで変わります。';

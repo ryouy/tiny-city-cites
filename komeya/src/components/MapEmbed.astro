@@ -22,15 +22,18 @@ const src =
 <style>
   .map-embed {
     margin: 0;
-    max-width: 560px;
+    max-width: none;
   }
   .map-embed iframe {
     display: block;
     width: 100%;
-    height: clamp(200px, 52vw, 260px);
+    height: clamp(220px, 56vw, 300px);
     border: 1px solid currentColor;
     border-color: color-mix(in srgb, currentColor 22%, transparent);
     background: color-mix(in srgb, currentColor 6%, transparent);
+  }
+  @media (min-width: 900px) {
+    .map-embed iframe { height: 340px; }
   }
   .map-embed figcaption {
     margin-top: 10px;

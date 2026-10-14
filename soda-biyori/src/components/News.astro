@@ -2,23 +2,18 @@
 import { news } from '../data/site';
 ---
 
-<section class="section news" id="news" aria-labelledby="news-title">
+<section class="section news" aria-labelledby="news-title">
   <div class="container news__grid">
-    <header class="reveal">
-      <p class="eyebrow">News</p>
-      <h2 id="news-title" class="h2"><span class="nw">お知らせ</span></h2>
-      <p class="news__note">すべて架空のサンプルです。</p>
-    </header>
-    <ol class="news__list">
+    <h2 id="news-title" class="h2">お知らせ</h2>
+    <ul class="news__list reveal">
       {
         news.map((n) => (
-          <li class="news__item reveal">
-            <span class="news__no serif" aria-hidden="true">{n.no}</span>
+          <li class="news__item">
             <h3 class="news__title">{n.title}</h3>
             <p>{n.body}</p>
           </li>
         ))
       }
-    </ol>
+    </ul>
   </div>
 </section>

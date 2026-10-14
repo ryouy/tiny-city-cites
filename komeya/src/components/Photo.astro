@@ -10,24 +10,27 @@ interface Props {
   priority?: boolean;
   /** 枠のアスペクト比(CSS値)。省略時は 4 / 3 */
   ratio?: string;
+  /** 枠に合わせて切り取るときの基準位置(CSS object-position) */
+  position?: string;
   sizes?: string;
 }
-const { name, priority = false, ratio = '4 / 3', sizes = '(min-width: 900px) 560px, 100vw' } = Astro.props;
+const { name, priority = false, ratio = '4 / 3', position = '50% 50%', sizes = '(min-width: 900px) 560px, 100vw' } = Astro.props;
 const def = photos[name];
-// ビルド時に public/images/komeya/ の実ファイルを確認。無ければプレースホルダー表示。
-const exists = existsSync(join(process.cwd(), 'public', 'images', 'komeya', def.file));
+// ビルド時に public/images/komeya/ の実ファイル(webp / png / jpg / jpeg)を探す。無ければプレースホルダー表示。
+const dir = join(process.cwd(), 'public', 'images', 'komeya');
+const found = ['webp', 'png', 'jpg', 'jpeg'].map((e) => `${def.file}.${e}`).find((f) => existsSync(join(dir, f)));
 ---
 
 {
-  exists ? (
+  found ? (
     <img
       class="photo"
-      src={`${import.meta.env.BASE_URL}images/komeya/${def.file}`}
+      src={`${import.meta.env.BASE_URL}images/komeya/${found}`}
       alt={def.alt}
       width={def.width}
       height={def.height}
       sizes={sizes}
-      style={`aspect-ratio:${ratio}`}
+      style={`aspect-ratio:${ratio};object-position:${position}`}
       loading={priority ? 'eager' : 'lazy'}
       fetchpriority={priority ? 'high' : undefined}
       decoding="async"
@@ -35,12 +38,6 @@ const exists = existsSync(join(process.cwd(), 'public', 'images', 'komeya', def.
   ) : (
     <div class={`photo photo--ph tone-${def.tone}`} style={`aspect-ratio:${ratio}`} role="img" aria-label={`画像準備中: ${def.shoot}`}>
       <span class="photo__tag">画像準備中</span>
-      <svg class="photo__icon" viewBox="0 0 64 64" width="72" height="72" aria-hidden="true" focusable="false">
-        <path d="M22 12c-3 4 3 7 0 11M32 10c-3 4 3 8 0 12M42 12c-3 4 3 7 0 11" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" />
-        <path d="M8 30h48c0 13-9 22-24 22S8 43 8 30Z" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" />
-        <path d="M24 56h16" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
-      </svg>
-      <span class="photo__shoot">撮影イメージ: {def.shoot}</span>
     </div>
   )
 }

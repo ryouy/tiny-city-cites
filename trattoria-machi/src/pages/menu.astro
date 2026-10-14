@@ -1,0 +1,110 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Photo from '../components/Photo.astro';
+import SetSim from '../components/SetSim.astro';
+import { site, sections } from '../data/site';
+import { lunch, lunchDrinks, lunchExample, pasta, pastaNote, pizza, pizzaNote, antipasti, dolce, drink } from '../data/menu';
+import type { Item } from '../data/menu';
+
+const chips = [
+  { id: 'lunch', label: 'ランチ' },
+  { id: 'pasta', label: 'パスタ' },
+  { id: 'pizza', label: 'ピッツァ' },
+  { id: 'antipasti', label: '前菜' },
+  { id: 'dolce', label: 'ドルチェ・ドリンク' },
+  { id: 'set', label: 'おふたりセット' },
+];
+---
+
+<BaseLayout title={site.menuTitle} description={site.menuDescription} current="menu">
+  <main id="main">
+    <header class="menuhead wrap">
+      <h1>お品書き</h1>
+      <p class="menuhead__note">価格はすべて税込表記です。</p>
+      <p class="menuhead__serve"><b>{sections.lunch.serve}</b>（ランチ営業 11:30–14:30、L.O.14:00）</p>
+    </header>
+
+    <nav class="chips" aria-label="お品書きのカテゴリ">
+      <ul class="wrap">
+        {chips.map((c) => <li><a href={`#${c.id}`}>{c.label}</a></li>)}
+      </ul>
+    </nav>
+
+    <div class="wrap menu">
+      <section id="lunch" class="msec" aria-labelledby="h-lunch">
+        <div class="msec__photo"><Photo name="pastaCream" ratio="4 / 5" sizes="(min-width: 900px) 36vw, 100vw" /></div>
+        <div class="msec__body">
+          <h2 id="h-lunch">ランチ <span>{sections.lunch.serve.replace('ランチ提供 ', '')}</span></h2>
+          <ul class="plist">
+            {lunch.map((it: Item) => (
+              <li><span class="plist__name">{it.name}</span><span class="plist__desc">{it.desc}</span><span class="plist__price">{it.price}</span></li>
+            ))}
+          </ul>
+          <p class="mnote">ドリンクは {lunchDrinks} からお選びいただけます。</p>
+          <p class="mnote">{lunchExample}</p>
+        </div>
+      </section>
+
+      <section id="pasta" class="msec msec--rev" aria-labelledby="h-pasta">
+        <div class="msec__photo"><Photo name="pastaTomato" ratio="4 / 5" sizes="(min-width: 900px) 36vw, 100vw" /></div>
+        <div class="msec__body">
+          <h2 id="h-pasta">パスタ <span>ディナー単品</span></h2>
+          <ul class="plist">
+            {pasta.map((it: Item) => (
+              <li><span class="plist__name">{it.name}</span><span class="plist__desc">{it.desc}</span><span class="plist__price">{it.price}</span></li>
+            ))}
+          </ul>
+          <p class="mnote">{pastaNote}</p>
+        </div>
+      </section>
+
+      <section id="pizza" class="msec" aria-labelledby="h-pizza">
+        <div class="msec__photo"><Photo name="pizza" ratio="4 / 5" sizes="(min-width: 900px) 36vw, 100vw" /></div>
+        <div class="msec__body">
+          <h2 id="h-pizza">ピッツァ</h2>
+          <ul class="plist">
+            {pizza.map((it: Item) => (
+              <li><span class="plist__name">{it.name}</span><span class="plist__desc">{it.desc}</span><span class="plist__price">{it.price}</span></li>
+            ))}
+          </ul>
+          <p class="mnote">{pizzaNote}</p>
+        </div>
+      </section>
+
+      <section id="antipasti" class="msec msec--rev" aria-labelledby="h-antipasti">
+        <div class="msec__photo"><Photo name="antipasti" ratio="4 / 5" sizes="(min-width: 900px) 36vw, 100vw" /></div>
+        <div class="msec__body">
+          <h2 id="h-antipasti">前菜</h2>
+          <ul class="plist">
+            {antipasti.map((it: Item) => (
+              <li><span class="plist__name">{it.name}</span><span class="plist__price">{it.price}</span></li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section id="dolce" class="msec" aria-labelledby="h-dolce">
+        <div class="msec__photo"><Photo name="tiramisu" ratio="4 / 5" sizes="(min-width: 900px) 36vw, 100vw" /></div>
+        <div class="msec__body">
+          <h2 id="h-dolce">ドルチェ・ドリンク</h2>
+          <h3>ドルチェ</h3>
+          <ul class="plist">
+            {dolce.map((it: Item) => (
+              <li><span class="plist__name">{it.name}</span><span class="plist__price">{it.price}</span></li>
+            ))}
+          </ul>
+          <h3>ドリンク</h3>
+          <ul class="plist">
+            {drink.map((it: Item) => (
+              <li><span class="plist__name">{it.name}</span><span class="plist__price">{it.price}</span></li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section id="set" class="setwrap" aria-labelledby="set-title">
+        <SetSim />
+      </section>
+    </div>
+  </main>
+</BaseLayout>

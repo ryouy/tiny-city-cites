@@ -7,27 +7,27 @@ interface Props {
   name: PhotoKey;
   /** CSS aspect-ratio 形式 例: "4 / 5" */
   ratio?: string;
-  /** スマホ(〜767px)での比率 */
+  /** スマホ(〜639px)での比率 */
   ratioSm?: string;
   eager?: boolean;
   sizes?: string;
   class?: string;
-  showCaption?: boolean;
 }
-const { name, ratio = '4 / 3', ratioSm, eager = false, sizes = '100vw', class: className = '', showCaption = true } = Astro.props;
+const { name, ratio = '4 / 3', ratioSm, eager = false, sizes = '100vw', class: className = '' } = Astro.props;
 const photo = photos[name];
 
-// ビルド時に実ファイルの有無を判定する
-const exists = existsSync(join(process.cwd(), 'public', imageDir, photo.file));
-const style = `--r:${ratio};--r-sm:${ratioSm ?? ratio}`;
+// ビルド時に実ファイルの有無と拡張子を判定する
+const exts = ['webp', 'png', 'jpg', 'jpeg', 'avif'];
+const ext = exts.find((e) => existsSync(join(process.cwd(), 'public', imageDir, `${photo.stem}.${e}`)));
+const style = `--r:${ratio};--r-sm:${ratioSm ?? ratio};--pos:${photo.pos}`;
 const cls = ['photo', `tone-${photo.tone}`, className].filter(Boolean).join(' ');
 ---
 
 {
-  exists ? (
+  ext ? (
     <div class={cls} style={style}>
       <img
-        src={`${import.meta.env.BASE_URL}${imageDir.slice(1)}${photo.file}`}
+        src={`${import.meta.env.BASE_URL.replace(/\/$/, '')}${imageDir}${photo.stem}.${ext}`}
         alt={photo.alt}
         width={photo.width}
         height={photo.height}
@@ -39,12 +39,7 @@ const cls = ['photo', `tone-${photo.tone}`, className].filter(Boolean).join(' ')
     </div>
   ) : (
     <div class={`${cls} photo--placeholder`} style={style} role="img" aria-label={`画像準備中：${photo.shot}`}>
-      <span class="photo__frame" aria-hidden="true" />
-      <span class="photo__meta" aria-hidden="true">
-        <span class="photo__label">{photo.label}</span>
-        <span class="photo__status">画像準備中</span>
-        {showCaption && <span class="photo__shot">{photo.shot}</span>}
-      </span>
+      <span class="photo__status" aria-hidden="true">画像準備中</span>
     </div>
   )
 }

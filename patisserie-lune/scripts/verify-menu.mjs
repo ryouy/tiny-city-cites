@@ -4,7 +4,7 @@ import { readFileSync, existsSync } from 'node:fs';
 
 const specPath = process.argv[2] ?? '../siyosyo/PATISSERIE_LUNE_Claude_Code.md';
 const spec = readFileSync(specPath, 'utf8');
-const pages = { home: 'dist/index.html', menu: 'dist/menu/index.html', order: 'dist/order/index.html', about: 'dist/about/index.html', access: 'dist/access/index.html' };
+const pages = { home: 'dist/index.html', menu: 'dist/menu/index.html', order: 'dist/order/index.html', about: 'dist/about/index.html' };
 
 const raw = {};
 const toLines = (html) =>
@@ -40,19 +40,18 @@ const near = (L, name, words) => {
 const cut = rows(section('### Cut Cakes', '### Whole Cakes'), /^cake\d+$/);
 for (const [, , name, price, desc, alg] of cut) {
   count++;
-  if (!near(lines.menu, name, [price, desc, `アレルゲン例（架空データ）：${alg}`])) ng(`menu cut: ${name} ${price}`); else console.log(`OK: ${name} ${price}`);
+  if (!near(lines.menu, name, [price, desc, `アレルゲン例：${alg}`])) ng(`menu cut: ${name} ${price}`); else console.log(`OK: ${name} ${price}`);
 }
 const whole = rows(section('### Whole Cakes', '### Baked Goods'), /^whole\d+$/);
 for (const [, , name, size, price, note] of whole) {
   count++;
   if (!near(lines.menu, name, [size, price, note])) ng(`menu whole: ${name} ${size} ${price}`); else console.log(`OK: ${name} ${size} ${price}`);
-  if (!lines.home.includes(price)) ng(`home whole price: ${name} ${price}`);
+  if (!lines.order.includes(price)) ng(`order whole price: ${name} ${price}`);
 }
 const baked = rows(section('### Baked Goods', '*アレルゲンは'), /^bake\d+$/);
 for (const [, , name, price, desc] of baked) {
   count++;
   if (!near(lines.menu, name, [price, desc])) ng(`menu baked: ${name} ${price}`); else console.log(`OK: ${name} ${price}`);
-  if (!near(lines.home, name, [price, desc])) ng(`home baked: ${name} ${price}`);
 }
 if (cut.length !== 6 || whole.length !== 6 || baked.length !== 5) ng(`商品数が仕様書と異なる: ${cut.length}/${whole.length}/${baked.length}`);
 // 代表3点(トップ)
@@ -70,12 +69,12 @@ const musts = {
     '想いを包む、焼き菓子。', '素材の風味が広がるフィナンシェやサブレを、贈りものに。ひとつから、詰め合わせまで。',
     '10:00–18:00', '火曜日・水曜日は定休日です。', '商品売切れ時は早仕舞いの場合があります。',
   ],
-  access: [
+  about: [
     '10:00〜18:00', '火曜日・水曜日', 'テイクアウトあり', 'イートインはありません', '3台（架空設定）', 'カットケーキ500〜850円', 'ギフト1,000円〜',
     '現金・クレジットカード・一部QR決済（架空設定）', '福島県会津若松市の閑静な住宅地', 'ホールケーキのみ',
   ],
   menu: ['アレルゲン表示は架空データです（デザイン検証用の仮データで、実際の食品表示ではありません）。', '季節商品は架空の販売例です。在庫情報はリアルタイムで表示していません。'],
-  order: ['デモのため予約されません。', '火曜・水曜', '祝日・臨時休業には対応していません。'],
+  order: ['デモのため予約されません。', '火曜・水曜', '祝日・臨時休業には対応していません。', '本ページは架空店舗のデモです。予約・注文は受け付けていません。'],
 };
 // 英文見出しは 各行 span に分割されているため連結して(下の正規表現で確認)
 for (const [pg, arr] of Object.entries(musts)) for (const m of arr) {
@@ -106,7 +105,7 @@ for (const [pg, h] of Object.entries(raw)) {
   if (/<form[\s>]/.test(h) && /action=/.test(h)) ng(`${pg}: form に action がある(送信されうる)`);
   const ifr = h.match(/<iframe[^>]*>/g) ?? [];
   iframeTotal += ifr.length;
-  if (ifr.length && pg !== 'access') ng(`${pg}: iframe は access ページのみ許可`);
+  if (ifr.length && pg !== 'about') ng(`${pg}: iframe は about ページのみ許可`);
   for (const f of ifr) if (!/src="https:\/\/www\.google\.com\/maps\/embed\?/.test(f)) ng(`${pg}: iframe が Google マップ埋め込みではない`);
   if (/lang="ja"/.test(h) === false) ng(`${pg}: lang`);
   // 画像に alt

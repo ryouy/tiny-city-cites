@@ -1,0 +1,44 @@
+---
+import { site } from '../data/site';
+---
+
+<!-- 右端の現在位置インジケーター(PCのみ・装飾)。操作はヘッダーのナビで行えるため、支援技術・Tab移動の対象にしない -->
+<ol class="screen-dots" aria-hidden="true" data-screen-dots>
+  {
+    site.screens.map((s) => (
+      <li>
+        <a href={`#${s.id}`} tabindex="-1" data-target={s.id}>
+          <span class="screen-dots__label">{s.label}</span>
+        </a>
+      </li>
+    ))
+  }
+</ol>
+
+<script>
+  const ids = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-screen-dots] a')).map((a) => a.dataset.target ?? '');
+  const dots = document.querySelectorAll<HTMLElement>('[data-screen-dots] a');
+  const navLinks = document.querySelectorAll<HTMLAnchorElement>('.site-nav a, .reserve-link');
+  const sections = ids.map((id) => document.getElementById(id)).filter((el): el is HTMLElement => !!el);
+
+  const setActive = (id: string) => {
+    dots.forEach((d) => d.classList.toggle('is-active', d.dataset.target === id));
+    navLinks.forEach((a) => {
+      if (a.getAttribute('href') === `#${id}`) a.setAttribute('aria-current', 'location');
+      else a.removeAttribute('aria-current');
+    });
+  };
+
+  if ('IntersectionObserver' in window) {
+    // 画面の縦中央付近を横切っているセクションを現在位置とする
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((en) => {
+          if (en.isIntersecting) setActive(en.target.id);
+        });
+      },
+      { rootMargin: '-45% 0px -50% 0px' },
+    );
+    sections.forEach((s) => io.observe(s));
+  }
+</script>

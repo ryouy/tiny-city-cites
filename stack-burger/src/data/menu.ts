@@ -1,6 +1,4 @@
 // メニューデータ(仕様書 §3。すべて架空・税込)。価格・説明の変更はこのファイルだけで完結します。
-import type { PhotoKey } from './photos';
-
 export type Category = 'burgers' | 'sides' | 'drinks';
 
 export interface MenuItem {
@@ -46,17 +44,9 @@ export const drinks: MenuItem[] = [
 
 export const itemsByCategory: Record<Category, MenuItem[]> = { burgers, sides, drinks };
 
-/** カテゴリごとの写真(無ければ文字の色面) */
-export const panelPhotos: Record<Category, PhotoKey[]> = {
-  burgers: ['classic', 'bacon'],
-  sides: ['fries'],
-  drinks: [],
-};
-
 export const menuNotes = {
   tax: 'すべて税込価格です。',
   badge: '※「人気No.1」は架空設定であり、実在の販売実績ではありません。',
-  fictional: '※メニュー・価格はすべて架空の設定です。',
 };
 
 // セット・追加(仕様書 §3 SETS & ADD-ONS)
