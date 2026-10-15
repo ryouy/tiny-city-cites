@@ -3,7 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Photo from '../components/Photo.astro';
 import Calendar from '../components/Calendar.astro';
 import MapEmbed from '../components/MapEmbed.astro';
-import { pages, about, commitments, shopInfo, shopNote } from '../data/site';
+import { pages, about, commitments, shopInfo } from '../data/site';
 ---
 
 <BaseLayout current="shop" title={pages.shop.title} description={pages.shop.description}>
@@ -24,7 +24,7 @@ import { pages, about, commitments, shopInfo, shopNote } from '../data/site';
         <h2 id="about-title" class="h2">{about.heading}</h2>
         <p class="about__lead">{about.body}</p>
         <p>{about.story}</p>
-        <p class="about__owner">{about.owner}<small>{about.ownerNote}</small></p>
+        <p class="about__owner">{about.owner}</p>
       </div>
     </div>
   </section>
@@ -45,7 +45,6 @@ import { pages, about, commitments, shopInfo, shopNote } from '../data/site';
   <section class="section shop" id="info" aria-labelledby="shop-title">
     <div class="wrap">
       <h2 id="shop-title" class="h2">店舗案内</h2>
-      <Photo name="exterior" ratio="21 / 9" ratioSm="3 / 2" sizes="100vw" class="shop__photo reveal" />
       <div class="shop__grid">
         <div>
           <dl class="info">
@@ -53,7 +52,6 @@ import { pages, about, commitments, shopInfo, shopNote } from '../data/site';
               <div class="info__row"><dt>{r.term}</dt><dd>{r.desc}</dd></div>
             ))}
           </dl>
-          <p class="shop__note">{shopNote}</p>
         </div>
         <MapEmbed />
       </div>

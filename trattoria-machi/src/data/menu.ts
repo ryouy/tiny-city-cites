@@ -9,7 +9,7 @@ export const lunch: Item[] = [
   { name: 'お子さまプレート', price: '¥680', desc: 'ミニミートソース、サラダ、ジュース' },
 ];
 export const lunchDrinks = 'コーヒー（HOT/ICE）、紅茶（HOT/ICE）、オレンジジュース';
-export const lunchExample = '本日のパスタの一例（架空）：きのことベーコンのクリームソース';
+export const lunchExample = '本日のパスタの例：きのことベーコンのクリームソース';
 
 export const pasta: Item[] = [
   { name: '揚げなすとモッツァレラのトマトソース', price: '¥1,180', desc: 'ほどよい酸味とチーズのコク' },

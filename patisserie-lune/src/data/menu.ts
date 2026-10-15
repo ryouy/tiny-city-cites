@@ -1,4 +1,4 @@
-// 商品マスター(仕様書 §4。すべて架空の税込価格)。UI には直書きせず、ここから描画する。
+// 商品マスター(仕様書 §4。税込価格)。UI には直書きせず、ここから描画する。
 export type PhotoKey = 'hero' | 'shop' | 'shortcake' | 'tart' | 'chocolat' | 'wholeCake' | 'gift' | 'baker';
 
 export interface CutCake {

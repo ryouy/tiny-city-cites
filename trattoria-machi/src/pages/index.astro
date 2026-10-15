@@ -2,69 +2,62 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Photo from '../components/Photo.astro';
 import MapEmbed from '../components/MapEmbed.astro';
-import { hero, hoursBand, sections, info, access } from '../data/site';
+import { hero, hoursBand, sections, info } from '../data/site';
 const base = import.meta.env.BASE_URL;
 const menu = `${base}menu/`;
+const meals = [
+  { id: 'lunch', h2: sections.lunch.h2, body: sections.lunch.body, serve: sections.lunch.serve, label: 'ランチメニューを見る', href: `${menu}#lunch` },
+  { id: 'dinner', h2: sections.dinner.h2, body: sections.dinner.body, serve: 'ディナー 17:30–21:00（L.O.20:30）', label: 'ディナーメニューを見る', href: `${menu}#pasta` },
+];
 ---
 
 <BaseLayout current="top">
   <main id="main">
     <section class="hero" aria-labelledby="hero-title">
-      <div class="hero__text">
-        <p class="hero__eyebrow">{hero.eyebrow}</p>
-        <h1 id="hero-title">{hero.h1.split('、').map((t, i) => <span>{i === 0 ? `${t}、` : t}</span>)}</h1>
-        <p class="hero__lead">{hero.lead}</p>
-        <p class="hero__cta">
-          <a class="btn" href={menu}>メニューを見る</a>
-          <a class="btn btn--ghost" href="#about">お店について</a>
-        </p>
-      </div>
       <div class="hero__photo">
-        <Photo name="hero" priority ratio="16 / 9" sizes="(min-width: 900px) 58vw, 100vw" />
+        <Photo name="hero" priority ratio="16 / 9" sizes="100vw" />
       </div>
-    </section>
-
-    <section class="hoursband" aria-label="営業時間と予算">
-      <div class="wrap hoursband__in">
-        {hoursBand.map((h) => (
-          <dl>
-            <dt>{h.k}</dt>
-            <dd class="hoursband__time">{h.time}</dd>
-            <dd>予算 {h.budget}</dd>
-          </dl>
-        ))}
-        <p class="hoursband__more">定休日 月曜日<br /><a href="#info">店舗案内</a></p>
-      </div>
-    </section>
-
-    <section class="meals wrap" aria-label="ランチとディナー">
-      <article id="lunch" class="meal">
-        <Photo name="pastaCream" ratio="3 / 2" sizes="(min-width: 900px) 46vw, 100vw" />
-        <h2>{sections.lunch.h2}</h2>
-        <p>{sections.lunch.body}</p>
-        <p class="meal__time">{sections.lunch.serve}</p>
-        <a class="textlink" href={`${menu}#lunch`}>ランチメニューを見る</a>
-      </article>
-      <article id="dinner" class="meal">
-        <Photo name="pizza" ratio="3 / 2" sizes="(min-width: 900px) 46vw, 100vw" />
-        <h2>{sections.dinner.h2}</h2>
-        <p>{sections.dinner.body}</p>
-        <p class="meal__time">ディナー 17:30–21:00（L.O.20:30）</p>
-        <a class="textlink" href={`${menu}#pasta`}>ディナーメニューを見る</a>
-      </article>
-    </section>
-
-    <section id="about" class="about">
-      <div class="wrap about__in">
-        <div class="about__photo"><Photo name="interior" ratio="3 / 2" sizes="(min-width: 900px) 52vw, 100vw" /></div>
-        <div class="about__text">
-          <h2>{sections.story.h2}</h2>
-          <p>{sections.story.body}</p>
-          <p>{sections.story.detail}</p>
-          <p class="about__note">{sections.story.note}</p>
-          <h3>{sections.family.h2}</h3>
-          <p>{sections.family.body}</p>
+      <div class="hero__panel">
+        <div class="wrap hero__in">
+          <div>
+            <p class="hero__eyebrow">{hero.eyebrow}</p>
+            <h1 id="hero-title">{hero.h1.split('、').map((t, i) => <span>{i === 0 ? `${t}、` : t}</span>)}</h1>
+          </div>
+          <div>
+            <p class="hero__lead">{hero.lead}</p>
+            <p class="hero__cta">
+              <a class="btn" href={menu}>メニューを見る</a>
+              <a class="btn btn--ghost" href="#about">お店について</a>
+            </p>
+          </div>
         </div>
+
+        <div class="wrap meals">
+          {meals.map((m, i) => (
+            <article id={m.id} class="meal">
+              <h2>{m.h2}</h2>
+              <p>{m.body}</p>
+              <p class="meal__time">{m.serve}</p>
+              <p class="meal__budget">予算 {hoursBand[i].budget}</p>
+              <a class="textlink" href={m.href}>{m.label}</a>
+            </article>
+          ))}
+        </div>
+        <p class="wrap hero__closed">定休日 月曜日 <a href="#info">店舗案内</a></p>
+      </div>
+    </section>
+
+    <section id="about" class="about wrap">
+      <div class="about__photo"><Photo name="interior" ratio="3 / 2" sizes="(min-width: 1120px) 1080px, 100vw" /></div>
+      <div class="about__text">
+        <h2>{sections.story.h2}</h2>
+        <p>{sections.story.body}</p>
+        <p>{sections.story.detail}</p>
+        <p class="about__note">{sections.story.note}</p>
+      </div>
+      <div class="about__family">
+        <h3>{sections.family.h2}</h3>
+        <p>{sections.family.body}</p>
       </div>
     </section>
 
@@ -81,8 +74,6 @@ const menu = `${base}menu/`;
         </dl>
         <div class="info__access">
           <h3>アクセス</h3>
-          <p><strong>{access.lead}</strong></p>
-          <p>{access.body}</p>
           <MapEmbed />
         </div>
       </div>

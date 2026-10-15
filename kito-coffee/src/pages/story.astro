@@ -6,8 +6,8 @@ import { photos } from '../data/photos';
 
 <BaseLayout
   current="story"
-  title="ストーリー | KITO COFFEE（架空カフェ デモサイト）"
-  description="KITO COFFEEのストーリー。お店のこと、コーヒー、手づくりのお菓子、店主について。架空店舗のデモサイトです。"
+  title="ストーリー | KITO COFFEE"
+  description="KITO COFFEEのストーリー。お店のこと、コーヒー、手づくりのお菓子、店主について。"
 >
   <div class="container">
     <h1 class="h1 story-title">ストーリー</h1>
@@ -15,7 +15,7 @@ import { photos } from '../data/photos';
 
   <article class="feature container reveal">
     <div class="feature__photo">
-      <Photo photo={photos.interior} ratio="4 / 5" ratioSm="4 / 5" pos="40% 50%" sizes="(min-width: 900px) 42vw, 100vw" />
+      <Photo photo={photos.interior} ratio="4 / 5" ratioSm="4 / 5" pos="50% 50%" sizes="(min-width: 900px) 42vw, 100vw" />
     </div>
     <div class="feature__text">
       <h2 class="h2"><span class="nw">コーヒーを、</span><span class="nw">もっと自分らしく。</span></h2>
@@ -27,7 +27,7 @@ import { photos } from '../data/photos';
 
   <article class="feature feature--flip container reveal">
     <div class="feature__photo">
-      <Photo photo={photos.pourOver} ratio="3 / 2" ratioSm="4 / 3" pos="55% 50%" sizes="(min-width: 900px) 58vw, 100vw" />
+      <Photo photo={photos.pourOver} ratio="3 / 2" ratioSm="3 / 2" pos="50% 50%" sizes="(min-width: 900px) 58vw, 100vw" />
     </div>
     <div class="feature__text">
       <h2 class="h2"><span class="nw">一杯に、</span><span class="nw">丁寧な理由がある。</span></h2>
@@ -39,7 +39,7 @@ import { photos } from '../data/photos';
 
   <article class="feature container reveal">
     <div class="feature__photo">
-      <Photo photo={photos.cheesecake} ratio="4 / 3" ratioSm="4 / 3" pos="55% 50%" sizes="(min-width: 900px) 50vw, 100vw" />
+      <Photo photo={photos.cheesecake} ratio="4 / 3" ratioSm="4 / 3" pos="50% 50%" sizes="(min-width: 900px) 50vw, 100vw" />
     </div>
     <div class="feature__text">
       <h2 class="h2"><span class="nw">コーヒーの隣に、</span><span class="nw">小さなご褒美。</span></h2>
@@ -49,15 +49,14 @@ import { photos } from '../data/photos';
     </div>
   </article>
 
-  <article class="owner container reveal">
-    <div class="owner__photo">
-      <Photo photo={photos.hero} ratio="21 / 9" ratioSm="4 / 3" pos="60% 55%" sizes="100vw" />
-    </div>
+  <article class="owner reveal">
+    <div class="container owner__inner">
     <div class="owner__text">
       <h2 class="h2"><span class="nw">木と、糸と、</span><span class="nw">人のつながり。</span></h2>
       <p class="prose">
         KITOという名前には、空間を彩る「木」と、人と人を結ぶ「糸」の意味を込めました。店主は東京のコーヒー専門店で約6年経験を積み、故郷の会津へ。2023年に、気負わず立ち寄れる小さな店を開きました。
       </p>
+    </div>
     </div>
   </article>
 

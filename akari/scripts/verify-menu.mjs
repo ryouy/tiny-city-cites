@@ -32,7 +32,7 @@ for (const row of spec.slice(menuStart, menuEnd).split('\n')) {
   const want = yen(price);
   const idxs = lines.map((l, i) => (l === name ? i : -1)).filter((i) => i >= 0);
   // 品名 → 説明 → 価格(「税込」ラベルを挟む)の順で出ること
-  const ok = idxs.some((i) => lines[i + 1] === desc && lines.slice(i + 2, i + 5).includes(want) && (!from || lines.slice(i + 2, i + 7).includes('〜')));
+  const ok = idxs.some((i) => lines[i + 1] === desc.replace(/（架空の目安）/, '') && lines.slice(i + 2, i + 5).includes(want) && (!from || lines.slice(i + 2, i + 7).includes('〜')));
   if (!ok) ng(`menu ${id} ${name} ${want}${from} / ${desc}`);
   else console.log(`OK: ${name} ${want}${from}`);
 }
@@ -72,8 +72,9 @@ const must = [
   '炭火の気配を感じるカウンター席。会話を楽しむテーブル席。少人数のお集まりには半個室もご用意しています。',
   '本サイトは架空店舗「炭火と酒 灯」を題材としたWeb制作デモです。実店舗・予約・営業は存在しません。',
   'ご予約について',
-  '予約画面のデモを見る',
-  'こちらはポートフォリオ用の操作デモです。予約は送信・確定されません。',
+  '予約の入力画面を開く',
+  'この画面から予約は送信・確定されません。',
+  '会津若松市周辺の地図',
   '17:30–23:00',
   'お料理 22:00／お飲み物 22:30',
   '毎週日曜日',
@@ -83,6 +84,14 @@ const must = [
 for (const s of must) if (!flat.includes(s)) ng(`missing text: ${s}`);
 
 // --- 禁止事項 ---
+if (html.includes('demo-band')) ng('top band remains');
+for (const w of ['【架空', '(架空', '（架空', 'サンプル', 'デモ用', '店舗の所在地ではありません', 'ポートフォリオ用の操作デモ']) {
+  if (flat.includes(w)) ng(`demo wording remains: ${w}`);
+}
+// 「デモ」「架空」は免責文1行(フッター)のみ
+const rest = flat.replace('本サイトは架空店舗「炭火と酒 灯」を題材としたWeb制作デモです。実店舗・予約・営業は存在しません。', '');
+if (/デモ|架空/.test(rest)) ng('デモ/架空 appears outside the footer disclaimer');
+if ((html.match(/<iframe/g) ?? []).length !== 1) ng('iframe count != 1');
 for (const bad of ['予約完了', '予約確定しました', 'tel:', 'mailto:', 'LocalBusiness', 'application/ld+json']) {
   if (html.includes(bad)) ng(`forbidden: ${bad}`);
 }

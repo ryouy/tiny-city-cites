@@ -53,7 +53,6 @@ export const menu: MenuCategory[] = [
 export const menuNotes = {
   tax: '価格はすべて税込です。',
   set: 'セット：ケーキ＋ドリンクの合計額から¥100引き',
-  fiction: '季節の商品を含め、メニューはすべて創作設定です。',
 } as const;
 
 export const formatPrice = (n: number) => `¥${n.toLocaleString('ja-JP')}`;

@@ -15,9 +15,6 @@ const base = import.meta.env.BASE_URL;
         {nav.map((n) => <li><a href={`${base}${n.href}`}>{n.label}</a></li>)}
       </ul>
     </nav>
-    <div class="site-footer__note">
-      <p class="site-footer__badge">{site.demoBadge}</p>
-      <p>{site.disclaimer}</p>
-    </div>
+    <p class="site-footer__note">{site.disclaimer}</p>
   </div>
 </footer>

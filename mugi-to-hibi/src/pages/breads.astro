@@ -5,6 +5,8 @@ import { pages } from '../data/site';
 import { categories, products, menuNote } from '../data/menu';
 
 const yen = (n: number) => n.toLocaleString('ja-JP');
+// 写真のある商品を先に並べ、写真のない商品は文字だけの行として続ける
+const ordered = [...products.filter((p) => p.photo), ...products.filter((p) => !p.photo)];
 ---
 
 <BaseLayout current="breads" title={pages.breads.title} description={pages.breads.description}>
@@ -23,13 +25,13 @@ const yen = (n: number) => n.toLocaleString('ja-JP');
       <p class="filter__status" role="status" aria-live="polite" data-filter-status>{products.length}点を表示しています</p>
 
       <ul class="products">
-        {products.map((p) => {
+        {ordered.map((p) => {
           const tags = p.tags.filter((t) => t !== p.category);
           return (
             <li id={p.id} class={`product${p.photo ? ' product--photo' : ' product--text'}`} data-product-id={p.id} data-category={p.category} data-price={p.price}>
               {p.photo && (
                 <div class="product__media">
-                  <Photo name={p.photo} ratio="1 / 1" ratioSm="4 / 3" sizes="(min-width: 1000px) 540px, (min-width: 640px) 50vw, 100vw" />
+                  <Photo name={p.photo} ratio="4 / 5" ratioSm="1 / 1" sizes="(min-width: 1000px) 270px, (min-width: 640px) 50vw, 100vw" />
                 </div>
               )}
               <div class="product__body">

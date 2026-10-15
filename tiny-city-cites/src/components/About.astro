@@ -6,7 +6,6 @@ const { operator, location } = site;
 <section class="section" id="about" aria-labelledby="about-title">
   <div class="container split">
     <div class="reveal">
-      <p class="label">ABOUT THE STUDIO</p>
       <h2 class="heading" id="about-title">お店らしさを、<br />Webで伝える。</h2>
     </div>
     <div class="reveal">
@@ -25,13 +24,13 @@ const { operator, location } = site;
 
       <dl class="facts">
         <div class="facts__row">
-          <dt>Based in</dt>
+          <dt>拠点</dt>
           <dd>
             {location.current}を拠点に活動しています。
           </dd>
         </div>
         <div class="facts__row">
-          <dt>Operator</dt>
+          <dt>運営者</dt>
           <dd>
             {
               (operator.name || operator.title) && (
@@ -58,6 +57,5 @@ const { operator, location } = site;
       loading="lazy"
       decoding="async"
     />
-    <figcaption class="label">NOV 2025</figcaption>
   </figure>
 </section>

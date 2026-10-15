@@ -34,7 +34,11 @@ for (const [k, h] of Object.entries(html)) {
   if (/rel="canonical"|application\/ld\+json|LocalBusiness/.test(h)) fail(`${k}: canonical/構造化データは不可`);
   if (/href="(tel|mailto):|<form[\s>]|<input[\s>]|<textarea/.test(h)) fail(`${k}: 電話・メール・フォームは不可`);
   if (/自家焙煎|instagram\.com|twitter\.com\/|facebook\.com/.test(h)) fail(`${k}: 禁止表現/SNSリンク`);
-  if (t.split(norm(disclaimer)).length - 1 < 2) fail(`${k}: 免責文が帯とフッターの2か所に無い`);
+  if (t.split(norm(disclaimer)).length - 1 !== 1) fail(`${k}: 免責文がフッターの1か所だけにあること`);
+  if (!/<footer[\s\S]*site-footer__disclaimer/.test(h)) fail(`${k}: 免責文がフッター内に無い`);
+  if (/demo-band/.test(h)) fail(`${k}: 上部の注記帯が残っている`);
+  const body = norm(text(h.replace(/<head>[\s\S]*<\/head>/, '').replace(/<footer[\s\S]*<\/footer>/, '')));
+  if (/デモ|架空|サンプル|創作|ダミー/.test(body)) fail(`${k}: 本文に「デモ・架空・サンプル・創作」の表現が残っている`);
   if (!/<title>[^<]+<\/title>/.test(h) || !/<meta name="description" content="[^"]+"/.test(h)) fail(`${k}: title/description`);
   if (!/class="skip-link"/.test(h)) fail(`${k}: スキップリンク`);
   if ((h.match(/aria-current="page"/g) ?? []).length !== 1) fail(`${k}: aria-current が1つでない`);
@@ -44,7 +48,7 @@ for (const [k, h] of Object.entries(html)) {
 }
 const titles = Object.values(html).map((h) => h.match(/<title>([^<]*)/)?.[1]);
 if (new Set(titles).size !== titles.length) fail('title が重複している');
-if (html.home && html.home.match(/<title>([^<]*)/)?.[1] !== 'KITO COFFEE | 架空カフェ デモサイト') fail('トップの title が仕様と異なる');
+if (html.home && html.home.match(/<title>([^<]*)/)?.[1] !== 'KITO COFFEE | 会津若松のスペシャルティコーヒー') fail('トップの title が想定と異なる');
 
 if (html.menu) {
   const t = norm(text(html.menu));
@@ -63,7 +67,7 @@ if (html.home) {
 }
 if (html.information) {
   const t = norm(text(html.information));
-  for (const s of ['福島県会津若松市（架空設定）', '9:00–17:00（ラストオーダー16:30）', '火曜・第2水曜', '18席（カウンター6・テーブル12）／席の予約なし', '4台', 'ドリンク・焼き菓子可', '現金／クレジットカード／主要QR決済', 'Gallery', '地図は会津若松市のおおよその目安として、鶴ヶ城周辺を表示しています。店舗の所在地ではありません（架空店舗）。']) {
+  for (const s of ['福島県会津若松市', '9:00–17:00（ラストオーダー16:30）', '火曜・第2水曜', '18席（カウンター6・テーブル12）／席の予約なし', '4台', 'ドリンク・焼き菓子可', '現金／クレジットカード／主要QR決済', 'Gallery', '会津若松市周辺の地図']) {
     if (!t.includes(norm(s))) fail(`information: 「${s}」が無い`);
   }
 }

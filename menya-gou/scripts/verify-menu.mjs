@@ -79,8 +79,13 @@ for (const m of musts) {
 const disc = 'このサイトはWeb制作ポートフォリオ用の架空店舗デモです。実在の店舗ではありません。';
 const discCount = html.split(disc).length - 1;
 if (!spec.includes(disc)) ng('仕様書に免責文なし');
-if (discCount >= 2) ok(`免責表示 ${discCount} 箇所(上部帯+フッター)`); else ng(`免責表示が ${discCount} 箇所`);
-if (!/<title>横浜家系 麺屋 豪｜デモサイト<\/title>/.test(html)) ng('title 不一致'); else ok('title');
+if (discCount === 1 && /<footer[\s\S]*?このサイトはWeb制作ポートフォリオ用[\s\S]*?<\/footer>/.test(html)) ok('免責表示はフッター1箇所のみ');
+else ng(`免責表示が ${discCount} 箇所(フッター1箇所が正)`);
+if (/class="demo-band"/.test(html)) ng('上部の帯が残っている'); else ok('上部の帯なし');
+const bodyText = html.replace(/<footer[\s\S]*?<\/footer>/, '').replace(/<script[\s\S]*?<\/script>/g, '').replace(/<style[\s\S]*?<\/style>/g, '').replace(/<[^>]+>/g, '\n');
+for (const w of ['デモ', '架空', 'サンプル', 'ダミー', '想定']) { if (bodyText.includes(w)) ng(`本文に「${w}」が残っている`); else ok(`本文に「${w}」なし`); }
+if (!/<figcaption[^>]*>会津若松市周辺の地図<\/figcaption>/.test(html)) ng('地図キャプションが「会津若松市周辺の地図」ではない'); else ok('地図キャプション');
+if (!/<title>横浜家系 麺屋 豪<\/title>/.test(html)) ng('title 不一致'); else ok('title');
 
 // ---- 禁止事項チェック ----
 const forbid = [

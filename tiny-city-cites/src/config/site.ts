@@ -17,7 +17,7 @@ export type WorkItem = {
 
 export const site = {
   name: 'tiny city cites',
-    tagline: '小さなお店に、ちょうどいいWebを。',
+  tagline: '小さなお店に、ちょうどいいWebを。',
   subtagline: 'お店の魅力が、まっすぐ伝わる場所を。',
 
   title: 'tiny city cites | 飲食店・個人商店のホームページ制作',
@@ -67,87 +67,98 @@ export const site = {
   /** Works セクション。false で非表示（ナビゲーションからも消えます）。 */
   works: {
     show: true,
-    /** 制作実績・サンプル。正式に掲載できるものだけを追加。空のときは「準備中」を表示。 */
+    /** 制作事例。正式に掲載できるものだけを追加。空のときは「準備中」を表示。 */
+    intro: '実在しない店舗を想定して制作したサンプルサイトです。どれも、メニューや営業時間などお店に必要な情報が、スマートフォンですぐ見つかるように作っています。',
     items: [
       {
         title: 'KITO COFFEE',
         category: 'カフェ',
         kind: 'Demo',
         summary:
-          'スペシャルティコーヒーと焼き菓子の店を想定した、架空店舗のデモサイトです。実在する店舗ではありません。',
+          'スペシャルティコーヒーと焼き菓子の店。全4ページで、メニュー・店のストーリー・営業情報を分けて見せる構成です。',
         url: '/demos/kito-coffee/',
+        thumbnail: '/images/works/kito-coffee.webp',
       },
       {
         title: 'お食事処 こめや',
-        category: '食堂・定食屋',
+        category: '定食屋',
         kind: 'Demo',
         summary:
-          'メニューと営業時間を探しやすくした、昔ながらの定食屋を想定した架空店舗のデモサイトです。実在する店舗ではありません。',
+          '昼夜の営業時間とお品書きを、トップですぐ見つけられる1ページ構成です。',
         url: '/demos/komeya/',
+        thumbnail: '/images/works/komeya.webp',
       },
       {
         title: '炭火と酒 灯',
         category: '居酒屋',
         kind: 'Demo',
         summary:
-          '炭火料理と地酒を楽しむ和モダンな居酒屋を想定した、架空店舗のデモサイトです。実在する店舗ではありません。',
+          '夜の雰囲気を伝える全画面型の1ページ。お品書き・コース・お席を画面ごとに切り替えて見せます。',
         url: '/demos/akari/',
+        thumbnail: '/images/works/akari.webp',
       },
       {
         title: '麦と日々',
         category: 'ベーカリー',
         kind: 'Demo',
         summary:
-          '天然酵母のパンを扱う小さなベーカリーを想定した、架空店舗のデモサイトです。実在する店舗ではありません。',
+          '焼き上がりの時間と営業日が最初の画面でわかる、3ページ構成のパン屋のサイトです。',
         url: '/demos/mugi-to-hibi/',
+        thumbnail: '/images/works/mugi-to-hibi.webp',
       },
       {
         title: '横浜家系 麺屋 豪',
         category: 'ラーメン店',
         kind: 'Demo',
         summary:
-          '家系ラーメン店を想定した、架空店舗のデモサイトです。お好みの組み合わせを確認できる画面も試作しました。実在する店舗ではありません。',
+          '写真とお品書きをすぐ見せる、コンパクトな1ページ。好みの組み合わせも確認できます。',
         url: '/demos/menya-gou/',
+        thumbnail: '/images/works/menya-gou.webp',
       },
       {
         title: '喫茶 ソーダ日和',
         category: '喫茶店',
         kind: 'Demo',
         summary:
-          'クリームソーダが主役のレトロポップな喫茶店を想定した、架空店舗のデモサイトです。実在する店舗ではありません。',
+          'クリームソーダの色を選んで楽しめる、3ページ構成の喫茶店のサイトです。',
         url: '/demos/soda-biyori/',
+        thumbnail: '/images/works/soda-biyori.webp',
       },
       {
         title: 'HAIR SALON niwa',
         category: '美容室',
         kind: 'Demo',
         summary:
-          'スタイル紹介とメニューを軸にした美容室を想定した、架空店舗のデモサイトです。予約画面は試作で、実際には予約されません。実在する店舗ではありません。',
+          'スタイル写真を大きく見せる6ページ構成。メニューと料金、スタッフ、アクセスも整理しています。',
         url: '/demos/hair-salon-niwa/',
+        thumbnail: '/images/works/hair-salon-niwa.webp',
       },
       {
         title: 'PÂTISSERIE LUNE',
         category: 'パティスリー',
         kind: 'Demo',
         summary:
-          '洋菓子店を想定した、架空店舗のデモサイトです。ご注文画面は試作で、実際には注文されません。実在する店舗ではありません。',
+          'ケーキの写真が主役の4ページ構成。ホールケーキの受取日と金額の確認画面もあります。',
         url: '/demos/patisserie-lune/',
+        thumbnail: '/images/works/patisserie-lune.webp',
       },
       {
         title: 'STACK BURGER',
         category: 'ハンバーガー店',
         kind: 'Demo',
         summary:
-          '鉄板で焼くスマッシュバーガーの店を想定した、架空店舗のデモサイトです。金額を試算できる画面は試作で、注文はできません。実在する店舗ではありません。',
+          '大きな写真で区切る縦長の1ページ。トッピングを選んで金額を確認できます。',
         url: '/demos/stack-burger/',
+        thumbnail: '/images/works/stack-burger.webp',
       },
       {
         title: 'トラットリア まちの灯',
         category: 'イタリアン',
         kind: 'Demo',
         summary:
-          '家族経営の大衆イタリアンを想定した、架空店舗のデモサイトです。実在する店舗ではありません。',
+          'ランチとディナーを分けて見せる2ページ構成。おふたりセットの内容も確認できます。',
         url: '/demos/trattoria-machi/',
+        thumbnail: '/images/works/trattoria-machi.webp',
       },
     ] as WorkItem[],
   },

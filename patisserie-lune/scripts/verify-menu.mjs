@@ -38,9 +38,9 @@ const near = (L, name, words) => {
 
 // 1) 商品マスター(§4)
 const cut = rows(section('### Cut Cakes', '### Whole Cakes'), /^cake\d+$/);
-for (const [, , name, price, desc, alg] of cut) {
+for (const [, , name, price, desc] of cut) {
   count++;
-  if (!near(lines.menu, name, [price, desc, `アレルゲン例：${alg}`])) ng(`menu cut: ${name} ${price}`); else console.log(`OK: ${name} ${price}`);
+  if (!near(lines.menu, name, [price, desc])) ng(`menu cut: ${name} ${price}`); else console.log(`OK: ${name} ${price}`);
 }
 const whole = rows(section('### Whole Cakes', '### Baked Goods'), /^whole\d+$/);
 for (const [, , name, size, price, note] of whole) {
@@ -65,16 +65,15 @@ const musts = {
     '旬の果実の香り、なめらかなクリーム、焼きたてのお菓子。PÂTISSERIE LUNEでは、素材の持ち味を大切にしながら、ひとつひとつ丁寧にお作りしています。大切な人への贈りものにも、今日の自分へのごほうびにも。',
     'ひと口から、しあわせな時間へ。',
     'お誕生日や記念日に合わせて、ホールケーキをご用意しています。サイズやデコレーションをお選びいただき、受取希望日の3営業日前までにご相談ください。',
-    '特別な日に、あなただけのケーキを。', '本ページは架空店舗のデモです。予約・注文は受け付けていません。',
-    '想いを包む、焼き菓子。', '素材の風味が広がるフィナンシェやサブレを、贈りものに。ひとつから、詰め合わせまで。',
+    '特別な日に、あなただけのケーキを。', '想いを包む、焼き菓子。', '素材の風味が広がるフィナンシェやサブレを、贈りものに。ひとつから、詰め合わせまで。',
     '10:00–18:00', '火曜日・水曜日は定休日です。', '商品売切れ時は早仕舞いの場合があります。',
   ],
   about: [
-    '10:00〜18:00', '火曜日・水曜日', 'テイクアウトあり', 'イートインはありません', '3台（架空設定）', 'カットケーキ500〜850円', 'ギフト1,000円〜',
-    '現金・クレジットカード・一部QR決済（架空設定）', '福島県会津若松市の閑静な住宅地', 'ホールケーキのみ',
+    '10:00〜18:00', '火曜日・水曜日', 'テイクアウトあり', 'イートインはありません', '3台', 'カットケーキ500〜850円', 'ギフト1,000円〜',
+    '現金・クレジットカード・一部QR決済', '福島県会津若松市の閑静な住宅地', 'ホールケーキのみ', '会津若松市周辺の地図',
   ],
-  menu: ['アレルゲン表示は架空データです（デザイン検証用の仮データで、実際の食品表示ではありません）。', '季節商品は架空の販売例です。在庫情報はリアルタイムで表示していません。'],
-  order: ['デモのため予約されません。', '火曜・水曜', '祝日・臨時休業には対応していません。', '本ページは架空店舗のデモです。予約・注文は受け付けていません。'],
+  menu: ['表示価格はすべて税込です。'],
+  order: ['予約は送信されません。', '火曜・水曜', '祝日・臨時休業には対応していません。', '予約・注文は受け付けていません。'],
 };
 // 英文見出しは 各行 span に分割されているため連結して(下の正規表現で確認)
 for (const [pg, arr] of Object.entries(musts)) for (const m of arr) {
@@ -86,12 +85,16 @@ if (!/A LITTLE[\s\S]{0,40}MOMENT[\s\S]{0,40}OF JOY\./.test(raw.home.replace(/<[^
 if (!spec.includes('10:00〜18:00（商品売切れ時は早仕舞いの場合あり）') || !spec.includes('火曜日・水曜日')) ng('spec hours changed?');
 
 // 3) 全ページ共通: デモ表記・noindex・禁止事項
-const badge = 'PORTFOLIO DEMO｜架空店舗の制作事例です';
+const disclaimer = 'このサイトは架空店舗の制作デモです。実在の店舗ではありません。店舗名・設定・価格・人物・事業内容はすべて創作です。';
 let iframeTotal = 0;
 for (const [pg, h] of Object.entries(raw)) {
   const L = lines[pg];
-  if (L.filter((l) => l === badge).length < 2) ng(`${pg}: デモ表記が帯とフッターの2か所にない`);
-  if (!L.includes('このサイトは架空店舗の制作デモです。実在の店舗ではありません。店舗名・設定・価格・人物・事業内容はすべて創作です。')) ng(`${pg}: 免責文`);
+  if (L.some((l) => /PORTFOLIO DEMO/.test(l))) ng(`${pg}: 上部の「デモ」帯が残っている`);
+  if (/class="demo-band"/.test(h)) ng(`${pg}: demo-band が残っている`);
+  // 「デモ」「架空」「サンプル」は免責の1行(フッター)にのみ許可
+  const body = L.filter((l) => l !== disclaimer);
+  for (const l of body) if (/デモ|架空|サンプル|ダミー/.test(l)) ng(`${pg}: 注記の言い回しが残っている: ${l}`);
+  if (L.filter((l) => l === disclaimer).length !== 1) ng(`${pg}: フッターの免責文が1行だけではない`);
   if (!/<meta name="robots" content="noindex,nofollow"/.test(h)) ng(`${pg}: robots noindex`);
   if ((h.match(/<h1[\s>]/g) ?? []).length !== 1) ng(`${pg}: h1 は1つ`);
   const bad = [
@@ -103,6 +106,8 @@ for (const [pg, h] of Object.entries(raw)) {
   for (const [re, label] of bad) if (re.test(text.replace(/<iframe[\s\S]*?<\/iframe>/g, ''))) ng(`${pg}: forbidden ${label}`);
   if (/<a [^>]*href="https?:/.test(h)) ng(`${pg}: 外部リンク(a)`);
   if (/<form[\s>]/.test(h) && /action=/.test(h)) ng(`${pg}: form に action がある(送信されうる)`);
+  if (pg === 'about' && !L.includes('会津若松市周辺の地図')) ng('about: 地図キャプション');
+  if (/店舗の所在地ではありません/.test(h)) ng(`${pg}: 旧地図キャプション`);
   const ifr = h.match(/<iframe[^>]*>/g) ?? [];
   iframeTotal += ifr.length;
   if (ifr.length && pg !== 'about') ng(`${pg}: iframe は about ページのみ許可`);

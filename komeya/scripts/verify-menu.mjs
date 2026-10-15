@@ -33,6 +33,15 @@ for (const row of section.split('\n')) {
 for (const must of ['定食にはごはん・味噌汁・小鉢・漬物が付きます。', '+¥100', '税込', 'L.O. 14:00', 'L.O. 19:30', '11:00–14:30', '17:00–20:00', '毎週日曜', 'このWebサイトはWeb制作ポートフォリオ用の架空店舗デモです。実在する店舗・商品・サービスではありません。']) {
   if (!text.includes(must)) { fail++; console.error(`NG missing: ${must}`); }
 }
+// 新方針: 上部の注記帯なし・地図キャプション・「デモ」等の言い回しはフッター免責以外に出さない
+const disc = 'このWebサイトはWeb制作ポートフォリオ用の架空店舗デモです。実在する店舗・商品・サービスではありません。';
+const rest = text.replace(disc, '');
+for (const w of ['デモ', '架空', 'サンプル']) {
+  if (rest.includes(w)) { fail++; console.error(`NG: 「${w}」が免責文以外に残っています`); }
+}
+if (html.includes('demo-note')) { fail++; console.error('NG: 上部の注記帯が残っています'); }
+if (!lines.includes('会津若松市周辺の地図')) { fail++; console.error('NG: 地図キャプション'); }
+if ((html.match(/<iframe[\s>]/g) ?? []).length !== 1) { fail++; console.error('NG: iframe は1点のみ'); }
 // 追加検査: noindex / 禁止要素 / 看板コピー / 物語の原文
 const must2 = ['<meta name="robots" content="noindex,nofollow">'];
 for (const m of must2) if (!html.includes(m)) { fail++; console.error(`NG missing html: ${m}`); }

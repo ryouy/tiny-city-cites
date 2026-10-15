@@ -1,4 +1,4 @@
-// メニュー・税込価格(仕様書 §4。すべて架空設定)。表示文字列は仕様書の表記のまま保持する。
+// メニュー・税込価格(仕様書 §4)。表示文字列は仕様書の表記のまま保持する。
 export type CategoryKey = 'Cut' | 'Color' | 'Perm' | 'Care' | 'Set';
 
 export interface Service {
@@ -40,7 +40,7 @@ export const byId = (id: string) => services.find((s) => s.id === id);
 export const previewIds = ['cut01', 'color02', 'perm01', 'care01', 'set01'];
 
 export const menuNotes = [
-  '料金は税込です。デモ用の架空設定です。',
+  '料金は税込です。',
   '「〜」の付いた料金は、施術内容により追加料金がかかる場合があります。',
   '所要時間は目安です。髪の状態や施術内容により前後します。',
 ];

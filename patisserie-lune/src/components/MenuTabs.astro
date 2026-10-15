@@ -2,6 +2,8 @@
 import Photo from './Photo.astro';
 import { cutCakes, wholeCakes, bakedGoods, yen } from '../data/menu';
 
+const withPhoto = cutCakes.filter((c) => c.photo);
+const noPhoto = cutCakes.filter((c) => !c.photo);
 const tabs = [
   { id: 'cut', ja: 'ケーキ' },
   { id: 'whole', ja: 'ホール' },
@@ -21,16 +23,20 @@ const tabs = [
   <section class="panel" role="tabpanel" id="panel-cut" aria-labelledby="tab-cut" tabindex="0">
     <h2 class="visually-hidden">カットケーキ</h2>
     <ul class="grid">
-      {cutCakes.map((c) => (
+      {withPhoto.map((c) => (
         <li class="card">
-          {c.photo ? (
-            <Photo name={c.photo} ratio="4 / 5" sizes="(min-width: 900px) 33vw, (min-width: 560px) 50vw, 100vw" />
-          ) : (
-            <div class="photo photo--ph" style="aspect-ratio:4 / 5" aria-hidden="true"><span>画像準備中</span></div>
-          )}
+          <Photo name={c.photo!} ratio="4 / 5" sizes="(min-width: 900px) 33vw, (min-width: 560px) 50vw, 100vw" />
           <h3 class="card__name">{c.name}</h3>
           <p class="card__desc">{c.desc}</p>
-          <p class="card__meta">アレルゲン例：{c.allergens}</p>
+          <p class="price">{yen(c.price)}<small>税込</small></p>
+        </li>
+      ))}
+    </ul>
+    <ul class="rows rows--more">
+      {noPhoto.map((c) => (
+        <li class="row">
+          <h3 class="row__name">{c.name}</h3>
+          <p class="row__sub">{c.desc}</p>
           <p class="price">{yen(c.price)}<small>税込</small></p>
         </li>
       ))}
@@ -52,7 +58,7 @@ const tabs = [
             </li>
           ))}
         </ul>
-        <p class="panel__note">ご予約は原則、受取希望日の3営業日前までを想定しています（デモ機能のため、実際の予約はできません）。</p>
+        <p class="panel__note">ご予約は原則、受取希望日の3営業日前までを想定しています。</p>
         <a class="btn" href={`${import.meta.env.BASE_URL}order/`}>ホールケーキを見る</a>
       </div>
     </div>
@@ -61,7 +67,7 @@ const tabs = [
   <section class="panel" role="tabpanel" id="panel-baked" aria-labelledby="tab-baked" tabindex="0">
     <h2 class="visually-hidden">焼き菓子</h2>
     <div class="split">
-      <div class="split__photo"><Photo name="gift" ratio="1 / 1" position="45% 50%" sizes="(min-width: 900px) 45vw, 100vw" /></div>
+      <div class="split__photo"><Photo name="gift" ratio="5 / 4" sizes="(min-width: 900px) 45vw, 100vw" /></div>
       <ul class="rows">
         {bakedGoods.map((b) => (
           <li class="row">

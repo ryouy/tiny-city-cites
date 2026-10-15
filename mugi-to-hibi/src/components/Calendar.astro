@@ -9,7 +9,7 @@ const order = Array.from({ length: 7 }, (_, i) => (i + calendarConfig.weekStart)
   <div class="wrap calendar__grid">
     <div class="calendar__intro">
       <h2 id="calendar-title" class="h2">営業カレンダー</h2>
-      <p>毎週月曜・火曜が定休日です。臨時休業はサンプルの設定で、祝日などは反映していません。日付はお使いの端末の時刻で表示します。</p>
+      <p>毎週月曜・火曜が定休日です。祝日などは反映していません。日付はお使いの端末の時刻で表示します。</p>
     </div>
 
     <div class="cal" data-calendar data-config={payload}>
@@ -30,7 +30,7 @@ const order = Array.from({ length: 7 }, (_, i) => (i + calendarConfig.weekStart)
         <ul class="legend" aria-label="凡例">
           <li><span class="swatch swatch--open" aria-hidden="true"></span>通常営業</li>
           <li><span class="swatch swatch--closed" aria-hidden="true"></span>定休日（月・火）</li>
-          <li><span class="swatch swatch--temp" aria-hidden="true"></span>臨時休業（サンプル）</li>
+          <li><span class="swatch swatch--temp" aria-hidden="true"></span>臨時休業</li>
           <li><span class="swatch swatch--today" aria-hidden="true"></span>今日</li>
         </ul>
         <button type="button" class="cal__btn cal__btn--today" data-today>今月に戻る</button>
@@ -75,7 +75,7 @@ const order = Array.from({ length: 7 }, (_, i) => (i + calendarConfig.weekStart)
         const key = `${y}-${String(m + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
         const temp = closures.get(key);
         const regular = cfg.closedWeekdays.includes(date.getDay());
-        const state = temp ? '臨時休業（サンプル）' : regular ? '定休日' : '営業';
+        const state = temp ? '臨時休業' : regular ? '定休日' : '営業';
         const td = document.createElement('td');
         td.className = `day ${temp ? 'is-temp' : regular ? 'is-closed' : 'is-open'}${key === todayKey ? ' is-today' : ''}`;
         const num = document.createElement('span');

@@ -72,7 +72,7 @@ const ogImage = `${base}/og-image.png`;
       const setMenu = (open: boolean) => {
         if (!toggle || !header) return;
         toggle.setAttribute('aria-expanded', String(open));
-        toggle.querySelector('.nav-toggle-label')!.textContent = open ? 'Close' : 'Menu';
+        toggle.querySelector('.nav-toggle-label')!.textContent = open ? '閉じる' : 'メニュー';
         header.classList.toggle('menu-open', open);
       };
       toggle?.addEventListener('click', () =>

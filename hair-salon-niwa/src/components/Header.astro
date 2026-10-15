@@ -1,11 +1,10 @@
 ---
-import { site, nav, path, bandParts } from '../data/site';
+import { site, nav, path } from '../data/site';
 const current = Astro.url.pathname.replace(/\/$/, '');
 const isCur = (href: string) => href.replace(/\/$/, '') === current;
 ---
 
 <div class="top">
-  <p class="band">{bandParts[0]}｜<wbr />{bandParts[1]}</p>
   <header class="site-header">
     <a class="brand" href={path()} aria-label={`${site.name} トップへ`}>{site.wordmark}</a>
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="メニューを開く">

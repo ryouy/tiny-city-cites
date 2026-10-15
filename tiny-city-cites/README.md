@@ -24,7 +24,7 @@ Node.js 22.12 以上が必要です。
 | メールアドレスを表示 | `contact.email` |
 | 料金表を表示（金額確定後） | `pricing.show = true` |
 | Works セクションを非表示 | `works.show = false` |
-| 制作実績を追加 | `works.items` に追加（Demo / Concept Work / Client Work を明示） |
+| 制作事例を追加 | `works.items` に追加。サムネイルは `public/images/works/` に 4:3 の WebP（幅1000px）を置いて `thumbnail` に指定 |
 | 運営者の氏名・肩書きを表示 | `operator.name` / `operator.title` |
 | 「相談は無料」表記を消す | `showFreeConsultation = false` |
 | プライバシーポリシーへのリンク | `privacyUrl` |

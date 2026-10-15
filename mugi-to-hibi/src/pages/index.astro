@@ -11,7 +11,7 @@ const yen = (n: number) => n.toLocaleString('ja-JP');
 
 <BaseLayout current="home" title={pages.home.title} description={pages.home.description}>
   <section class="hero" aria-labelledby="hero-title">
-    <Photo name="hero" ratio="21 / 9" ratioSm="2 / 1" eager sizes="100vw" class="hero__photo" />
+    <Photo name="hero" ratio="16 / 9" ratioSm="4 / 3" eager sizes="100vw" class="hero__photo" />
     <div class="wrap hero__body">
       <div class="hero__head">
         <p class="hero__label">{hero.label}</p>
@@ -38,9 +38,8 @@ const yen = (n: number) => n.toLocaleString('ja-JP');
     <div class="wrap today__grid">
       <div>
         <h2 id="today-title" class="h2">今日の焼き上がり</h2>
-        <p class="notice" role="note">{todayNotice}</p>
         <table class="bake">
-          <caption class="sr-only">今日の焼き上がり予定（架空のサンプル）</caption>
+          <caption class="sr-only">今日の焼き上がり予定</caption>
           <thead class="sr-only"><tr><th scope="col">時間</th><th scope="col">商品</th><th scope="col">表示</th></tr></thead>
           <tbody>
             {bakeSchedule.map((r) => (
@@ -52,9 +51,10 @@ const yen = (n: number) => n.toLocaleString('ja-JP');
             ))}
           </tbody>
         </table>
+        <p class="notice">{todayNotice}</p>
       </div>
       <aside class="news" aria-labelledby="news-title">
-        <h3 id="news-title" class="news__title">お知らせ<small>（デモ用サンプル）</small></h3>
+        <h3 id="news-title" class="news__title">お知らせ</h3>
         <ul>
           {news.map((n) => <li>{n.text}</li>)}
         </ul>

@@ -14,5 +14,5 @@ export const reservationDemo = {
     { id: 'season', label: '灯の季節コース', course: true },
     { id: 'omakase', label: '炭火おまかせコース', course: true },
   ],
-  banner: 'こちらはポートフォリオ用の操作デモです。予約は送信・確定されません。',
+  banner: 'この画面から予約は送信・確定されません。',
 } as const;

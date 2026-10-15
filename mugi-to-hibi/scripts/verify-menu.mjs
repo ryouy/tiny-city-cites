@@ -69,14 +69,18 @@ ok(pages.home.html.includes('パンのある日々を、</span><span class="nb">
 ok(has('営業時間') && pages.home.text.includes('8:00–16:00') && pages.home.text.includes('（売り切れ次第終了）') && pages.home.text.includes('月曜日・火曜日'), 'トップに営業時間・定休日');
 ok(pages.home.text.includes('08:00|カンパーニュ・クロワッサン'), 'トップに今日の焼き上がり');
 ok(pages.shop.text.includes('8:00–16:00（売り切れ次第終了）') && pages.shop.html.includes('data-calendar'), '/shop に営業時間とカレンダー');
-ok(pages.home.text.includes('デモ用サンプル'), 'Newsに「デモ用サンプル」表記');
+const DISC = 'このWebサイトは架空店舗「麦と日々」の制作実績用デモです。実際の店舗・販売・予約は行っていません。';
+const NOTICE = '掲載時間は架空のサンプルです。リアルタイムの在庫・焼成情報ではありません';
 for (const [k, p] of Object.entries(pages)) {
   ok((p.html.match(/<h1[ >]/g) ?? []).length === 1, `${k}: h1 は1つ`);
   ok(/<meta name="robots" content="noindex, nofollow"/.test(p.html), `${k}: noindex,nofollow`);
   ok(!/rel="canonical"/.test(p.html), `${k}: canonical なし`);
   ok(/<title>[^<]*麦と日々/.test(p.html) && /<meta name="description" content="[^"]+"/.test(p.html), `${k}: title/description`);
   ok(p.text.includes('このWebサイトは架空店舗「麦と日々」の制作実績用デモです。実際の店舗・販売・予約は行っていません。'), `${k}: フッターの免責文`);
-  ok(p.html.includes('class="demo-band"'), `${k}: 上部の帯`);
+  ok(!/demo-band/.test(p.html), `${k}: 上部の帯なし`);
+  const rest = p.text.replace(DISC, '').replace(NOTICE, '');
+  ok(!/デモ|架空|サンプル|ダミー/.test(rest), `${k}: 免責文・焼き上がり注記以外に「デモ/架空/サンプル」なし`);
+  ok(!/デモ|架空/.test((p.html.match(/<title>[^<]*/)[0]) + (p.html.match(/<meta name="description" content="[^"]*/)[0])), `${k}: title/description に「デモ/架空」なし`);
   ok(/aria-current="page"/.test(p.html), `${k}: aria-current`);
   ok(/href="#main"/.test(p.html), `${k}: スキップリンク`);
 }
@@ -87,9 +91,11 @@ ok(new Set(titles).size === 3, 'title が全ページで固有');
 // 地図は会津若松市の目安(鶴ヶ城周辺)の Google Maps 埋め込み 1 点のみ許可(店舗の所在地ではない)
 const htmlNoMap = allHtml.replace(/<iframe[^>]*google\.com\/maps\/embed[^>]*><\/iframe>/g, '');
 ok(!/href="tel:|href="mailto:|<form|<iframe|maps\.google|instagram|twitter\.com\/|facebook\.com|line\.me/i.test(htmlNoMap), '電話/メール/フォーム/SNSリンクなし(地図は目安の埋め込みのみ)');
-ok(!/〒|TEL|電話番号：/.test(text.replace('詳細な住所・電話番号・SNSは、架空店舗のため掲載していません。', '')), '住所・電話の記載なし');
+ok(!/〒|TEL|電話番号/.test(text), '住所・電話の記載なし');
+ok(/<figcaption[^>]*>\s*会津若松市周辺の地図\s*<\/figcaption>/.test(pages.shop.html), '地図キャプションは「会津若松市周辺の地図」のみ');
+ok((pages.shop.html.match(/<iframe/g) ?? []).length === 1 && !/<iframe/.test(pages.home.html + pages.breads.html), 'iframe は /shop に1点のみ');
+ok(pages.shop.html.includes('<footer') && pages.shop.html.split('<footer')[1].includes(DISC), 'フッターに免責文1行');
 ok(!/class="eyebrow"|Our Story|Our Commitment|Today's Bake|Since 20|SCROLL/.test(allHtml), '装飾ラベル(eyebrow/Since/SCROLL 等)なし');
-ok((text.match(/（架空）/g) ?? []).length === 0, '「（架空）」の繰り返しなし');
 ok(!/application\/ld\+json|LocalBusiness/.test(allHtml), '構造化データなし');
 ok((allHtml.match(/maps\/embed/g) ?? []).length === 1, '地図埋め込みは1点のみ');
 const robots = join(root, 'dist', 'robots.txt');

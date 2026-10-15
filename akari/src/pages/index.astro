@@ -20,7 +20,7 @@ const seatsTotal = site.space.seats.reduce((s, x) => s + x.count, 0);
   <main id="main">
     <!-- Hero -->
     <section class="hero" id="top" aria-labelledby="hero-title">
-      <Photo name="hero" fill eager pos="62% 55%" sizes="100vw" />
+      <Photo name="hero" fill eager pos="70% 60%" sizes="100vw" />
       <div class="hero__shade" aria-hidden="true"></div>
       <div class="wrap hero__inner">
         <p class="hero__sub" lang="en">{site.hero.sub}</p>
@@ -46,7 +46,7 @@ const seatsTotal = site.space.seats.reduce((s, x) => s + x.count, 0);
         </div>
       </div>
       <div class="about__photo">
-        <Photo name="yakitori" fill pos="50% 55%" sizes="(min-width: 900px) 45vw, 100vw" />
+        <Photo name="yakitori" fill pos="50% 58%" sizes="(min-width: 900px) 45vw, 100vw" />
       </div>
     </section>
 
@@ -65,7 +65,7 @@ const seatsTotal = site.space.seats.reduce((s, x) => s + x.count, 0);
     <!-- 地酒: 左に写真 -->
     <section class="screen sake" id="sake" aria-labelledby="sake-title">
       <div class="sake__photo">
-        <Photo name="sake" fill pos="45% 55%" sizes="(min-width: 900px) 55vw, 100vw" />
+        <Photo name="sake" fill pos="40% 60%" sizes="(min-width: 900px) 55vw, 100vw" />
       </div>
       <div class="sake__text">
         <div class="sake__text-inner reveal">
@@ -108,18 +108,16 @@ const seatsTotal = site.space.seats.reduce((s, x) => s + x.count, 0);
 
     <!-- お席: 写真2枚+席数 -->
     <section class="screen space" id="space" aria-labelledby="space-title">
-      <div class="space__photos">
-        <div class="space__counter">
-          <Photo name="counter" fill pos="62% 50%" sizes="(min-width: 900px) 65vw, 100vw" />
-        </div>
-        <div class="space__semi">
-          <Photo name="semiPrivate" fill pos="40% 50%" sizes="(min-width: 900px) 35vw, 100vw" />
-        </div>
+      <div class="space__counter">
+        <Photo name="counter" fill pos="50% 50%" sizes="100vw" />
       </div>
       <div class="wrap space__body">
         <div class="space__text">
           <h2 class="h2" id="space-title">火を眺める、<span class="nw">穏やかな時間。</span></h2>
           <p class="lead">{site.space.body}</p>
+        </div>
+        <div class="space__semi">
+          <Photo name="semiPrivate" fill pos="50% 50%" sizes="(min-width: 900px) 34vw, 100vw" />
         </div>
         <div class="seats">
           <p class="seats__total">
@@ -152,7 +150,7 @@ const seatsTotal = site.space.seats.reduce((s, x) => s + x.count, 0);
           <p class="notice">{site.reservation.demoNotice}</p>
         </div>
         <div class="reservation__body">
-          <h3 class="sub-h">ご予約の想定フロー</h3>
+          <h3 class="sub-h">ご予約の流れ</h3>
           <ol class="steps">
             {
               site.reservation.steps.map((s) => (
@@ -198,7 +196,6 @@ const seatsTotal = site.space.seats.reduce((s, x) => s + x.count, 0);
             <Photo name="exterior" fill pos="55% 45%" sizes="(min-width: 900px) 40vw, 100vw" />
           </div>
           <MapEmbed />
-          <p class="fine">電話番号・詳細な住所・SNSは掲載していません。</p>
         </div>
       </div>
     </section>
@@ -209,10 +206,6 @@ const seatsTotal = site.space.seats.reduce((s, x) => s + x.count, 0);
       <div>
         <p class="footer__name">{site.name}</p>
         <p class="footer__en" lang="en">{site.nameEn}</p>
-      </div>
-      <div>
-        <p class="footer__disclaimer">{site.disclaimer}</p>
-        <p class="footer__note">掲載の店舗情報・メニュー・価格・人物はすべて創作です。</p>
       </div>
       <nav aria-label="フッターメニュー">
         <ul class="footer__nav">
@@ -225,6 +218,9 @@ const seatsTotal = site.space.seats.reduce((s, x) => s + x.count, 0);
           }
         </ul>
       </nav>
+    </div>
+    <div class="wrap">
+      <p class="footer__disclaimer">{site.disclaimer}</p>
     </div>
   </footer>
 

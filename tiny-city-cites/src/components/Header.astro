@@ -2,10 +2,11 @@
 import { site } from '../config/site';
 
 const links = [
-  { href: '#about', en: 'About', ja: 'スタジオについて' },
-  { href: '#services', en: 'Services', ja: 'サービス' },
-  ...(site.works.show ? [{ href: '#works', en: 'Works', ja: '制作' }] : []),
-  { href: '#contact', en: 'Contact', ja: 'お問い合わせ' },
+  ...(site.works.show ? [{ href: '#works', ja: '制作事例' }] : []),
+  { href: '#services', ja: 'サービス' },
+  { href: '#flow', ja: 'ご依頼の流れ' },
+  { href: '#about', ja: '運営者について' },
+  { href: '#contact', ja: 'お問い合わせ' },
 ];
 ---
 
@@ -14,20 +15,12 @@ const links = [
     <a class="logo" href="#top" aria-label={`${site.name} ページ上部へ`}>{site.name}</a>
 
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
-      <span class="nav-toggle-label">Menu</span>
+      <span class="nav-toggle-label">メニュー</span>
     </button>
 
     <nav class="site-nav" id="site-nav" aria-label="メインナビゲーション">
       <ul>
-        {
-          links.map((l) => (
-            <li>
-              <a href={l.href}>
-                {l.en} <small>{l.ja}</small>
-              </a>
-            </li>
-          ))
-        }
+        {links.map((l) => <li><a href={l.href}>{l.ja}</a></li>)}
       </ul>
     </nav>
   </div>

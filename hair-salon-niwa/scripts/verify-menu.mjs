@@ -49,12 +49,12 @@ for (const row of section('## 6. スタイル', '## 7. 情報設計').split('\n'
 }
 const staffMsgs = [...section('## 5. スタイリスト', '## 6. スタイル').matchAll(/メッセージ：`([^`]+)`/g)].map((m) => m[1]);
 for (const m of staffMsgs) if (!flat['staff/'].includes(m.replace(/\s+/g, ''))) ng(`staff message: ${m}`);
-for (const w of ['佐伯 まどか', 'Madoka Saeki', 'Owner Stylist', '美容師歴12年（架空）', '高野 悠', 'Yu Takano', '美容師歴7年（架空）', 'ナチュラルなレイヤー', 'メンズカット', '頭皮ケア', '骨格に馴染むショート・ボブ', '柔らかなカラー'])
+for (const w of ['佐伯 まどか', 'Madoka Saeki', 'Owner Stylist', '美容師歴12年', '高野 悠', 'Yu Takano', '美容師歴7年', 'ナチュラルなレイヤー', 'メンズカット', '頭皮ケア', '骨格に馴染むショート・ボブ', '柔らかなカラー'])
   if (!lines['staff/'].includes(w)) ng(`staff: ${w}`);
 
 // 3) 営業情報・固定文言
 const access = lines['access/'];
-const musts = [['access/', ['9:30〜18:30', 'カット17:30', 'カット＋カラー16:00', '月曜日・第1・第3日曜日', '2席（半個室風の配置）', '2台', '現金、カード、QR決済（架空設定）', '福島県会津若松市の住宅エリア']]];
+const musts = [['access/', ['9:30〜18:30', 'カット17:30', 'カット＋カラー16:00', '月曜日・第1・第3日曜日', '2席（半個室風の配置）', '2台', '現金、カード、QR決済', '福島県会津若松市の住宅エリア']]];
 for (const [p, ws] of musts) for (const w of ws) if (!lines[p].includes(w)) ng(`access: ${w}`);
 void access;
 const home = flat[''];
@@ -65,18 +65,33 @@ for (const t of [
   '丁寧なカウンセリング', '悩みや好み、普段のセット方法までじっくり伺います。', '毎日に馴染むスタイル', 'サロン帰りだけでなく、翌朝も扱いやすい髪へ。',
   '静かに過ごせる空間', '2席だけのプライベートな空間で、自分の時間を。', 'はじめての方へ',
   'ご希望の髪型が決まっていなくても大丈夫です。髪のお悩みや普段のライフスタイルを伺いながら、一緒にスタイルを考えていきます。',
-  'カット5,000円台〜、カラー7,000円台〜', 'PORTFOLIO DEMO｜架空店舗の制作事例です',
-  '予約デモを体験',
+  'カット5,000円台〜、カラー7,000円台〜',
+  '予約する',
 ].map((s) => s.replace(/\s+/g, ''))) if (!home.includes(t)) ng(`home missing: ${t}`);
-for (const [q, a] of [...section('## 11. FAQ', '## 12. 技術').matchAll(/\*\*Q\. (.+?)\*\*\s*\nA\. (.+)/g)].map((m) => [m[1], m[2]])) {
+// FAQ: 1・2問目は仕様書の原文どおり。3・4問目は「デモ設定」の言い回しを外した文に置き換え済み(事実=同伴相談可/空き枠に応じて対応)
+const faqRows = [...section('## 11. FAQ', '## 12. 技術').matchAll(/\*\*Q\. (.+?)\*\*\s*\nA\. (.+)/g)].map((m) => [m[1], m[2]]);
+const faqAns = [faqRows[0][1], faqRows[1][1], '同伴でのご相談も可能です。', '空き枠に応じて対応いたします。'];
+faqRows.forEach(([q], i) => {
   count++;
-  if (!flat['access/'].includes('Q' + q.replace(/\s+/g, '')) || !flat['access/'].includes(a.trim())) ng(`faq: ${q}`);
-}
-if (!flat['reserve/'].includes('これはデモです。予約は成立していません')) ng('完了画面の文言');
+  if (!flat['access/'].includes('Q' + q.replace(/\s+/g, '')) || !flat['access/'].includes(faqAns[i].trim())) ng(`faq: ${q}`);
+});
+if (!flat['reserve/'].includes('予約は成立していません')) ng('予約ページの送信されない旨の1行');
+if (/予約完了|ご予約ありがとう|デモを完了|これはデモです/.test(flat['reserve/'])) ng('完了表示らしき文言');
+const disclaimer = '架空店舗のポートフォリオ用デモサイトです。実在店舗ではありません。店名・人物・料金・店舗情報は創作です。';
 for (const p of pages) {
-  if (!flat[p].includes('PORTFOLIODEMO｜架空店舗の制作事例です')) ng(`${p || '/'} に帯がない`);
-  if (!flat[p].includes('このサイトはWeb制作ポートフォリオ用の架空店舗デモです。')) ng(`${p || '/'} フッター免責`);
+  const h = html[p];
+  if (/class="band"|PORTFOLIODEMO|PORTFOLIO DEMO/.test(h)) ng(`${p || '/'} 上部の帯が残っている`);
+  if (!flat[p].includes(disclaimer)) ng(`${p || '/'} フッター免責(1行)`);
+  // フッター免責とメタ情報以外に「デモ・架空・サンプル」の語が残っていないこと(予約ページの注記は別途許可)
+  const body = h.replace(/<head>[\s\S]*?<\/head>/, '').replace(/<script[\s\S]*?<\/script>/g, '').replace(/<footer[\s\S]*?<\/footer>/, '');
+  const txt = body.replace(/<[^>]+>/g, '');
+  if (/デモ|架空|サンプル|ダミー|デモ用/.test(txt)) ng(`${p || '/'} 本文に「デモ/架空/サンプル」が残っている`);
+  const head = (h.match(/<head>[\s\S]*?<\/head>/) ?? [''])[0].replace(/<script[\s\S]*?<\/script>/g, '');
+  if (/デモ|架空|サンプル/.test(head.replace(/<meta name="robots"[^>]*>/, ''))) ng(`${p || '/'} head に「デモ/架空」が残っている`);
 }
+// 地図キャプション: 「会津若松市周辺の地図」のみ
+if (!/<figcaption[^>]*>\s*会津若松市周辺の地図\s*<\/figcaption>/.test(html['access/'])) ng('地図キャプションは「会津若松市周辺の地図」のみ');
+if (/店舗の所在地ではありません/.test(html['access/'])) ng('地図の旧注記が残っている');
 
 // 4) 禁止事項(全ページ)
 const bad = [

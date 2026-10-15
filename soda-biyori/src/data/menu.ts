@@ -1,4 +1,4 @@
-// メニュー・価格は仕様書 §3 のとおり(税込・架空価格)。変更する場合は仕様書も合わせて更新すること。
+// メニュー・価格は仕様書 §3 のとおり(税込)。変更する場合は仕様書も合わせて更新すること。
 export type PhotoKey =
   | 'hero'
   | 'melon'
@@ -67,6 +67,6 @@ export const drinks: { name: string; price: string }[] = [
 ];
 
 export const setNote = 'フードに対象ドリンクを付けると、ドリンク代から150円引き（クリームソーダは対象外）。';
-export const menuDisclaimer = '架空のメニューです。アレルゲン情報は掲載していません。';
-export const menuTaxNote = '価格はすべて税込・架空価格です。実際の注文はできません。';
+export const menuDisclaimer = 'アレルゲン情報は掲載していません。';
+export const menuTaxNote = '価格はすべて税込です。';
 

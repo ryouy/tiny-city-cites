@@ -19,7 +19,7 @@ export const imageDir = '/images/mugi-to-hibi/';
 export const photos = {
   hero: {
     stem: 'hero-bakery',
-    pos: '50% 60%',
+    pos: '42% 60%',
     alt: '朝の光が差し込む、木の棚にパンが並ぶ店内',
     shot: '店内のパン棚。朝の斜光、木の棚、並んだパン（横長 16:9）',
     tone: 'wheat',
@@ -75,7 +75,7 @@ export const photos = {
     stem: 'shop-exterior',
     pos: '50% 45%',
     alt: '郊外の住宅地にある小さなベーカリーの外観',
-    shot: '郊外の小規模ベーカリー外観。架空のロゴ・看板のみ（3:2）',
+    shot: '郊外の小規模ベーカリー外観。3:2',
     tone: 'sage',
     width: 1536,
     height: 1024,

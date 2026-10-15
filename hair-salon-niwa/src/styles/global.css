@@ -1,24 +1,25 @@
-/* HAIR SALON niwa(架空デモ) */
+/* HAIR SALON niwa */
 :root {
-  --bg: #f7f5f0;
-  --surface: #eeeae4;
-  --ink: #33332f;
-  --taupe: #988c80; /* 罫線など装飾専用 */
-  --accent: #76695c; /* ボタン面(bg文字で 4.89:1) */
-  --line: #d8d2c9;
-  --mute: #6b6056; /* 補助文字: bg 5.61 / surface 5.11 */
-  --on-dark-mute: #cfc7bc;
-  --ph-sand: #e4ddd2;
-  --ph-stone: #dad5cc;
-  --ph-clay: #d6cabb;
-  --ph-mist: #dfe0d9;
+  /* 写真(クリーム・蜂蜜色の木・ベージュ)に合わせて、仕様書の色を少し黄みに寄せた */
+  --bg: #f8f4ec;
+  --surface: #efe7da;
+  --ink: #38322b;
+  --taupe: #9a8a76; /* 入力欄の枠。bg で 3.05:1 */
+  --accent: #6f5f4d; /* ボタン面(bg文字で 5.60:1) */
+  --line: #ddd2c1;
+  --mute: #6a5b4c; /* 補助文字: bg 5.96 / surface 5.33 */
+  --on-dark-mute: #d8cfc0;
+  --ph-sand: #e8dfd0;
+  --ph-stone: #ddd5c6;
+  --ph-clay: #d9cab5;
+  --ph-mist: #e2e0d5;
 
   --f-jp: 'Zen Kaku Gothic New', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Noto Sans JP', sans-serif;
   --f-serif: 'Cormorant Garamond', 'Times New Roman', serif;
 
   --wrap: 1180px;
   --gut: clamp(20px, 5vw, 48px);
-  --top-h: 96px;
+  --top-h: 61px;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -39,7 +40,7 @@ input { font: inherit; letter-spacing: inherit; color: inherit; }
 .nw { white-space: nowrap; }
 
 :focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
-.band :focus-visible, .site-footer :focus-visible { outline-color: var(--bg); }
+[hidden] { display: none !important; }
 
 .skip-link { position: absolute; left: 12px; top: -100px; z-index: 100; background: var(--ink); color: var(--bg); padding: 12px 18px; }
 .skip-link:focus { top: 12px; }
@@ -89,8 +90,6 @@ h2 { font-size: clamp(1.25rem, 3.6vw, 1.625rem); letter-spacing: 0.08em; }
 
 /* ヘッダー */
 .top { position: sticky; top: 0; z-index: 50; }
-.band, .site-footer__notice p:first-child { word-break: keep-all; overflow-wrap: normal; }
-.band { background: var(--ink); color: var(--bg); text-align: center; font-size: 0.75rem; letter-spacing: 0.1em; line-height: 1.4; padding: 6px var(--gut); }
 .site-header { position: relative; display: flex; align-items: center; justify-content: space-between; min-height: 60px; padding: 0 max(var(--gut), calc((100% - var(--wrap)) / 2)); background: var(--bg); border-bottom: 1px solid var(--line); }
 .brand { display: inline-flex; align-items: center; min-height: 44px; font-family: var(--f-serif); font-weight: 500; font-size: 1.875rem; line-height: 1; letter-spacing: 0.04em; text-decoration: none; }
 .nav-toggle { width: 48px; height: 48px; display: grid; place-items: center; background: none; border: 0; margin-right: -12px; }
@@ -107,7 +106,7 @@ h2 { font-size: clamp(1.25rem, 3.6vw, 1.625rem); letter-spacing: 0.08em; }
 .site-nav__cta { margin-top: 20px; }
 .site-nav__cta .btn { width: 100%; }
 @media (min-width: 900px) {
-  :root { --top-h: 110px; }
+  :root { --top-h: 65px; }
   .nav-toggle { display: none; }
   .site-nav { position: static; display: block; background: none; border: 0; padding: 0; }
   .site-nav ul { flex-direction: row; align-items: center; gap: clamp(20px, 2.6vw, 36px); }
@@ -118,16 +117,15 @@ h2 { font-size: clamp(1.25rem, 3.6vw, 1.625rem); letter-spacing: 0.08em; }
 }
 
 /* フッター */
-.site-footer { background: var(--ink); color: var(--bg); padding-block: 48px 36px; margin-top: 0; }
+.site-footer { background: var(--surface); color: var(--ink); padding-block: 48px 28px; border-top: 1px solid var(--line); }
 .site-footer a { text-decoration: none; }
 .site-footer a:hover { text-decoration: underline; }
 .site-footer__grid { display: grid; gap: 24px; }
 .site-footer__mark { font-family: var(--f-serif); font-size: 2rem; line-height: 1; }
-.site-footer__small { margin-top: 8px; font-size: 0.8125rem; color: var(--on-dark-mute); }
+.site-footer__small { margin-top: 8px; font-size: 0.8125rem; color: var(--mute); }
 .site-footer__nav { display: flex; flex-wrap: wrap; gap: 0 24px; }
 .site-footer__nav a { display: inline-flex; align-items: center; min-height: 44px; font-size: 0.875rem; }
-.site-footer__notice { margin-top: 28px; padding-top: 20px; border-top: 1px solid rgba(247, 245, 240, 0.25); font-size: 0.75rem; line-height: 1.8; color: var(--on-dark-mute); }
-.site-footer__notice p + p { margin-top: 4px; }
+.site-footer__notice { margin-top: 24px; font-size: 0.6875rem; line-height: 1.8; color: var(--mute); }
 @media (min-width: 900px) { .site-footer__grid { grid-template-columns: 1fr auto; align-items: end; } }
 
 /* 共通リスト */
@@ -154,7 +152,7 @@ h2 { font-size: clamp(1.25rem, 3.6vw, 1.625rem); letter-spacing: 0.08em; }
 .hero__sub { max-width: 30em; }
 .hero__cta { margin-top: 20px; display: flex; flex-wrap: wrap; gap: 8px 28px; align-items: center; }
 @media (min-width: 900px) {
-  .hero__media .photo { aspect-ratio: 5 / 2 !important; max-height: 72vh; }
+  .hero__media .photo { aspect-ratio: 16 / 9 !important; max-height: min(68vh, 720px); object-position: 50% 45% !important; }
   .hero__text { grid-template-columns: 1fr 1fr; gap: 64px; padding-block: 48px 0; align-items: end; }
 }
 .about__grid { display: grid; gap: 32px; }
@@ -179,12 +177,10 @@ h2 { font-size: clamp(1.25rem, 3.6vw, 1.625rem); letter-spacing: 0.08em; }
 .tile__cat { display: block; margin-top: 10px; font-size: 0.75rem; color: var(--mute); letter-spacing: 0.08em; line-height: 1.4; }
 .tile__name { display: block; margin-top: 2px; font-size: 0.9375rem; line-height: 1.5; }
 .menu-prev { background: var(--surface); }
-.menu-prev__grid { display: grid; gap: 32px; }
-.menu-prev__range { margin: 6px 0 20px; color: var(--mute); font-size: 0.9375rem; }
-.menu-prev__media { max-width: 420px; }
+.menu-prev__grid { display: grid; gap: 28px; }
+.menu-prev__range { margin-top: 8px; color: var(--mute); font-size: 0.9375rem; }
 @media (min-width: 900px) {
-  .menu-prev__grid { grid-template-columns: 7fr 4fr; gap: 0 clamp(48px, 8vw, 112px); align-items: center; }
-  .menu-prev__media { max-width: none; }
+  .menu-prev__grid { grid-template-columns: 4fr 7fr; gap: 0 clamp(48px, 8vw, 112px); align-items: start; }
 }
 .bottom__grid { display: grid; gap: 40px; }
 .h2-like { margin-bottom: 8px; }
@@ -235,11 +231,9 @@ h2 { font-size: clamp(1.25rem, 3.6vw, 1.625rem); letter-spacing: 0.08em; }
 .picker__price { font-family: var(--f-serif); font-size: 2.25rem; line-height: 1.3; font-weight: 500; font-variant-numeric: lining-nums; }
 .picker__meta { font-size: 0.875rem; color: var(--mute); display: grid; }
 .picker__cta { margin-top: 16px; }
-.menupage__side .photo { display: none; }
 @media (min-width: 900px) {
   .menupage { grid-template-columns: 7fr 4fr; gap: 0 clamp(48px, 8vw, 112px); align-items: start; padding-top: 56px; }
   .menupage__side { position: sticky; top: calc(var(--top-h) + 24px); }
-  .menupage__side .photo { display: block; }
 }
 
 /* アクセス */
@@ -261,10 +255,10 @@ h2 { font-size: clamp(1.25rem, 3.6vw, 1.625rem); letter-spacing: 0.08em; }
 
 /* モーダル */
 dialog.modal { padding: 0; border: 0; background: var(--bg); color: var(--ink); width: min(920px, calc(100vw - 24px)); max-height: calc(100dvh - 24px); overflow: auto; margin: auto;  }
-dialog.modal::backdrop { background: rgba(51, 51, 47, 0.6); }
+dialog.modal::backdrop { background: rgba(56, 50, 43, 0.6); }
 .modal__inner { display: grid; }
 .modal__media { background: var(--surface); }
-.modal__media .photo { aspect-ratio: 4 / 3 !important; }
+.modal__media .photo { aspect-ratio: 1 / 1 !important; }
 .modal__body { padding: 28px var(--gut) 36px; }
 .modal__body h2 { font-size: clamp(1.5rem, 5vw, 2rem); font-weight: 400; letter-spacing: 0.08em; margin-top: 8px; }
 .modal__comment { margin-top: 10px; }
@@ -328,9 +322,7 @@ legend { padding: 0; }
 .confirm { border-top: 1px solid var(--ink); }
 .confirm > div { display: grid; grid-template-columns: 6em 1fr; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--line); }
 .confirm dt { font-size: 0.8125rem; color: var(--mute); padding-top: 2px; }
-.done { border: 1px solid var(--ink); padding: clamp(28px, 6vw, 56px); }
-.done h2 { margin-bottom: 16px; }
-.done__big { font-size: clamp(1.25rem, 4.6vw, 1.75rem); font-weight: 500; letter-spacing: 0.06em; line-height: 1.6; }
+.wiz__final { margin-top: 20px; font-size: 0.9375rem; color: var(--mute); }
 @media (min-width: 640px) {
   .dates { grid-template-columns: repeat(5, minmax(0, 1fr)); }
   .times { grid-template-columns: repeat(4, minmax(0, 1fr)); }
@@ -339,4 +331,3 @@ legend { padding: 0; }
 .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 
 @media (max-width: 480px) { .grid .tile__name { font-size: 0.875rem; letter-spacing: 0; } }
-@media (max-width: 380px) { .band { letter-spacing: 0.02em; font-size: 0.6875rem; } }

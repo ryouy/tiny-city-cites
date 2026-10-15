@@ -1,10 +1,9 @@
 ---
-import { site, pages, url, type PageKey } from '../data/site';
+import { pages, url, type PageKey } from '../data/site';
 interface Props { current: PageKey }
 const { current } = Astro.props;
 ---
 
-<p class="demo-band">{site.bandNote}<span class="demo-band__more">｜実在の店舗ではありません</span></p>
 <header class="site-header">
   <div class="container site-header__inner">
     <a class="brand" href={url()} aria-current={current === 'home' ? 'page' : undefined}>

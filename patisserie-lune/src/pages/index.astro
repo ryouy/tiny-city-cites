@@ -14,7 +14,7 @@ const hours = infoRows.find((r) => r.k === '営業時間')!;
   <main id="main">
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero__photo">
-        <Photo name="hero" priority ratio="16 / 9" position="50% 42%" sizes="100vw" />
+        <Photo name="hero" priority ratio="4 / 3" position="50% 45%" sizes="100vw" />
       </div>
       <div class="wrap hero__row">
         <div>
@@ -52,17 +52,16 @@ const hours = infoRows.find((r) => r.k === '営業時間')!;
       </div>
     </section>
 
-    <section class="sec sec--tint" aria-label="ホールケーキと焼き菓子">
+    <section class="sec sec--tight" aria-label="ホールケーキと焼き菓子">
       <div class="wrap duo">
         <article class="duo__item reveal" id="whole-cakes" aria-labelledby="whole-title">
           <Photo name="wholeCake" ratio="1 / 1" sizes="(min-width: 900px) 50vw, 100vw" />
           <h2 id="whole-title">{wholeCopy.heading}</h2>
           <p>{wholeCopy.body}</p>
           <a class="btn" href={`${base}order/`}>ホールケーキを見る</a>
-          <p class="small">{wholeCopy.note}</p>
         </article>
         <article class="duo__item reveal" id="gifts" aria-labelledby="gift-title">
-          <Photo name="gift" ratio="1 / 1" position="45% 50%" sizes="(min-width: 900px) 50vw, 100vw" />
+          <Photo name="gift" ratio="5 / 4" sizes="(min-width: 900px) 50vw, 100vw" />
           <h2 id="gift-title">{giftCopy.heading}</h2>
           <p>{giftCopy.body}</p>
           <a class="btn btn--ghost" href={`${base}menu/#baked`}>焼き菓子を見る</a>
@@ -72,7 +71,7 @@ const hours = infoRows.find((r) => r.k === '営業時間')!;
 
     <section class="sec" id="about" aria-labelledby="about-title">
       <div class="wrap story">
-        <div class="story__photo reveal"><Photo name="shop" ratio="4 / 5" position="50% 60%" sizes="(min-width: 900px) 400px, 100vw" /></div>
+        <div class="story__photo reveal"><Photo name="baker" ratio="4 / 5" sizes="(min-width: 900px) 440px, 100vw" /></div>
         <div class="story__text">
           <h2 id="about-title">{about.heading}</h2>
           <p>{about.body}</p>

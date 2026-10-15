@@ -1,4 +1,4 @@
-// 店舗設定は仕様書 §2 のとおり(すべて架空)。住所・電話・SNS は設定しない。
+// 店舗設定は仕様書 §2 のとおり。住所・電話・SNS は設定しない。
 const base = import.meta.env.BASE_URL;
 /** base 付きの内部リンクを作る(例: path('menu') → /menu/) */
 export const path = (p = '') => (p === '' ? base : `${base}${p.replace(/^\//, '')}${p.endsWith('/') ? '' : '/'}`);
@@ -7,19 +7,16 @@ export const site = {
   name: 'HAIR SALON niwa',
   kana: 'ヘアサロン ニワ',
   wordmark: 'niwa',
-  title: 'HAIR SALON niwa（ヘアサロン ニワ）｜髪から、日々を心地よく。（架空店舗デモ）',
+  title: 'HAIR SALON niwa（ヘアサロン ニワ）｜髪から、日々を心地よく。',
   description:
-    '福島県会津若松市の住宅エリアにある設定の、2席・完全予約制のプライベートヘアサロン「HAIR SALON niwa」。Web制作ポートフォリオ用の架空店舗デモサイトです。',
+    '福島県会津若松市の住宅エリアにある、2席・完全予約制のプライベートヘアサロン「HAIR SALON niwa」。静かな空間で、一人ひとりの髪と丁寧に向き合います。',
   copy: '髪から、日々を心地よく。',
   heroEn: 'A PLACE TO FEEL LIKE YOURSELF.',
   heroSub: 'いつもの自分に、ちょうどいい変化を。静かな空間で、一人ひとりの髪と丁寧に向き合うプライベートサロン。',
-  band: 'PORTFOLIO DEMO｜架空店舗の制作事例です',
   disclaimer:
-    'このサイトはWeb制作ポートフォリオ用の架空店舗デモです。実在の店舗ではなく、店名・人物・料金・店舗情報はすべて創作です。実際の営業案内として使用しないでください。',
-  cta: '予約デモを体験',
+    '架空店舗のポートフォリオ用デモサイトです。実在店舗ではありません。店名・人物・料金・店舗情報は創作です。',
+  cta: '予約する',
 } as const;
-
-export const bandParts = site.band.split('｜') as [string, string];
 
 export const nav = [
   { href: path('styles'), label: 'スタイル' },
@@ -49,7 +46,7 @@ export const infoRows: { k: string; v: string[] }[] = [
   { k: '最終受付目安', v: ['カット17:30', 'カット＋カラー16:00', '施術内容により変動します'] },
   { k: '定休日', v: ['月曜日・第1・第3日曜日'] },
   { k: '席数', v: ['2席（半個室風の配置）', '完全予約制'] },
-  { k: '所在エリア', v: ['福島県会津若松市の住宅エリア', '住所・電話番号は設定していません'] },
+  { k: '所在エリア', v: ['福島県会津若松市の住宅エリア'] },
   { k: '駐車場', v: ['2台'] },
-  { k: 'お支払い', v: ['現金、カード、QR決済（架空設定）'] },
+  { k: 'お支払い', v: ['現金、カード、QR決済'] },
 ];

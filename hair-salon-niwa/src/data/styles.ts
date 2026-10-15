@@ -1,4 +1,4 @@
-// スタイルギャラリー(仕様書 §6。サンプルデータ)。関連メニューは本実装での対応付け(services.ts の id)。
+// スタイルギャラリー(仕様書 §6)。関連メニューは本実装での対応付け(services.ts の id)。
 import type { PhotoKey } from './photos';
 
 export type StyleCategory = 'Short' | 'Bob' | 'Medium' | 'Long' | "Men's";
@@ -25,4 +25,4 @@ export const hairStyles: HairStyle[] = [
 
 export const featuredStyleIds = ['style01', 'style02', 'style03', 'style04'];
 
-export const stylesNote = 'スタイルはサンプルです。仕上がりをお約束するものではありません。髪質・状態により異なります。';
+export const stylesNote = '仕上がりをお約束するものではありません。髪質・状態により異なります。';

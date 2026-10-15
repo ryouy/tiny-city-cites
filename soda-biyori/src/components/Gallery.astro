@@ -1,14 +1,14 @@
 ---
 import Photo from './Photo.astro';
 import type { PhotoKey } from '../data/menu';
-const shots: { k: PhotoKey; pos?: string; wide?: boolean }[] = [
-  { k: 'interior', pos: '50% 45%', wide: true },
-  { k: 'pudding', pos: '55% 50%' },
-  { k: 'ichigo', pos: '50% 42%' },
-  { k: 'napolitan', pos: '60% 55%' },
-  { k: 'aozora', pos: '50% 42%' },
-  { k: 'omelette', pos: '55% 55%' },
-  { k: 'yuyake', pos: '50% 42%' },
+// スマホは写真の縦横比のまま並べ、PC は 上段=縦長 4:5 / 下段=横長 5:4 に揃える(正方形のオムライスのみ 5:4 に切り出し)。
+const shots: { k: PhotoKey; ratio: string; sq?: boolean }[] = [
+  { k: 'ichigo', ratio: '1122 / 1402' },
+  { k: 'aozora', ratio: '1122 / 1402' },
+  { k: 'yuyake', ratio: '1122 / 1402' },
+  { k: 'pudding', ratio: '1402 / 1122' },
+  { k: 'napolitan', ratio: '1402 / 1122' },
+  { k: 'omelette', ratio: '1 / 1', sq: true },
 ];
 ---
 
@@ -16,7 +16,7 @@ const shots: { k: PhotoKey; pos?: string; wide?: boolean }[] = [
   <div class="container">
     <h2 id="gallery-title" class="h2">ギャラリー</h2>
     <div class="snaps">
-      {shots.map((s) => <figure class={s.wide ? 'snap snap--wide' : 'snap'}><Photo name={s.k} ratio={s.wide ? '2 / 1' : '1 / 1'} pos={s.pos} sizes={s.wide ? '(min-width: 900px) 560px, 92vw' : '(min-width: 900px) 270px, 46vw'} /></figure>)}
+      {shots.map((s) => <figure class={s.sq ? 'snap snap--sq' : 'snap'}><Photo name={s.k} ratio={s.ratio} sizes="(min-width: 900px) 360px, 46vw" /></figure>)}
     </div>
   </div>
 </section>

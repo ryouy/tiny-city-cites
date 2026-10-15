@@ -3,8 +3,6 @@ import { site } from '../config/site';
 
 const services = [
   {
-    no: '01',
-    en: 'Web Design',
     title: 'ホームページ制作',
     desc: 'お店の雰囲気や情報を整理し、スマートフォンでも見やすいホームページを制作します。',
     listTitle: '対応内容',
@@ -18,16 +16,12 @@ const services = [
     ],
   },
   {
-    no: '02',
-    en: 'Web Launch',
     title: '公開・初期設定',
     desc: '制作したホームページを公開するための技術的な設定をサポートします。',
     listTitle: '対応内容',
     items: ['公開環境の構築', '独自ドメイン設定支援', 'HTTPS対応', '基本動作の確認'],
   },
   {
-    no: '03',
-    en: 'Web Care',
     title: '保守・更新サポート',
     desc: '公開後も、必要に応じてサイトの管理や軽微な内容更新を行います。',
     listTitle: '対応例',
@@ -37,20 +31,15 @@ const services = [
 const { pricing } = site;
 ---
 
-<section class="section section--white" id="services" aria-labelledby="services-title">
+<section class="section" id="services" aria-labelledby="services-title">
   <div class="container">
     <div class="section-head reveal">
-      <p class="label">OUR SERVICES</p>
-      <h2 class="heading" id="services-title">つくることも、<br />その先も。</h2>
+      <h2 class="heading" id="services-title">サービス</h2>
     </div>
 
     {
       services.map((s) => (
         <article class="service reveal">
-          <p class="service__meta">
-            <b>{s.no}</b>
-            {s.en}
-          </p>
           <div>
             <h3 class="service__title">{s.title}</h3>
             <p class="service__desc">{s.desc}</p>

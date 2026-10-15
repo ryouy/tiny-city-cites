@@ -8,8 +8,8 @@ import { site } from '../data/site';
 
 <BaseLayout
   current="information"
-  title="店舗情報 | KITO COFFEE（架空カフェ デモサイト）"
-  description="KITO COFFEEの営業時間、休業日、座席、駐車場、持ち帰り、支払い方法と地図、Gallery。架空店舗のデモサイトです。"
+  title="店舗情報 | KITO COFFEE"
+  description="KITO COFFEEの営業時間、休業日、座席、駐車場、持ち帰り、支払い方法と地図、Gallery。"
 >
   <div class="container info-page">
     <div class="info-page__main">
@@ -33,10 +33,10 @@ import { site } from '../data/site';
   <section class="gallery container" aria-labelledby="gallery-title">
     <h2 id="gallery-title" class="h2">Gallery</h2>
     <div class="gallery__grid">
-      <div class="gallery__a"><Photo photo={photos.interior} ratio="4 / 5" ratioSm="4 / 5" pos="40% 50%" sizes="(min-width: 900px) 45vw, 100vw" /></div>
-      <div class="gallery__b"><Photo photo={photos.pourOver} ratio="3 / 2" ratioSm="4 / 3" sizes="(min-width: 900px) 50vw, 100vw" /></div>
-      <div class="gallery__c"><Photo photo={photos.blend} ratio="1 / 1" ratioSm="1 / 1" sizes="(min-width: 900px) 24vw, 50vw" /></div>
-      <div class="gallery__d"><Photo photo={photos.sweets} ratio="4 / 3" ratioSm="1 / 1" sizes="(min-width: 900px) 30vw, 50vw" /></div>
+      <div class="gallery__a"><Photo photo={photos.hero} ratio="2 / 1" ratioSm="3 / 2" pos="50% 62%" sizes="100vw" /></div>
+      <div class="gallery__b"><Photo photo={photos.blend} ratio="1 / 1" pos="50% 48%" sizes="(min-width: 900px) 32vw, 50vw" /></div>
+      <div class="gallery__c"><Photo photo={photos.interior} ratio="1 / 1" pos="40% 45%" sizes="(min-width: 900px) 32vw, 50vw" /></div>
+      <div class="gallery__d"><Photo photo={photos.pourOver} ratio="1 / 1" ratioSm="3 / 2" pos="52% 50%" sizes="(min-width: 900px) 32vw, 100vw" /></div>
     </div>
   </section>
 </BaseLayout>

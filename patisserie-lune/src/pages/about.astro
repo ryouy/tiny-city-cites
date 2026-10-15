@@ -7,7 +7,7 @@ import Footer from '../components/Footer.astro';
 import { story, infoRows, faq } from '../data/site';
 ---
 
-<BaseLayout current="about" title="店舗案内｜PÂTISSERIE LUNE（架空店舗の制作デモ）" description="PÂTISSERIE LUNEのお店について、営業時間・定休日・駐車場・お支払い方法、よくあるご質問。具体的な住所・電話番号は設けていません。">
+<BaseLayout current="about" title="店舗案内｜PÂTISSERIE LUNE" description="PÂTISSERIE LUNEのお店について、営業時間・定休日・駐車場・お支払い方法、よくあるご質問。">
   <main id="main">
     <PageHead title="店舗案内" />
 
@@ -16,15 +16,13 @@ import { story, infoRows, faq } from '../data/site';
         <div class="story__text">
           <h2 id="story-title">お店について</h2>
           {story.paras.map((t) => <p>{t}</p>)}
-          <p class="small">{story.fiction}</p>
         </div>
-        <div class="story__photo"><Photo name="baker" ratio="4 / 5" position="50% 55%" sizes="(min-width: 900px) 400px, 100vw" /></div>
+        <div class="story__photo"><Photo name="shop" ratio="4 / 5" sizes="(min-width: 900px) 440px, 100vw" /></div>
       </div>
     </section>
 
-    <section class="sec sec--tint" id="info" aria-labelledby="info-title">
+    <section class="sec sec--tight" id="info" aria-labelledby="info-title">
       <div class="wrap info">
-        <div class="info__photo"><Photo name="shop" ratio="4 / 5" position="50% 60%" sizes="(min-width: 900px) 400px, 100vw" /></div>
         <div>
           <h2 id="info-title">営業情報</h2>
           <dl class="dl">
@@ -33,25 +31,22 @@ import { story, infoRows, faq } from '../data/site';
             ))}
           </dl>
         </div>
+        <div class="info__map">
+          <MapEmbed />
+        </div>
       </div>
     </section>
 
-    <section class="sec" aria-label="地図とよくあるご質問">
-      <div class="wrap access-grid">
-        <div>
-          <h2 class="h-sub">エリアの目安</h2>
-          <MapEmbed />
-        </div>
-        <div>
-          <h2 class="h-sub">よくあるご質問</h2>
-          <div class="faq">
-            {faq.map((f) => (
-              <details>
-                <summary>{f.q}</summary>
-                <p>{f.a}</p>
-              </details>
-            ))}
-          </div>
+    <section class="sec sec--tight" aria-labelledby="faq-title">
+      <div class="wrap faq-wrap">
+        <h2 class="h-sub" id="faq-title">よくあるご質問</h2>
+        <div class="faq">
+          {faq.map((f) => (
+            <details>
+              <summary>{f.q}</summary>
+              <p>{f.a}</p>
+            </details>
+          ))}
         </div>
       </div>
     </section>

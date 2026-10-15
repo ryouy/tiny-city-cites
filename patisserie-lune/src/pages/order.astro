@@ -1,17 +1,25 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import PageHead from '../components/PageHead.astro';
+import Photo from '../components/Photo.astro';
 import OrderDemo from '../components/OrderDemo.astro';
 import Footer from '../components/Footer.astro';
 import { wholeCopy } from '../data/site';
 ---
 
-<BaseLayout current="order" title="ホールケーキ｜PÂTISSERIE LUNE（架空店舗の制作デモ）" description="PÂTISSERIE LUNEのホールケーキ。商品とサイズ、受取希望日、メッセージプレートを選べます。予約機能はデモで、送信されません。">
+<BaseLayout current="order" title="ホールケーキ｜PÂTISSERIE LUNE" description="PÂTISSERIE LUNEのホールケーキ。商品とサイズ、受取希望日、メッセージプレートを選べます。">
   <main id="main">
-    <PageHead title={wholeCopy.heading} lead={wholeCopy.body} />
-    <div class="page-body">
+    <header class="page-head page-head--photo">
+      <div class="wrap order-head">
+        <div>
+          <h1>{wholeCopy.heading}</h1>
+          <p class="page-head__lead">{wholeCopy.body}</p>
+          <p class="form-note">{wholeCopy.note}</p>
+        </div>
+        <div class="order-head__photo"><Photo name="wholeCake" priority ratio="1 / 1" sizes="(min-width: 800px) 340px, 320px" /></div>
+      </div>
+    </header>
+    <div class="page-body page-body--form">
       <div class="wrap">
-        <p class="demo-note">{wholeCopy.note}</p>
         <OrderDemo />
       </div>
     </div>

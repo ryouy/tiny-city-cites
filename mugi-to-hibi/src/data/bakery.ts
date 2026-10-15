@@ -18,10 +18,10 @@ export const calendarConfig = {
 };
 
 /**
- * 臨時休業(サンプル)。YYYY-MM-DD。祝日などは自動推測しない。
+ * 臨時休業。YYYY-MM-DD。祝日などは自動推測しない。
  * 空配列にすると通常スケジュールのみを表示する。
  */
 export const specialClosures: { date: string; label: string }[] = [
-  { date: '2026-10-28', label: '臨時休業（サンプル）' },
-  { date: '2026-11-11', label: '臨時休業（サンプル）' },
+  { date: '2026-10-28', label: '臨時休業' },
+  { date: '2026-11-11', label: '臨時休業' },
 ];

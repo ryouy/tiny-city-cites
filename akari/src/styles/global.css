@@ -1,8 +1,8 @@
 /* 炭火と酒 灯 — Dark / Japanese Modern。全画面セクション型の1ページ */
 
 :root {
-  --bg: #171613;
-  --bg-alt: #211e19;
+  --bg: #16130f;
+  --bg-alt: #1f1a14;
   --ink: #e8dfcd;
   --accent: #ba8850;
   /* 補助色(帯・面): 文字には使わない */
@@ -20,12 +20,12 @@
   --serif-en: var(--serif-jp);
 
   --gutter: clamp(20px, 5.5vw, 80px);
-  --top-h: 92px;
+  --top-h: 62px;
   --maxw: 1240px;
 }
 @media (min-width: 1024px) {
   :root {
-    --top-h: 104px;
+    --top-h: 74px;
   }
 }
 
@@ -226,33 +226,13 @@ select {
   background: rgb(186 136 80 / 0.16);
 }
 
-/* ---------- 上部帯 + ヘッダー ---------- */
+/* ---------- ヘッダー ---------- */
 .site-top {
   position: fixed;
   inset: 0 0 auto 0;
   z-index: 100;
 }
-.demo-band {
-  background: var(--aux);
-  color: var(--ink);
-  font-size: 0.75rem;
-  letter-spacing: 0.04em;
-  line-height: 1.5;
-  text-align: center;
-  padding: 6px 12px;
-  min-height: 30px;
-  text-wrap: balance;
-}
-@media (max-width: 419px) {
-  .demo-band {
-    font-size: 0.6875rem;
-    letter-spacing: 0.01em;
-  }
-}
 @media (max-width: 359px) {
-  :root {
-    --top-h: 110px;
-  }
   .site-header {
     gap: 6px;
   }
@@ -494,7 +474,7 @@ select {
   inset: 8px;
   border: 1px solid var(--accent-text);
   border-radius: 50%;
-  background: rgb(23 22 19 / 0.6);
+  background: rgb(22 19 15 / 0.6);
   transition:
     background-color 0.3s,
     inset 0.3s;
@@ -554,8 +534,8 @@ select {
   position: relative;
   min-height: max(100svh, 560px);
   display: flex;
-  align-items: flex-end;
-  padding: calc(var(--top-h) + 32px) 0 clamp(40px, 9vh, 88px);
+  align-items: flex-start;
+  padding: calc(var(--top-h) + clamp(28px, 7vh, 80px)) 0 40px;
   overflow: hidden;
   isolation: isolate;
 }
@@ -563,9 +543,10 @@ select {
   position: absolute;
   inset: 0;
   z-index: 1;
+  /* 写真は左上が暗い煙と壁、下に焼き台。文字は左上に置き、上から左へ暗幕をかける */
   background:
-    linear-gradient(to top, rgb(23 22 19 / 0.92) 0%, rgb(23 22 19 / 0.55) 40%, rgb(23 22 19 / 0.12) 75%),
-    linear-gradient(to right, rgb(23 22 19 / 0.55), transparent 65%);
+    linear-gradient(to bottom, rgb(22 19 15 / 0.9) 0%, rgb(22 19 15 / 0.62) 38%, rgb(22 19 15 / 0.05) 72%),
+    linear-gradient(to right, rgb(22 19 15 / 0.6), transparent 60%);
 }
 .hero__inner {
   position: relative;
@@ -654,10 +635,18 @@ select {
   }
   .about__photo {
     aspect-ratio: auto;
+    min-height: 560px;
   }
 }
 
 /* ---------- お品書き(画面内タブ) ---------- */
+@media (min-width: 900px) {
+  .screen.menu {
+    min-height: 0;
+    align-content: start;
+    padding-block: 88px 96px;
+  }
+}
 .menu-tabs {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -756,12 +745,9 @@ select {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
 }
-.dish-photos--1 {
-  grid-template-columns: minmax(0, 1fr);
-}
 .dish-photos__item {
   position: relative;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 4 / 5;
 }
 @media (min-width: 900px) {
   .menu-tabs {
@@ -801,20 +787,28 @@ select {
   }
   .tabpanel {
     height: 100%;
-    grid-template-columns: minmax(0, 1fr) clamp(220px, 24vw, 340px);
+    align-content: start;
+  }
+  .tabpanel--photo {
+    grid-template-columns: minmax(0, 1fr) clamp(240px, 28vw, 400px);
     column-gap: clamp(32px, 4vw, 56px);
-    align-items: stretch;
+    align-items: start;
   }
   .tabpanel__title {
     grid-column: 1 / -1;
   }
   .dish-photos {
     grid-template-columns: minmax(0, 1fr);
-    grid-auto-rows: minmax(0, 1fr);
-    min-height: 420px;
+    gap: 12px;
   }
   .dish-photos__item {
-    aspect-ratio: auto;
+    aspect-ratio: 4 / 3;
+  }
+  .tabpanel:not(.tabpanel--photo) .dishes {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: clamp(32px, 4vw, 64px);
+    border-top: 1px solid var(--line-soft);
   }
 }
 
@@ -926,26 +920,23 @@ select {
 /* ---------- お席 ---------- */
 .space {
   padding: 0;
-  grid-template-rows: auto auto;
-  align-content: stretch;
-  gap: 0;
+  align-content: start;
 }
-.space__photos {
-  display: grid;
-  grid-template-columns: 3fr 2fr;
-  gap: 4px;
-  height: clamp(180px, 40vw, 260px);
-  background: var(--bg);
+.space__counter {
+  position: relative;
+  aspect-ratio: 1916 / 821;
+  max-height: 460px;
+  width: 100%;
 }
-.space__counter,
 .space__semi {
   position: relative;
+  aspect-ratio: 4 / 3;
 }
 .space__body {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: 24px;
-  padding-block: 40px;
+  padding-block: 40px 48px;
 }
 .seats__total {
   display: flex;
@@ -980,18 +971,35 @@ select {
   letter-spacing: 0.14em;
 }
 @media (min-width: 900px) {
-  .space {
-    grid-template-rows: minmax(0, 1fr) auto;
-  }
-  .space__photos {
-    height: auto;
-    grid-template-columns: 2fr 1fr;
+  .space__counter {
+    height: clamp(260px, 44svh, 460px);
+    aspect-ratio: auto;
+    max-height: none;
   }
   .space__body {
     grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
-    gap: clamp(40px, 7vw, 112px);
-    align-items: center;
-    padding-block: 36px 40px;
+    grid-template-areas:
+      'text semi'
+      'seats semi';
+    column-gap: clamp(40px, 7vw, 112px);
+    row-gap: 28px;
+    align-items: start;
+    padding-block: 40px 48px;
+  }
+  .space__text {
+    grid-area: text;
+  }
+  .space__semi {
+    grid-area: semi;
+    align-self: start;
+  }
+  .seats__list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: 24px;
+  }
+  .seats {
+    grid-area: seats;
   }
   .space__body .lead {
     margin-top: 12px;
@@ -1116,7 +1124,7 @@ select {
   }
   .info__photo {
     aspect-ratio: auto;
-    height: clamp(150px, 24vh, 240px);
+    height: clamp(200px, 30vh, 300px);
   }
 }
 
@@ -1141,13 +1149,10 @@ select {
   color: var(--ink-sub);
 }
 .footer__disclaimer {
-  font-size: 0.9rem;
-  line-height: 1.9;
-  max-width: 34em;
-}
-.footer__note {
-  margin-top: 6px;
-  font-size: 0.8rem;
+  margin-top: 20px;
+  font-size: 0.72rem;
+  line-height: 1.8;
+  letter-spacing: 0.02em;
   color: var(--ink-sub);
 }
 .footer__nav {
@@ -1428,10 +1433,10 @@ select {
     padding-block: 36px;
   }
   .about__photo {
-    aspect-ratio: 2 / 1;
+    aspect-ratio: 4 / 3;
   }
   .sake__photo {
-    aspect-ratio: 2 / 1;
+    aspect-ratio: 3 / 2;
   }
   .menu-tabs {
     gap: 12px;
@@ -1444,12 +1449,6 @@ select {
   }
   .dish__desc {
     line-height: 1.7;
-  }
-  .dish-photos--1 .dish-photos__item {
-    aspect-ratio: 2 / 1;
-  }
-  .dish-photos--2 .dish-photos__item {
-    aspect-ratio: 1 / 1;
   }
   .courses {
     margin-top: 20px;
@@ -1465,9 +1464,6 @@ select {
   }
   .course-item__cond {
     margin-top: 10px;
-  }
-  .space__photos {
-    height: 170px;
   }
   .space__body {
     padding-block: 28px;
@@ -1500,9 +1496,6 @@ select {
     align-items: baseline;
     padding-block: 7px;
   }
-  .info__photo {
-    aspect-ratio: 21 / 9;
-  }
   .site-footer {
     padding-block: 28px 16px;
   }
@@ -1512,7 +1505,7 @@ select {
 }
 @media (max-width: 899px) {
   .hero {
-    min-height: min(100svh, 680px);
+    min-height: max(100svh, 640px);
     padding-bottom: 36px;
   }
   .hero__body {
@@ -1520,10 +1513,6 @@ select {
   }
   .hero__cta {
     margin-top: 20px;
-  }
-  .about__photo,
-  .sake__photo {
-    aspect-ratio: 16 / 7;
   }
   .about__text,
   .sake__text {
@@ -1535,12 +1524,6 @@ select {
   }
   .lead {
     font-size: 0.95rem;
-  }
-  .dish-photos--1 .dish-photos__item {
-    aspect-ratio: 16 / 7;
-  }
-  .dish-photos--2 .dish-photos__item {
-    aspect-ratio: 4 / 3;
   }
   .course-item__name {
     font-size: 1.3rem;
@@ -1557,10 +1540,13 @@ select {
     font-size: 1rem;
   }
   .info__photo {
-    aspect-ratio: 3 / 1;
+    aspect-ratio: 16 / 9;
   }
   .space__body .lead {
     margin-top: 10px;
+  }
+  .space__counter {
+    aspect-ratio: 2 / 1;
   }
   .footer__nav {
     display: none;

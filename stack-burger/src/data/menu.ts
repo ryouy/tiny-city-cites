@@ -1,4 +1,4 @@
-// メニューデータ(仕様書 §3。すべて架空・税込)。価格・説明の変更はこのファイルだけで完結します。
+// メニューデータ(仕様書 §3。すべて税込)。価格・説明の変更はこのファイルだけで完結します。
 export type Category = 'burgers' | 'sides' | 'drinks';
 
 export interface MenuItem {
@@ -20,7 +20,7 @@ export const categories: { id: Category; label: string; ja: string }[] = [
 
 export const burgers: MenuItem[] = [
   { id: 'classic', name: 'クラシック・スマッシュ', price: 980, desc: '香ばしいパティ、チェダー、レタス、トマト、オリジナルソース', badge: '定番', setEligible: true },
-  { id: 'double', name: 'ダブルチーズ・スタック', price: 1380, desc: 'パティ2枚とチーズ2枚を重ねた看板メニュー', badge: '人気No.1※', setEligible: true },
+  { id: 'double', name: 'ダブルチーズ・スタック', price: 1380, desc: 'パティ2枚とチーズ2枚を重ねた看板メニュー', badge: '人気No.1', setEligible: true },
   { id: 'bacon', name: 'スモーキーベーコン', price: 1280, desc: 'ベーコンとスモーキーなBBQソース', setEligible: true },
   { id: 'spicy', name: 'ホットチリ・スタック', price: 1250, desc: 'スパイシーソースとハラペーニョの刺激', badge: '辛口', setEligible: true },
   { id: 'avo', name: 'アボカド・チーズ', price: 1300, desc: 'アボカドのまろやかさと肉の旨み', setEligible: true },
@@ -46,7 +46,6 @@ export const itemsByCategory: Record<Category, MenuItem[]> = { burgers, sides, d
 
 export const menuNotes = {
   tax: 'すべて税込価格です。',
-  badge: '※「人気No.1」は架空設定であり、実在の販売実績ではありません。',
 };
 
 // セット・追加(仕様書 §3 SETS & ADD-ONS)

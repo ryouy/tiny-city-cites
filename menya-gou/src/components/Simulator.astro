@@ -1,9 +1,12 @@
 ---
+import Photo from './Photo.astro';
 import { custom, preferences } from '../data/site';
 ---
 
 <section class="custom" id="custom" aria-labelledby="custom-title">
-  <div class="container">
+  <div class="container custom__grid">
+    <Photo name="noodle" ratio="2 / 1" ratioWide="4 / 5" sizes="(min-width: 800px) 40vw, 100vw" pos="50% 40%" class="custom__photo" />
+    <div>
     <h2 id="custom-title" class="h2">{custom.heading}</h2>
     <p class="custom__lead">{custom.body}</p>
 
@@ -31,6 +34,7 @@ import { custom, preferences } from '../data/site';
       <p class="sim__status" data-status role="status"></p>
       <p class="sim__note">{custom.note}{custom.disclaimer}</p>
     </form>
+    </div>
   </div>
 </section>
 

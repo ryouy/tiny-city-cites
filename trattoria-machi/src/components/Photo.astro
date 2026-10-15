@@ -14,8 +14,9 @@ interface Props {
   /** object-position(被写体の位置に合わせて指定) */
   pos?: string;
 }
-const { name, priority = false, ratio = '4 / 5', sizes = '(min-width: 900px) 50vw, 100vw', pos = '50% 50%' } = Astro.props;
+const { name, priority = false, ratio = '4 / 5', sizes = '(min-width: 900px) 50vw, 100vw', pos } = Astro.props;
 const def = photos[name];
+const objPos = pos ?? def.pos;
 // ビルド時に public/images/trattoria-machi/ の実ファイル(webp/png/jpg/jpeg/avif)を確認。無ければ控えめなプレースホルダー。
 const found = photoExts
   .map((e) => `${def.base}.${e}`)
@@ -31,7 +32,7 @@ const found = photoExts
       width={def.width}
       height={def.height}
       sizes={sizes}
-      style={`--r:${ratio};--pos:${pos}`}
+      style={`--r:${ratio};--pos:${objPos}`}
       loading={priority ? 'eager' : 'lazy'}
       fetchpriority={priority ? 'high' : undefined}
       decoding="async"

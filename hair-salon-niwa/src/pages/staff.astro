@@ -1,16 +1,15 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Photo from '../components/Photo.astro';
-import { staff, staffNote } from '../data/staff';
+import { staff } from '../data/staff';
 import { path, site } from '../data/site';
 ---
 
-<BaseLayout page="スタッフ" description="HAIR SALON niwa（架空店舗デモ）のスタイリスト紹介。プロフィールや得意なスタイル、メッセージを掲載（すべて架空の人物）。">
+<BaseLayout page="スタッフ" description="HAIR SALON niwaのスタイリスト紹介。プロフィール、得意なスタイル、メッセージを掲載しています。">
   <div class="wrap staffpage">
-    <div class="staffpage__media"><Photo name="hands" ratio="4 / 5" sizes="(min-width: 900px) 44vw, 100vw" position="40% 40%" /></div>
+    <div class="staffpage__media"><Photo name="hands" ratio="4 / 5" sizes="(min-width: 900px) 44vw, 100vw" position="35% 40%" /></div>
     <div class="staffpage__text">
       <h1 class="ptitle">スタッフ</h1>
-      <p class="ptitle__note">{staffNote}</p>
       {staff.map((p) => (
         <section class="profile" aria-labelledby={`p-${p.id}`}>
           <h2 id={`p-${p.id}`}>{p.name}</h2>

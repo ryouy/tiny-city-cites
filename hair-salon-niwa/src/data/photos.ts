@@ -26,17 +26,17 @@ export const photos: Record<PhotoKey, PhotoDef> = {
   hero: {
     base: 'niwa-hero', alt: '2席だけの、静かなサロンの内装',
     shoot: 'ミラー2面と椅子2脚。木の質感と自然光が入る、静かなサロン内装（横長）。',
-    width: 1536, height: 1024, tone: 'sand', usage: 'ヒーロー（3:2 横長）', spec: true,
+    width: 1536, height: 1024, tone: 'sand', usage: 'トップ ヒーロー（3:2 横長）', spec: true,
   },
   interior: {
     base: 'niwa-interior', alt: 'ミラー、木材、窓からの自然光が並ぶサロンの一角',
     shoot: 'ミラーの縁、木の棚、カーテン越しの自然光。人物は写さない。',
-    width: 1122, height: 1402, tone: 'stone', usage: 'About / 初回来店（4:5 縦長）', spec: true,
+    width: 1122, height: 1402, tone: 'stone', usage: 'トップ About（4:5 縦長）', spec: true,
   },
   hands: {
     base: 'niwa-hands', alt: '髪をブローしながら整える、スタイリングの手元',
     shoot: 'ブラシとドライヤーで髪を整える手元のクローズアップ。本人を特定できない構図。',
-    width: 1122, height: 1402, tone: 'clay', usage: 'メニュー / スタッフ（4:5 縦長）', spec: true,
+    width: 1122, height: 1402, tone: 'clay', usage: 'メニュー（4:5 縦長）', spec: true,
   },
   style01: {
     base: 'niwa-style-01', alt: 'やわらか丸みボブのスタイル写真',
@@ -48,7 +48,7 @@ export const photos: Record<PhotoKey, PhotoDef> = {
   },
   style03: {
     base: 'niwa-style-03', alt: '大人のコンパクトショートのスタイル写真',
-    shoot: 'ハンサムすぎない、まとまりのあるショート（縦長）。', width: 1086, height: 1448, tone: 'clay', usage: 'スタイル03（3:4 縦長）', spec: true,
+    shoot: 'ハンサムすぎない、まとまりのあるショート（縦長）。', width: 1087, height: 1447, tone: 'clay', usage: 'スタイル03（3:4 縦長）', spec: true,
   },
   style04: {
     base: 'niwa-style-04', alt: '艶感ロングレイヤーのスタイル写真',

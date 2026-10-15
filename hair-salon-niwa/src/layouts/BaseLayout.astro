@@ -11,7 +11,7 @@ interface Props {
   page?: string;
 }
 const { title = site.title, description = site.description, page } = Astro.props;
-const fullTitle = page ? `${page}｜${site.name}（架空店舗デモ）` : title;
+const fullTitle = page ? `${page}｜${site.name}` : title;
 const base = import.meta.env.BASE_URL;
 ---
 
@@ -23,7 +23,7 @@ const base = import.meta.env.BASE_URL;
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <meta name="robots" content="noindex,nofollow" />
-    <meta name="theme-color" content="#F7F5F0" />
+    <meta name="theme-color" content="#F8F4EC" />
     <link rel="icon" href={`${base}favicon.svg`} type="image/svg+xml" />
 
     <meta property="og:type" content="website" />

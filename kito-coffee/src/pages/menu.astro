@@ -8,22 +8,21 @@ import { menu, menuNotes } from '../data/menu';
 
 <BaseLayout
   current="menu"
-  title="メニュー | KITO COFFEE（架空カフェ デモサイト）"
-  description="KITO COFFEEのメニュー。コーヒー、ドリンク、手づくりのお菓子の全品を税込価格で掲載しています。架空店舗のデモサイトです。"
+  title="メニュー | KITO COFFEE"
+  description="KITO COFFEEのメニュー。コーヒー、ドリンク、手づくりのお菓子の全品を税込価格で掲載しています。"
 >
   <div class="container menu-page">
     <header class="menu-page__head">
       <h1 class="h1">メニュー</h1>
       <p class="menu-page__tax">{menuNotes.tax}</p>
       <div class="menu-page__photo">
-        <Photo photo={photos.blend} ratio="1 / 1" ratioSm="16 / 9" pos="50% 45%" sizes="(min-width: 900px) 30vw, 100vw" />
+        <Photo photo={photos.blend} ratio="1 / 1" ratioSm="16 / 9" pos="50% 48%" sizes="(min-width: 900px) 30vw, 100vw" />
       </div>
     </header>
     <div class="menu-page__body">
       {menu.map((cat) => <MenuList cat={cat} />)}
       <div class="menu-notes">
         <p class="menu-notes__set">{menuNotes.set}</p>
-        <p class="menu-notes__small">{menuNotes.fiction}</p>
       </div>
     </div>
   </div>

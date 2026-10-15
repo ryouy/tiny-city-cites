@@ -4,7 +4,9 @@ import { site, info } from '../data/site';
 ---
 
 <section class="hero" id="top" aria-labelledby="hero-title">
-  <Photo name="hero" priority ratio="4 / 5" ratioWide="21 / 9" sizes="100vw" class="hero__img" pos="50% 55%" />
+  <div class="hero__media">
+    <Photo name="hero" priority ratio="6 / 5" ratioWide="4 / 3" sizes="(min-width: 800px) 60vw, 100vw" class="hero__img" pos="50% 62%" />
+  </div>
   <div class="hero__body">
     <p class="hero__copy">{site.copy}</p>
     <h1 id="hero-title" class="hero__title">{site.name}</h1>

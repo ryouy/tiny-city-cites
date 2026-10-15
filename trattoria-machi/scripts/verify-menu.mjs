@@ -13,6 +13,7 @@ const toLines = (html) => html.replace(/<script[\s\S]*?<\/script>/g, '').replace
   .replace(/<[^>]+>/g, '\n').replace(/&amp;/g, '&').replace(/&#39;/g, "'").split('\n').map((l) => l.trim()).filter(Boolean);
 const lines = { top: toLines(htmls.top), menu: toLines(htmls.menu) };
 const all = [...lines.top, ...lines.menu];
+if (!/<figcaption[^>]*>会津若松市周辺の地図<\/figcaption>/.test(htmls.top)) { fail++; console.error('NG: 地図キャプション'); }
 const near = (ls, name, words) => ls.some((l, i) => l === name && words.every((w) => ls.slice(i, i + 8).includes(w)));
 const section = (a, b) => { const s = spec.indexOf(a); return spec.slice(s, b ? spec.indexOf(b, s + a.length) : undefined); };
 const rows = (sec) => sec.split('\n').filter((l) => /^\|/.test(l) && /¥[\d,]+/.test(l)).map((l) => l.split('|').slice(1, -1).map((c) => c.trim()));
@@ -40,7 +41,7 @@ if (!setOk) ng('おふたりセット');
 if (!lines.menu.some((l) => l.includes('これは注文・予約ではありません'))) ng('注文・予約ではない旨');
 if (!lines.menu.some((l) => l.includes('税込'))) ng('税込表記');
 if (!lines.menu.some((l) => l.includes('11:30–14:00'))) ng('ランチ提供時間');
-for (const w of ['コーヒー（HOT/ICE）', '紅茶（HOT/ICE）', 'オレンジジュース', '本日のパスタの一例（架空）', '＋¥200']) if (!lines.menu.some((l) => l.includes(w))) ng(`menu missing: ${w}`);
+for (const w of ['コーヒー（HOT/ICE）', '紅茶（HOT/ICE）', 'オレンジジュース', '本日のパスタの例：きのことベーコンのクリームソース', '＋¥200']) if (!lines.menu.some((l) => l.includes(w))) ng(`menu missing: ${w}`);
 
 // 2) トップページの固定文言・営業情報
 const musts = [
@@ -53,9 +54,9 @@ const musts = [
   '料理人の夫と、接客を担当する妻が営む地域密着のイタリアン。夫は東京のカジュアルイタリアンで経験を積んだ後、会津に戻って店を開いた。地元の旬野菜を時期に合わせて取り入れ、ソースやドレッシングを店内で仕込む。子ども連れにも歓迎の雰囲気を大切にしている。',
   'ランチ 11:30–14:30（L.O.14:00）', 'ディナー 17:30–21:00（L.O.20:30）', '月曜日（祝日の場合翌火曜日休み）', '28席（2人席4卓、4人席5卓）', '6台',
   'ランチ ¥1,000–1,800', 'ディナー ¥2,000–3,500',
-  'ディナーのみ電話予約を受ける想定。ただし電話番号は未設定で、デモサイトでは受付不可。', '実店舗化時に電話番号・予約導線を設定予定。',
-  'ピッツァと一部パスタを対象とする設定。注文機能はなし。', '現金、クレジットカード、QR決済を想定', '歓迎。キッズプレートあり',
-  'メニューを見る', 'お店について', 'ランチメニューを見る', 'ディナーメニューを見る', '会津若松市内を想定した架空店舗',
+  'ディナーのみ電話予約を受ける想定。電話番号は未設定のため、このサイトでは予約を受け付けていません。',
+  'ピッツァと一部パスタが対象。このサイトでは注文できません。', '現金、クレジットカード、QR決済', '歓迎。キッズプレートあり',
+  'メニューを見る', 'お店について', 'ランチメニューを見る', 'ディナーメニューを見る', '所在地', '会津若松市',
 ];
 for (const m of musts) if (!lines.top.some((l) => l.includes(m))) ng(`top missing: ${m}`);
 for (const w of ['¥1,000–1,800', '¥2,000–3,500', '28席（2人席4卓、4人席5卓）', '¥4,200']) if (!spec.includes(w)) ng('spec changed: ' + w);
@@ -77,13 +78,21 @@ for (const [k, html] of Object.entries(htmls)) {
   if (!/<meta name="robots" content="noindex,nofollow"/.test(html)) ng(`${k} noindex`);
   if ((html.match(/<h1[\s>]/g) ?? []).length !== 1) ng(`${k} h1 は1つ`);
   if (!html.includes('lang="ja"')) ng(`${k} lang`);
-  if (!/<meta name="description" content="[^"]*架空[^"]*"/.test(html)) ng(`${k} description にデモ明記`);
+  if (/<meta name="description" content="[^"]*(架空|デモ)[^"]*"/.test(html)) ng(`${k} description に「架空・デモ」が残っている`);
   if (!html.includes('aria-current="page"')) ng(`${k} aria-current`);
   const ls = k === 'top' ? lines.top : lines.menu;
-  if (ls.filter((l) => l.includes('架空店舗のWebサイト制作デモです')).length !== 2) ng(`${k} デモ表記は帯とフッターの2か所`);
+  // 注記はフッター1か所のみ。上部の帯・本文中の「デモ/架空/サンプル」は出さない(メタ情報とフッターで足りる)。
+  if (ls.filter((l) => l.includes('架空店舗のWebサイト制作デモです')).length !== 1) ng(`${k} 免責文はフッター1か所のみ`);
+  const foot = html.slice(html.indexOf('<footer'));
+  const bodyOnly = html.slice(html.indexOf('<body'), html.indexOf('<footer'));
+  if (!foot.includes('架空店舗のWebサイト制作デモです')) ng(`${k} フッターの免責文`);
+  if (/<p class="demo-band"|demo-band/.test(html)) ng(`${k} 上部の帯が残っている`);
+  const bodyText = toLines(bodyOnly).join('\n');
+  const hit = bodyText.match(/デモ|架空|サンプル|デモ用|画像準備中/);
+  if (hit && !/画像準備中/.test(hit[0])) ng(`${k} 本文に「${hit[0]}」が残っている`);
   for (const im of html.match(/<img[^>]*>/g) ?? []) if (!/ alt="[^"]+"/.test(im)) ng(`${k} img alt`);
 }
-if (!htmls.top.includes('<title>トラットリア まちの灯 | 架空イタリアン店舗 デモサイト</title>')) ng('top title');
+if (!htmls.top.includes('<title>トラットリア まちの灯 | 会津若松のイタリアン</title>')) ng('top title');
 if (!/<title>お品書き \| トラットリア まちの灯/.test(htmls.menu)) ng('menu title');
 if (!all.some((l) => l.includes('トラットリア まちの灯｜架空店舗のWebサイト制作デモです。実在店舗ではなく、予約・注文・問い合わせは受け付けていません。'))) ng('footer notice');
 

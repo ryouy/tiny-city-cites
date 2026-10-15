@@ -26,7 +26,7 @@ import { menu, yen } from '../data/menu';
     {
       menu.map((c, i) => (
         <div
-          class="tabpanel"
+          class={`tabpanel${c.photos.length ? ' tabpanel--photo' : ''}`}
           role="tabpanel"
           id={`panel-${c.id}`}
           aria-labelledby={`tab-${c.id}`}
@@ -48,13 +48,15 @@ import { menu, yen } from '../data/menu';
               </li>
             ))}
           </ul>
-          <div class={`dish-photos dish-photos--${c.photos.length}`}>
-            {c.photos.map((p) => (
-              <div class="dish-photos__item">
-                <Photo name={p.key} fill pos={p.pos} sizes="(min-width: 900px) 24vw, 100vw" />
-              </div>
-            ))}
-          </div>
+          {c.photos.length > 0 && (
+            <div class={`dish-photos dish-photos--${c.photos.length}`}>
+              {c.photos.map((p) => (
+                <div class="dish-photos__item">
+                  <Photo name={p.key} fill pos={p.pos} sizes="(min-width: 900px) 28vw, 50vw" />
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       ))
     }

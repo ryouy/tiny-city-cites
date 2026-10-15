@@ -14,7 +14,7 @@ const hours = infoRows.filter((r) => ['営業時間', '定休日'].includes(r.k)
 <BaseLayout>
   <section class="hero" aria-labelledby="hero-h">
     <div class="hero__media">
-      <Photo name="hero" priority ratio="3 / 2" sizes="100vw" position="50% 60%" />
+      <Photo name="hero" priority ratio="3 / 2" sizes="100vw" position="50% 55%" />
     </div>
     <div class="wrap hero__text">
       <div>
@@ -61,9 +61,12 @@ const hours = infoRows.filter((r) => ['営業時間', '定休日'].includes(r.k)
 
   <section class="section menu-prev" aria-labelledby="menu-h">
     <div class="wrap menu-prev__grid">
-      <div>
+      <div class="menu-prev__head">
         <h2 id="menu-h">メニュー・料金</h2>
         <p class="menu-prev__range">{priceRange}</p>
+        <p class="more"><a class="textlink" href={path('menu')}>メニュー・料金をすべて見る</a></p>
+      </div>
+      <div>
         <ul class="mlist">
           {preview.map((m) => (
             <li class="mrow">
@@ -73,9 +76,7 @@ const hours = infoRows.filter((r) => ['営業時間', '定休日'].includes(r.k)
             </li>
           ))}
         </ul>
-        <p class="more"><a class="textlink" href={path('menu')}>メニュー・料金をすべて見る</a></p>
       </div>
-      <div class="menu-prev__media"><Photo name="hands" ratio="4 / 5" sizes="(min-width: 900px) 36vw, 100vw" position="40% 40%" /></div>
     </div>
   </section>
 

@@ -16,7 +16,7 @@ const { title = site.title, description = site.description } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <!-- 架空店舗のデモのため検索エンジンには載せない(canonical・構造化データも意図的に設定しない) -->
+    <!-- 検索エンジンには載せない(canonical・構造化データも意図的に設定しない) -->
     <meta name="robots" content="noindex,nofollow" />
     <meta name="theme-color" content="#151412" />
     <link rel="icon" href={`${import.meta.env.BASE_URL}favicon.svg`} type="image/svg+xml" />

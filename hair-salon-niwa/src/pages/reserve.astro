@@ -2,7 +2,6 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { staff } from '../data/staff';
 import { categories, services } from '../data/services';
-import { path } from '../data/site';
 
 const stepNames = [
   { en: 'Staff', ja: 'スタッフ' },
@@ -13,10 +12,10 @@ const stepNames = [
 const times = ['09:30', '11:00', '13:30', '15:00'];
 ---
 
-<BaseLayout page="予約デモ" description="HAIR SALON niwa（架空店舗デモ）の予約デモ。スタッフ、メニュー、日時を選ぶ流れを体験できますが、予約は成立せず、入力内容は送信・保存されません。">
+<BaseLayout page="ご予約" description="HAIR SALON niwaの予約ページ。スタッフ、メニュー、日時を選びます。入力内容は送信・保存されず、予約は成立しません。">
   <div class="page-body">
     <div class="wrap wrap--narrow">
-      <h1 class="ptitle">予約デモ</h1>
+      <h1 class="ptitle">ご予約</h1>
       <p class="ptitle__note">入力内容は送信・保存されません。予約は成立しません。</p>
 
       <div class="wiz" id="wiz" data-labels={JSON.stringify(stepNames.map((s) => s.ja))}>
@@ -58,7 +57,6 @@ const times = ['09:30', '11:00', '13:30', '15:00'];
 
         <section class="wiz__panel" data-step="2" aria-labelledby="w2" hidden>
           <h2 id="w2" tabindex="-1">希望日・時刻とお名前</h2>
-          <p class="wiz__hint">日時はダミーです。</p>
           <fieldset>
             <legend class="sub-h">希望日</legend>
             <div class="dates" id="dates"></div>
@@ -72,36 +70,28 @@ const times = ['09:30', '11:00', '13:30', '15:00'];
             </div>
           </fieldset>
           <div class="field">
-            <label for="f-name">お名前（デモ用）</label>
-            <input id="f-name" type="text" name="demo-name" autocomplete="off" maxlength="30" placeholder="例：デモ 太郎" />
-            <small>架空の名前で構いません。</small>
+            <label for="f-name">お名前</label>
+            <input id="f-name" type="text" name="guest-name" autocomplete="off" maxlength="30" placeholder="例：山田 花子" />
           </div>
         </section>
 
         <section class="wiz__panel" data-step="3" aria-labelledby="w3" hidden>
           <h2 id="w3" tabindex="-1">内容を確認する</h2>
-                    <dl class="confirm">
+          <dl class="confirm">
             <div><dt>スタッフ</dt><dd id="c-staff"></dd></div>
             <div><dt>メニュー</dt><dd id="c-menu"></dd></div>
             <div><dt>料金・所要</dt><dd id="c-price"></dd></div>
             <div><dt>希望日時</dt><dd id="c-date"></dd></div>
             <div><dt>お名前</dt><dd id="c-name"></dd></div>
           </dl>
-        </section>
-
-        <section class="wiz__panel done" id="wiz-done" aria-labelledby="w4" hidden>
-          <h2 id="w4" tabindex="-1">デモ体験は以上です</h2>
-          <p class="done__big">これはデモです。予約は成立していません</p>
-          <div class="wiz__nav">
-            <button type="button" class="btn btn--solid" id="restart">最初からやり直す</button>
-            <a class="btn btn--line" href={path()}>トップへ戻る</a>
-          </div>
+          <p class="wiz__final">この内容は送信されません。予約は成立していません。</p>
         </section>
 
         <p class="wiz__err" id="wiz-err" role="alert"></p>
         <div class="wiz__nav" id="wiz-nav">
           <button type="button" class="btn btn--line" id="back" hidden>戻る</button>
           <button type="button" class="btn btn--solid" id="next">次へ</button>
+          <button type="button" class="btn btn--line" id="restart" hidden>最初からやり直す</button>
         </div>
       </div>
     </div>
@@ -115,14 +105,13 @@ const times = ['09:30', '11:00', '13:30', '15:00'];
   const back = document.getElementById('back') as HTMLButtonElement;
   const next = document.getElementById('next') as HTMLButtonElement;
   const err = document.getElementById('wiz-err')!;
-  const done = document.getElementById('wiz-done')!;
-  const nav = document.getElementById('wiz-nav')!;
+  const restart = document.getElementById('restart') as HTMLButtonElement;
   const nameInput = document.getElementById('f-name') as HTMLInputElement;
   let step = 0;
 
   const checked = (name: string) => root.querySelector<HTMLInputElement>(`input[name="${name}"]:checked`);
 
-  // ダミーの日付(翌日から。月曜日・第1/第3日曜日を除く)
+  // 選択できる日付(翌日から。月曜日・第1/第3日曜日を除く)
   const dates = document.getElementById('dates')!;
   const wk = ['日', '月', '火', '水', '木', '金', '土'];
   const d = new Date();
@@ -154,7 +143,8 @@ const times = ['09:30', '11:00', '13:30', '15:00'];
       s.classList.toggle('is-done', j < i);
     });
     back.hidden = i === 0;
-    next.textContent = i === 3 ? 'デモを完了する' : '次へ';
+    next.hidden = i === 3;
+    restart.hidden = i !== 3;
     err.textContent = '';
     if (focus) panels[i].querySelector<HTMLElement>('h2')?.focus();
   };
@@ -174,7 +164,7 @@ const times = ['09:30', '11:00', '13:30', '15:00'];
     if (step === 2) {
       if (!checked('date')) return '希望日を選んでください。';
       if (!checked('time')) return '希望時刻を選んでください。';
-      if (!nameInput.value.trim()) return 'お名前（デモ用の架空の名前で構いません）を入力してください。';
+      if (!nameInput.value.trim()) return 'お名前を入力してください。';
     }
     return '';
   };
@@ -182,25 +172,13 @@ const times = ['09:30', '11:00', '13:30', '15:00'];
   next.addEventListener('click', () => {
     const msg = validate();
     if (msg) { err.textContent = msg; return; }
-    if (step < 3) {
-      if (step === 2) confirmFill();
-      show(step + 1);
-    } else {
-      // 送信・保存は行わない。完了画面(デモ)を表示するだけ。
-      panels.forEach((p) => (p.hidden = true));
-      done.hidden = false;
-      nav.hidden = true;
-      err.textContent = '';
-      stepEls.forEach((s) => { s.removeAttribute('aria-current'); s.classList.add('is-done'); });
-      done.querySelector<HTMLElement>('h2')!.focus();
-    }
+    if (step === 2) confirmFill();
+    show(step + 1);
   });
   back.addEventListener('click', () => show(step - 1));
   nameInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); next.click(); } });
-  document.getElementById('restart')!.addEventListener('click', () => {
+  restart.addEventListener('click', () => {
     root.querySelectorAll<HTMLInputElement>('input').forEach((i) => { if (i.type === 'radio') i.checked = false; else i.value = ''; });
-    done.hidden = true;
-    nav.hidden = false;
     show(0);
   });
 

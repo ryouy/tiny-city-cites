@@ -48,8 +48,8 @@ export const photos: Record<PhotoKey, PhotoDef> = {
   },
   noren: {
     file: 'noren',
-    alt: '「こめや」ののれんがかかる店の入口(架空デザイン)',
-    shoot: '店のれんや外観(架空デザイン)。',
+    alt: '「こめや」ののれんがかかる店の入口',
+    shoot: '店のれんや外観。',
     width: 1672,
     height: 941,
     tone: 'green',

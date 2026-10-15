@@ -1,53 +1,37 @@
 ---
 import { site } from '../config/site';
-const { items } = site.works;
+const { items, intro } = site.works;
 ---
 
 {
   site.works.show && (
-    <section class="section section--green" id="works" aria-labelledby="works-title">
-      <div class="container split">
-        <div class="reveal">
-          <p class="label">SELECTED WORKS</p>
-          <h2 class="heading" id="works-title">制作したWebサイト。</h2>
+    <section class="section works" id="works" aria-labelledby="works-title">
+      <div class="container">
+        <div class="section-head reveal">
+          <h2 class="heading" id="works-title">制作事例</h2>
+          <p class="works__intro">{intro}</p>
         </div>
-        <div class="reveal">
-          {items.length === 0 ? (
-            <div class="works-empty">
-              <strong>制作サンプルは準備中です。</strong>
-              <p>
-                現在、飲食店向けのWebサイトサンプルを制作しています。<br />
-                準備が整い次第、こちらでご紹介します。
-              </p>
-            </div>
-          ) : (
-            <ul class="works-list">
-              {items.map((w) => (
-                <li class="work">
+        {items.length === 0 ? (
+          <div class="works-empty">
+            <strong>制作サンプルは準備中です。</strong>
+            <p>準備が整い次第、こちらでご紹介します。</p>
+          </div>
+        ) : (
+          <ul class="works-grid">
+            {items.map((w) => (
+              <li class="work reveal">
+                <a class="work__link" href={w.url}>
                   {w.thumbnail && (
-                    <img class="work__thumb" src={w.thumbnail} alt="" width="800" height="600" loading="lazy" />
+                    <img class="work__thumb" src={w.thumbnail} alt="" width="1000" height="750" loading="lazy" decoding="async" />
                   )}
-                  <p class="work__meta">
-                    {w.kind} / {w.category}
-                  </p>
-                  <h3 class="work__title">
-                    {w.url ? (
-                      <a href={w.url}>{w.title}</a>
-                    ) : (
-                      w.title
-                    )}
-                  </h3>
-                  <p>{w.summary}</p>
-                  {w.url && (
-                    <a class="link-arrow" href={w.url}>
-                      {w.kind === 'Client Work' ? 'サイトを見る' : 'デモサイトを見る'} →
-                    </a>
-                  )}
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
+                  <span class="work__meta">{w.category}</span>
+                  <span class="work__title">{w.title}</span>
+                  <span class="work__desc">{w.summary}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </section>
   )

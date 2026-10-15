@@ -64,20 +64,34 @@ if (data.burgers.find((b) => b.id === 'kids')?.setEligible !== false) ng('kids �
 if (data.burgers.length !== 6 || data.burgers[0].id !== 'classic') ng('builder base 初期値/件数');
 
 // 3) 営業情報(§1)
-for (const w of ['11:00–20:00(フードL.O.19:30)', '水曜日(不定休は告知欄に掲載する想定)', '24席(カウンター6、テーブル18)', '4台(架空設定)', '現金・クレジットカード・QRコード決済(架空設定)', '1,200–2,000円程度(想定)', '2024年6月(架空)', '店主1名＋スタッフ3名の個人経営', 'STACK BURGER', 'スタックバーガー'].map(norm)) {
+for (const w of ['11:00–20:00(フードL.O.19:30)', '水曜日', '不定休', '24席(カウンター6、テーブル18)', '4台', '現金・クレジットカード・QRコード決済', '1,200–2,000円程度', '2024年6月', '会津若松市', '会津若松市周辺の地図', '店主1名＋スタッフ3名の個人経営', 'STACK BURGER'].map(norm)) {
   count++;
   if (!flatN.includes(w)) ng(`info: ${w}`);
 }
 for (const t of ['かぶりつけ、うまさを重ねろ。', '焼きたての香ばしさも、とろけるチーズも、遠慮はいらない。街のスマッシュバーガー、STACK BURGER。', 'MENUを見る', 'お店について',
   'ひと口でわかる、鉄板のうまさ。', 'パティを熱い鉄板に押しつけて、一気に焼き上げる。表面はカリッと香ばしく、中には肉の旨み。バンズ、チーズ、野菜、ソースを重ねて、できたてを頬張る。それが、STACKのいちばんおいしい食べ方です。',
   '迷ったら、ダブルで。', '人気のダブルチーズ・スタックは、重ねたパティとチーズの一体感が主役。ボリュームはしっかり、それでいて最後のひと口まで飽きないバランスを目指しました。',
-  '好きな場所で、思いきり。', 'バーガーもサイドもテイクアウトOK。お昼ごはんにも、家での映画時間にも。', '※本サイトはデモのため注文は受け付けていません。',
+  '好きな場所で、思いきり。', 'バーガーもサイドもテイクアウトOK。お昼ごはんにも、家での映画時間にも。',
   '今日のごはんは、バーガーにしよう。', 'ひとりでも、友だちとでも。お腹を空かせて、気軽にどうぞ。', 'これは注文ではありません',
-  'STACK BURGER｜架空店舗のWebサイト制作デモです。実在店舗ではなく、注文・予約・問い合わせは受け付けていません。', '架空店舗のデモサイトです。注文・予約・問い合わせは受け付けていません。'].map(norm)) {
+  'STACK BURGER｜架空店舗のWebサイト制作デモです。実在店舗ではなく、注文・予約・問い合わせは受け付けていません。'].map(norm)) {
   count++;
   if (!flatN.includes(t)) ng(`text missing: ${t}`);
 }
-if (!/<title>STACK BURGER \| 架空バーガーショップ デモサイト<\/title>/.test(html)) ng('title');
+if (!/<title>[^<]+<\/title>/.test(html)) ng('title');
+// 新方針: 「デモ」の強調をしない。フッターの免責1行以外に、デモ/架空/サンプルの語を本文に出さない
+{
+  const body = html.replace(/<script[\s\S]*?<\/script>/g, '').replace(/<style[\s\S]*?<\/style>/g, '');
+  const main = (body.match(/<main[\s\S]*?<\/main>/) ?? [''])[0].replace(/<[^>]+>/g, ' ');
+  for (const w of ['デモ', '架空', 'サンプル', '想定']) if (main.includes(w)) ng(`main に「${w}」が残っている`);
+  const header = (body.match(/<header[\s\S]*?<\/header>/) ?? [''])[0];
+  if (/デモ|架空/.test(header) || /demo-band/.test(body)) ng('上部にデモ帯/注記が残っている');
+  const footerRaw = (body.match(/<footer[\s\S]*?<\/footer>/) ?? [''])[0];
+  const footer = footerRaw.replace(/<[^>]+>/g, '');
+  if ((footerRaw.match(/<p[\s>]/g) ?? []).length !== 1 || !footer.includes('架空店舗のWebサイト制作デモです')) ng('フッターは免責1行のみ');
+  const cap = body.match(/<figcaption[^>]*>会津若松市周辺の地図<\/figcaption>/);
+  if (!cap) ng('地図キャプションは「会津若松市周辺の地図」のみ');
+  if (!body.includes('金額の参考計算です。注文はできません。')) ng('Builder の注記');
+}
 
 // 4) 禁止事項
 const bad = [

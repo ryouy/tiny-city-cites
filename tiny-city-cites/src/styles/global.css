@@ -989,3 +989,122 @@ html:not(.js) .site-nav a small {
     aspect-ratio: 16 / 9;
   }
 }
+
+
+/* ==========================================================================
+   Works（制作事例）
+   ========================================================================== */
+
+.works {
+  background: var(--white);
+  padding-top: clamp(72px, 11vw, 128px);
+}
+.works .section-head {
+  max-width: 44rem;
+}
+.works__intro {
+  margin-top: 20px;
+  max-width: 36em;
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+.works-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 36px 14px;
+}
+@media (max-width: 699px) {
+  .work__desc {
+    display: none;
+  }
+  .work__title {
+    font-size: 0.9375rem;
+    letter-spacing: 0.04em;
+  }
+  .work__thumb {
+    margin-bottom: 10px;
+  }
+}
+.work__link {
+  display: grid;
+  gap: 4px;
+  text-decoration: none;
+}
+.work__thumb {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  margin-bottom: 14px;
+  background: var(--line);
+  transition: opacity 0.3s ease;
+}
+.work__link:hover .work__thumb {
+  opacity: 0.88;
+}
+.work__meta {
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+.work__title {
+  font-weight: 500;
+  font-size: 1.125rem;
+  letter-spacing: 0.06em;
+  line-height: 1.6;
+}
+.work__link:hover .work__title {
+  text-decoration: underline;
+  text-underline-offset: 0.3em;
+  text-decoration-thickness: 1px;
+}
+.work__desc {
+  margin-top: 4px;
+  font-size: 0.8125rem;
+  line-height: 1.9;
+  color: var(--muted);
+  max-width: 34em;
+}
+@media (min-width: 700px) {
+  .works-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 64px 32px;
+  }
+}
+@media (min-width: 1000px) {
+  .works-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 72px 32px;
+  }
+}
+
+/* Hero 下部のリンク */
+.hero__more {
+  display: inline-flex;
+  align-items: center;
+  min-height: 56px;
+  font-size: 0.8125rem;
+  letter-spacing: 0.1em;
+  color: var(--sage);
+  text-decoration: none;
+}
+.hero__more:hover {
+  color: var(--ivory);
+}
+
+/* Services: 番号と英字を外した2列 */
+@media (min-width: 900px) {
+  .service {
+    grid-template-columns: 5fr 4fr;
+  }
+}
+.pricing,
+.quote-note {
+  margin-left: 0;
+}
+@media (min-width: 900px) {
+  .pricing,
+  .quote-note {
+    margin-left: 0;
+  }
+}
