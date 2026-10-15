@@ -17,11 +17,11 @@ export interface PhotoDef {
 }
 
 export const photos: Record<PhotoKey, PhotoDef> = {
-  hero: { base: 'hero-burger', alt: 'ダブルチーズ・スタック', width: 1122, height: 1402, tone: 'red', usage: 'Hero(縦構図4:5。デスクトップは右半分に大きく、スマホは上に配置)' },
-  signature: { base: 'double', alt: 'ダブルチーズ・スタックとポテト', width: 1122, height: 1402, tone: 'red', usage: 'Signature(縦構図4:5を左に大きく)' },
+  hero: { base: 'hero-burger', alt: '肉の焼き目と溶けたチーズが見える、ダブルチーズ・スタック', width: 1122, height: 1402, tone: 'red', usage: 'Hero(縦構図4:5。デスクトップは右半分に大きく、スマホは上に配置)' },
+  signature: { base: 'double', alt: '2枚のパティに溶けたチーズを重ねたダブルチーズ・スタックとポテト', width: 1122, height: 1402, tone: 'red', usage: 'Signature(縦構図4:5を左に大きく)' },
   classic: { base: 'classic', alt: 'クラシック・スマッシュ', width: 1122, height: 1402, tone: 'ink', usage: 'メニュー下の写真列(4:5)。3枚そろうと表示' },
   bacon: { base: 'bacon', alt: 'スモーキーベーコン', width: 1122, height: 1402, tone: 'ink', usage: 'メニュー下の写真列(4:5)' },
   fries: { base: 'fries', alt: 'フライドポテト', width: 1122, height: 1402, tone: 'ink', usage: 'メニュー下の写真列(4:5)' },
   griddle: { base: 'griddle', alt: '熱い鉄板でパティを焼く手元', width: 1536, height: 1024, tone: 'ink', usage: 'OUR STYLE(全幅の横長に切り出し。手元と鉄板の道具が主役)' },
-  interior: { base: 'interior', alt: '店内の様子', width: 1672, height: 941, tone: 'cream', usage: 'お店について(16:9)' },
+  interior: { base: 'interior', alt: '明るく賑やかな小さなダイナーの店内', width: 1672, height: 941, tone: 'cream', usage: 'お店について(16:9)' },
 };
