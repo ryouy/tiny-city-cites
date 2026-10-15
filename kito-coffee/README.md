@@ -2,7 +2,7 @@
 
 架空カフェ「KITO COFFEE」のWeb制作ポートフォリオ用サイトです(実在の店舗ではありません)。仕様は `../siyosyo/KITO_COFFEE_Claude_Code.md` に基づきます。
 
-> 技術構成の判断: 仕様書の標準は Next.js + Tailwind CSS ですが、本ワークスペースの既存サイト(`tiny-city-cites`)が Astro + TypeScript + 素のCSS の静的サイトのため、それに揃えて Astro で構築しています。
+> 技術構成の判断: 仕様書の標準は Next.js + Tailwind CSS ですが、本ワークスペースの既存サイト(`tiny-city-sites`)が Astro + TypeScript + 素のCSS の静的サイトのため、それに揃えて Astro で構築しています。
 
 ## 開発
 

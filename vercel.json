@@ -3,5 +3,5 @@
   "framework": null,
   "installCommand": "node scripts/install-all.mjs",
   "buildCommand": "npm run build",
-  "outputDirectory": "tiny-city-cites/dist"
+  "outputDirectory": "tiny-city-sites/dist"
 }

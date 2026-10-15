@@ -1,7 +1,7 @@
 // メインサイトと全デモサイトを 1 つの静的ファイル群にまとめる。
-//   tiny-city-cites/dist/            ← メイン (/)
-//   tiny-city-cites/dist/demos/<名前>/ ← 各デモ (/demos/<名前>/)
-// 公開時は tiny-city-cites/dist だけを配信すればよい。
+//   tiny-city-sites/dist/            ← メイン (/)
+//   tiny-city-sites/dist/demos/<名前>/ ← 各デモ (/demos/<名前>/)
+// 公開時は tiny-city-sites/dist だけを配信すればよい。
 import { execSync } from 'node:child_process';
 import { cpSync, mkdirSync, rmSync, existsSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
@@ -9,7 +9,7 @@ import { fileURLToPath } from 'node:url';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const demos = ['kito-coffee', 'komeya', 'akari', 'mugi-to-hibi', 'menya-gou', 'soda-biyori', 'hair-salon-niwa', 'patisserie-lune', 'stack-burger', 'trattoria-machi']; // 追加時はここに足す
-const main = resolve(root, 'tiny-city-cites');
+const main = resolve(root, 'tiny-city-sites');
 
 const run = (cwd, env = {}) =>
   execSync('npm run build', { cwd, stdio: 'inherit', env: { ...process.env, ...env } });
@@ -19,7 +19,7 @@ for (const name of demos) {
   run(resolve(root, name), { BASE_PATH: `/demos/${name}/` });
 }
 
-console.log('\n=== build main: tiny-city-cites');
+console.log('\n=== build main: tiny-city-sites');
 run(main);
 
 const target = resolve(main, 'dist', 'demos');

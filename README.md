@@ -5,7 +5,7 @@ tiny city sites（営業用の公式サイト）と、ポートフォリオ用�
 
 | フォルダ | 内容 |
 |---|---|
-| `tiny-city-cites/` | 公式サイト（メイン） |
+| `tiny-city-sites/` | 公式サイト（メイン） |
 | `kito-coffee/` | デモ: カフェ |
 | `komeya/` | デモ: 定食屋 |
 | `akari/` | デモ: 居酒屋 |
@@ -23,13 +23,13 @@ tiny city sites（営業用の公式サイト）と、ポートフォリオ用�
 
 ```sh
 # 各プロジェクトで依存関係を入れる（初回のみ）
-for d in tiny-city-cites kito-coffee komeya akari mugi-to-hibi menya-gou soda-biyori hair-salon-niwa patisserie-lune; do (cd $d && npm install); done
+for d in tiny-city-sites kito-coffee komeya akari mugi-to-hibi menya-gou soda-biyori hair-salon-niwa patisserie-lune; do (cd $d && npm install); done
 
-npm run build   # メイン + 全デモをビルドし tiny-city-cites/dist にまとめる（デモは /demos/<名前>/）
+npm run build   # メイン + 全デモをビルドし tiny-city-sites/dist にまとめる（デモは /demos/<名前>/）
 npm run serve   # ビルド後 http://localhost:4321 で配信
 ```
 
-公開時は `tiny-city-cites/dist` だけを配信します。個別のデモを単体で動かす場合は、各フォルダで `npm run dev` を使います。
+公開時は `tiny-city-sites/dist` だけを配信します。個別のデモを単体で動かす場合は、各フォルダで `npm run dev` を使います。
 
 ## 画像の追加
 
@@ -37,4 +37,4 @@ npm run serve   # ビルド後 http://localhost:4321 で配信
 
 ## Vercel でのデプロイ
 
-ルートの `vercel.json` に設定があります（Install: `scripts/install-all.mjs`、Build: `npm run build`、Output: `tiny-city-cites/dist`）。Root Directory はリポジトリのルートのままにし、Node.js は 22.x、環境変数 `SITE_URL` に公開URLを設定してください。
+ルートの `vercel.json` に設定があります（Install: `scripts/install-all.mjs`、Build: `npm run build`、Output: `tiny-city-sites/dist`）。Root Directory はリポジトリのルートのままにし、Node.js は 22.x、環境変数 `SITE_URL` に公開URLを設定してください。
