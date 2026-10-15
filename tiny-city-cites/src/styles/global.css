@@ -164,3 +164,6 @@ a:hover { color: var(--accent-dark); }
   .plans { grid-template-columns: 1fr 1fr; gap: 28px; }
   .plan { padding: 36px 32px; }
 }
+.price-band a { color: #fff; font-weight: 700; text-underline-offset: 4px; }
+.price-band a:hover { color: #fff; text-decoration-thickness: 2px; }
+.price-band :focus-visible { outline-color: #fff; }
