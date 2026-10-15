@@ -31,9 +31,9 @@ export const site = {
   /** 連絡先。個人の電話番号は公開しない方針。 */
   contact: {
     /** Instagram のプロフィールまたはDMのURL。未設定の間はCTAが問い合わせセクションへ移動します。 */
-    instagramUrl: 'https://www.instagram.com/tiny_city_cites/',
+    instagramUrl: 'https://www.instagram.com/tiny_city_sites/',
     /** Instagram ID（表示用。例: "@machi_studio"） */
-    instagramHandle: '@tiny_city_cites',
+    instagramHandle: '@tiny_city_sites',
     /** メールアドレス（任意） */
     email: '',
   },
