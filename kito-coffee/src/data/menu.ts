@@ -16,20 +16,20 @@ export interface MenuCategory {
 export const menu: MenuCategory[] = [
   {
     id: 'coffee',
-    title: 'COFFEE',
+    title: 'コーヒー',
     items: [
-      { featured: true, name: 'ハンドドリップ（本日の豆）', price: 550, description: '日替わりの豆の魅力を、一杯ずつ丁寧に' },
-      { featured: true, name: 'KITOブレンド', price: 500, description: 'チョコレートのようなコク、ナッツの香ばしさ。中深煎り' },
-      { name: 'シングルオリジン', price: 650, priceSuffix: '〜', description: '産地ごとに異なる香りと味わい' },
-      { featured: true, name: 'カフェラテ（HOT / ICE）', price: 600, description: 'エスプレッソとミルクのやさしい調和' },
-      { name: 'カプチーノ', price: 600, description: 'きめ細かなフォームミルク' },
-      { name: 'エスプレッソ', price: 400, description: '豆の旨みを凝縮した一杯' },
-      { featured: true, name: 'コールドブリュー', price: 580, description: 'ゆっくり抽出した、すっきりとした後味' },
+      { featured: true, name: 'ハンドドリップ（本日の豆）', price: 550, description: '日替わりの豆を一杯ずつ淹れます' },
+      { featured: true, name: 'KITOブレンド', price: 500, description: '中深煎り。チョコレートとナッツの風味' },
+      { name: 'シングルオリジン', price: 650, priceSuffix: '〜', description: '単一産地の豆' },
+      { featured: true, name: 'カフェラテ（HOT / ICE）', price: 600, description: 'エスプレッソとミルク' },
+      { name: 'カプチーノ', price: 600, description: 'フォームミルクをのせたエスプレッソ' },
+      { name: 'エスプレッソ', price: 400 },
+      { featured: true, name: 'コールドブリュー', price: 580, description: '水出しコーヒー' },
     ],
   },
   {
     id: 'other-drinks',
-    title: 'OTHER DRINKS',
+    title: 'その他のドリンク',
     items: [
       { name: '自家製レモネード', price: 550 },
       { name: 'チャイラテ', price: 620 },
@@ -39,13 +39,13 @@ export const menu: MenuCategory[] = [
   },
   {
     id: 'sweets',
-    title: 'HOMEMADE SWEETS',
+    title: 'お菓子',
     items: [
-      { featured: true, name: 'バスクチーズケーキ', price: 580, description: '香ばしい表面となめらかな中心' },
-      { featured: true, name: '季節のフルーツタルト', price: 650, description: '季節の果実を使ったタルト' },
-      { name: 'キャロットケーキ', price: 550, description: 'スパイスがほのかに香る' },
-      { featured: true, name: 'スコーン（プレーン）', price: 350, description: 'さっくりした手づくりスコーン' },
-      { name: '自家製プリン', price: 480, description: 'ほろ苦いカラメルとなめらかな食感' },
+      { featured: true, name: 'バスクチーズケーキ', price: 580, description: '表面を焦がして焼いたチーズケーキ' },
+      { featured: true, name: '季節のフルーツタルト', price: 650, description: '季節の果物のタルト' },
+      { name: 'キャロットケーキ', price: 550, description: 'スパイス入り' },
+      { featured: true, name: 'スコーン（プレーン）', price: 350, description: '手づくりのスコーン' },
+      { name: '自家製プリン', price: 480, description: 'カラメルソース付き' },
     ],
   },
 ];

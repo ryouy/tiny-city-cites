@@ -16,14 +16,14 @@ export interface Product {
 }
 
 export const products: Product[] = [
-  { id: 'campagne', name: '天然酵母のカンパーニュ', price: 580, category: '食事パン', description: '外は香ばしく、中はしっとり。小麦の風味が広がる定番の一品。', tags: ['人気'], photo: 'campagne' },
-  { id: 'croissant', name: '発酵バタークロワッサン', price: 320, category: '食事パン', description: '層の軽さとバターの香りを楽しむ朝の定番。', tags: ['人気'], photo: 'croissant' },
-  { id: 'walnut', name: 'くるみとレーズンのパン', price: 420, category: '食事パン', description: '香ばしいくるみと自然な甘みのレーズンをたっぷり。', tags: [] },
-  { id: 'anbutter', name: '自家製あんバター', price: 350, category: '菓子パン', description: '小豆のやさしい甘さとバターの塩気。', tags: ['人気'], photo: 'anbutter' },
-  { id: 'fig', name: '季節のフルーツデニッシュ', price: 380, category: '季節限定', description: '季節の果物を使った軽やかなデニッシュ。', tags: ['季節限定'], photo: 'danish' },
-  { id: 'focaccia', name: 'ローズマリーフォカッチャ', price: 300, category: '惣菜パン', description: 'オリーブオイルの香りとほどよい塩気。', tags: [] },
-  { id: 'curry', name: '焼きカレーパン', price: 360, category: '惣菜パン', description: 'スパイス香る自家製カレーを包み、カリッと焼き上げました。', tags: [] },
-  { id: 'scone', name: '全粒粉スコーン', price: 280, category: '焼き菓子', description: 'ざくっとした食感。コーヒーにも紅茶にも。', tags: [] },
+  { id: 'campagne', name: '天然酵母のカンパーニュ', price: 580, category: '食事パン', description: '天然酵母で焼いた丸い食事パン。', tags: ['人気'], photo: 'campagne' },
+  { id: 'croissant', name: '発酵バタークロワッサン', price: 320, category: '食事パン', description: 'バターを折り込んだクロワッサン。', tags: ['人気'], photo: 'croissant' },
+  { id: 'walnut', name: 'くるみとレーズンのパン', price: 420, category: '食事パン', description: 'くるみとレーズンを入れた食事パン。', tags: [] },
+  { id: 'anbutter', name: '自家製あんバター', price: 350, category: '菓子パン', description: '小豆あんとバターを挟んだパン。', tags: ['人気'], photo: 'anbutter' },
+  { id: 'fig', name: '季節のフルーツデニッシュ', price: 380, category: '季節限定', description: '季節の果物をのせたデニッシュ。', tags: ['季節限定'], photo: 'danish' },
+  { id: 'focaccia', name: 'ローズマリーフォカッチャ', price: 300, category: '惣菜パン', description: 'ローズマリーとオリーブオイルのフォカッチャ。', tags: [] },
+  { id: 'curry', name: '焼きカレーパン', price: 360, category: '惣菜パン', description: '自家製カレーを包んで焼いたパン。', tags: [] },
+  { id: 'scone', name: '全粒粉スコーン', price: 280, category: '焼き菓子', description: '全粒粉のスコーン。', tags: [] },
 ];
 
 export const menuNote =

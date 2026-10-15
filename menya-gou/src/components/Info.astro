@@ -25,9 +25,7 @@ import { about, rice, info } from '../data/site';
 
 <section class="info" id="information" aria-labelledby="info-title">
   <div class="container">
-    <Photo name="interior" ratio="16 / 9" ratioWide="21 / 9" sizes="(min-width: 1000px) 960px, 100vw" pos="50% 62%" class="info__photo" />
     <h2 id="info-title" class="h2">{info.heading}</h2>
-    <p class="info__lead">{info.body}</p>
     <div class="info__grid">
       <div>
         <dl class="spec">
@@ -42,7 +40,8 @@ import { about, rice, info } from '../data/site';
         </dl>
         <p class="info__area">{info.area}</p>
       </div>
-      <div>
+      <div class="info__side">
+        <Photo name="interior" ratio="16 / 9" sizes="(min-width: 800px) 45vw, 100vw" pos="50% 62%" />
         <MapEmbed />
       </div>
     </div>

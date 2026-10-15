@@ -21,7 +21,7 @@ const nav = [
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="robots" content="noindex,nofollow" />
-    <meta name="theme-color" content="#FBF1E1" />
+    <meta name="theme-color" content="#faf7f0" />
     <link rel="icon" href={href('favicon.svg')} type="image/svg+xml" />
 
     <meta property="og:type" content="website" />
@@ -34,12 +34,6 @@ const nav = [
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Shippori+Mincho+B1:wght@500;700&display=swap"
-    />
   </head>
   <body>
     <a class="skip-link" href="#main">本文へスキップ</a>
@@ -47,7 +41,6 @@ const nav = [
     <header class="site-header">
       <a class="logo" href={href('')} aria-label={`${site.name} トップページへ`}>
         <span class="logo__main">{site.name}</span>
-        <span class="logo__en">{site.nameEn}</span>
       </a>
       <nav class="site-nav" aria-label="メインナビゲーション">
         {nav.map((n) => <a href={n.href} aria-current={n.key === current ? 'page' : undefined}>{n.label}</a>)}
@@ -61,8 +54,7 @@ const nav = [
         <div>
           <a class="logo" href={href('')} aria-label={`${site.name} トップページへ`}>
             <span class="logo__main">{site.name}</span>
-            <span class="logo__en">{site.nameEn}</span>
-          </a>
+              </a>
           <p class="site-footer__notice">{site.footerNotice}</p>
         </div>
         <nav class="site-footer__nav" aria-label="フッターナビゲーション">

@@ -20,11 +20,11 @@ const chips = [
   <main id="main">
     <header class="menuhead wrap">
       <h1>お品書き</h1>
-      <p class="menuhead__note">価格はすべて税込表記です。</p>
-      <p class="menuhead__serve"><b>{sections.lunch.serve}</b>（ランチ営業 11:30–14:30、L.O.14:00）</p>
+      <p>価格はすべて税込です。</p>
+      <p>{sections.lunch.serve}（ランチ営業 11:30–14:30、L.O.14:00）</p>
     </header>
 
-    <nav class="chips" aria-label="お品書きのカテゴリ">
+    <nav class="jump" aria-label="お品書きのカテゴリ">
       <ul class="wrap">
         {chips.map((c) => <li><a href={`#${c.id}`}>{c.label}</a></li>)}
       </ul>
@@ -34,7 +34,7 @@ const chips = [
       <section id="lunch" class="msec" aria-labelledby="h-lunch">
         <div class="msec__photo"><Photo name="pastaCream" ratio="4 / 5" sizes="(min-width: 900px) 40vw, 100vw" /></div>
         <div class="msec__body">
-          <h2 id="h-lunch">ランチ <span>{sections.lunch.serve.replace('ランチ提供 ', '')}</span></h2>
+          <h2 id="h-lunch">ランチ <small>{sections.lunch.serve.replace('ランチ提供 ', '')}</small></h2>
           <ul class="plist">
             {lunch.map((it: Item) => (
               <li><span class="plist__name">{it.name}</span><span class="plist__desc">{it.desc}</span><span class="plist__price">{it.price}</span></li>
@@ -45,10 +45,10 @@ const chips = [
         </div>
       </section>
 
-      <section id="pasta" class="msec msec--rev" aria-labelledby="h-pasta">
+      <section id="pasta" class="msec" aria-labelledby="h-pasta">
         <div class="msec__photo"><Photo name="pastaTomato" ratio="4 / 5" sizes="(min-width: 900px) 40vw, 100vw" /></div>
         <div class="msec__body">
-          <h2 id="h-pasta">パスタ <span>ディナー単品</span></h2>
+          <h2 id="h-pasta">パスタ <small>ディナー単品</small></h2>
           <ul class="plist">
             {pasta.map((it: Item) => (
               <li><span class="plist__name">{it.name}</span><span class="plist__desc">{it.desc}</span><span class="plist__price">{it.price}</span></li>
@@ -71,7 +71,7 @@ const chips = [
         </div>
       </section>
 
-      <section id="antipasti" class="msec msec--rev" aria-labelledby="h-antipasti">
+      <section id="antipasti" class="msec" aria-labelledby="h-antipasti">
         <div class="msec__photo"><Photo name="antipasti" ratio="4 / 5" sizes="(min-width: 900px) 40vw, 100vw" /></div>
         <div class="msec__body">
           <h2 id="h-antipasti">前菜</h2>

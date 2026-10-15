@@ -1,4 +1,4 @@
-// メニュー・価格(仕様書 §3、すべて税込)。名前・価格・説明は仕様書の原文どおり。
+// メニュー・価格(仕様書 §3、すべて税込)。名前・価格は仕様書どおり。説明は内容を示す短い文に書き換え済み。
 export interface Item { name: string; price: string; desc?: string }
 
 export const lunch: Item[] = [
@@ -12,19 +12,19 @@ export const lunchDrinks = 'コーヒー（HOT/ICE）、紅茶（HOT/ICE）、�
 export const lunchExample = '本日のパスタの例：きのことベーコンのクリームソース';
 
 export const pasta: Item[] = [
-  { name: '揚げなすとモッツァレラのトマトソース', price: '¥1,180', desc: 'ほどよい酸味とチーズのコク' },
-  { name: 'きのことベーコンのクリームソース', price: '¥1,280', desc: '香ばしいきのこ、まろやかなソース' },
-  { name: '海老とほうれん草のトマトクリーム', price: '¥1,380', desc: '海老の旨みが広がる人気の組み合わせ' },
-  { name: '昔ながらのミートソース', price: '¥1,080', desc: 'じっくり煮込んだひき肉のソース' },
-  { name: 'ペペロンチーノ', price: '¥980', desc: 'にんにくとオイルのシンプルな一皿' },
+  { name: '揚げなすとモッツァレラのトマトソース', price: '¥1,180', desc: '揚げなす、モッツァレラ、トマトソース' },
+  { name: 'きのことベーコンのクリームソース', price: '¥1,280' },
+  { name: '海老とほうれん草のトマトクリーム', price: '¥1,380' },
+  { name: '昔ながらのミートソース', price: '¥1,080', desc: 'ひき肉を煮込んだミートソース' },
+  { name: 'ペペロンチーノ', price: '¥980', desc: 'にんにくとオリーブオイルのパスタ' },
 ];
 export const pastaNote = 'パスタ大盛り ＋¥200（お子さまプレートを除く）';
 
 export const pizza: Item[] = [
   { name: 'マルゲリータ', price: '¥1,280', desc: 'トマト、モッツァレラ、バジル' },
   { name: 'クアトロフォルマッジ', price: '¥1,580', desc: '4種のチーズ、はちみつ別添え' },
-  { name: 'ベーコンと季節野菜', price: '¥1,480', desc: '季節の野菜を色鮮やかに' },
-  { name: '照り焼きチキン', price: '¥1,380', desc: '甘辛ソースと香ばしいチキン' },
+  { name: 'ベーコンと季節野菜', price: '¥1,480' },
+  { name: '照り焼きチキン', price: '¥1,380', desc: '照り焼きソースのチキン' },
 ];
 export const pizzaNote = '直径約25cm。オーブンで焼いています。';
 

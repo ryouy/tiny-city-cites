@@ -20,7 +20,6 @@ const items = onlyFeatured ? cat.items.filter((i) => i.featured) : cat.items;
         <li class="menu-item">
           <div class="menu-item__row">
             <span class="menu-item__name">{item.name}</span>
-            <span class="menu-item__leader" aria-hidden="true" />
             <span class="menu-item__price">
               <span class="visually-hidden">税込 </span>
               {formatPrice(item.price)}

@@ -48,34 +48,42 @@ for (const [k, h] of Object.entries(html)) {
 }
 const titles = Object.values(html).map((h) => h.match(/<title>([^<]*)/)?.[1]);
 if (new Set(titles).size !== titles.length) fail('title が重複している');
-if (html.home && html.home.match(/<title>([^<]*)/)?.[1] !== 'KITO COFFEE | 会津若松のスペシャルティコーヒー') fail('トップの title が想定と異なる');
+if (html.home && html.home.match(/<title>([^<]*)/)?.[1] !== 'KITO COFFEE | 会津若松のコーヒー店') fail('トップの title が想定と異なる');
 
 if (html.menu) {
   const t = norm(text(html.menu));
   for (const [n, p] of menuItems) {
     if (!t.includes(norm(n + '税込' + p))) fail(`menu: ${n} ${p} が無い`);
   }
-  for (const s of ['価格はすべて税込です。', 'セット：ケーキ＋ドリンクの合計額から¥100引き', 'COFFEE', 'OTHER DRINKS', 'HOMEMADE SWEETS']) {
+  for (const s of ['価格はすべて税込です。', 'セット：ケーキ＋ドリンクの合計額から¥100引き', 'コーヒー', 'その他のドリンク', 'お菓子']) {
     if (!t.includes(norm(s))) fail(`menu: 「${s}」が無い`);
   }
 }
 if (html.home) {
   const t = norm(text(html.home));
-  for (const s of ['日常に、少しだけ余白を。', 'メニューを見る', 'KITOについて', '9:00–17:00（ラストオーダー16:30）', '火曜・第2水曜', '18席（カウンター6・テーブル12）／席の予約なし', 'バスクチーズケーキ税込¥580']) {
+  for (const s of ['KITO COFFEE', '会津若松市のコーヒー店です。', '9:00–17:00（ラストオーダー16:30）', '火曜・第2水曜', '18席（カウンター6・テーブル12）／席の予約なし', 'バスクチーズケーキ税込¥580']) {
     if (!t.includes(norm(s))) fail(`home: 「${s}」が無い`);
   }
 }
 if (html.information) {
   const t = norm(text(html.information));
-  for (const s of ['福島県会津若松市', '9:00–17:00（ラストオーダー16:30）', '火曜・第2水曜', '18席（カウンター6・テーブル12）／席の予約なし', '4台', 'ドリンク・焼き菓子可', '現金／クレジットカード／主要QR決済', 'Gallery', '会津若松市周辺の地図']) {
+  for (const s of ['福島県会津若松市', '9:00–17:00（ラストオーダー16:30）', '火曜・第2水曜', '18席（カウンター6・テーブル12）／席の予約なし', '4台', 'ドリンク・焼き菓子可', '現金／クレジットカード／主要QR決済', '写真', '会津若松市周辺の地図']) {
     if (!t.includes(norm(s))) fail(`information: 「${s}」が無い`);
   }
 }
 if (html.story) {
   const t = norm(text(html.story));
-  for (const s of ['コーヒーを、もっと自分らしく。', '一杯に、丁寧な理由がある。', 'コーヒーの隣に、小さなご褒美。', '木と、糸と、人のつながり。', '今日も、いつもの一杯を。', '国内の専門ロースターから厳選', '東京のコーヒー専門店で約6年経験を積み', '2023年に']) {
+  for (const s of ['お店', 'コーヒー', 'お菓子', '店主', '国内の専門ロースターから仕入れています', '東京のコーヒー専門店で約6年働いた', '2023年に']) {
     if (!t.includes(norm(s))) fail(`story: 「${s}」が無い`);
   }
+}
+
+// ポエム・英語キャッチ・情緒語の再発防止
+const banned = /余白|ひととき|こだわ|丁寧|ご褒美|物語|想い|寄り添|彩る|紡|心地よい|ほっと|Specialty|Homemade|Gallery|AIZU|温もり|穏やか/;
+for (const [k, h] of Object.entries(html)) {
+  const body = text(h.replace(/<head>[\s\S]*<\/head>/, ''));
+  const m = body.match(banned);
+  if (m) fail(`${k}: 情緒語・英語キャッチが残っている (${m[0]})`);
 }
 
 // robots.txt

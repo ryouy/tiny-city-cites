@@ -13,7 +13,7 @@ export interface PhotoDef {
 export const photos = {
   hero: {
     file: 'hero.webp',
-    alt: '自然光が差し込む、木のカウンターのあるカフェの店内',
+    alt: '木のカウンターのある店内',
     tone: 'dark',
     width: 1672,
     height: 941,
@@ -34,14 +34,14 @@ export const photos = {
   },
   cheesecake: {
     file: 'cheesecake.webp',
-    alt: '香ばしく焼き上げたバスクチーズケーキ',
+    alt: 'バスクチーズケーキ',
     tone: 'warm',
     width: 1448,
     height: 1086,
   },
   interior: {
     file: 'interior.webp',
-    alt: '木の温もりと自然光に包まれた店内の様子',
+    alt: '木の内装の店内',
     tone: 'light',
     width: 1122,
     height: 1402,

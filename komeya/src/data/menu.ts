@@ -27,24 +27,24 @@ export const menu: MenuCategory[] = [
     title: '定食',
     note: 'ごはん・味噌汁・小鉢・漬物付き',
     items: [
-      { name: 'こめやの唐揚げ定食', price: 980, description: '醤油と生姜の自家製だれに一晩漬け込んだ揚げたて唐揚げ', tag: '看板' },
-      { name: '豚の生姜焼き定食', price: 1050, description: '香ばしく焼いた豚肉を甘辛い生姜だれで' },
-      { name: '自家製ハンバーグ定食', price: 1180, description: 'ふっくら焼き上げた手ごねハンバーグ' },
-      { name: 'さばの味噌煮定食', price: 980, description: '味噌の香りが染み込んだ家庭の味' },
-      { name: 'ミックスフライ定食', price: 1280, description: 'サクサクの揚げ物を盛り合わせ' },
-      { name: '日替わり定食', price: 900, description: 'その日のおかずを楽しめる定食', tag: '内容は店頭でご案内' },
-      { name: '会津産豚のとんかつ定食', price: 1380, description: '肉厚なとんかつと炊きたてごはん' },
+      { name: 'こめやの唐揚げ定食', price: 980, description: '醤油と生姜の自家製だれに一晩漬け込んだ唐揚げ', tag: '看板' },
+      { name: '豚の生姜焼き定食', price: 1050, description: '豚肉を甘辛い生姜だれで焼いたもの' },
+      { name: '自家製ハンバーグ定食', price: 1180, description: '手ごねのハンバーグ' },
+      { name: 'さばの味噌煮定食', price: 980, description: 'さばを味噌で煮たもの' },
+      { name: 'ミックスフライ定食', price: 1280, description: '揚げ物の盛り合わせ' },
+      { name: '日替わり定食', price: 900, description: 'その日のおかずの定食', tag: '内容は店頭でご案内' },
+      { name: '会津産豚のとんかつ定食', price: 1380, description: '会津産豚のとんかつ' },
     ],
   },
   {
     id: 'don',
     title: '丼もの・ごはん',
     items: [
-      { name: '会津ソースカツ丼', price: 1150, description: '自家製甘辛ソースとキャベツ、会津産コシヒカリ', tag: '看板' },
-      { name: '親子丼', price: 850, description: 'ふんわり卵と鶏の旨み' },
-      { name: 'カツカレー', price: 1100, description: '揚げたてカツとこめやの特製カレー' },
-      { name: '特製カレーライス', price: 800, description: '野菜の甘みとほどよいスパイス' },
-      { name: 'お子さま定食', price: 650, description: 'お子さま向けの食べやすい定食', tag: 'お子さま向け' },
+      { name: '会津ソースカツ丼', price: 1150, description: '自家製の甘辛ソースとキャベツ、会津産コシヒカリ', tag: '看板' },
+      { name: '親子丼', price: 850, description: '卵と鶏肉の丼' },
+      { name: 'カツカレー', price: 1100, description: 'カツをのせた特製カレー' },
+      { name: '特製カレーライス', price: 800, description: '野菜入りのカレー' },
+      { name: 'お子さま定食', price: 650, description: 'お子さま向けの定食', tag: 'お子さま向け' },
     ],
   },
   {
@@ -75,12 +75,12 @@ export const signatures: Signature[] = [
   {
     menuName: 'こめやの唐揚げ定食',
     photo: 'hero',
-    copy: '醤油と生姜を効かせた自家製だれに一晩漬け込み、注文を受けてからカラッと。外はカリッと、中はジューシー。',
+    copy: '醤油と生姜の自家製だれに一晩漬け込み、注文を受けてから揚げます。',
   },
   {
     menuName: '会津ソースカツ丼',
     photo: 'katsudon',
-    copy: '厚切りの豚カツを甘辛い自家製ソースにくぐらせて。シャキシャキのキャベツと会津産コシヒカリで豪快に。',
+    copy: '厚切りの豚カツに甘辛い自家製ソースをかけ、キャベツと会津産コシヒカリの上にのせています。',
   },
 ];
 

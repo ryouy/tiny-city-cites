@@ -28,17 +28,16 @@ const near = (name, others) => {
 // 1) 商品表(§3): 商品名・説明・価格が近接していること。バッジは「人気No.1（※…）」の先頭部分
 const rows = (from, to) => section(from, to).split('\n').map((r) => r.split('|').map((s) => s.trim())).filter((c) => c.length > 3 && /^¥/.test(c[3] ?? '') || c.length > 3 && /^¥/.test(c[2] ?? ''));
 for (const c of rows('### BURGERS', '### SIDES')) {
-  const [, , name, price, desc, badge] = c;
+  const [, , name, price, , badge] = c;
   count++;
   const b = badge ? badge.replace(/（.*$/, '') : '';
-  const others = [price, desc, ...(b ? [b] : [])];
-  if (near(name, [desc, price]) || near(name, others.slice(0, 2))) console.log(`OK: ${name} ${price}`); else ng(`burger: ${name} ${price} ${desc}`);
+    if (near(name, [price])) console.log(`OK: ${name} ${price}`); else ng(`burger: ${name} ${price}`);
   if (b && !flat.includes(b)) ng(`badge: ${b}`);
 }
 for (const c of rows('### SIDES', '### DRINKS')) {
-  const [, name, price, desc] = c;
+  const [, name, price] = c;
   count++;
-  if (near(name, [desc, price])) console.log(`OK: ${name} ${price}`); else ng(`side: ${name} ${price} ${desc}`);
+  if (near(name, [price])) console.log(`OK: ${name} ${price}`); else ng(`side: ${name} ${price}`);
 }
 for (const c of rows('### DRINKS', '### SETS')) {
   const [, name, price] = c;
@@ -68,11 +67,9 @@ for (const w of ['11:00–20:00(フードL.O.19:30)', '水曜日', '不定休', 
   count++;
   if (!flatN.includes(w)) ng(`info: ${w}`);
 }
-for (const t of ['かぶりつけ、うまさを重ねろ。', '焼きたての香ばしさも、とろけるチーズも、遠慮はいらない。街のスマッシュバーガー、STACK BURGER。', 'MENUを見る', 'お店について',
-  'ひと口でわかる、鉄板のうまさ。', 'パティを熱い鉄板に押しつけて、一気に焼き上げる。表面はカリッと香ばしく、中には肉の旨み。バンズ、チーズ、野菜、ソースを重ねて、できたてを頬張る。それが、STACKのいちばんおいしい食べ方です。',
-  '迷ったら、ダブルで。', '人気のダブルチーズ・スタックは、重ねたパティとチーズの一体感が主役。ボリュームはしっかり、それでいて最後のひと口まで飽きないバランスを目指しました。',
-  '好きな場所で、思いきり。', 'バーガーもサイドもテイクアウトOK。お昼ごはんにも、家での映画時間にも。',
-  '今日のごはんは、バーガーにしよう。', 'ひとりでも、友だちとでも。お腹を空かせて、気軽にどうぞ。', 'これは注文ではありません',
+// 文言は仕様書の原文ではなく、平易に書き直した現行の文(ポエム調の原文は使わない)
+for (const t of ['会津若松市のスマッシュバーガー専門店です。水曜定休。', 'メニューを見る', '店舗案内', '焼き方', 'お店について', 'ダブルチーズ・スタック', 'パティ2枚とチーズ2枚を重ねたバーガーです。',
+  '店主は20代後半。飲食店のキッチンで働いたあと、会津に戻って2024年に開業しました。', 'これは注文ではありません',
   'STACK BURGER｜架空店舗のWebサイト制作デモです。実在店舗ではなく、注文・予約・問い合わせは受け付けていません。'].map(norm)) {
   count++;
   if (!flatN.includes(t)) ng(`text missing: ${t}`);
@@ -92,6 +89,9 @@ if (!/<title>[^<]+<\/title>/.test(html)) ng('title');
   if (!cap) ng('地図キャプションは「会津若松市周辺の地図」のみ');
   if (!body.includes('金額の参考計算です。注文はできません。')) ng('Builder の注記');
 }
+
+// 3b) ポエム調の語が画面に残っていないこと
+for (const w of ['こだわり', '丁寧', 'ひととき', '物語', '約束', '想い', '寄り添', '彩る', '紡ぐ', 'とろける', '頬張', '遠慮', 'かぶりつけ', '重ねろ', '思いきり', '迷ったら', 'OUR STYLE', 'Build Your Stack', 'BURGERS', 'SIDES', 'DRINKS']) if (flat.includes(w)) ng(`ポエム/英字ラベルが残っている: ${w}`);
 
 // 4) 禁止事項
 const bad = [

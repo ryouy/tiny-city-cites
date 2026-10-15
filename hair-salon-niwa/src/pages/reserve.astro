@@ -3,16 +3,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { staff } from '../data/staff';
 import { categories, services } from '../data/services';
 
-const stepNames = [
-  { en: 'Staff', ja: 'スタッフ' },
-  { en: 'Menu', ja: 'メニュー' },
-  { en: 'Date', ja: '日時' },
-  { en: 'Confirm', ja: '内容確認' },
-];
+const stepNames = [{ ja: 'スタッフ' }, { ja: 'メニュー' }, { ja: '日時' }, { ja: '内容確認' }];
 const times = ['09:30', '11:00', '13:30', '15:00'];
 ---
 
-<BaseLayout page="ご予約" description="HAIR SALON niwaの予約ページ。スタッフ、メニュー、日時を選びます。入力内容は送信・保存されず、予約は成立しません。">
+<BaseLayout page="ご予約" description="HAIR SALON niwaの予約ページ。入力内容は送信・保存されず、予約は成立しません。">
   <div class="page-body">
     <div class="wrap wrap--narrow">
       <h1 class="ptitle">ご予約</h1>

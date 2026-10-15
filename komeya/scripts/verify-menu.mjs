@@ -23,13 +23,6 @@ for (const row of section.split('\n')) {
   const ok = idxs.some((i) => lines.slice(i, i + 4).includes(price));
   if (!ok) { fail++; console.error(`NG: ${name} ${price}`); } else console.log(`OK: ${name} ${price}`);
 }
-// 紹介文
-for (const row of section.split('\n')) {
-  const m = row.match(/^\|\s*([^|]+?)\s*\|\s*¥[\d,]+\s*\|\s*([^|]+?)\s*\|$/);
-  if (!m || m[1] === '名前') continue;
-  let desc = m[2].replace(/（内容は架空設定.*）$/, '');
-  if (!lines.includes(desc)) { fail++; console.error(`NG desc: ${m[1]} -> ${desc}`); }
-}
 for (const must of ['定食にはごはん・味噌汁・小鉢・漬物が付きます。', '+¥100', '税込', 'L.O. 14:00', 'L.O. 19:30', '11:00–14:30', '17:00–20:00', '毎週日曜', 'このWebサイトはWeb制作ポートフォリオ用の架空店舗デモです。実在する店舗・商品・サービスではありません。']) {
   if (!text.includes(must)) { fail++; console.error(`NG missing: ${must}`); }
 }
@@ -42,14 +35,16 @@ for (const w of ['デモ', '架空', 'サンプル']) {
 if (html.includes('demo-note')) { fail++; console.error('NG: 上部の注記帯が残っています'); }
 if (!lines.includes('会津若松市周辺の地図')) { fail++; console.error('NG: 地図キャプション'); }
 if ((html.match(/<iframe[\s>]/g) ?? []).length !== 1) { fail++; console.error('NG: iframe は1点のみ'); }
-// 追加検査: noindex / 禁止要素 / 看板コピー / 物語の原文
+// 追加検査: noindex / 禁止要素
 const must2 = ['<meta name="robots" content="noindex,nofollow">'];
 for (const m of must2) if (!html.includes(m)) { fail++; console.error(`NG missing html: ${m}`); }
-for (const m of spec.matchAll(/^- \*\*(.+?)\*\*: `(.+?)`$/gm)) {
-  if (!text.includes(m[2])) { fail++; console.error(`NG signature copy: ${m[1]}`); }
+// 文章検査: ポエム語が画面テキストに残っていないこと(原文一致検査は廃止)
+for (const w of ['こだわり', '丁寧', '心まで', 'ほっと', 'そっと', 'ひととき', '物語', '約束', '想い', '寄り添', '彩', '紡', 'ふっくら', 'じっくり', 'とろけ', '心地よ', '飽きない', '家庭の味', 'お待ちしています', 'Nostalgic', 'Warm']) {
+  if (text.includes(w)) { fail++; console.error(`NG poetic word: ${w}`); }
 }
-for (const m of spec.matchAll(/^(?:見出し|本文): `(.+?)`$/gm)) {
-  if (!text.includes(m[1])) { fail++; console.error(`NG story text: ${m[1].slice(0, 20)}...`); }
+// 事実の保持
+for (const f of ['1998年4月', '会津産コシヒカリ', '会津若松出身']) {
+  if (!text.includes(f)) { fail++; console.error(`NG missing fact: ${f}`); }
 }
 if ((html.match(/<h1[\s>]/g) ?? []).length !== 1) { fail++; console.error('NG: h1 must be exactly one'); }
 for (const bad of [/href="tel:/i, /href="mailto:/i, /<form[\s>]/i, /Since\s?\d/i, /Our Story/i, /itemtype=|application\/ld\+json/i, /rel="canonical"/i, /(instagram|twitter|facebook)\.com/i]) {

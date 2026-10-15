@@ -6,7 +6,7 @@ import { path, site } from '../data/site';
 import { faq } from '../data/faq';
 ---
 
-<BaseLayout page="アクセス・店舗情報" description="HAIR SALON niwaの営業時間・定休日・駐車場・所在エリアと、よくある質問。">
+<BaseLayout page="アクセス・店舗情報" description="HAIR SALON niwaの営業時間、定休日、駐車場、所在エリア、よくある質問。">
   <div class="wrap accesspage">
     <div>
       <h1 class="ptitle">アクセス・店舗情報</h1>
@@ -20,7 +20,7 @@ import { faq } from '../data/faq';
     <div class="faq">
       {faq.map((f) => (
         <details>
-          <summary><span class="faq__q"><i aria-hidden="true">Q</i><span>{f.q}</span></span></summary>
+          <summary><span>{f.q}</span></summary>
           <p class="faq__a">{f.a}</p>
         </details>
       ))}

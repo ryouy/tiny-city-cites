@@ -42,14 +42,13 @@ for (const row of section('## 4. メニュー', '## 5. スタイリスト').spli
 for (const row of section('## 6. スタイル', '## 7. 情報設計').split('\n')) {
   const c = row.split('|').map((s) => s.trim());
   if (c.length < 6 || !/^style\d+$/.test(c[1])) continue;
-  const [, , name, cat, comment] = c;
+  const [, , name, cat] = c;
   count++;
-  if (!near(lines['styles/'], cat, [name, comment]) && !near(lines['styles/'].slice(), name, [comment])) ng(`style: ${name}`);
-  if (!lines['styles/'].includes(cat)) ng(`style cat: ${cat}`);
+  const catJa = { Short: 'ショート', Bob: 'ボブ', Medium: 'ミディアム', Long: 'ロング', "Men's": 'メンズ' }[cat];
+  if (!near(lines['styles/'], catJa, [name])) ng(`style: ${name}`);
+  if (!lines['styles/'].includes(catJa)) ng(`style cat: ${catJa}`);
 }
-const staffMsgs = [...section('## 5. スタイリスト', '## 6. スタイル').matchAll(/メッセージ：`([^`]+)`/g)].map((m) => m[1]);
-for (const m of staffMsgs) if (!flat['staff/'].includes(m.replace(/\s+/g, ''))) ng(`staff message: ${m}`);
-for (const w of ['佐伯 まどか', 'Madoka Saeki', 'Owner Stylist', '美容師歴12年', '高野 悠', 'Yu Takano', '美容師歴7年', 'ナチュラルなレイヤー', 'メンズカット', '頭皮ケア', '骨格に馴染むショート・ボブ', '柔らかなカラー'])
+for (const w of ['佐伯 まどか', 'オーナースタイリスト', '美容師歴12年', '高野 悠', 'スタイリスト', '美容師歴7年', 'ナチュラルなレイヤー', 'メンズカット', '頭皮ケア', '骨格に馴染むショート・ボブ', '柔らかなカラー'])
   if (!lines['staff/'].includes(w)) ng(`staff: ${w}`);
 
 // 3) 営業情報・固定文言
@@ -59,21 +58,18 @@ for (const [p, ws] of musts) for (const w of ws) if (!lines[p].includes(w)) ng(`
 void access;
 const home = flat[''];
 for (const t of [
-  'A PLACE TO FEEL LIKE YOURSELF.', '髪から、日々を心地よく。', 'いつもの自分に、ちょうどいい変化を。静かな空間で、一人ひとりの髪と丁寧に向き合うプライベートサロン。',
-  'メニュー・料金を見る', 'スタイルを見る', '背伸びをしない、自分らしいきれい。',
-  '髪質も、暮らし方も、似合うスタイルも一人ひとり違うから。niwaではカウンセリングの時間を大切にし、日々のお手入れまで見据えたヘアデザインをご提案します。落ち着いた空間で、どうぞゆっくりお過ごしください。',
-  '丁寧なカウンセリング', '悩みや好み、普段のセット方法までじっくり伺います。', '毎日に馴染むスタイル', 'サロン帰りだけでなく、翌朝も扱いやすい髪へ。',
-  '静かに過ごせる空間', '2席だけのプライベートな空間で、自分の時間を。', 'はじめての方へ',
-  'ご希望の髪型が決まっていなくても大丈夫です。髪のお悩みや普段のライフスタイルを伺いながら、一緒にスタイルを考えていきます。',
+  '福島県会津若松市の美容室です。2席、完全予約制。', 'メニュー・料金を見る', 'スタイルを見る',
+  'お店について', 'カット、カラー、パーマ、トリートメント、ヘッドスパを行っています。施術の前に、髪の悩みや普段のセット方法を伺います。',
+  'はじめての方へ', '髪型が決まっていなくても、相談しながら決められます。',
   'カット5,000円台〜、カラー7,000円台〜',
   '予約する',
 ].map((s) => s.replace(/\s+/g, ''))) if (!home.includes(t)) ng(`home missing: ${t}`);
-// FAQ: 1・2問目は仕様書の原文どおり。3・4問目は「デモ設定」の言い回しを外した文に置き換え済み(事実=同伴相談可/空き枠に応じて対応)
+// FAQ: 質問文は仕様書どおり。回答は平易な文に書き換え済み(事実=所要時間の目安、同伴相談可、空き枠に応じて対応)
 const faqRows = [...section('## 11. FAQ', '## 12. 技術').matchAll(/\*\*Q\. (.+?)\*\*\s*\nA\. (.+)/g)].map((m) => [m[1], m[2]]);
-const faqAns = [faqRows[0][1], faqRows[1][1], '同伴でのご相談も可能です。', '空き枠に応じて対応いたします。'];
+const faqAns = ['はい。髪質や普段のスタイリングを伺って、一緒に決めます。', faqRows[1][1], '同伴でのご相談も可能です。', '空き枠に応じて対応いたします。'];
 faqRows.forEach(([q], i) => {
   count++;
-  if (!flat['access/'].includes('Q' + q.replace(/\s+/g, '')) || !flat['access/'].includes(faqAns[i].trim())) ng(`faq: ${q}`);
+  if (!flat['access/'].includes(q.replace(/\s+/g, '')) || !flat['access/'].includes(faqAns[i].trim())) ng(`faq: ${q}`);
 });
 if (!flat['reserve/'].includes('予約は成立していません')) ng('予約ページの送信されない旨の1行');
 if (/予約完了|ご予約ありがとう|デモを完了|これはデモです/.test(flat['reserve/'])) ng('完了表示らしき文言');
@@ -92,6 +88,10 @@ for (const p of pages) {
 // 地図キャプション: 「会津若松市周辺の地図」のみ
 if (!/<figcaption[^>]*>\s*会津若松市周辺の地図\s*<\/figcaption>/.test(html['access/'])) ng('地図キャプションは「会津若松市周辺の地図」のみ');
 if (/店舗の所在地ではありません/.test(html['access/'])) ng('地図の旧注記が残っている');
+
+// 3b) 情緒語・英字キャッチの再混入防止
+const poem = /こだわり|丁寧|心地よ|ほっと|そっと|特別な|ひととき|物語|約束|想い|寄り添|彩る|紡ぐ|A PLACE TO|YOURSELF/;
+for (const p of pages) { const m = lines[p].join('\n').match(poem); if (m) ng(`${p || '/'} 情緒語: ${m[0]}`); }
 
 // 4) 禁止事項(全ページ)
 const bad = [

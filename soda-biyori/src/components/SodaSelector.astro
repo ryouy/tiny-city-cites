@@ -5,10 +5,7 @@ import { sodas } from '../data/menu';
 
 <section class="section soda" aria-labelledby="soda-title" style={`--soda:${sodas[0].color}`}>
   <div class="container">
-    <h2 id="soda-title" class="h2">
-      <span class="nw">色で選ぶ？</span> <span class="nw">気分で選ぶ？</span>
-    </h2>
-    <p class="soda__lead">メロン、いちご、青空、ゆうやけ。お気に入りの色を見つけたら、今日はきっとソーダ日和。</p>
+    <h2 id="soda-title" class="h2">クリームソーダ</h2>
 
     <fieldset class="picker">
       <legend class="picker__legend">クリームソーダの色を選ぶ（5色）</legend>
@@ -35,7 +32,7 @@ import { sodas } from '../data/menu';
               <Photo name={s.photo} ratio="4 / 5" pos="50% 40%" sizes="(min-width: 900px) 380px, 90vw" />
             </div>
             <div class="soda__info">
-              <p class="badge">{s.badge}</p>
+              {s.badge && <p class="badge">{s.badge}</p>}
               <h3 id={`${s.id}-name`} class="soda__name">{s.name}</h3>
               <p class="soda__price">{s.price}<small>（税込）</small></p>
               <ul class="soda__notes">

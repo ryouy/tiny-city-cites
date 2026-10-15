@@ -12,70 +12,33 @@ const hours = site.info.filter((r) => ['営業時間', '休業日', '座席'].in
 ---
 
 <BaseLayout current="home">
-  <section class="hero" aria-labelledby="hero-title">
-    <Photo photo={photos.hero} ratio="16 / 9" ratioSm="4 / 5" fill eager pos="58% 55%" sizes="100vw" class="hero__photo" />
-    <div class="hero__overlay" aria-hidden="true"></div>
-    <div class="container hero__inner">
-      <h1 id="hero-title" class="hero__title"><span class="nw">日常に、</span><span class="nw">少しだけ余白を。</span></h1>
-      <p class="hero__lead">一杯のコーヒーから始まる、心地よい時間。</p>
-      <div class="hero__cta">
-        <a class="btn btn--solid" href={url('menu/')}>メニューを見る</a>
-        <a class="btn btn--line" href={url('story/')}>KITOについて</a>
-      </div>
-    </div>
-  </section>
+  <div class="hero-photo">
+    <Photo photo={photos.hero} ratio="21 / 9" ratioSm="4 / 3" eager pos="58% 55%" sizes="100vw" />
+  </div>
 
-  <section class="section intro">
-    <div class="container intro__grid">
-      <p class="intro__text">
-        朝の始まりに。仕事の合間に。何もしない午後に。<span class="nw">KITO COFFEEは、</span>一杯のコーヒーとともに、日常に小さな余白を届けるコーヒースタンドです。
-      </p>
-      <div class="intro__hours">
-        <h2 class="h3">営業時間</h2>
-        <dl class="info-list">
-          {
-            hours.map((row) => (
-              <div class="info-list__row">
-                <dt>{row.term}</dt>
-                <dd>{row.desc}</dd>
-              </div>
-            ))
-          }
-        </dl>
-        <p class="more"><a href={url('information/')}>店舗情報を見る</a></p>
-      </div>
-    </div>
-  </section>
-
-  <section class="section excerpt" aria-labelledby="excerpt-title">
-    <div class="container excerpt__grid">
-      <div class="excerpt__photo">
-        <Photo photo={photos.sweets} ratio="4 / 3" pos="50% 50%" sizes="(min-width: 900px) 40vw, 100vw" />
-      </div>
-      <div class="excerpt__body">
-        <h2 id="excerpt-title" class="h2">メニュー</h2>
-        <p class="excerpt__tax">{menuNotes.tax}</p>
-        <div class="excerpt__lists">
-          <MenuList cat={drinks} onlyFeatured level={3} />
-          <MenuList cat={sweets} onlyFeatured level={3} />
-        </div>
-        <p class="more"><a href={url('menu/')}>メニュー全体を見る</a></p>
-      </div>
-    </div>
-  </section>
-
-  <nav class="section pages" aria-label="ページ案内">
-    <ul class="container pages__list">
+  <div class="container top">
+    <h1 class="h1">KITO COFFEE</h1>
+    <p>会津若松市のコーヒー店です。ハンドドリップのコーヒーと、手づくりのお菓子を出しています。</p>
+    <dl class="info-list">
       {
-        site.nav.map((l) => (
-          <li>
-            <a href={url(l.path)}>
-              <span class="pages__name">{l.label}</span>
-              <span class="pages__note">{l.note}</span>
-            </a>
-          </li>
+        hours.map((row) => (
+          <div class="info-list__row">
+            <dt>{row.term}</dt>
+            <dd>{row.desc}</dd>
+          </div>
         ))
       }
-    </ul>
-  </nav>
+    </dl>
+    <p class="more"><a href={url('information/')}>店舗情報</a></p>
+  </div>
+
+  <section class="container excerpt" aria-labelledby="excerpt-title">
+    <h2 id="excerpt-title" class="h2">メニューの一部</h2>
+    <p class="note">{menuNotes.tax}</p>
+    <div class="excerpt__lists">
+      <MenuList cat={drinks} onlyFeatured level={3} />
+      <MenuList cat={sweets} onlyFeatured level={3} />
+    </div>
+    <p class="more"><a href={url('menu/')}>メニュー全体</a></p>
+  </section>
 </BaseLayout>

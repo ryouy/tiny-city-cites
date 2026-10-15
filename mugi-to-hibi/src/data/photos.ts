@@ -20,7 +20,7 @@ export const photos = {
   hero: {
     stem: 'hero-bakery',
     pos: '42% 60%',
-    alt: '朝の光が差し込む、木の棚にパンが並ぶ店内',
+    alt: '木の棚にパンが並ぶ店内',
     shot: '店内のパン棚。朝の斜光、木の棚、並んだパン（横長 16:9）',
     tone: 'wheat',
     width: 1672,
@@ -29,7 +29,7 @@ export const photos = {
   campagne: {
     stem: 'bread-campagne',
     pos: '50% 60%',
-    alt: '粉をまとった天然酵母のカンパーニュ',
+    alt: '天然酵母のカンパーニュ',
     shot: 'カンパーニュ。粉の質感とクープ（4:5）',
     tone: 'crust',
     width: 1122,
@@ -38,7 +38,7 @@ export const photos = {
   croissant: {
     stem: 'bread-croissant',
     pos: '50% 55%',
-    alt: '焼きたての発酵バタークロワッサン',
+    alt: '発酵バタークロワッサン',
     shot: 'クロワッサン。層の断面が分かる寄り（4:5）',
     tone: 'cream',
     width: 1122,
@@ -47,7 +47,7 @@ export const photos = {
   anbutter: {
     stem: 'bread-anbutter',
     pos: '50% 55%',
-    alt: 'あんことバターを挟んだ自家製あんバター',
+    alt: '自家製あんバター',
     shot: 'あんバター。断面のあんとバター（4:5）',
     tone: 'wheat',
     width: 1122,
@@ -56,7 +56,7 @@ export const photos = {
   danish: {
     stem: 'bread-danish',
     pos: '50% 60%',
-    alt: '季節の果物をのせたフルーツデニッシュ',
+    alt: '季節のフルーツデニッシュ',
     shot: '季節のデニッシュ。果物の彩り（4:5）',
     tone: 'sage',
     width: 1122,
@@ -65,7 +65,7 @@ export const photos = {
   process: {
     stem: 'bakery-process',
     pos: '45% 55%',
-    alt: '生地を成形するパン職人の手元',
+    alt: '生地を成形する手元',
     shot: 'パン作りの手元。生地と粉と木の台（3:2）',
     tone: 'cream',
     width: 1536,
@@ -74,7 +74,7 @@ export const photos = {
   exterior: {
     stem: 'shop-exterior',
     pos: '50% 45%',
-    alt: '郊外の住宅地にある小さなベーカリーの外観',
+    alt: 'ベーカリーの外観',
     shot: '郊外の小規模ベーカリー外観。3:2',
     tone: 'sage',
     width: 1536,

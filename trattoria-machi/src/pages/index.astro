@@ -5,64 +5,47 @@ import MapEmbed from '../components/MapEmbed.astro';
 import { hero, hoursBand, sections, info } from '../data/site';
 const base = import.meta.env.BASE_URL;
 const menu = `${base}menu/`;
-const meals = [
-  { id: 'lunch', h2: sections.lunch.h2, body: sections.lunch.body, serve: sections.lunch.serve, label: 'ランチメニューを見る', href: `${menu}#lunch` },
-  { id: 'dinner', h2: sections.dinner.h2, body: sections.dinner.body, serve: 'ディナー 17:30–21:00（L.O.20:30）', label: 'ディナーメニューを見る', href: `${menu}#pasta` },
-];
 ---
 
 <BaseLayout current="top">
   <main id="main">
     <section class="hero" aria-labelledby="hero-title">
-      <div class="hero__photo">
-        <Photo name="hero" priority ratio="16 / 9" sizes="100vw" />
-      </div>
-      <div class="hero__panel">
-        <div class="wrap hero__in">
-          <div>
-            <p class="hero__eyebrow">{hero.eyebrow}</p>
-            <h1 id="hero-title">{hero.h1.split('、').map((t, i) => <span>{i === 0 ? `${t}、` : t}</span>)}</h1>
-          </div>
-          <div>
-            <p class="hero__lead">{hero.lead}</p>
-            <p class="hero__cta">
-              <a class="btn" href={menu}>メニューを見る</a>
-              <a class="btn btn--ghost" href="#about">お店について</a>
-            </p>
-          </div>
-        </div>
-
-        <div class="wrap meals">
-          {meals.map((m, i) => (
-            <article id={m.id} class="meal">
-              <h2>{m.h2}</h2>
-              <p>{m.body}</p>
-              <p class="meal__time">{m.serve}</p>
-              <p class="meal__budget">予算 {hoursBand[i].budget}</p>
-              <a class="textlink" href={m.href}>{m.label}</a>
-            </article>
-          ))}
-        </div>
-        <p class="wrap hero__closed">定休日 月曜日 <a href="#info">店舗案内</a></p>
+      <Photo name="hero" priority ratio="16 / 9" sizes="100vw" />
+      <div class="wrap hero__body">
+        <h1 id="hero-title">{hero.h1}</h1>
+        <table class="hours">
+          <thead>
+            <tr><th scope="col">時間帯</th><th scope="col">営業時間</th><th scope="col">予算</th></tr>
+          </thead>
+          <tbody>
+            {hoursBand.map((h) => (
+              <tr>
+                <th scope="row">{h.k}</th>
+                <td class="hours__time">{h.time}</td>
+                <td class="hours__budget">{h.budget}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <p class="hero__links">
+          <a href={`${menu}#lunch`}>ランチメニューを見る</a>
+          <a href={`${menu}#pasta`}>ディナーメニューを見る</a>
+          <a href="#info">店舗案内</a>
+        </p>
+        <p class="hero__closed">定休日 月曜日</p>
       </div>
     </section>
 
-    <section id="about" class="about wrap">
-      <div class="about__photo"><Photo name="interior" ratio="3 / 2" sizes="(min-width: 1120px) 1080px, 100vw" /></div>
+    <section id="about" class="about wrap" aria-labelledby="about-title">
+      <div class="about__photo"><Photo name="interior" ratio="3 / 2" sizes="(min-width: 900px) 480px, 100vw" /></div>
       <div class="about__text">
-        <h2>{sections.story.h2}</h2>
-        <p>{sections.story.body}</p>
-        <p>{sections.story.detail}</p>
-        <p class="about__note">{sections.story.note}</p>
-      </div>
-      <div class="about__family">
-        <h3>{sections.family.h2}</h3>
-        <p>{sections.family.body}</p>
+        <h2 id="about-title">{sections.story.h2}</h2>
+        {sections.story.paras.map((t) => <p>{t}</p>)}
       </div>
     </section>
 
-    <section id="info" class="info wrap">
-      <h2>店舗案内</h2>
+    <section id="info" class="info wrap" aria-labelledby="info-title">
+      <h2 id="info-title">店舗案内</h2>
       <div class="info__grid">
         <dl class="info__list">
           {info.map((r) => (
@@ -73,7 +56,6 @@ const meals = [
           ))}
         </dl>
         <div class="info__access">
-          <h3>アクセス</h3>
           <MapEmbed />
         </div>
       </div>

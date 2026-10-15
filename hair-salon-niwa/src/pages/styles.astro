@@ -2,17 +2,17 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import StyleTile from '../components/StyleTile.astro';
 import Photo from '../components/Photo.astro';
-import { hairStyles, styleFilters, stylesNote } from '../data/styles';
+import { hairStyles, styleFilters, stylesNote, categoryLabel } from '../data/styles';
 import { byId } from '../data/services';
 import { site, path } from '../data/site';
 ---
 
-<BaseLayout page="スタイル" description="HAIR SALON niwaのスタイルギャラリー。Short / Bob / Medium / Long / Men's をカテゴリで絞り込めます。">
+<BaseLayout page="スタイル" description="HAIR SALON niwaのスタイル一覧。ショート、ボブ、ミディアム、ロング、メンズで絞り込めます。">
   <div class="wrap stylespage">
     <div class="stylespage__head">
       <h1 class="ptitle">スタイル</h1>
       <div class="filter" role="group" aria-label="カテゴリで絞り込み" id="filter">
-        {styleFilters.map((f, i) => <button type="button" data-filter={f} aria-pressed={i === 0 ? 'true' : 'false'}>{f}</button>)}
+        {styleFilters.map((f, i) => <button type="button" data-filter={f} aria-pressed={i === 0 ? 'true' : 'false'}>{categoryLabel[f]}</button>)}
       </div>
     </div>
     <p class="filter-status" id="filter-status" role="status" aria-live="polite">全{hairStyles.length}スタイルを表示中</p>
@@ -30,9 +30,8 @@ import { site, path } from '../data/site';
       <div class="modal__inner">
         <div class="modal__media"><Photo name={s.photo} ratio="3 / 4" sizes="(min-width: 768px) 420px, 100vw" position="50% 30%" /></div>
         <div class="modal__body">
-          <p class="modal__cat">{s.category}</p>
+          <p class="modal__cat">{categoryLabel[s.category]}</p>
           <h2 id={`t-${s.id}`}>{s.name}</h2>
-          <p class="modal__comment">{s.comment}</p>
           <div class="modal__rel">
             <h3>関連メニュー</h3>
             <ul class="mlist">
@@ -65,6 +64,7 @@ import { site, path } from '../data/site';
   const status = document.getElementById('filter-status')!;
 
   const apply = (f: string, push = true) => {
+    const label = buttons.find((b) => b.dataset.filter === f)?.textContent ?? f;
     let n = 0;
     items.forEach((li) => {
       const show = f === 'All' || li.dataset.cat === f;
@@ -72,7 +72,7 @@ import { site, path } from '../data/site';
       if (show) n++;
     });
     buttons.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.filter === f)));
-    status.textContent = f === 'All' ? `全${n}スタイルを表示中` : `${f}：${n}スタイルを表示中`;
+    status.textContent = f === 'All' ? `全${n}スタイルを表示中` : `${label}：${n}スタイルを表示中`;
     if (push) {
       const u = new URL(location.href);
       if (f === 'All') u.searchParams.delete('c');

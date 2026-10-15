@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Photo from '../components/Photo.astro';
 import StyleTile from '../components/StyleTile.astro';
-import { site, about, concepts, firstVisit, infoRows, path } from '../data/site';
+import { site, about, firstVisit, infoRows, path } from '../data/site';
 import { previewIds, priceRange, byId } from '../data/services';
 import { hairStyles, featuredStyleIds } from '../data/styles';
 import { staff } from '../data/staff';
@@ -17,12 +17,8 @@ const hours = infoRows.filter((r) => ['営業時間', '定休日'].includes(r.k)
       <Photo name="hero" priority ratio="3 / 2" sizes="100vw" position="50% 55%" />
     </div>
     <div class="wrap hero__text">
+      <h1 id="hero-h">{site.hero}</h1>
       <div>
-        <p class="hero__en" lang="en">{site.heroEn}</p>
-        <h1 id="hero-h"><span class="nw">髪から、</span><span class="nw">日々を心地よく。</span></h1>
-      </div>
-      <div>
-        <p class="hero__sub">{site.heroSub}</p>
         <p class="hero__cta">
           <a class="btn btn--solid" href={path('menu')}>メニュー・料金を見る</a>
           <a class="textlink" href={path('styles')}>スタイルを見る</a>
@@ -37,9 +33,6 @@ const hours = infoRows.filter((r) => ['営業時間', '定休日'].includes(r.k)
       <div class="about__text">
         <h2 id="about-h">{about.heading}</h2>
         <p>{about.body}</p>
-        <dl class="concepts">
-          {concepts.map((c) => <div><dt>{c.title}</dt><dd>{c.body}</dd></div>)}
-        </dl>
         <h3 class="first">{firstVisit.heading}</h3>
         <p>{firstVisit.body}</p>
         <p><a class="textlink" href={`${path('access')}#faq`}>よくある質問</a></p>

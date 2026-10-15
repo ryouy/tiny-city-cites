@@ -2,12 +2,11 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Photo from '../components/Photo.astro';
 import Footer from '../components/Footer.astro';
-import { hero, about, wholeCopy, giftCopy, infoRows } from '../data/site';
+import { hero, about, wholeCopy, giftCopy } from '../data/site';
 import { cutCakes, yen } from '../data/menu';
 
 const base = import.meta.env.BASE_URL;
 const featured = cutCakes.filter((c) => c.photo);
-const hours = infoRows.find((r) => r.k === '営業時間')!;
 ---
 
 <BaseLayout current="home">
@@ -18,16 +17,13 @@ const hours = infoRows.find((r) => r.k === '営業時間')!;
       </div>
       <div class="wrap hero__row">
         <div>
-          <p class="hero__en" lang="en">{hero.eyebrow}</p>
           <h1 id="hero-title">{hero.copy}</h1>
-        </div>
-        <div>
           <p class="hero__sub">{hero.sub}</p>
-          <div class="cta-row">
-            <a class="btn" href="#cakes">ケーキを見る</a>
-            <a class="btn btn--ghost" href="#whole-cakes">ホールケーキのご案内</a>
-          </div>
         </div>
+        <dl class="hero__hours">
+          <div><dt>営業時間</dt><dd>10:00–18:00</dd></div>
+          <div><dt>定休日</dt><dd>火曜日・水曜日</dd></div>
+        </dl>
       </div>
     </section>
 
@@ -39,7 +35,7 @@ const hours = infoRows.find((r) => r.k === '営業時間')!;
         </div>
         <ul class="showcase">
           {featured.map((c) => (
-            <li class="reveal">
+            <li>
               <Photo name={c.photo!} ratio="4 / 5" sizes="(min-width: 900px) 33vw, 100vw" />
               <div class="showcase__cap">
                 <h3>{c.name}</h3>
@@ -54,37 +50,29 @@ const hours = infoRows.find((r) => r.k === '営業時間')!;
 
     <section class="sec sec--tight" aria-label="ホールケーキと焼き菓子">
       <div class="wrap duo">
-        <article class="duo__item reveal" id="whole-cakes" aria-labelledby="whole-title">
+        <article class="duo__item" id="whole-cakes" aria-labelledby="whole-title">
           <Photo name="wholeCake" ratio="1 / 1" sizes="(min-width: 900px) 50vw, 100vw" />
           <h2 id="whole-title">{wholeCopy.heading}</h2>
           <p>{wholeCopy.body}</p>
-          <a class="btn" href={`${base}order/`}>ホールケーキを見る</a>
+          <a class="tlink" href={`${base}order/`}>ホールケーキのページ</a>
         </article>
-        <article class="duo__item reveal" id="gifts" aria-labelledby="gift-title">
+        <article class="duo__item" id="gifts" aria-labelledby="gift-title">
           <Photo name="gift" ratio="5 / 4" sizes="(min-width: 900px) 50vw, 100vw" />
           <h2 id="gift-title">{giftCopy.heading}</h2>
           <p>{giftCopy.body}</p>
-          <a class="btn btn--ghost" href={`${base}menu/#baked`}>焼き菓子を見る</a>
+          <a class="tlink" href={`${base}menu/#baked`}>焼き菓子の一覧</a>
         </article>
       </div>
     </section>
 
     <section class="sec" id="about" aria-labelledby="about-title">
       <div class="wrap story">
-        <div class="story__photo reveal"><Photo name="baker" ratio="4 / 5" sizes="(min-width: 900px) 440px, 100vw" /></div>
+        <div class="story__photo"><Photo name="baker" ratio="4 / 5" sizes="(min-width: 900px) 440px, 100vw" /></div>
         <div class="story__text">
           <h2 id="about-title">{about.heading}</h2>
           <p>{about.body}</p>
-          <a class="tlink" href={`${base}about/`}>お店について</a>
+          <a class="tlink" href={`${base}about/`}>営業情報・FAQ</a>
         </div>
-      </div>
-    </section>
-
-    <section class="hours-strip" aria-label="営業時間">
-      <div class="wrap hours-strip__row">
-        <p class="hours-strip__time">10:00–18:00</p>
-        <p>火曜日・水曜日は定休日です。<br />{hours.v[1]}。</p>
-        <a class="tlink" href={`${base}about/#info`}>営業情報・FAQ</a>
       </div>
     </section>
   </main>

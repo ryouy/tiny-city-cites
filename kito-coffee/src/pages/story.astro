@@ -6,64 +6,47 @@ import { photos } from '../data/photos';
 
 <BaseLayout
   current="story"
-  title="ストーリー | KITO COFFEE"
-  description="KITO COFFEEのストーリー。お店のこと、コーヒー、手づくりのお菓子、店主について。"
+  title="お店について | KITO COFFEE"
+  description="KITO COFFEEのこと。お店、コーヒー、お菓子、店主について。"
 >
-  <div class="container">
-    <h1 class="h1 story-title">ストーリー</h1>
+  <div class="container page">
+    <h1 class="h1">お店について</h1>
+
+    <section class="feature">
+      <div class="feature__photo">
+        <Photo photo={photos.interior} ratio="4 / 5" pos="50% 50%" sizes="(min-width: 900px) 36vw, 100vw" />
+      </div>
+      <div class="feature__text">
+        <h2 class="h2">お店</h2>
+        <p class="prose">KITO COFFEEは、会津若松市のコーヒースタンドです。席は18席で、ドリンクと焼き菓子は持ち帰りもできます。</p>
+      </div>
+    </section>
+
+    <section class="feature">
+      <div class="feature__photo">
+        <Photo photo={photos.pourOver} ratio="3 / 2" pos="50% 50%" sizes="(min-width: 900px) 36vw, 100vw" />
+      </div>
+      <div class="feature__text">
+        <h2 class="h2">コーヒー</h2>
+        <p class="prose">豆は国内の専門ロースターから仕入れています。産地と焙煎度の違う豆を用意し、挽き目と湯温を調整して、一杯ずつハンドドリップで淹れます。</p>
+      </div>
+    </section>
+
+    <section class="feature">
+      <div class="feature__photo">
+        <Photo photo={photos.cheesecake} ratio="4 / 3" pos="50% 50%" sizes="(min-width: 900px) 36vw, 100vw" />
+      </div>
+      <div class="feature__text">
+        <h2 class="h2">お菓子</h2>
+        <p class="prose">バスクチーズケーキ、季節のフルーツタルト、スコーンなどを、店で作っています。</p>
+      </div>
+    </section>
+
+    <section class="feature feature--text">
+      <div class="feature__text">
+        <h2 class="h2">店主</h2>
+        <p class="prose">店名のKITOは、「木」と「糸」から付けました。店主は東京のコーヒー専門店で約6年働いたあと、故郷の会津に戻り、2023年に店を開きました。</p>
+      </div>
+    </section>
   </div>
-
-  <article class="feature container reveal">
-    <div class="feature__photo">
-      <Photo photo={photos.interior} ratio="4 / 5" ratioSm="4 / 5" pos="50% 50%" sizes="(min-width: 900px) 42vw, 100vw" />
-    </div>
-    <div class="feature__text">
-      <h2 class="h2"><span class="nw">コーヒーを、</span><span class="nw">もっと自分らしく。</span></h2>
-      <p class="prose">
-        朝の始まりに。仕事の合間に。何もしない午後に。<span class="nw">KITO COFFEEは、</span>一杯のコーヒーとともに、日常に小さな余白を届けるコーヒースタンドです。木の温もりと自然光に包まれた空間で、お気に入りの一杯を、思い思いの時間とともにお楽しみください。
-      </p>
-    </div>
-  </article>
-
-  <article class="feature feature--flip container reveal">
-    <div class="feature__photo">
-      <Photo photo={photos.pourOver} ratio="3 / 2" ratioSm="3 / 2" pos="50% 50%" sizes="(min-width: 900px) 58vw, 100vw" />
-    </div>
-    <div class="feature__text">
-      <h2 class="h2"><span class="nw">一杯に、</span><span class="nw">丁寧な理由がある。</span></h2>
-      <p class="prose">
-        豆は国内の専門ロースターから厳選。産地や焙煎度によって異なる個性を大切にしながら、挽き目と湯温を調整し、<span class="nw">一杯ずつ</span>ハンドドリップで抽出します。やさしい甘み、香ばしい余韻。その日の気分に合うコーヒーをお選びください。
-      </p>
-    </div>
-  </article>
-
-  <article class="feature container reveal">
-    <div class="feature__photo">
-      <Photo photo={photos.cheesecake} ratio="4 / 3" ratioSm="4 / 3" pos="50% 50%" sizes="(min-width: 900px) 50vw, 100vw" />
-    </div>
-    <div class="feature__text">
-      <h2 class="h2"><span class="nw">コーヒーの隣に、</span><span class="nw">小さなご褒美。</span></h2>
-      <p class="prose">
-        濃厚なバスクチーズケーキ、季節のフルーツタルト、素朴なスコーン。コーヒーの香りと余韻を引き立てる、手づくりのお菓子を揃えています。
-      </p>
-    </div>
-  </article>
-
-  <article class="owner reveal">
-    <div class="container owner__inner">
-    <div class="owner__text">
-      <h2 class="h2"><span class="nw">木と、糸と、</span><span class="nw">人のつながり。</span></h2>
-      <p class="prose">
-        KITOという名前には、空間を彩る「木」と、人と人を結ぶ「糸」の意味を込めました。店主は東京のコーヒー専門店で約6年経験を積み、故郷の会津へ。2023年に、気負わず立ち寄れる小さな店を開きました。
-      </p>
-    </div>
-    </div>
-  </article>
-
-  <section class="closing container" aria-labelledby="closing-title">
-    <h2 id="closing-title" class="h2"><span class="nw">今日も、</span><span class="nw">いつもの一杯を。</span></h2>
-    <p class="prose">
-      忙しい日にも、ゆっくりしたい日にも。扉を開ければ、コーヒーの香りと穏やかな時間が待っています。
-    </p>
-  </section>
 </BaseLayout>

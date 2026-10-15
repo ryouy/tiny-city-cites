@@ -22,17 +22,17 @@ npm run verify    # ビルド後に全ページを検査
 
 | URL | ファイル | 内容 |
 |---|---|---|
-| `/` | `src/pages/index.astro` | トップ(全幅の店内写真ヒーロー、ひと言紹介、営業時間の要約、メニュー抜粋、各ページへの導線) |
+| `/` | `src/pages/index.astro` | トップ(店内写真、店の紹介1文、営業時間の要約、メニュー抜粋) |
 | `/menu/` | `src/pages/menu.astro` | メニュー全品(税込価格) |
-| `/story/` | `src/pages/story.astro` | About・Coffee・Sweets・店主の紹介(写真と文章を交互に配置) |
-| `/information/` | `src/pages/information.astro` | 営業情報・座席・支払い、地図、Gallery(写真4点) |
+| `/story/`(ナビ表記は「お店について」) | `src/pages/story.astro` | お店・コーヒー・お菓子・店主(写真と短い説明) |
+| `/information/` | `src/pages/information.astro` | 営業情報・座席・支払い、地図、写真4点 |
 
 - `src/layouts/BaseLayout.astro` 全ページ共通(ヘッダー、フッター(免責文1行)、`noindex`、フォント)。各ページが `title` / `description` / `current`(ナビの現在ページ表示)を渡します
 - `src/data/site.ts` 店舗情報・免責文(フッター用)・ナビ。内部リンクは `url()` 経由で `BASE_URL` を基準にします
 - `src/data/menu.ts` メニュー(品名・価格・説明)。価格は数値で持ち、画面側で `¥` 付き・税込表記に整形。`featured: true` の品がトップの抜粋に載ります
 - `src/data/photos.ts` 写真の定義(ファイル名・alt・想定サイズ)
 - `src/components/Photo.astro` 画像の表示/プレースホルダー切替
-- `src/styles/global.css` 全スタイル(配色は先頭の CSS 変数)
+- `src/styles/global.css` 全スタイル(配色は先頭の CSS 変数。紙色の背景1色、文字色、差し色の木の褐色のみ。端末標準のゴシック体で外部フォントなし、アニメーションなし)
 - `scripts/verify.mjs` dist の全ページを検査(価格・営業情報・免責文がフッターのみにあること・本文に「デモ」等が無いこと・noindex・禁止事項・リンク解決)
 
 `BASE_PATH=/demos/kito/ npm run build` のようにサブパス配下へ出力できます(`npm run verify` も同じ環境変数で検査)。
@@ -49,16 +49,16 @@ npm run check && npm run lint && npm run verify   # verify は build も実行
 
 | ファイル | 内容 | 推奨サイズ(webp) |
 |---|---|---|
-| `hero.webp` | カフェ全景、自然光と木のカウンター(横長。トップのヒーローと Gallery) | 1672×941(現在) |
-| `pour-over.webp` | 手注ぎドリップの寄り(story と Gallery) | 1536×1024(現在) |
-| `blend.webp` | 陶器カップのコーヒー(menu と Gallery) | 1254×1254(現在) |
+| `hero.webp` | カフェ全景、自然光と木のカウンター(横長。トップと 写真ページ) | 1672×941(現在) |
+| `pour-over.webp` | 手注ぎドリップの寄り(story と 写真ページ) | 1536×1024(現在) |
+| `blend.webp` | 陶器カップのコーヒー(menu と 写真ページ) | 1254×1254(現在) |
 | `cheesecake.webp` | バスクチーズケーキ(story) | 1448×1086(現在) |
-| `interior.webp` | 空間の引き写真(縦長。story と Gallery) | 1122×1402(現在) |
+| `interior.webp` | 空間の引き写真(縦長。story と 写真ページ) | 1122×1402(現在) |
 | `sweets.webp` | 焼き菓子とカフェラテ(トップのメニュー抜粋) | 1448×1086(現在) |
 
 - 形式は WebP、1ファイル 300KB 前後を目安に圧縮してください。
 - 表示は `object-fit: cover` で、箇所ごとに比率と切り抜き位置(`pos`)が異なります(トリミングされても問題ない構図で撮影・生成してください)。実サイズを変える場合は `src/data/photos.ts` の `width` / `height`(CLS防止用の intrinsic size)も合わせます。
-- 利用権限を確認済みの撮影画像・生成画像のみ使用してください。`hero` `blend` `interior` `pour-over` は Gallery でも使っています。配色(`global.css` 先頭の変数と `--photo-shade`)は現在の写真の暖色系の木と漆喰に合わせています。写真を差し替えたら、ヒーロー上の文字が読めるか確認してください。
+- 利用権限を確認済みの撮影画像・生成画像のみ使用してください。`hero` `blend` `interior` `pour-over` は情報ページの写真欄でも使っています。
 
 ## メニューの編集
 

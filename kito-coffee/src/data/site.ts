@@ -6,20 +6,19 @@ export type PageKey = 'home' | 'menu' | 'story' | 'information';
 export const site = {
   name: 'KITO COFFEE',
   reading: 'キト コーヒー',
-  subtitle: 'Specialty Coffee & Homemade Sweets',
-  catchcopy: '日常に、少しだけ余白を。',
-  title: 'KITO COFFEE | 会津若松のスペシャルティコーヒー',
+  subtitle: '会津若松市のコーヒー店',
+  title: 'KITO COFFEE | 会津若松のコーヒー店',
   description:
-    '日常に、少しだけ余白を。会津若松のスペシャルティコーヒーと手作り焼き菓子のお店、KITO COFFEE。',
+    '会津若松市のコーヒー店、KITO COFFEE。ハンドドリップのコーヒーと手づくりのお菓子を出しています。',
   disclaimer:
     'このWebサイトはWeb制作ポートフォリオ用の架空店舗デモです。実在する店舗・商品・サービスではありません。',
   /** 免責文の改行位置制御用(定数のみ。set:html で使用) */
   disclaimerHtml:
     'このWebサイトはWeb制作ポートフォリオ用の<span class="nw">架空店舗デモです。</span>実在する店舗・商品・<span class="nw">サービスではありません。</span>',
   nav: [
-    { key: 'menu', path: 'menu/', label: 'メニュー', note: 'コーヒー・ドリンク・お菓子の全品' },
-    { key: 'story', path: 'story/', label: 'ストーリー', note: 'KITOのこと、コーヒーとお菓子、店主のこと' },
-    { key: 'information', path: 'information/', label: '店舗情報', note: '営業時間・座席・支払い・地図・Gallery' },
+    { key: 'menu', path: 'menu/', label: 'メニュー' },
+    { key: 'story', path: 'story/', label: 'お店について' },
+    { key: 'information', path: 'information/', label: '店舗情報' },
   ],
   info: [
     { term: '所在地', desc: '福島県会津若松市' },

@@ -24,17 +24,17 @@ export interface PhotoDef {
 
 export const photos: Record<PhotoKey, PhotoDef> = {
   hero: {
-    base: 'niwa-hero', alt: '2席だけの、静かなサロンの内装',
+    base: 'niwa-hero', alt: 'ミラーと椅子が2席分並ぶサロンの内装',
     shoot: 'ミラー2面と椅子2脚。木の質感と自然光が入る、静かなサロン内装（横長）。',
     width: 1536, height: 1024, tone: 'sand', usage: 'トップ ヒーロー（3:2 横長）', spec: true,
   },
   interior: {
-    base: 'niwa-interior', alt: 'ミラー、木材、窓からの自然光が並ぶサロンの一角',
+    base: 'niwa-interior', alt: 'ミラーと木の棚、窓のあるサロンの一角',
     shoot: 'ミラーの縁、木の棚、カーテン越しの自然光。人物は写さない。',
     width: 1122, height: 1402, tone: 'stone', usage: 'トップ About（4:5 縦長）', spec: true,
   },
   hands: {
-    base: 'niwa-hands', alt: '髪をブローしながら整える、スタイリングの手元',
+    base: 'niwa-hands', alt: 'ブラシとドライヤーで髪を整える手元',
     shoot: 'ブラシとドライヤーで髪を整える手元のクローズアップ。本人を特定できない構図。',
     width: 1122, height: 1402, tone: 'clay', usage: 'メニュー（4:5 縦長）', spec: true,
   },

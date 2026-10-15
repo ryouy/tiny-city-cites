@@ -48,7 +48,7 @@ export const photos: Record<PhotoKey, PhotoDef> = {
   rice: {
     base: 'rice-pairing',
     file: 'rice-pairing.webp',
-    alt: 'ライスと海苔、ラーメンを並べた一膳',
+    alt: 'ライス、海苔、ラーメン',
     shoot: 'ライス+海苔+ラーメンの取り合わせ。',
     width: 1448,
     height: 1086,
@@ -57,7 +57,7 @@ export const photos: Record<PhotoKey, PhotoDef> = {
   interior: {
     base: 'shop-interior',
     file: 'shop-interior.webp',
-    alt: '清潔なカウンター席が並ぶ店内',
+    alt: 'カウンター席が並ぶ店内',
     shoot: '清潔なカウンター席。実在の看板や人物の分かるものは写さない。',
     width: 1448,
     height: 1086,

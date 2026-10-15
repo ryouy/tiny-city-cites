@@ -22,17 +22,40 @@ const ng = (m) => {
 const yen = (n) => `¥${Number(n).toLocaleString('en-US')}`;
 
 // --- お品書き(3 表) ---
+// 品名・価格・下限表示は仕様書と突き合わせる。説明文は平易な文に書き換え済みのため、ここの表と突き合わせる
+const descs = {
+  yakitori5: 'その日のおすすめの部位を炭火で焼いた串五本。',
+  atsuyage: '炭火で焼いた厚揚げ。薬味つき。',
+  pork: '会津産の豚肉を炭火で焼いたもの。',
+  mushroom: '季節の野菜を炭火で焼いたもの。',
+  basashi: '会津の馬刺し。',
+  dashi: '出汁を入れた卵焼き。',
+  salad: '季節の小鉢を三種。',
+  donabe: '土鍋で炊いたごはん。',
+  sake3: '会津の日本酒三種の飲み比べ。',
+  sakeglass: '銘柄・仕入れ状況により変わります。',
+  beer: '',
+  soft: '生姜を使った自家製のジンジャーエール。',
+};
 const menuStart = spec.indexOf('## 3. お品書き');
 const menuEnd = spec.indexOf('## 4. コース料理');
 for (const row of spec.slice(menuStart, menuEnd).split('\n')) {
   const m = row.match(/^\|\s*([a-z0-9]+)\s*\|\s*([^|]+?)\s*\|\s*(\d+)(〜?)\s*\|\s*([^|]+?)\s*\|$/);
   if (!m) continue;
-  const [, id, name, price, from, desc] = m;
+  const [, id, name, price, from] = m;
+  const desc = descs[id];
+  if (desc === undefined) {
+    ng(`menu ${id}: no description entry`);
+    continue;
+  }
   count++;
   const want = yen(price);
   const idxs = lines.map((l, i) => (l === name ? i : -1)).filter((i) => i >= 0);
   // 品名 → 説明 → 価格(「税込」ラベルを挟む)の順で出ること
-  const ok = idxs.some((i) => lines[i + 1] === desc.replace(/（架空の目安）/, '') && lines.slice(i + 2, i + 5).includes(want) && (!from || lines.slice(i + 2, i + 7).includes('〜')));
+  const ok = idxs.some((i) => {
+    const k = desc ? 1 : 0;
+    return (!desc || lines[i + 1] === desc) && lines.slice(i + 1 + k, i + 4 + k).includes(want) && (!from || lines.slice(i + 1 + k, i + 6 + k).includes('〜'));
+  });
   if (!ok) ng(`menu ${id} ${name} ${want}${from} / ${desc}`);
   else console.log(`OK: ${name} ${want}${from}`);
 }
@@ -59,17 +82,16 @@ for (const row of spec.slice(cStart, cEnd).split('\n')) {
 
 // --- 必須文言 ---
 const must = [
-  '火を囲み、酒を愉しむ。',
-  'SUMIBI / SAKE / SEASONAL CUISINE',
-  '炭火の香りと、会津の一杯。季節を味わう、静かな夜を。',
+  '会津若松の炭火料理と地酒の店です。',
+  '備長炭で焼く料理と、会津の日本酒を出しています。営業は17:30から23:00まで、日曜は定休日です。',
   'お品書きを見る',
   'コースのご案内',
-  '火が引き出す、素材の旨み。',
-  '炭の状態を見極め、火との距離を調整しながら焼き上げる。シンプルな料理ほど、素材と火入れの違いが現れます。ひと口目の香りから、最後の余韻まで。灯ならではの一皿をお届けします。',
-  '今夜の一杯に、会津の地酒を。',
-  '料理との相性を考え、季節に合わせて日本酒を入れ替えています。飲み比べから、お料理に寄り添う一杯まで。その日の気分に合わせてお楽しみください。',
-  '火を眺める、穏やかな時間。',
-  '炭火の気配を感じるカウンター席。会話を楽しむテーブル席。少人数のお集まりには半個室もご用意しています。',
+  '店について',
+  '地酒',
+  'お席',
+  'コース',
+  '会津の日本酒を、季節に合わせて入れ替えています。飲み比べ三種もあります。',
+  'カウンター席、テーブル席、半個室があります。',
   '本サイトは架空店舗「炭火と酒 灯」を題材としたWeb制作デモです。実店舗・予約・営業は存在しません。',
   'ご予約について',
   '予約の入力画面を開く',
@@ -81,6 +103,9 @@ const must = [
   '4,000–6,000円',
   '22席（カウンター8／テーブル8／半個室6）',
 ];
+// 削除した詩的な文言が戻っていないこと
+const banned = ['火を囲み', 'SUMIBI', '素材の旨み', '穏やかな時間', '今夜の一杯', '静かな夜', '寄り添', '丁寧', 'ひとときご', '余韻'];
+for (const w of banned) if (flat.includes(w)) ng(`poetic wording remains: ${w}`);
 for (const s of must) if (!flat.includes(s)) ng(`missing text: ${s}`);
 
 // --- 禁止事項 ---

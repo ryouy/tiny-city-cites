@@ -13,25 +13,25 @@ export interface MenuItem {
 }
 
 export const categories: { id: Category; label: string; ja: string }[] = [
-  { id: 'burgers', label: 'BURGERS', ja: 'バーガー' },
-  { id: 'sides', label: 'SIDES', ja: 'サイド' },
-  { id: 'drinks', label: 'DRINKS', ja: 'ドリンク' },
+  { id: 'burgers', label: 'バーガー', ja: 'バーガー' },
+  { id: 'sides', label: 'サイド', ja: 'サイド' },
+  { id: 'drinks', label: 'ドリンク', ja: 'ドリンク' },
 ];
 
 export const burgers: MenuItem[] = [
-  { id: 'classic', name: 'クラシック・スマッシュ', price: 980, desc: '香ばしいパティ、チェダー、レタス、トマト、オリジナルソース', badge: '定番', setEligible: true },
-  { id: 'double', name: 'ダブルチーズ・スタック', price: 1380, desc: 'パティ2枚とチーズ2枚を重ねた看板メニュー', badge: '人気No.1', setEligible: true },
-  { id: 'bacon', name: 'スモーキーベーコン', price: 1280, desc: 'ベーコンとスモーキーなBBQソース', setEligible: true },
-  { id: 'spicy', name: 'ホットチリ・スタック', price: 1250, desc: 'スパイシーソースとハラペーニョの刺激', badge: '辛口', setEligible: true },
-  { id: 'avo', name: 'アボカド・チーズ', price: 1300, desc: 'アボカドのまろやかさと肉の旨み', setEligible: true },
-  { id: 'kids', name: 'キッズバーガープレート', price: 780, desc: '小ぶりのバーガー、ポテト、ジュース', badge: 'お子さま', setEligible: false },
+  { id: 'classic', name: 'クラシック・スマッシュ', price: 980, desc: 'パティ、チェダー、レタス、トマト、オリジナルソース', badge: '定番', setEligible: true },
+  { id: 'double', name: 'ダブルチーズ・スタック', price: 1380, desc: 'パティ2枚、チーズ2枚', badge: '人気No.1', setEligible: true },
+  { id: 'bacon', name: 'スモーキーベーコン', price: 1280, desc: 'ベーコン、BBQソース', setEligible: true },
+  { id: 'spicy', name: 'ホットチリ・スタック', price: 1250, desc: '辛いソース、ハラペーニョ', badge: '辛口', setEligible: true },
+  { id: 'avo', name: 'アボカド・チーズ', price: 1300, desc: 'アボカド入り', setEligible: true },
+  { id: 'kids', name: 'キッズバーガープレート', price: 780, desc: '小さめのバーガー、ポテト、ジュース', badge: 'お子さま', setEligible: false },
 ];
 
 export const sides: MenuItem[] = [
   { id: 'fries', name: 'フライドポテト', price: 350, desc: '細切り、塩味' },
-  { id: 'cheese-fries', name: 'チーズポテト', price: 520, desc: 'チーズソースたっぷり' },
-  { id: 'onion', name: 'オニオンリング', price: 480, desc: 'カリッとした衣' },
-  { id: 'slaw', name: 'コールスロー', price: 300, desc: 'さっぱりした副菜' },
+  { id: 'cheese-fries', name: 'チーズポテト', price: 520, desc: 'チーズソースがけ' },
+  { id: 'onion', name: 'オニオンリング', price: 480, desc: '衣をつけて揚げたもの' },
+  { id: 'slaw', name: 'コールスロー', price: 300, desc: 'キャベツのサラダ' },
 ];
 
 export const drinks: MenuItem[] = [

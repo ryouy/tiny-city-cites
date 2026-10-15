@@ -2,15 +2,14 @@
 
 > 店舗・メニュー・価格・人物・運営情報はすべて創作です(フッターに免責文を1行だけ掲載)。
 
-備長炭の炭火料理と会津の地酒をテーマにした、和モダンな夜の居酒屋の1ページサイトです。仕様書は `../siyosyo/AKARI_Claude_Code.md`。
+備長炭の炭火料理と会津の地酒の店の1ページサイトです。文章は事実中心の短い文にしており、キャッチコピーや英字ラベルは置いていません(仕様書の詩的な文言は意図的に書き換え済み)。仕様書は `../siyosyo/AKARI_Claude_Code.md`。
 
 ## ページ構成（全画面セクション型）
 
 1ページ内を、ほぼ1画面ぶんのセクションで区切っています。順に Hero / 灯について / お品書き（画面内タブで炭火料理・季節の一品・お飲み物を切替）/ 地酒 / コース / お席 / ご予約案内 / 営業情報 + フッター。
 
-- 縦の scroll-snap は `proximity`（`mandatory` ではない）。内容が画面より長いセクションは通常どおりスクロールできます。
-- スナップは「幅900px以上・高さ620px以上・動きの軽減を求めていない」場合のみ有効。スマホや `prefers-reduced-motion` では通常スクロールです（`src/styles/global.css` の冒頭）。
-- 右端（幅1100px以上）の丸いインジケーターは装飾で、キーボード・読み上げ対象外です。現在位置は上部ナビの `aria-current="location"` にも反映されます（`src/components/SectionNav.astro`）。
+- スナップ・フェードイン・右端のインジケーターはありません。現在位置は上部ナビの `aria-current="location"` に反映されます（`src/components/SectionNav.astro`）。
+- 背景は1色、フォントは端末標準のゴシック、価格は通常の文字色です。
 - セクションの並び・ナビの項目は `src/data/site.ts` の `screens` / `nav`。
 
 技術: Astro 7 + TypeScript + 素のCSS の静的サイト（仕様書はNext.js等を推奨していますが、本ワークスペースの他プロジェクトと構成を揃えるため Astro を採用）。Node 22 以上。
@@ -33,7 +32,7 @@ npm run verify    # 仕様書のお品書き・コース表と dist/index.html �
 
 | ファイル | 内容 |
 | --- | --- |
-| `src/data/site.ts` | 店名・コピー・ナビ・営業情報・免責文・予約案内 |
+| `src/data/site.ts` | 店名・紹介文・ナビ・営業情報・免責文・予約案内 |
 | `src/data/menu.ts` | お品書き（炭火料理／季節の一品／お飲み物）。価格は税込の数値。各カテゴリに添える写真と object-position も指定 |
 | `src/data/course.ts` | コース2種（価格・内容・提供条件） |
 | `src/data/reservation.ts` | 予約プレビュー（非送信デモ）の設定: 時間帯、人数、コース条件 |
@@ -73,4 +72,4 @@ BASE_PATH=/demos/akari/ npm run build
 
 `<meta name="robots" content="noindex, nofollow">` と `robots.txt`（Disallow: /）を設定し、LocalBusiness 等の構造化データ・canonical・電話・住所・SNSは設けていません（地図は会津若松市周辺の埋め込み1点のみ）。**公開後も noindex を外さないでください。**
 
-OG画像（`public/og-image.png`）はHero写真に店名を重ねたものをChromeヘッドレスで1200×630に撮影したものです。
+OG画像（`public/og-image.png`）はHero写真に店名のみを重ねたものをChromeヘッドレスで1200×630に撮影したものです。

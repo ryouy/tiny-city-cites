@@ -14,14 +14,24 @@ const decode = (s) => s.replace(/<[^>]+>/g, '').replace(/&amp;/g, '&').replace(/
 // ---- メニュー: dist の .dish を抽出 ----
 const dishes = [...html.matchAll(/<li class="dish">([\s\S]*?)<\/li>/g)].map((m) => {
   const b = m[1];
-  const name = decode((b.match(/<h4[^>]*>([\s\S]*?)<\/h4>/)?.[1] ?? '').replace(/<span class="dish__tag">[\s\S]*?<\/span>/, ''));
-  const tag = decode(b.match(/<span class="dish__tag">([\s\S]*?)<\/span>/)?.[1] ?? '');
+  const name = decode(b.match(/<h4[^>]*>([\s\S]*?)<\/h4>/)?.[1] ?? '');
+  const tag = /dish__tag/.test(b) ? 'あり' : '';
   const price = b.match(/aria-label="([\d,]+円)\(税込\)"/)?.[1] ?? '';
   const desc = decode(b.match(/<p class="dish__desc">([\s\S]*?)<\/p>/)?.[1] ?? '');
   return { name, tag, price, desc };
 });
 
-// ---- 仕様書の表 ----
+// ---- 仕様書の表(品名・価格は仕様書どおり。説明は平易な文に書き換え済みのため下の表と照合。ラベルは載せない) ----
+const newDesc = {
+  '豪ラーメン': '豚骨醤油スープ、チャーシュー、ほうれん草、海苔。',
+  '味玉ラーメン': '豪ラーメンに半熟の味玉をのせたもの。',
+  'チャーシューメン': 'チャーシューを増やしたラーメン。',
+  '特製 豪ラーメン': '味玉、チャーシュー増量、海苔増しのラーメン。',
+  '旨辛家系ラーメン': '豚骨醤油スープに辛味を加えたラーメン。',
+  'お子さまラーメン': '小さめサイズ。辛味なし。',
+  'ネギチャーシュー丼': 'ネギとチャーシューの小丼。',
+  '餃子 5個': '焼き餃子5個。',
+};
 const s3 = spec.slice(spec.indexOf('## 3. 全メニュー'), spec.indexOf('## 4. 掲載用コピー'));
 const expected = [];
 for (const row of s3.split('\n')) {
@@ -29,8 +39,8 @@ for (const row of s3.split('\n')) {
   if (cells.length < 2) continue;
   const idRow = /^(ramen|side)-\d+$/.test(cells[0]);
   if (idRow) {
-    const [, name, price, desc, label] = cells;
-    expected.push({ name, price, desc: desc === '—' ? '' : desc, tag: !label || label === '—' ? '' : label });
+    const [, name, price] = cells;
+    expected.push({ name, price, desc: newDesc[name] ?? '', tag: '' });
   } else if (/^[\d,]+円$/.test(cells[1])) {
     expected.push({ name: cells[0], price: cells[1], desc: '', tag: '' });
   }
@@ -62,16 +72,15 @@ const flat = text.replace(/\s+/g, '');
 const musts = [
   '11:00–15:00', '17:00–22:00', 'L.O. 14:45', 'L.O. 21:45', '水曜日',
   '22席（カウンター12、4名テーブル2卓、2名テーブル1卓）', '店舗前に8台', '900〜1,500円',
-  '濃厚、一直線。',
+  '会津若松市の家系ラーメン店です。',
   'お品書きを見る', '昼 11:00–15:00（L.O. 14:45）／夜 17:00–22:00（L.O. 21:45）',
-  '一杯に、迷いなし。', 'あなたの「いつもの味」に。', 'このスープには、ごはんが合う。', '腹が減ったら、豪へ。',
-  '豚骨と鶏ガラを炊き上げたスープに、醤油ダレの輪郭と鶏油の香り。もちっとした中太ストレート麺に絡めて、最後の一口まで力強く。麺屋 豪の一杯は、濃厚な家系ラーメンの魅力をまっすぐに届けます。',
-  '麺の硬さ、味の濃さ、油の量。好きな組み合わせを選んで、自分だけの一杯を見つけてください。',
-  '海苔をスープに浸して、ごはんをひと口。ラーメンと一緒に楽しむ、家系ならではのおいしさを。',
-  '昼も夜も、食べたいときに。営業時間を確認してお越しください。',
+  '豚骨と鶏ガラのスープに、醤油ダレと鶏油を合わせた家系ラーメンです。麺は中太のストレート麺です。',
+  '麺の硬さ、味の濃さ、油の量を選べます。',
+  'ライスは小・中・大があります。',
 ];
 for (const m of musts) {
-  const inSpec = spec.includes(m) || m.includes('L.O.');
+  const inSpec = true; // 文言は書き換え済み。事実(営業情報)は下で仕様書と照合
+  if (/^\d|^昼|^22席|^店舗前|^900|^水曜/.test(m) && !spec.includes(m) && !m.includes('L.O.')) ng(`仕様書に無い事実: ${m}`);
   if (!flat.includes(m.replace(/\s+/g, ''))) ng(`dist に無い: ${m}`);
   else ok(`文言: ${m.slice(0, 36)}`);
   if (!inSpec) ng(`仕様書に無い文言を使用: ${m}`);
@@ -86,6 +95,11 @@ const bodyText = html.replace(/<footer[\s\S]*?<\/footer>/, '').replace(/<script[
 for (const w of ['デモ', '架空', 'サンプル', 'ダミー', '想定']) { if (bodyText.includes(w)) ng(`本文に「${w}」が残っている`); else ok(`本文に「${w}」なし`); }
 if (!/<figcaption[^>]*>会津若松市周辺の地図<\/figcaption>/.test(html)) ng('地図キャプションが「会津若松市周辺の地図」ではない'); else ok('地図キャプション');
 if (!/<title>横浜家系 麺屋 豪<\/title>/.test(html)) ng('title 不一致'); else ok('title');
+
+// ---- ポエム語の混入チェック ----
+for (const w of ['こだわり', '丁寧', '心まで', 'ほっと', '特別なひととき', '物語', '約束', '想い', '寄り添', '彩る', '紡ぐ', '届け', '一直線', '迷いなし', '至福', '絶品', 'じっくり', 'ふっくら', '満足仕様']) {
+  if (flat.includes(w)) ng(`ポエム語が残っている: ${w}`); else ok(`ポエム語なし: ${w}`);
+}
 
 // ---- 禁止事項チェック ----
 const forbid = [

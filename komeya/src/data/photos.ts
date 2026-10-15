@@ -16,7 +16,7 @@ export interface PhotoDef {
 export const photos: Record<PhotoKey, PhotoDef> = {
   hero: {
     file: 'hero-karaage',
-    alt: 'こめやの唐揚げ定食。揚げたての唐揚げに、ごはんと味噌汁を添えて',
+    alt: 'こめやの唐揚げ定食',
     shoot: '唐揚げ定食の全景。味噌汁とお米、温かい光。',
     width: 1448,
     height: 1086,
@@ -24,7 +24,7 @@ export const photos: Record<PhotoKey, PhotoDef> = {
   },
   katsudon: {
     file: 'sauce-katsudon',
-    alt: '会津ソースカツ丼。厚切りのカツとキャベツがごはんの上に',
+    alt: '会津ソースカツ丼',
     shoot: '会津ソースカツ丼。肉とキャベツの質感。',
     width: 1448,
     height: 1086,
@@ -32,7 +32,7 @@ export const photos: Record<PhotoKey, PhotoDef> = {
   },
   rice: {
     file: 'rice',
-    alt: '羽釜からよそった炊きたてのごはんと立ちのぼる湯気',
+    alt: '羽釜で炊いたごはん',
     shoot: '羽釜からよそった炊きたてごはんと湯気。',
     width: 1448,
     height: 1086,
@@ -40,7 +40,7 @@ export const photos: Record<PhotoKey, PhotoDef> = {
   },
   interior: {
     file: 'interior',
-    alt: '木製のテーブルが並ぶ、小さな定食屋の店内',
+    alt: '店内のテーブル席',
     shoot: '木製テーブルと、小さな定食屋の店内。',
     width: 1448,
     height: 1086,
@@ -56,7 +56,7 @@ export const photos: Record<PhotoKey, PhotoDef> = {
   },
   gingerPork: {
     file: 'ginger-pork',
-    alt: '豚の生姜焼き定食。ごはん・味噌汁・小鉢つき',
+    alt: '豚の生姜焼き定食',
     shoot: '生姜焼き定食。',
     width: 1448,
     height: 1086,

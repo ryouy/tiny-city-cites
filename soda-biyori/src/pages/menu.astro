@@ -37,7 +37,7 @@ import { sodas, sweets, foods, drinks, setNote, menuDisclaimer, menuTaxNote } fr
                     <span class="menu-row__leader" aria-hidden="true"></span>
                     <span class="menu-row__price">{s.price}</span>
                   </span>
-                  <span class="menu-row__desc"><span class="badge">{s.badge}</span>{s.notes.join('／')}</span>
+                  <span class="menu-row__desc">{s.badge && <span class="badge">{s.badge}</span>}{s.notes.join('／')}</span>
                 </span>
               </li>
             ))
@@ -51,7 +51,6 @@ import { sodas, sweets, foods, drinks, setNote, menuDisclaimer, menuTaxNote } fr
         <div class="menu-sec__photo"><Photo name="pudding" ratio="5 / 4" pos="55% 50%" sizes="(min-width: 900px) 520px, 92vw" /></div>
         <div>
           <h2 id="sweets-h" class="h2">スイーツ</h2>
-          <p class="menu-sec__lead"><b>プリンは、ちょっぴり固めがいい。</b>スプーンを入れると、むっちりとした食感。ほろ苦いカラメルと、優しい卵の風味。懐かしい味を、ゆっくりどうぞ。</p>
           <ul class="menu-list">
             {
               sweets.map((s) => (
@@ -76,7 +75,6 @@ import { sodas, sweets, foods, drinks, setNote, menuDisclaimer, menuTaxNote } fr
       <div class="container menu-sec__grid menu-sec__grid--photo menu-sec__grid--rev">
         <div>
           <h2 id="food-h" class="h2">フード</h2>
-          <p class="menu-sec__lead"><b>おなかがすいたら、喫茶ごはん。</b>鉄板ナポリタンにオムライス、厚焼きたまごサンド。見た目も味も、あの頃のわくわくを。</p>
           <ul class="menu-list">
             {
               foods.map((s) => (

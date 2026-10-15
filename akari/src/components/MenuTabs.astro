@@ -38,7 +38,7 @@ import { menu, yen } from '../data/menu';
               <li class="dish">
                 <div class="dish__body">
                   <p class="dish__name">{it.name}</p>
-                  <p class="dish__desc">{it.desc}</p>
+                  {it.desc && <p class="dish__desc">{it.desc}</p>}
                 </div>
                 <p class="dish__price">
                   <span class="sr-only">税込 </span>

@@ -28,12 +28,12 @@ export interface BakedGood {
 }
 
 export const cutCakes: CutCake[] = [
-  { id: 'cake01', name: '季節のショートケーキ', price: 680, desc: '旬の果実と軽やかな生クリームを重ねた定番', allergens: '乳・卵・小麦', photo: 'shortcake' },
-  { id: 'cake02', name: 'タルト・オ・フリュイ', price: 760, desc: '香ばしいタルト生地に季節の果物をたっぷり', allergens: '乳・卵・小麦・アーモンド', photo: 'tart' },
-  { id: 'cake03', name: 'ショコラ・ノワール', price: 720, desc: 'カカオの深い香りとなめらかな口溶け', allergens: '乳・卵・小麦', photo: 'chocolat' },
-  { id: 'cake04', name: 'レアチーズ・シトロン', price: 650, desc: 'レモンの爽やかさが広がる軽やかなチーズケーキ', allergens: '乳・卵・小麦' },
-  { id: 'cake05', name: '和栗のモンブラン', price: 820, desc: '栗の風味を重ねた秋季限定の一皿', allergens: '乳・卵・小麦' },
-  { id: 'cake06', name: 'なめらかプリン', price: 480, desc: '卵とミルクのやさしいコク、ほろ苦いカラメル', allergens: '乳・卵' },
+  { id: 'cake01', name: '季節のショートケーキ', price: 680, desc: '季節の果実と生クリームのショートケーキ', allergens: '乳・卵・小麦', photo: 'shortcake' },
+  { id: 'cake02', name: 'タルト・オ・フリュイ', price: 760, desc: 'タルト生地に季節の果物をのせたタルト', allergens: '乳・卵・小麦・アーモンド', photo: 'tart' },
+  { id: 'cake03', name: 'ショコラ・ノワール', price: 720, desc: 'チョコレートのケーキ', allergens: '乳・卵・小麦', photo: 'chocolat' },
+  { id: 'cake04', name: 'レアチーズ・シトロン', price: 650, desc: 'レモン風味のレアチーズケーキ', allergens: '乳・卵・小麦' },
+  { id: 'cake05', name: '和栗のモンブラン', price: 820, desc: '和栗のクリームをのせたモンブラン。秋季限定', allergens: '乳・卵・小麦' },
+  { id: 'cake06', name: 'なめらかプリン', price: 480, desc: '卵と牛乳のプリン。カラメル付き', allergens: '乳・卵' },
 ];
 
 export const wholeCakes: WholeCake[] = [
@@ -52,11 +52,11 @@ export const wholeGroups: { key: WholeCake['group']; name: string }[] = [
 ];
 
 export const bakedGoods: BakedGood[] = [
-  { id: 'bake01', name: '焦がしバターフィナンシェ', price: 280, desc: 'バターとアーモンドの芳ばしい余韻' },
-  { id: 'bake02', name: '発酵バターサブレ', price: 240, desc: 'さくっと軽やかな口当たり' },
-  { id: 'bake03', name: '季節のパウンドケーキ', price: 360, desc: '果実とスパイスの季節の香り' },
-  { id: 'bake04', name: '焼き菓子ギフト6点', price: 1850, desc: '手土産やちょっとした贈りものに' },
-  { id: 'bake05', name: '焼き菓子ギフト10点', price: 3100, desc: '大切な人への贈りものに' },
+  { id: 'bake01', name: '焦がしバターフィナンシェ', price: 280, desc: 'バターとアーモンドの焼き菓子' },
+  { id: 'bake02', name: '発酵バターサブレ', price: 240, desc: '発酵バターを使ったサブレ' },
+  { id: 'bake03', name: '季節のパウンドケーキ', price: 360, desc: '果実とスパイス入りのパウンドケーキ' },
+  { id: 'bake04', name: '焼き菓子ギフト6点', price: 1850, desc: '焼き菓子6点の詰め合わせ' },
+  { id: 'bake05', name: '焼き菓子ギフト10点', price: 3100, desc: '焼き菓子10点の詰め合わせ' },
 ];
 
 /** 税込価格の表記を統一(例: 1,850円) */

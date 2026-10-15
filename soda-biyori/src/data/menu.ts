@@ -27,10 +27,10 @@ export interface Soda {
 }
 
 export const sodas: Soda[] = [
-  { id: 'soda-01', name: 'メロンクリームソーダ', price: '680円', notes: ['鮮やかな緑', 'バニラアイス', 'チェリー'], badge: '定番', color: '#2ea84a', colorName: 'メロン', photo: 'melon' },
-  { id: 'soda-02', name: 'いちごクリームソーダ', price: '720円', notes: ['ピンク', '甘酸っぱいいちご'], badge: '人気', color: '#e8607a', colorName: 'いちご', photo: 'ichigo' },
-  { id: 'soda-03', name: '青空クリームソーダ', price: '720円', notes: ['ブルー', '爽やかなシトラス風味'], badge: '写真映え', color: '#2a8fe0', colorName: '青空', photo: 'aozora' },
-  { id: 'soda-04', name: 'ゆうやけクリームソーダ', price: '750円', notes: ['オレンジ', '柑橘系ソーダ'], badge: 'おすすめ', color: '#f08a1c', colorName: 'ゆうやけ', photo: 'yuyake' },
+  { id: 'soda-01', name: 'メロンクリームソーダ', price: '680円', notes: ['緑', 'バニラアイス', 'チェリー'], badge: '', color: '#2ea84a', colorName: 'メロン', photo: 'melon' },
+  { id: 'soda-02', name: 'いちごクリームソーダ', price: '720円', notes: ['ピンク', 'いちご味'], badge: '', color: '#e8607a', colorName: 'いちご', photo: 'ichigo' },
+  { id: 'soda-03', name: '青空クリームソーダ', price: '720円', notes: ['ブルー', 'シトラス風味'], badge: '', color: '#2a8fe0', colorName: '青空', photo: 'aozora' },
+  { id: 'soda-04', name: 'ゆうやけクリームソーダ', price: '750円', notes: ['オレンジ', '柑橘系ソーダ'], badge: '', color: '#f08a1c', colorName: 'ゆうやけ', photo: 'yuyake' },
   { id: 'soda-05', name: '季節のクリームソーダ', price: '780円', notes: ['季節で色・味が変わる'], badge: '期間限定', color: '#a58bd6', colorName: '季節', photo: 'kisetsu' },
 ];
 
@@ -43,19 +43,19 @@ export interface Item {
 }
 
 export const sweets: Item[] = [
-  { id: 'sweet-01', name: '昔ながらの固めプリン', price: '580円', desc: '卵の風味とほろ苦カラメル、ホイップとチェリー付き' },
-  { id: 'sweet-02', name: 'プリン・ア・ラ・モード', price: '980円', desc: 'プリンにフルーツとアイスを盛り付け' },
+  { id: 'sweet-01', name: '昔ながらの固めプリン', price: '580円', desc: '卵のプリン。カラメル、ホイップ、チェリー付き' },
+  { id: 'sweet-02', name: 'プリン・ア・ラ・モード', price: '980円', desc: 'プリンにフルーツとアイスを添えたもの' },
   { id: 'sweet-03', name: '季節のショートケーキ', price: '650円', desc: '季節の果物を使ったケーキ' },
   { id: 'sweet-04', name: 'チョコレートパフェ', price: '880円', desc: 'チョコアイスとバナナ、ホイップ' },
   { id: 'sweet-05', name: 'クリームあんみつ', price: '750円', desc: 'あんこ・寒天・黒蜜・アイス' },
 ];
 
 export const foods: Item[] = [
-  { id: 'food-01', name: '鉄板ナポリタン', price: '1,080円', desc: '熱々の鉄板に、もちもち麺とトマトソース' },
-  { id: 'food-02', name: '厚焼きたまごサンド', price: '880円', desc: 'ふんわり厚焼き玉子とトースト' },
-  { id: 'food-03', name: '喫茶店のオムライス', price: '1,180円', desc: 'ケチャップライス、ふんわり卵' },
-  { id: 'food-04', name: 'ピザトースト', price: '780円', desc: 'チーズと野菜をのせて焼き上げ' },
-  { id: 'food-05', name: '懐かしのホットケーキ', price: '850円', desc: 'バターとメープル風シロップの2枚重ね' },
+  { id: 'food-01', name: '鉄板ナポリタン', price: '1,080円', desc: 'トマトソースの麺を鉄板にのせて提供' },
+  { id: 'food-02', name: '厚焼きたまごサンド', price: '880円', desc: '厚焼き玉子とトースト' },
+  { id: 'food-03', name: '喫茶店のオムライス', price: '1,180円', desc: 'ケチャップライスに卵をのせたオムライス' },
+  { id: 'food-04', name: 'ピザトースト', price: '780円', desc: 'チーズと野菜をのせたトースト' },
+  { id: 'food-05', name: '懐かしのホットケーキ', price: '850円', desc: 'ホットケーキ2枚。バターとメープル風シロップ付き' },
 ];
 
 export const drinks: { name: string; price: string }[] = [

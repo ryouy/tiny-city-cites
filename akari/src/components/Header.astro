@@ -5,11 +5,7 @@ import { site } from '../data/site';
 <div class="site-top" data-site-top>
   <header class="site-header">
     <a class="logo" href="#top" aria-label={`${site.name} トップへ`}>
-      <span class="logo__mark" aria-hidden="true">灯</span>
-      <span class="logo__text">
-        <span class="logo__name">{site.name}</span>
-        <span class="logo__en" aria-hidden="true">{site.nameEn}</span>
-      </span>
+      <span class="logo__name">{site.name}</span>
     </a>
     <a class="reserve-link" href={site.reserveCta.href}>{site.reserveCta.label}</a>
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">

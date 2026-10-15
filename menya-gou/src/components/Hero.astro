@@ -4,16 +4,16 @@ import { site, info } from '../data/site';
 ---
 
 <section class="hero" id="top" aria-labelledby="hero-title">
-  <div class="hero__media">
-    <Photo name="hero" priority ratio="6 / 5" ratioWide="4 / 3" sizes="(min-width: 800px) 60vw, 100vw" class="hero__img" pos="50% 62%" />
-  </div>
-  <div class="hero__body">
-    <p class="hero__copy">{site.copy}</p>
-    <h1 id="hero-title" class="hero__title">{site.name}</h1>
-    <ul class="hero__hours" aria-label="営業時間">
-      {info.hours.map((h) => <li><b>{h.label}</b> {h.time}</li>)}
-      <li><b>休</b> {info.holiday}</li>
-    </ul>
-    <a class="btn btn--red" href="#menu">お品書きを見る</a>
+  <div class="container hero__grid">
+    <div class="hero__body">
+      <h1 id="hero-title" class="hero__title">{site.name}</h1>
+      <p class="hero__copy">{site.copy}</p>
+      <dl class="hero__hours" aria-label="営業時間">
+        {info.hours.map((h) => <div><dt>{h.label}</dt><dd>{h.time}</dd></div>)}
+        <div><dt>休</dt><dd>{info.holiday}</dd></div>
+      </dl>
+      <a class="link" href="#menu">お品書きを見る</a>
+    </div>
+    <Photo name="hero" priority ratio="4 / 3" sizes="(min-width: 800px) 55vw, 100vw" class="hero__img" pos="50% 50%" />
   </div>
 </section>

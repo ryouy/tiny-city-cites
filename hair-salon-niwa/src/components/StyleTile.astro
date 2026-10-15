@@ -1,6 +1,6 @@
 ---
 import Photo from './Photo.astro';
-import type { HairStyle } from '../data/styles';
+import { categoryLabel, type HairStyle } from '../data/styles';
 interface Props { style: HairStyle; href?: string; ratio?: string; sizes?: string; asButton?: boolean }
 const { style, href, ratio = '3 / 4', sizes = '(min-width: 900px) 33vw, 50vw', asButton = false } = Astro.props;
 ---
@@ -9,13 +9,13 @@ const { style, href, ratio = '3 / 4', sizes = '(min-width: 900px) 33vw, 50vw', a
   asButton ? (
     <button class="tile" type="button" data-style={style.id} aria-haspopup="dialog">
       <Photo name={style.photo} {ratio} {sizes} position="50% 30%" />
-      <span class="tile__cat">{style.category}</span>
+      <span class="tile__cat">{categoryLabel[style.category]}</span>
       <span class="tile__name">{style.name}</span>
     </button>
   ) : (
     <a class="tile" href={href}>
       <Photo name={style.photo} {ratio} {sizes} position="50% 30%" />
-      <span class="tile__cat">{style.category}</span>
+      <span class="tile__cat">{categoryLabel[style.category]}</span>
       <span class="tile__name">{style.name}</span>
     </a>
   )

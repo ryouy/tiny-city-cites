@@ -37,8 +37,16 @@ const near = (L, name, words) => {
 };
 
 // 1) 商品マスター(§4)
+// 商品説明は事実のみの短文に書き換え済み(仕様書の説明文とは異なる)。名前・価格・サイズ・備考は仕様書と照合する。
+const descs = {
+  cake01: '季節の果実と生クリームのショートケーキ', cake02: 'タルト生地に季節の果物をのせたタルト', cake03: 'チョコレートのケーキ',
+  cake04: 'レモン風味のレアチーズケーキ', cake05: '和栗のクリームをのせたモンブラン。秋季限定', cake06: '卵と牛乳のプリン。カラメル付き',
+  bake01: 'バターとアーモンドの焼き菓子', bake02: '発酵バターを使ったサブレ', bake03: '果実とスパイス入りのパウンドケーキ',
+  bake04: '焼き菓子6点の詰め合わせ', bake05: '焼き菓子10点の詰め合わせ',
+};
 const cut = rows(section('### Cut Cakes', '### Whole Cakes'), /^cake\d+$/);
-for (const [, , name, price, desc] of cut) {
+for (const [, id, name, price] of cut) {
+  const desc = descs[id];
   count++;
   if (!near(lines.menu, name, [price, desc])) ng(`menu cut: ${name} ${price}`); else console.log(`OK: ${name} ${price}`);
 }
@@ -49,24 +57,21 @@ for (const [, , name, size, price, note] of whole) {
   if (!lines.order.includes(price)) ng(`order whole price: ${name} ${price}`);
 }
 const baked = rows(section('### Baked Goods', '*アレルゲンは'), /^bake\d+$/);
-for (const [, , name, price, desc] of baked) {
+for (const [, id, name, price] of baked) {
+  const desc = descs[id];
   count++;
   if (!near(lines.menu, name, [price, desc])) ng(`menu baked: ${name} ${price}`); else console.log(`OK: ${name} ${price}`);
 }
 if (cut.length !== 6 || whole.length !== 6 || baked.length !== 5) ng(`商品数が仕様書と異なる: ${cut.length}/${whole.length}/${baked.length}`);
 // 代表3点(トップ)
-for (const r of cut.slice(0, 3)) if (!near(lines.home, r[2], [r[3], r[4]])) ng(`home featured: ${r[2]}`);
+for (const r of cut.slice(0, 3)) if (!near(lines.home, r[2], [r[3], descs[r[1]]])) ng(`home featured: ${r[2]}`);
 
 // 2) 営業情報・固定文言(§2, §3, §8)
 const musts = {
   home: [
-    'ケーキを見る', 'ホールケーキのご案内', '小さな幸せを、ひとつずつ。',
-    '季節の果実と、丁寧に重ねるおいしさ。日常にも、特別な日にも寄り添う小さな洋菓子店。',
-    '旬の果実の香り、なめらかなクリーム、焼きたてのお菓子。PÂTISSERIE LUNEでは、素材の持ち味を大切にしながら、ひとつひとつ丁寧にお作りしています。大切な人への贈りものにも、今日の自分へのごほうびにも。',
-    'ひと口から、しあわせな時間へ。',
-    'お誕生日や記念日に合わせて、ホールケーキをご用意しています。サイズやデコレーションをお選びいただき、受取希望日の3営業日前までにご相談ください。',
-    '特別な日に、あなただけのケーキを。', '想いを包む、焼き菓子。', '素材の風味が広がるフィナンシェやサブレを、贈りものに。ひとつから、詰め合わせまで。',
-    '10:00–18:00', '火曜日・水曜日は定休日です。', '商品売切れ時は早仕舞いの場合があります。',
+    '会津若松市の洋菓子店です。', 'カットケーキ、ホールケーキ、焼き菓子を販売しています。テイクアウト専門です。',
+    '店主がパティスリーで経験を積み、2022年10月に会津で開業しました。旬の果物を使ったケーキと、甘さを抑えた焼き菓子を作っています。',
+    '10:00–18:00', '火曜日・水曜日',
   ],
   about: [
     '10:00〜18:00', '火曜日・水曜日', 'テイクアウトあり', 'イートインはありません', '3台', 'カットケーキ500〜850円', 'ギフト1,000円〜',
@@ -80,7 +85,6 @@ for (const [pg, arr] of Object.entries(musts)) for (const m of arr) {
   const all = lines[pg].join('\n');
   if (!all.includes(m) && !lines[pg].join('').includes(m.replace(/\s/g, ''))) ng(`missing on ${pg}: ${m}`);
 }
-if (!/A LITTLE[\s\S]{0,40}MOMENT[\s\S]{0,40}OF JOY\./.test(raw.home.replace(/<[^>]+>/g, ' '))) ng('hero english text (A LITTLE MOMENT OF JOY.)');
 // 営業時間は仕様書の表と一致
 if (!spec.includes('10:00〜18:00（商品売切れ時は早仕舞いの場合あり）') || !spec.includes('火曜日・水曜日')) ng('spec hours changed?');
 
@@ -120,6 +124,8 @@ if (iframeTotal !== 1) ng(`iframe は Google マップ埋め込み1点のみ許�
 
 // 4) 価格は全て「N円」表記(カンマ区切り)
 for (const [pg, L] of Object.entries(lines)) for (const l of L) if (/^\d{4,}円$/.test(l)) ng(`${pg}: カンマなしの価格 ${l}`);
+
+for (const [pg, L] of Object.entries(lines)) for (const l of L) if (/こだわり|丁寧|心まで|ほっと|そっと|特別なひととき|物語|約束|想い|寄り添|彩る|紡ぐ|届け|ひとつずつ|しあわせ|ごほうび|ふっくら|とろけ|A LITTLE/.test(l)) ng(`${pg}: 情緒語が残っている: ${l}`);
 
 console.log(`\n${count} products checked, ${fail} failures`);
 process.exit(fail ? 1 : 0);
