@@ -37,7 +37,7 @@ import { sodas } from '../data/menu';
             <div class="soda__info">
               <p class="badge">{s.badge}</p>
               <h3 id={`${s.id}-name`} class="soda__name">{s.name}</h3>
-              <p class="soda__price"><span class="serif">{s.price}</span><small>（税込）</small></p>
+              <p class="soda__price">{s.price}<small>（税込）</small></p>
               <ul class="soda__notes">
                 {s.notes.map((n) => <li>{n}</li>)}
               </ul>

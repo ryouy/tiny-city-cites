@@ -16,7 +16,7 @@ const shots: { k: PhotoKey; ratio: string; sq?: boolean }[] = [
   <div class="container">
     <h2 id="gallery-title" class="h2">ギャラリー</h2>
     <div class="snaps">
-      {shots.map((s) => <figure class={s.sq ? 'snap snap--sq' : 'snap'}><Photo name={s.k} ratio={s.ratio} sizes="(min-width: 900px) 360px, 46vw" /></figure>)}
+      {shots.map((s) => <figure class={`snap snap--${s.sq ? 'sq' : s.ratio.startsWith('1122') ? 'tall' : 'wide'}`}><Photo name={s.k} ratio={s.ratio} sizes="(min-width: 900px) 360px, 46vw" /></figure>)}
     </div>
   </div>
 </section>

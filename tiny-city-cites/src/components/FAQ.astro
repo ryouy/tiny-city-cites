@@ -1,6 +1,10 @@
 ---
 const faqs = [
   {
+    q: '学生さんに頼んで大丈夫ですか?',
+    a: '個人で制作しているため、やり取りは直接行います。学びながら取り組んでいる分、料金は抑えめです。公開前には必ず内容をご確認いただきます。',
+  },
+  {
     q: 'ホームページの知識がなくても依頼できますか？',
     a: 'はい。掲載する情報や必要なページ構成など、ご相談しながら進めます。',
   },
@@ -23,17 +27,15 @@ const faqs = [
 ];
 ---
 
-<section class="section section--white" id="faq" aria-labelledby="faq-title">
-  <div class="container split">
-    <div class="reveal">
-      <h2 class="heading" id="faq-title">よくあるご質問</h2>
-    </div>
-    <div class="faq reveal">
+<section class="section" id="faq" aria-labelledby="faq-title">
+  <div class="container">
+    <h2 id="faq-title">よくあるご質問</h2>
+    <div class="faq">
       {
         faqs.map((f) => (
           <details>
             <summary>{f.q}</summary>
-            <p class="faq__a">{f.a}</p>
+            <p>{f.a}</p>
           </details>
         ))
       }

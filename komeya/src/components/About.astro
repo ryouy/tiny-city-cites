@@ -5,15 +5,17 @@ import Photo from './Photo.astro';
 
 <section class="about" id="about" aria-labelledby="about-title">
   <div class="container about__grid">
-    <div class="about__photos">
-      <Photo name="rice" ratio="1 / 1" position="40% 50%" sizes="(min-width: 900px) 260px, 50vw" />
-      <Photo name="interior" ratio="1 / 1" position="35% 50%" sizes="(min-width: 900px) 260px, 50vw" />
-    </div>
     <div class="about__text">
       <h2 id="about-title" class="h2">{stories.about.heading}</h2>
       <p>{stories.about.body}</p>
-      <p><b>{stories.rice.heading}</b>{stories.rice.body}</p>
-      <p><b>{stories.family.heading}</b>{stories.family.body}</p>
+      <h3 class="h3">{stories.rice.heading}</h3>
+      <p>{stories.rice.body}</p>
+      <h3 class="h3">{stories.family.heading}</h3>
+      <p>{stories.family.body}</p>
+    </div>
+    <div class="about__photos">
+      <Photo name="rice" ratio="4 / 3" sizes="(min-width: 900px) 440px, 100vw" />
+      <Photo name="interior" ratio="4 / 3" sizes="(min-width: 900px) 440px, 100vw" />
     </div>
   </div>
 </section>

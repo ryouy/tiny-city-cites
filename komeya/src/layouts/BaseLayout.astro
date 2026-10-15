@@ -17,7 +17,7 @@ const { title = site.title, description = site.description } = Astro.props;
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="robots" content="noindex,nofollow" />
-    <meta name="theme-color" content="#A34331" />
+    <meta name="theme-color" content="#F4EBD5" />
     <link rel="icon" href={`${import.meta.env.BASE_URL}favicon.svg`} type="image/svg+xml" />
 
     <meta property="og:type" content="website" />
@@ -30,62 +30,9 @@ const { title = site.title, description = site.description } = Astro.props;
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500;700&display=swap"
-    />
-    <script is:inline>
-      document.documentElement.classList.add('js');
-    </script>
   </head>
   <body>
     <a class="skip-link" href="#main">本文へスキップ</a>
     <slot />
-    <script>
-      const header = document.querySelector<HTMLElement>('.site-header');
-      const toggle = document.querySelector<HTMLButtonElement>('.nav-toggle');
-      const nav = document.getElementById('site-nav');
-      const desktop = window.matchMedia('(min-width: 900px)');
-
-      const setOpen = (open: boolean, returnFocus = false) => {
-        if (!toggle || !nav) return;
-        toggle.setAttribute('aria-expanded', String(open));
-        nav.classList.toggle('is-open', open);
-        if (!open && returnFocus) toggle.focus();
-      };
-
-      toggle?.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
-      nav?.addEventListener('click', (e) => {
-        if ((e.target as HTMLElement).closest('a')) setOpen(false);
-      });
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && toggle?.getAttribute('aria-expanded') === 'true') setOpen(false, true);
-      });
-      document.addEventListener('click', (e) => {
-        if (toggle?.getAttribute('aria-expanded') === 'true' && header && !header.contains(e.target as Node)) setOpen(false);
-      });
-      desktop.addEventListener('change', () => setOpen(false));
-
-      // スクロール表示(最小限)
-      const items = document.querySelectorAll<HTMLElement>('.reveal');
-      if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        items.forEach((el) => el.classList.add('is-in'));
-      } else {
-        const io = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((en) => {
-              if (en.isIntersecting) {
-                en.target.classList.add('is-in');
-                io.unobserve(en.target);
-              }
-            });
-          },
-          { rootMargin: '0px 0px -8% 0px' },
-        );
-        items.forEach((el) => io.observe(el));
-      }
-    </script>
   </body>
 </html>

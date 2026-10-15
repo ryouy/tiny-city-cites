@@ -4,26 +4,22 @@ import Photo from './Photo.astro';
 ---
 
 <section class="hero" id="top" aria-labelledby="hero-title">
-  <div class="container hero__grid">
+  <div class="hero__photo">
+    <Photo name="noren" priority ratio="16 / 9" position="50% 40%" sizes="100vw" />
+  </div>
+  <div class="container hero__body">
     <div class="hero__copy">
       <h1 id="hero-title">{site.catchcopy}</h1>
       <p class="hero__lead">{site.lead}</p>
-
-      <div class="hero__hours" aria-label="営業時間">
-        <p><b>昼</b> {site.hours[0].open}–{site.hours[0].close}</p>
-        <p><b>夜</b> {site.hours[1].open}–{site.hours[1].close}</p>
-        <p class="hero__off"><b>休</b> 日曜</p>
-      </div>
-      <p class="hero__lo">L.O. 昼 {site.hours[0].lastOrder} / 夜 {site.hours[1].lastOrder}</p>
-
-      <div class="hero__cta">
+      <p class="hero__cta">
         <a class="btn btn--primary" href="#menu">お品書きを見る</a>
-        <a class="btn btn--ghost" href="#info">店舗案内</a>
-      </div>
+        <a class="btn" href="#hours">営業時間を見る</a>
+      </p>
     </div>
-
-    <div class="hero__photo">
-      <Photo name="noren" priority ratio="16 / 10" position="50% 45%" sizes="(min-width: 900px) 560px, 100vw" />
-    </div>
+    <dl class="board" aria-label="営業時間">
+      <div><dt>昼</dt><dd>{site.hours[0].open}–{site.hours[0].close}<small>L.O. {site.hours[0].lastOrder}</small></dd></div>
+      <div><dt>夜</dt><dd>{site.hours[1].open}–{site.hours[1].close}<small>L.O. {site.hours[1].lastOrder}</small></dd></div>
+      <div><dt>休</dt><dd>日曜<small>毎週</small></dd></div>
+    </dl>
   </div>
 </section>

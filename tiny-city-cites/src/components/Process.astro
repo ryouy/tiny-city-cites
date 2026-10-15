@@ -1,40 +1,21 @@
 ---
 const steps = [
-  {
-    no: '01',
-    title: 'ご相談',
-    desc: 'お店の状況やホームページに掲載したい情報、ご希望を伺います。',
-  },
-  {
-    no: '02',
-    title: '構成・デザイン',
-    desc: '必要な情報を整理し、お店に合ったデザインをご提案します。',
-  },
-  {
-    no: '03',
-    title: '制作・確認',
-    desc: 'ホームページを制作し、内容をご確認いただきながら調整します。',
-  },
-  {
-    no: '04',
-    title: '公開・運用',
-    desc: '最終確認後に公開し、ご希望に応じて更新・保守をサポートします。',
-  },
+  { title: 'ご相談', desc: 'お店の状況や、載せたい情報、ご希望を伺います。' },
+  { title: '構成・デザイン', desc: '必要な情報を整理して、デザインをご提案します。' },
+  { title: '制作・確認', desc: '内容をご確認いただきながら、調整して仕上げます。' },
+  { title: '公開・運用', desc: '最終確認後に公開します。更新や保守もご相談ください。' },
 ];
 ---
 
-<section class="section section--white" id="flow" aria-labelledby="flow-title">
+<section class="section" id="flow" aria-labelledby="flow-title">
   <div class="container">
-    <div class="section-head reveal">
-      <h2 class="heading" id="flow-title">ご相談から公開まで。</h2>
-    </div>
-    <ol class="steps reveal">
+    <h2 id="flow-title">ご依頼の流れ</h2>
+    <ol class="steps">
       {
         steps.map((s) => (
-          <li class="step">
-            <span class="step__no" aria-hidden="true">{s.no}</span>
-            <h3 class="step__title">{s.title}</h3>
-            <p class="step__desc">{s.desc}</p>
+          <li>
+            <h3>{s.title}</h3>
+            <p>{s.desc}</p>
           </li>
         ))
       }

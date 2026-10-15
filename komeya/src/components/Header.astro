@@ -4,17 +4,8 @@ import { site, nav } from '../data/site';
 
 <header class="site-header">
   <div class="container site-header__inner">
-    <a class="brand" href="#top" aria-label={`${site.name} ページ上部へ`}>
-      <span class="seal" aria-hidden="true">米</span>
-      <span class="brand__name"><small>お食事処</small>こめや</span>
-    </a>
-
-    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
-      <span class="nav-toggle__bars" aria-hidden="true"></span>
-      <span class="nav-toggle__label">メニュー</span>
-    </button>
-
-    <nav class="site-nav" id="site-nav" aria-label="メインナビゲーション">
+    <a class="brand" href="#top" aria-label={`${site.name} ページ上部へ`}>お食事処 <b>こめや</b></a>
+    <nav class="site-nav" aria-label="メインナビゲーション">
       <ul>
         {nav.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
       </ul>

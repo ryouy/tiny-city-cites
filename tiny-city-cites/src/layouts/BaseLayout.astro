@@ -20,7 +20,7 @@ const ogImage = `${base}/og-image.png`;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#243D35" />
+    <meta name="theme-color" content="#ffffff" />
     {canonical && <link rel="canonical" href={canonical} />}
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
@@ -36,74 +36,9 @@ const ogImage = `${base}/og-image.png`;
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Manrope:wght@400;500;600&family=Noto+Sans+JP:wght@400;500&display=swap"
-    />
-
-    <script is:inline>
-      document.documentElement.classList.add('js');
-    </script>
   </head>
   <body>
     <a class="skip-link" href="#main">本文へスキップ</a>
     <slot />
-    <script>
-      // ヘッダー: ヒーロー上では透過、スクロール後は背景色つき
-      const header = document.querySelector<HTMLElement>('.site-header');
-      const hero = document.querySelector<HTMLElement>('.hero');
-      const toggle = document.querySelector<HTMLButtonElement>('.nav-toggle');
-      const nav = document.getElementById('site-nav');
-
-      const setOnHero = () => {
-        if (!header || !hero) return;
-        const limit = hero.offsetHeight - header.offsetHeight;
-        header.classList.toggle('on-hero', window.scrollY < limit);
-      };
-      if (header && hero) {
-        setOnHero();
-        window.addEventListener('scroll', setOnHero, { passive: true });
-        window.addEventListener('resize', setOnHero);
-      }
-
-      // モバイルメニュー
-      const setMenu = (open: boolean) => {
-        if (!toggle || !header) return;
-        toggle.setAttribute('aria-expanded', String(open));
-        toggle.querySelector('.nav-toggle-label')!.textContent = open ? '閉じる' : 'メニュー';
-        header.classList.toggle('menu-open', open);
-      };
-      toggle?.addEventListener('click', () =>
-        setMenu(toggle.getAttribute('aria-expanded') !== 'true'),
-      );
-      nav?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && toggle?.getAttribute('aria-expanded') === 'true') {
-          setMenu(false);
-          toggle.focus();
-        }
-      });
-
-      // スクロール時の控えめなフェードイン
-      const items = document.querySelectorAll<HTMLElement>('.reveal');
-      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (reduce || !('IntersectionObserver' in window)) {
-        items.forEach((el) => el.classList.add('is-in'));
-      } else {
-        const io = new IntersectionObserver(
-          (entries) =>
-            entries.forEach((en) => {
-              if (en.isIntersecting) {
-                en.target.classList.add('is-in');
-                io.unobserve(en.target);
-              }
-            }),
-          { rootMargin: '0px 0px -8% 0px', threshold: 0.05 },
-        );
-        items.forEach((el) => io.observe(el));
-      }
-    </script>
   </body>
 </html>

@@ -11,11 +11,10 @@ import Photo from './Photo.astro';
         signatures.map((s) => {
           const item = findItem(s.menuName);
           return (
-            <li class="sig reveal">
-              <Photo name={s.photo} ratio="1 / 1" position="50% 55%" sizes="(min-width: 900px) 540px, 42vw" />
+            <li class="sig">
+              <Photo name={s.photo} ratio="4 / 3" sizes="(min-width: 900px) 520px, 100vw" />
               <div class="sig__body">
-                <h3 class="sig__name">{item.name}</h3>
-                <p class="sig__price">{yen(item.price)}<small>税込</small></p>
+                <h3 class="sig__name">{item.name}<span class="sig__price">{yen(item.price)}<small>税込</small></span></h3>
                 <p>{s.copy}</p>
               </div>
             </li>

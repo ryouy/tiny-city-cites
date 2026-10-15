@@ -6,21 +6,23 @@ import Photo from './Photo.astro';
 
 <section class="takeaway" id="takeaway" aria-labelledby="takeaway-title">
   <div class="container takeaway__grid">
+    <Photo name="gingerPork" ratio="4 / 3" sizes="(min-width: 900px) 480px, 100vw" />
     <div>
       <h2 id="takeaway-title" class="h2">{stories.takeaway.heading}</h2>
-      <p class="takeaway__body">{stories.takeaway.body}</p>
-      <ul class="bento">
+      <p>{stories.takeaway.body}</p>
+      <ul class="dishes bento">
         {
           takeout.map((i) => (
-            <li class="bento__row">
-              <span class="bento__name">{i.name}</span>
-              <span class="bento__price">{yen(i.price)}</span>
+            <li class="dish">
+              <div class="dish__head">
+                <span class="dish__name">{i.name}</span>
+                <span class="dish__price">{yen(i.price)}</span>
+              </div>
             </li>
           ))
         }
       </ul>
       <p class="takeaway__note">価格は税込です。お持ち帰り: {site.takeout}</p>
     </div>
-    <Photo name="gingerPork" ratio="2 / 1" position="50% 62%" sizes="(min-width: 900px) 520px, 100vw" />
   </div>
 </section>

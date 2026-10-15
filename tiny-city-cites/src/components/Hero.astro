@@ -5,31 +5,21 @@ const external = Boolean(site.contact.instagramUrl);
 ---
 
 <section class="hero" id="top" aria-labelledby="hero-title">
-  <div class="container hero__main">
-    <p class="label">WEB DESIGN STUDIO / AIZU, JAPAN</p>
-    <h1 class="hero__title" id="hero-title">
-      <span class="nowrap">小さなお店に、</span><br />
-      <span class="nowrap">ちょうどいいWebを。</span>
+  <div class="container">
+    <h1 id="hero-title">
+      <span class="nowrap">小さなお店に、</span><span class="nowrap">ちょうどいいWebを。</span>
     </h1>
-    <div class="hero__lead">
-      <strong>{site.subtagline}</strong>
-      <p>
-        <span>飲食店や個人商店に向けて、見やすく、使いやすいホームページを制作しています。</span>
-      </p>
-    </div>
-    <div class="hero__actions">
+    <p class="hero__lead">
+      飲食店や個人商店のホームページを作っています。会津大学の学生が勉強しながら取り組んでいるので、料金は抑えめです。
+    </p>
+    <p class="hero__actions">
       <a
-        class="btn btn--light"
+        class="btn"
         href={cta}
         target={external ? '_blank' : undefined}
-        rel={external ? 'noopener noreferrer' : undefined}>制作について相談する</a
+        rel={external ? 'noopener noreferrer' : undefined}>Instagramで相談する</a
       >
-      <a class="link-arrow" href="#works">制作事例を見る →</a>
-    </div>
-  </div>
-  <div class="hero__foot">
-    <div class="container">
-      <a class="hero__more" href="#works">制作事例を見る<span aria-hidden="true"> ↓</span></a>
-    </div>
+      <a class="textlink" href="#works">制作事例を見る</a>
+    </p>
   </div>
 </section>

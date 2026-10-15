@@ -27,11 +27,11 @@ export interface Soda {
 }
 
 export const sodas: Soda[] = [
-  { id: 'soda-01', name: 'メロンクリームソーダ', price: '680円', notes: ['鮮やかな緑', 'バニラアイス', 'チェリー'], badge: '定番', color: '#9FDDBB', colorName: 'メロン', photo: 'melon' },
-  { id: 'soda-02', name: 'いちごクリームソーダ', price: '720円', notes: ['ピンク', '甘酸っぱいいちご'], badge: '人気', color: '#F6AFC0', colorName: 'いちご', photo: 'ichigo' },
-  { id: 'soda-03', name: '青空クリームソーダ', price: '720円', notes: ['ブルー', '爽やかなシトラス風味'], badge: '写真映え', color: '#8CD2E8', colorName: '青空', photo: 'aozora' },
-  { id: 'soda-04', name: 'ゆうやけクリームソーダ', price: '750円', notes: ['オレンジ', '柑橘系ソーダ'], badge: 'おすすめ', color: '#F7BA73', colorName: 'ゆうやけ', photo: 'yuyake' },
-  { id: 'soda-05', name: '季節のクリームソーダ', price: '780円', notes: ['季節で色・味が変わる'], badge: '期間限定', color: '#D8CCF0', colorName: '季節', photo: 'kisetsu' },
+  { id: 'soda-01', name: 'メロンクリームソーダ', price: '680円', notes: ['鮮やかな緑', 'バニラアイス', 'チェリー'], badge: '定番', color: '#2ea84a', colorName: 'メロン', photo: 'melon' },
+  { id: 'soda-02', name: 'いちごクリームソーダ', price: '720円', notes: ['ピンク', '甘酸っぱいいちご'], badge: '人気', color: '#e8607a', colorName: 'いちご', photo: 'ichigo' },
+  { id: 'soda-03', name: '青空クリームソーダ', price: '720円', notes: ['ブルー', '爽やかなシトラス風味'], badge: '写真映え', color: '#2a8fe0', colorName: '青空', photo: 'aozora' },
+  { id: 'soda-04', name: 'ゆうやけクリームソーダ', price: '750円', notes: ['オレンジ', '柑橘系ソーダ'], badge: 'おすすめ', color: '#f08a1c', colorName: 'ゆうやけ', photo: 'yuyake' },
+  { id: 'soda-05', name: '季節のクリームソーダ', price: '780円', notes: ['季節で色・味が変わる'], badge: '期間限定', color: '#a58bd6', colorName: '季節', photo: 'kisetsu' },
 ];
 
 export interface Item {

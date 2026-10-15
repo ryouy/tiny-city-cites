@@ -3,36 +3,18 @@ import { site } from '../config/site';
 const { instagramUrl, email } = site.contact;
 ---
 
-<section class="section section--green" id="contact" aria-labelledby="contact-title">
-  <div class="container reveal">
-    <h2 class="contact__title" id="contact-title">
-      あなたのお店のWebについて、<br />
-      お話ししませんか。
-    </h2>
-    <div class="contact__body">
-      <p>ホームページの新規制作やリニューアルについて、お気軽にご相談ください。</p>
-      <p>まだ具体的な内容が決まっていなくても大丈夫です。</p>
-    </div>
-    <div class="contact__actions">
-      {
-        instagramUrl ? (
-          <a class="btn btn--light" href={instagramUrl} target="_blank" rel="noopener noreferrer">
-            Instagramで相談する ↗
-          </a>
-        ) : (
-          <span class="btn btn--disabled" role="note">
-            Instagramでのご相談窓口は準備中です
-          </span>
-        )
-      }
-      {site.showFreeConsultation && <p class="contact__free">ご相談・お見積もりは無料です。</p>}
-    </div>
+<section class="section contact" id="contact" aria-labelledby="contact-title">
+  <div class="container">
+    <h2 id="contact-title">まずはお気軽にご相談ください</h2>
+    <p>新規制作でもリニューアルでも、内容が決まっていなくても大丈夫です。</p>
     {
-      email && (
-        <p class="contact__mail">
-          メールでのご相談: <a href={`mailto:${email}`}>{email}</a>
-        </p>
+      instagramUrl ? (
+        <p><a class="btn" href={instagramUrl} target="_blank" rel="noopener noreferrer">Instagramで相談する</a></p>
+      ) : (
+        <p>Instagramでのご相談窓口は準備中です。</p>
       )
     }
+    {site.showFreeConsultation && <p class="contact__free">ご相談・お見積もりは無料です。</p>}
+    {email && <p>メール: <a href={`mailto:${email}`}>{email}</a></p>}
   </div>
 </section>

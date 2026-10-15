@@ -1,57 +1,47 @@
 ---
 import { menu, menuNotes, yen } from '../data/menu';
 import { stories } from '../data/site';
-
-const columns = [[menu[0]], menu.slice(1)];
 ---
 
 <section class="menu" id="menu" aria-labelledby="menu-title">
   <div class="container">
     <h2 id="menu-title" class="h2">お品書き</h2>
     <p class="menu-rules"><span>{menuNotes.tax}</span> <span>{menuNotes.set}</span> <span>{menuNotes.large}</span></p>
-  </div>
 
-  <nav class="menu-jump" aria-label="お品書きのカテゴリ">
-    <div class="container">
+    <nav class="menu-jump" aria-label="お品書きのカテゴリ">
       <ul>
         {menu.map((c) => <li><a href={`#menu-${c.id}`}>{c.title}</a></li>)}
         <li><a href="#takeaway">お持ち帰り</a></li>
       </ul>
+    </nav>
+
+    <div class="menu__cols">
+      {
+        menu.map((c) => (
+          <section class={`cat cat--${c.id}`} id={`menu-${c.id}`} aria-labelledby={`cat-${c.id}`}>
+            <h3 class="cat__title" id={`cat-${c.id}`}>
+              {c.title}
+              {c.note && <small>{c.note}</small>}
+            </h3>
+            <ul class="dishes">
+              {c.items.map((i) => (
+                <li class="dish">
+                  <div class="dish__head">
+                    <h4 class="dish__name">
+                      {i.name}
+                      {i.tag && <span class="dish__tag">{i.tag}</span>}
+                    </h4>
+                    <span class="dish__price">{yen(i.price)}</span>
+                  </div>
+                  {i.description && <p class="dish__desc">{i.description}</p>}
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))
+      }
     </div>
-  </nav>
 
-  <div class="container menu__cols">
-    {
-      columns.map((col) => (
-        <div class="menu__col">
-          {col.map((c) => (
-            <section class="cat" id={`menu-${c.id}`} aria-labelledby={`cat-${c.id}`}>
-              <h3 class="cat__title" id={`cat-${c.id}`}>
-                {c.title}
-                {c.note && <small>{c.note}</small>}
-              </h3>
-              <ul class="dishes">
-                {c.items.map((i) => (
-                  <li class="dish">
-                    <div class="dish__head">
-                      <h4 class="dish__name">
-                        {i.name}
-                        {i.tag && <span class="dish__tag">{i.tag}</span>}
-                      </h4>
-                      <span class="dish__price">{yen(i.price)}</span>
-                    </div>
-                    {i.description && <p class="dish__desc">{i.description}</p>}
-                  </li>
-                ))}
-              </ul>
-            </section>
-          ))}
-        </div>
-      ))
-    }
-  </div>
-
-  <div class="container">
     <p class="daily" id="daily"><b>{stories.daily.heading}</b>{stories.daily.body}</p>
   </div>
 </section>

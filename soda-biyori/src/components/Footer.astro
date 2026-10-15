@@ -3,17 +3,12 @@ import { site, pages, url } from '../data/site';
 ---
 
 <footer class="site-footer">
-  <div class="container site-footer__inner">
-    <div>
-      <p class="site-footer__brand serif">SODA BIYORI</p>
-      <p class="site-footer__ja">{site.name}</p>
-      <ul class="site-footer__nav">
-        <li><a href={url()}>トップ</a></li>
-        {pages.map((p) => <li><a href={url(p.path)}>{p.label}</a></li>)}
-      </ul>
-    </div>
-    <div class="site-footer__legal">
-      <p class="site-footer__disc">{site.disclaimer}</p>
-    </div>
+  <div class="container">
+    <p class="site-footer__name">{site.name}</p>
+    <ul class="site-footer__nav">
+      <li><a href={url()}>トップ</a></li>
+      {pages.map((p) => <li><a href={url(p.path)}>{p.label}</a></li>)}
+    </ul>
+    <p class="site-footer__disc">{site.disclaimer}</p>
   </div>
 </footer>

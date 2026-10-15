@@ -5,24 +5,19 @@ const { items, intro } = site.works;
 
 {
   site.works.show && (
-    <section class="section works" id="works" aria-labelledby="works-title">
+    <section class="section" id="works" aria-labelledby="works-title">
       <div class="container">
-        <div class="section-head reveal">
-          <h2 class="heading" id="works-title">制作事例</h2>
-          <p class="works__intro">{intro}</p>
-        </div>
+        <h2 id="works-title">制作事例</h2>
+        <p class="section__intro">{intro}</p>
         {items.length === 0 ? (
-          <div class="works-empty">
-            <strong>制作サンプルは準備中です。</strong>
-            <p>準備が整い次第、こちらでご紹介します。</p>
-          </div>
+          <p>制作サンプルは準備中です。</p>
         ) : (
           <ul class="works-grid">
             {items.map((w) => (
-              <li class="work reveal">
-                <a class="work__link" href={w.url}>
+              <li>
+                <a class="work" href={w.url}>
                   {w.thumbnail && (
-                    <img class="work__thumb" src={w.thumbnail} alt="" width="1000" height="750" loading="lazy" decoding="async" />
+                    <img src={w.thumbnail} alt="" width="1000" height="750" loading="lazy" decoding="async" />
                   )}
                   <span class="work__meta">{w.category}</span>
                   <span class="work__title">{w.title}</span>

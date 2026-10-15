@@ -1,77 +1,37 @@
 ---
-import { site } from '../config/site';
-
 const services = [
   {
     title: 'ホームページ制作',
-    desc: 'お店の雰囲気や情報を整理し、スマートフォンでも見やすいホームページを制作します。',
-    listTitle: '対応内容',
-    items: [
-      '企画・構成',
-      'デザイン',
-      'スマートフォン対応',
-      '店舗情報・メニュー掲載',
-      'アクセス・問い合わせ導線',
-      '基本的なSEO設定',
-    ],
+    items: ['企画・構成', 'デザイン', 'スマートフォン対応', '店舗情報・メニュー掲載', 'アクセス・問い合わせ導線', '基本的なSEO設定'],
   },
   {
     title: '公開・初期設定',
-    desc: '制作したホームページを公開するための技術的な設定をサポートします。',
-    listTitle: '対応内容',
     items: ['公開環境の構築', '独自ドメイン設定支援', 'HTTPS対応', '基本動作の確認'],
   },
   {
-    title: '保守・更新サポート',
-    desc: '公開後も、必要に応じてサイトの管理や軽微な内容更新を行います。',
-    listTitle: '対応例',
+    title: '保守・更新',
     items: ['営業時間の変更', 'メニューの更新', '写真・文章の差し替え', 'サイトの稼働確認'],
   },
 ];
-const { pricing } = site;
 ---
 
 <section class="section" id="services" aria-labelledby="services-title">
   <div class="container">
-    <div class="section-head reveal">
-      <h2 class="heading" id="services-title">サービス</h2>
-    </div>
-
-    {
-      services.map((s) => (
-        <article class="service reveal">
+    <h2 id="services-title">サービス</h2>
+    <div class="services">
+      {
+        services.map((s) => (
           <div>
-            <h3 class="service__title">{s.title}</h3>
-            <p class="service__desc">{s.desc}</p>
-          </div>
-          <div>
-            <p class="service__list-title">{s.listTitle}</p>
-            <ul class="service__list">
-              {s.items.map((i) => (
-                <li>{i}</li>
-              ))}
+            <h3>{s.title}</h3>
+            <ul>
+              {s.items.map((i) => <li>{i}</li>)}
             </ul>
           </div>
-        </article>
-      ))
-    }
-
-    {
-      pricing.show ? (
-        <div class="reveal">
-          <dl class="pricing">
-            {pricing.items.map((p) => (
-              <div class="pricing__row">
-                <dt>{p.label}</dt>
-                <dd class="pricing__price">{p.price}</dd>
-              </div>
-            ))}
-          </dl>
-          {pricing.note && <p class="pricing__note">{pricing.note}</p>}
-        </div>
-      ) : (
-        <p class="quote-note reveal">{pricing.hiddenNote}</p>
-      )
-    }
+        ))
+      }
+    </div>
+    <p class="price-note">
+      学生が勉強しながら取り組んでいるため、料金は一般的な制作会社より抑えめにご案内します。内容に合わせて、事前にお見積もりします。
+    </p>
   </div>
 </section>

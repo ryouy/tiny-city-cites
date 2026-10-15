@@ -1,22 +1,13 @@
 ---
 import Photo from './Photo.astro';
 import { site, url } from '../data/site';
-const bubbles = [
-  { x: 6, s: 22, d: 16, o: 0 }, { x: 28, s: 14, d: 13, o: 6 }, { x: 46, s: 30, d: 20, o: 3 },
-  { x: 71, s: 16, d: 15, o: 9 }, { x: 90, s: 24, d: 18, o: 2 },
-];
 ---
 
 <section class="hero" aria-labelledby="hero-title">
-  <div class="hero__bubbles" aria-hidden="true">
-    {bubbles.map((b) => <i style={`--x:${b.x}%;--s:${b.s}px;--d:${b.d}s;--o:-${b.o}s`}></i>)}
-  </div>
   <div class="container hero__grid">
     <div class="hero__copy">
       <h1 id="hero-title" class="hero__title">
-        <span class="nw">今日も、</span>
-        <span class="nw">ちょっと</span>
-        <span class="nw hero__mark">ごきげん。</span>
+        <span class="nw">今日も、</span><span class="nw">ちょっと</span><span class="nw">ごきげん。</span>
       </h1>
       <p class="hero__sub">{site.sub}</p>
       <p class="hero__lead">
@@ -29,7 +20,7 @@ const bubbles = [
       <p class="hero__hours">11:00–19:00／月曜定休</p>
     </div>
     <div class="hero__visual">
-      <Photo name="hero" priority ratio="4 / 5" pos="50% 40%" sizes="(min-width: 900px) 460px, 90vw" />
+      <Photo name="hero" priority ratio="4 / 5" pos="50% 40%" sizes="(min-width: 900px) 440px, 90vw" />
     </div>
   </div>
 </section>
