@@ -10,7 +10,7 @@ export const site = {
   title: 'HAIR SALON niwa（ヘアサロン ニワ）｜会津若松市の美容室',
   description:
     '福島県会津若松市の美容室「HAIR SALON niwa」。2席、完全予約制です。メニュー・料金、スタイル、営業時間を掲載しています。',
-  hero: '福島県会津若松市の美容室です。2席、完全予約制。',
+  hero: 'HAIR SALON niwa 2席、完全予約制',
   disclaimer:
     '架空店舗のポートフォリオ用デモサイトです。実在店舗ではありません。店名・人物・料金・店舗情報は創作です。',
   cta: '予約する',

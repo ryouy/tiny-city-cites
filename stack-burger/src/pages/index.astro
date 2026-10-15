@@ -7,39 +7,33 @@ import MapEmbed from '../components/MapEmbed.astro';
 import { site } from '../data/site';
 import { photoFile } from '../lib/photo-file';
 
-// メニュー下の写真列は、3枚そろったときだけ表示(未配置のときは枠を出さない)
-const menuPhotos = [
-  { key: 'classic', label: 'クラシック・スマッシュ' },
-  { key: 'bacon', label: 'スモーキーベーコン' },
-  { key: 'fries', label: 'フライドポテト' },
-] as const;
-const showMenuPhotos = menuPhotos.every((p) => photoFile(p.key));
+// メニュー下の写真列は、4枚そろったときだけ表示(未配置のときは枠を出さない)
+const menuPhotos = (['double', 'classic', 'bacon', 'fries'] as const);
+const showMenuPhotos = menuPhotos.every((k) => photoFile(k));
 ---
 
 <BaseLayout>
-  <section class="hero" id="top" aria-labelledby="hero-title">
-    <div class="hero__text">
+  <section class="poster poster--hero" id="top" aria-labelledby="hero-title">
+    <Photo name="hero" fill priority pos="50% 55%" sizes="100vw" />
+    <div class="wrap poster__in">
       <h1 id="hero-title" class="hero__title"><span class="nw">かぶりつけ、</span><span class="nw">うまさを重ねろ。</span></h1>
       <p class="hero__lead">{site.hero.lead}</p>
       <div class="hero__cta">
-        <a class="btn btn--red" href={site.hero.cta1.href}>{site.hero.cta1.label}</a>
-        <a class="btn btn--line" href={site.hero.cta2.href}>{site.hero.cta2.label}</a>
+        <a class="btn btn--solid" href={site.hero.cta1.href}>{site.hero.cta1.label}</a>
+        <a class="btn btn--line-light" href={site.hero.cta2.href}>{site.hero.cta2.label}</a>
       </div>
-    </div>
-    <div class="hero__fig">
-      <Photo name="hero" fill priority pos="50% 50%" sizes="(min-width: 900px) 46vw, 100vw" />
     </div>
   </section>
 
-  <section class="sig" id="signature" aria-labelledby="sig-title">
-    <div class="sig__fig">
-      <Photo name="signature" fill pos="50% 55%" sizes="(min-width: 900px) 50vw, 100vw" />
-    </div>
-    <div class="sig__text reveal">
-      <p class="sig__price">{site.signature.price}</p>
-      <h2 id="sig-title" class="sig__h2"><span class="nw">迷ったら、</span><span class="nw">ダブルで。</span></h2>
-      <p class="sig__name">{site.signature.name}</p>
-      <p>{site.signature.body}</p>
+  <section class="poster poster--sig" id="signature" aria-labelledby="sig-title">
+    <Photo name="signature" fill pos="50% 45%" sizes="100vw" />
+    <div class="wrap poster__in">
+      <div class="sig reveal">
+        <p class="sig__price">{site.signature.price}</p>
+        <h2 id="sig-title" class="sig__h2"><span class="nw">迷ったら、</span><span class="nw">ダブルで。</span></h2>
+        <p class="sig__name">{site.signature.name}</p>
+        <p>{site.signature.body}</p>
+      </div>
     </div>
   </section>
 
@@ -53,12 +47,7 @@ const showMenuPhotos = menuPhotos.every((p) => photoFile(p.key));
     {showMenuPhotos && (
       <div class="wrap">
         <div class="menu-photos">
-          {menuPhotos.map((p) => (
-            <figure>
-              <Photo name={p.key} ratio="4 / 5" sizes="(min-width: 900px) 360px, 50vw" />
-              <figcaption>{p.label}</figcaption>
-            </figure>
-          ))}
+          {menuPhotos.map((k) => <figure><Photo name={k} ratio="4 / 5" sizes="(min-width: 900px) 300px, 50vw" /></figure>)}
         </div>
       </div>
     )}
@@ -74,22 +63,23 @@ const showMenuPhotos = menuPhotos.every((p) => photoFile(p.key));
     </div>
   </section>
 
-  <section class="style" id="our-style" aria-labelledby="style-title">
-    <figure class="style__fig"><Photo name="griddle" ratio="3 / 2" pos="50% 40%" sizes="100vw" /></figure>
-    <div class="wrap style__in">
-      <div class="style__lead">
+  <section class="poster poster--style" id="our-style" aria-labelledby="style-title">
+    <Photo name="griddle" fill pos="50% 50%" sizes="100vw" />
+    <div class="wrap poster__in">
+      <div class="style reveal">
         <h2 id="style-title" class="style__h2">{site.ourStyle.h2}</h2>
         <p class="style__body">{site.ourStyle.body}</p>
+        <ul class="style__steps">
+          {site.ourStyle.steps.map((s) => (
+            <li><b>{s.title}</b><span>{s.body}</span></li>
+          ))}
+        </ul>
       </div>
-      <ul class="style__steps">
-        {site.ourStyle.steps.map((s) => (
-          <li><b>{s.title}</b><span>{s.body}</span></li>
-        ))}
-      </ul>
     </div>
   </section>
 
   <section class="about" id="about" aria-labelledby="about-title">
+    <figure class="about__fig"><Photo name="interior" ratio="16 / 9" sizes="100vw" /></figure>
     <div class="wrap about__in">
       <h2 id="about-title" class="about__h2">{site.about.h2}</h2>
       <div class="about__text">
@@ -97,7 +87,6 @@ const showMenuPhotos = menuPhotos.every((p) => photoFile(p.key));
         <p>{site.about.story}</p>
       </div>
     </div>
-    <figure class="about__fig"><Photo name="interior" ratio="16 / 9" pos="50% 60%" sizes="100vw" /></figure>
   </section>
 
   <section class="take" id="takeout" aria-labelledby="take-title">

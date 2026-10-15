@@ -45,7 +45,7 @@ export const nav: { label: string; path: string; current?: PageKey }[] = [
 ];
 
 export const hero = {
-  heading: '会津若松市の天然酵母パン屋です。',
+  heading: '天然酵母のパン',
   lead: '国産小麦と自家製天然酵母のパンを、毎朝焼いています。',
   hours: '8:00–16:00',
   hoursNote: '（売り切れ次第終了）',

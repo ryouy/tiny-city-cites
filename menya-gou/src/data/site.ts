@@ -8,7 +8,7 @@ export const site = {
   title: '横浜家系 麺屋 豪',
   description: '会津若松市の家系ラーメン店。豚骨醤油ラーメン。昼と夜に営業、水曜定休。',
   disclaimer: 'このサイトはWeb制作ポートフォリオ用の架空店舗デモです。実在の店舗ではありません。',
-  copy: '会津若松市の家系ラーメン店です。',
+  copy: '豚骨醤油の家系ラーメン。',
 } as const;
 
 export const about = {

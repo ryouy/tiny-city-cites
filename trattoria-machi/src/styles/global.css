@@ -232,3 +232,4 @@ h2 { font-size: 1.5rem; }
   .btn, .site-nav a, .jump a { transition: background-color 0.15s, color 0.15s, transform 0.15s; }
   .btn:hover { transform: translateY(-1px); }
 }
+.hero__sub { margin: 4px 0 20px; }

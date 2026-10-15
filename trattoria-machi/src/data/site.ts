@@ -11,7 +11,8 @@ export const site = {
 } as const;
 
 export const hero = {
-  h1: '会津若松市のイタリアンです。昼と夜、月曜定休。',
+  h1: 'トラットリア まちの灯',
+  sub: 'ランチとディナー。月曜定休。',
 } as const;
 
 /** 営業時間と予算(仕様書 §1) */
