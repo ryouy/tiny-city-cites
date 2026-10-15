@@ -12,33 +12,83 @@ const hours = site.info.filter((r) => ['営業時間', '休業日', '座席'].in
 ---
 
 <BaseLayout current="home">
-  <div class="hero-photo">
-    <Photo photo={photos.hero} ratio="21 / 9" ratioSm="4 / 3" eager pos="58% 55%" sizes="100vw" />
-  </div>
-
-  <div class="container top">
-    <h1 class="h1">KITO COFFEE</h1>
-    <p>会津若松市のコーヒー店です。ハンドドリップのコーヒーと、手づくりのお菓子を出しています。</p>
-    <dl class="info-list">
-      {
-        hours.map((row) => (
-          <div class="info-list__row">
-            <dt>{row.term}</dt>
-            <dd>{row.desc}</dd>
-          </div>
-        ))
-      }
-    </dl>
-    <p class="more"><a href={url('information/')}>店舗情報</a></p>
-  </div>
-
-  <section class="container excerpt" aria-labelledby="excerpt-title">
-    <h2 id="excerpt-title" class="h2">メニューの一部</h2>
-    <p class="note">{menuNotes.tax}</p>
-    <div class="excerpt__lists">
-      <MenuList cat={drinks} onlyFeatured level={3} />
-      <MenuList cat={sweets} onlyFeatured level={3} />
+  <section class="hero" aria-labelledby="hero-title">
+    <Photo photo={photos.hero} ratio="16 / 9" ratioSm="3 / 4" fill eager pos="62% 55%" sizes="100vw" />
+    <div class="hero__shade" aria-hidden="true"></div>
+    <div class="container hero__inner">
+      <h1 id="hero-title" class="hero__title">KITO COFFEE</h1>
+      <p class="hero__lead">会津若松市のコーヒー店です。ハンドドリップのコーヒーと、手づくりのお菓子を出しています。</p>
+      <div class="btn-row">
+        <a class="btn btn--solid" href={url('menu/')}>メニュー</a>
+        <a class="btn btn--line" href={url('information/')}>店舗情報</a>
+      </div>
     </div>
-    <p class="more"><a href={url('menu/')}>メニュー全体</a></p>
+    <div class="hero__facts-wrap">
+      <dl class="info-list hero__facts container">
+        {
+          hours.map((row) => (
+            <div class="info-list__row">
+              <dt>{row.term}</dt>
+              <dd>{row.desc}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
   </section>
+
+  <section class="band" aria-labelledby="about-title">
+    <div class="container split">
+      <Photo photo={photos.interior} ratio="4 / 5" ratioSm="4 / 5" pos="50% 50%" sizes="(min-width: 900px) 40vw, 100vw" />
+      <div>
+        <h2 id="about-title" class="h2">お店</h2>
+        <p class="prose">KITO COFFEEは、会津若松市のコーヒースタンドです。席は18席で、ドリンクと焼き菓子は持ち帰りもできます。</p>
+        <dl class="stats">
+          <div class="stats__item"><dt>座席</dt><dd>18<small>席</small></dd></div>
+          <div class="stats__item"><dt>駐車場</dt><dd>4<small>台</small></dd></div>
+          <div class="stats__item"><dt>持ち帰り</dt><dd>可</dd></div>
+        </dl>
+        <p class="note" style="margin-top:20px"><a href={url('story/')}>お店について</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--dark" aria-labelledby="coffee-title">
+    <div class="container split split--wide-photo">
+      <div>
+        <h2 id="coffee-title" class="h2">コーヒー</h2>
+        <p class="prose" style="margin-bottom:24px">豆は国内の専門ロースターから仕入れ、一杯ずつハンドドリップで淹れます。</p>
+        <Photo photo={photos.pourOver} ratio="3 / 2" ratioSm="3 / 2" pos="52% 50%" sizes="(min-width: 900px) 56vw, 100vw" />
+      </div>
+      <div class="board">
+        <p class="note lists-note">{menuNotes.tax}</p>
+        <MenuList cat={drinks} onlyFeatured level={3} />
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--tan" aria-labelledby="sweets-title">
+    <div class="container split split--flip">
+      <div class="sweets-photos">
+        <Photo photo={photos.cheesecake} ratio="4 / 3" ratioSm="4 / 3" pos="55% 50%" sizes="(min-width: 900px) 48vw, 100vw" />
+        <div class="sweets-photos__sub">
+          <Photo photo={photos.sweets} ratio="4 / 3" ratioSm="4 / 3" pos="50% 50%" sizes="(min-width: 900px) 28vw, 58vw" />
+        </div>
+      </div>
+      <div>
+        <h2 id="sweets-title" class="h2">お菓子</h2>
+        <p class="prose" style="margin-bottom:20px">バスクチーズケーキ、季節のフルーツタルト、スコーンなどを、店で作っています。</p>
+        <div class="paper">
+          <MenuList cat={sweets} onlyFeatured level={3} />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <nav class="band band--accent" aria-label="ページ案内">
+    <div class="container jump">
+      <a href={url('menu/')}>メニュー全体</a>
+      <a href={url('information/')}>店舗情報</a>
+    </div>
+  </nav>
 </BaseLayout>

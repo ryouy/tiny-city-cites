@@ -6,16 +6,16 @@ import { about, rice, info } from '../data/site';
 
 <section class="about" aria-labelledby="about-title">
   <div class="container">
-    <div class="about__row">
+    <div class="about__row about__row--soup">
       <Photo name="soup" ratio="21 / 9" ratioWide="1 / 1" sizes="(min-width: 800px) 30vw, 100vw" pos="50% 50%" />
-      <div>
+      <div class="about__text">
         <h2 id="about-title" class="h2">{about.heading}</h2>
         <p>{about.body}</p>
       </div>
     </div>
     <div class="about__row about__row--rev">
       <Photo name="rice" ratio="16 / 9" ratioWide="4 / 3" sizes="(min-width: 800px) 40vw, 100vw" pos="50% 50%" />
-      <div>
+      <div class="about__text">
         <h2 class="h2">{rice.heading}</h2>
         <p>{rice.body}</p>
       </div>
@@ -25,6 +25,7 @@ import { about, rice, info } from '../data/site';
 
 <section class="info" id="information" aria-labelledby="info-title">
   <div class="container">
+    <Photo name="interior" ratio="16 / 9" ratioWide="21 / 9" sizes="(min-width: 1000px) 960px, 100vw" pos="50% 62%" class="info__photo" />
     <h2 id="info-title" class="h2">{info.heading}</h2>
     <div class="info__grid">
       <div>
@@ -41,7 +42,6 @@ import { about, rice, info } from '../data/site';
         <p class="info__area">{info.area}</p>
       </div>
       <div class="info__side">
-        <Photo name="interior" ratio="16 / 9" sizes="(min-width: 800px) 45vw, 100vw" pos="50% 62%" />
         <MapEmbed />
       </div>
     </div>

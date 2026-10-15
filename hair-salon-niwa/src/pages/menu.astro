@@ -5,10 +5,14 @@ import { site, path } from '../data/site';
 ---
 
 <BaseLayout page="メニュー・料金" description="HAIR SALON niwaのメニューと税込料金、所要時間の目安。">
-  <div class="wrap menupage">
-    <div class="menupage__main">
+  <div class="phead">
+    <div class="wrap">
       <h1 class="ptitle">メニュー・料金</h1>
       <p class="ptitle__note">{priceRange}</p>
+    </div>
+  </div>
+  <div class="wrap menupage">
+    <div class="menupage__main">
       <div class="tabs" role="tablist" aria-label="メニューカテゴリ" id="tabs">
         {categories.map((c, i) => (
           <button type="button" role="tab" id={`tab-${c.key}`} aria-controls={`panel-${c.key}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1} data-key={c.key}>{c.ja}</button>

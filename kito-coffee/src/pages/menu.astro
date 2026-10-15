@@ -4,6 +4,10 @@ import Photo from '../components/Photo.astro';
 import MenuList from '../components/MenuList.astro';
 import { photos } from '../data/photos';
 import { menu, menuNotes } from '../data/menu';
+
+const drinks = menu.find((c) => c.id === 'coffee')!;
+const others = menu.find((c) => c.id === 'other-drinks')!;
+const sweets = menu.find((c) => c.id === 'sweets')!;
 ---
 
 <BaseLayout
@@ -11,16 +15,27 @@ import { menu, menuNotes } from '../data/menu';
   title="メニュー | KITO COFFEE"
   description="KITO COFFEEのメニュー。コーヒー、ドリンク、お菓子の全品を税込価格で載せています。"
 >
-  <div class="container page menu-page">
-    <h1 class="h1">メニュー</h1>
-    <p class="note">{menuNotes.tax}</p>
-    <div class="menu-page__grid">
+  <section class="band band--dark page-head">
+    <div class="container">
+      <h1 class="h1">メニュー</h1>
+      <p class="note">{menuNotes.tax}</p>
+    </div>
+  </section>
+  <div class="band">
+    <div class="container menu-page__grid">
       <div class="menu-page__body">
-        {menu.map((cat) => <MenuList cat={cat} />)}
-        <p class="menu-notes">{menuNotes.set}</p>
+        <div class="board">
+          <MenuList cat={drinks} />
+        </div>
+        <div class="menu-two">
+          <div class="paper"><MenuList cat={others} /></div>
+          <div class="paper"><MenuList cat={sweets} /></div>
+        </div>
+        <p class="menu-set">{menuNotes.set}</p>
       </div>
-      <div class="menu-page__photo">
-        <Photo photo={photos.blend} ratio="1 / 1" ratioSm="16 / 9" pos="50% 48%" sizes="(min-width: 900px) 30vw, 100vw" />
+      <div class="menu-page__side">
+        <Photo photo={photos.blend} ratio="1 / 1" ratioSm="4 / 3" pos="50% 48%" sizes="(min-width: 900px) 30vw, 100vw" />
+        <Photo photo={photos.sweets} ratio="4 / 3" ratioSm="4 / 3" pos="50% 50%" sizes="(min-width: 900px) 30vw, 100vw" />
       </div>
     </div>
   </div>

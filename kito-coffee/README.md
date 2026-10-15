@@ -32,7 +32,7 @@ npm run verify    # ビルド後に全ページを検査
 - `src/data/menu.ts` メニュー(品名・価格・説明)。価格は数値で持ち、画面側で `¥` 付き・税込表記に整形。`featured: true` の品がトップの抜粋に載ります
 - `src/data/photos.ts` 写真の定義(ファイル名・alt・想定サイズ)
 - `src/components/Photo.astro` 画像の表示/プレースホルダー切替
-- `src/styles/global.css` 全スタイル(配色は先頭の CSS 変数。紙色の背景1色、文字色、差し色の木の褐色のみ。端末標準のゴシック体で外部フォントなし、アニメーションなし)
+- `src/styles/global.css` 全スタイル(配色は先頭の CSS 変数。焦げ茶の面・クリーム色の面・タン色の面・木の褐色の帯を交互に使い、暗い面では琥珀色を差し色にする。ヒーローは全面写真に大きな店名と営業情報の帯、メニューは黒板風(コーヒー)と紙風(その他・お菓子)の面に点線リーダー付きの価格表、お店についてページは「木」「糸」の大きな字の帯。見出しと価格だけ Google Fonts の Zen Kaku Gothic New 1ファミリー、本文は端末標準ゴシック。動きは写真のホバー拡大のみ(prefers-reduced-motion では無効))
 - `scripts/verify.mjs` dist の全ページを検査(価格・営業情報・免責文がフッターのみにあること・本文に「デモ」等が無いこと・noindex・禁止事項・リンク解決)
 
 `BASE_PATH=/demos/kito/ npm run build` のようにサブパス配下へ出力できます(`npm run verify` も同じ環境変数で検査)。

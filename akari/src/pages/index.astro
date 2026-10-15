@@ -11,6 +11,12 @@ import { courses, courseNote } from '../data/course';
 import { yen } from '../data/menu';
 
 const seatsTotal = site.space.seats.reduce((s, x) => s + x.count, 0);
+const [h1a, h1b] = site.hero.h1.split('と地酒');
+const heroFacts = [
+  { term: '営業時間', desc: '17:30–23:00' },
+  { term: '定休日', desc: '毎週日曜日' },
+  { term: '席数', desc: `${seatsTotal}席` },
+];
 ---
 
 <BaseLayout>
@@ -22,19 +28,31 @@ const seatsTotal = site.space.seats.reduce((s, x) => s + x.count, 0);
       <Photo name="hero" fill eager pos="70% 60%" sizes="100vw" />
       <div class="hero__shade" aria-hidden="true"></div>
       <div class="wrap hero__inner">
-        <h1 class="hero__title" id="hero-title">{site.hero.h1}</h1>
+        <h1 class="hero__title" id="hero-title">
+          <span class="nw">{h1a}と</span><span class="nw">地酒{h1b}</span>
+        </h1>
         <p class="hero__body">{site.hero.body}</p>
         <div class="hero__cta">
           <a class="btn btn--solid" href={site.hero.ctas[0].href}>{site.hero.ctas[0].label}</a>
           <a class="btn btn--ghost" href={site.hero.ctas[1].href}>{site.hero.ctas[1].label}</a>
         </div>
       </div>
+      <dl class="hero__facts">
+        {
+          heroFacts.map((f) => (
+            <div>
+              <dt>{f.term}</dt>
+              <dd>{f.desc}</dd>
+            </div>
+          ))
+        }
+      </dl>
     </section>
 
     <!-- 灯について: 左に文章、右は画面端まで写真 -->
-    <section class="screen about" id="about" aria-labelledby="about-title">
+    <section class="screen screen--alt about" id="about" aria-labelledby="about-title">
       <div class="about__text">
-        <div class="about__text-inner">
+        <div class="about__text-inner reveal">
           <h2 class="h2" id="about-title">{site.about.heading}</h2>
           <p class="lead">{site.about.body}</p>
           <p class="owner">{site.about.owner}</p>
@@ -42,11 +60,12 @@ const seatsTotal = site.space.seats.reduce((s, x) => s + x.count, 0);
       </div>
       <div class="about__photo">
         <Photo name="yakitori" fill pos="50% 58%" sizes="(min-width: 900px) 45vw, 100vw" />
+        <p class="about__vertical" aria-hidden="true">{site.name}</p>
       </div>
     </section>
 
     <!-- お品書き: 画面内のタブで切り替え -->
-    <section class="screen menu" id="menu" aria-labelledby="menu-title">
+    <section class="screen menu paper" id="menu" aria-labelledby="menu-title">
       <div class="wrap">
         <MenuTabs>
           <Fragment slot="head">
@@ -63,7 +82,7 @@ const seatsTotal = site.space.seats.reduce((s, x) => s + x.count, 0);
         <Photo name="sake" fill pos="40% 60%" sizes="(min-width: 900px) 55vw, 100vw" />
       </div>
       <div class="sake__text">
-        <div class="sake__text-inner">
+        <div class="sake__text-inner reveal">
           <h2 class="h2" id="sake-title">{site.sake.heading}</h2>
           <p class="lead">{site.sake.body}</p>
           <p class="fine">{site.sake.note}</p>
@@ -81,7 +100,7 @@ const seatsTotal = site.space.seats.reduce((s, x) => s + x.count, 0);
         <div class="courses">
           {
             courses.map((c) => (
-              <article class="course-item" aria-labelledby={`course-${c.id}`}>
+              <article class="course-item reveal" aria-labelledby={`course-${c.id}`}>
                 <h3 class="course-item__name" id={`course-${c.id}`}>{c.name}</h3>
                 <p class="course-item__price">
                   <span class="sr-only">税込 </span>
@@ -103,18 +122,12 @@ const seatsTotal = site.space.seats.reduce((s, x) => s + x.count, 0);
 
     <!-- お席: 写真2枚+席数 -->
     <section class="screen space" id="space" aria-labelledby="space-title">
-      <div class="space__counter">
-        <Photo name="counter" fill pos="50% 50%" sizes="100vw" />
-      </div>
-      <div class="wrap space__body">
-        <div class="space__text">
-          <h2 class="h2" id="space-title">{site.space.heading}</h2>
-          <p class="lead">{site.space.body}</p>
+      <div class="space__top">
+        <div class="space__counter">
+          <Photo name="counter" fill pos="50% 50%" sizes="100vw" />
+          <div class="space__shade" aria-hidden="true"></div>
         </div>
-        <div class="space__semi">
-          <Photo name="semiPrivate" fill pos="50% 50%" sizes="(min-width: 900px) 34vw, 100vw" />
-        </div>
-        <div class="seats">
+        <div class="seats wrap">
           <p class="seats__total">
             <span class="seats__num">{seatsTotal}</span><span class="seats__unit">席</span>
             <span class="sr-only">（内訳は以下）</span>
@@ -129,6 +142,15 @@ const seatsTotal = site.space.seats.reduce((s, x) => s + x.count, 0);
               ))
             }
           </ul>
+        </div>
+      </div>
+      <div class="wrap space__body">
+        <div class="space__text reveal">
+          <h2 class="h2" id="space-title">{site.space.heading}</h2>
+          <p class="lead">{site.space.body}</p>
+        </div>
+        <div class="space__semi">
+          <Photo name="semiPrivate" fill pos="50% 50%" sizes="(min-width: 900px) 34vw, 100vw" />
         </div>
       </div>
     </section>

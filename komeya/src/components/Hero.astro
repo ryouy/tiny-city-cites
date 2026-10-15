@@ -5,11 +5,11 @@ import Photo from './Photo.astro';
 
 <section class="hero" id="top" aria-labelledby="hero-title">
   <div class="hero__photo">
-    <Photo name="noren" priority ratio="16 / 9" position="50% 40%" sizes="100vw" />
+    <Photo name="noren" priority ratio="16 / 9" position="62% 40%" sizes="(min-width: 900px) 62vw, 100vw" />
   </div>
-  <div class="container hero__body">
+  <div class="hero__panel">
     <div class="hero__copy">
-      <h1 id="hero-title">{site.catchcopy}</h1>
+      <h1 id="hero-title"><span class="hero__kind">お食事処</span> <span class="hero__name">こめや</span></h1>
       <p class="hero__lead">{site.lead}</p>
       <p class="hero__cta">
         <a class="btn btn--primary" href="#menu">お品書きを見る</a>

@@ -5,19 +5,30 @@ const external = Boolean(site.contact.instagramUrl);
 ---
 
 <section class="hero" id="top" aria-labelledby="hero-title">
-  <div class="container">
-    <h1 id="hero-title">飲食店・個人商店の<span class="nowrap">ホームページ制作</span></h1>
+  <img
+    class="hero__bg"
+    src="/images/mountain-lake.webp"
+    alt=""
+    width="1800"
+    height="1305"
+    fetchpriority="high"
+    decoding="async"
+  />
+  <div class="container hero__inner">
+    <h1 id="hero-title">
+      飲食店・個人商店の<br /><span class="nowrap">ホームページ制作</span>
+    </h1>
     <p class="hero__lead">
       会津若松で、会津大学の学生が一人で作っています。勉強しながら取り組んでいるので、料金は抑えめです。
     </p>
     <p class="hero__actions">
       <a
-        class="btn"
+        class="btn btn--light"
         href={cta}
         target={external ? '_blank' : undefined}
         rel={external ? 'noopener noreferrer' : undefined}>Instagramで相談する</a
       >
-      <a class="textlink" href="#works">制作事例を見る</a>
+      <a class="textlink textlink--light" href="#works">制作事例を見る</a>
     </p>
   </div>
 </section>

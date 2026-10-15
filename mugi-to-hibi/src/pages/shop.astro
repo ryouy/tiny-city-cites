@@ -7,7 +7,8 @@ import { pages, about, commitments, commitmentsHeading, shopInfo } from '../data
 ---
 
 <BaseLayout current="shop" title={pages.shop.title} description={pages.shop.description}>
-  <div class="wrap page-head">
+  <div class="page-head">
+   <div class="wrap page-head__in">
     <h1 class="page-title">お店のこと</h1>
     <ul class="jump" aria-label="このページの内容">
       <li><a href="#about">お店について</a></li>
@@ -15,11 +16,12 @@ import { pages, about, commitments, commitmentsHeading, shopInfo } from '../data
       <li><a href="#calendar">営業カレンダー</a></li>
       <li><a href="#info">店舗案内</a></li>
     </ul>
+   </div>
   </div>
 
   <section class="section about" id="about" aria-labelledby="about-title">
     <div class="wrap about__grid">
-      <Photo name="process" ratio="3 / 2" ratioSm="3 / 2" sizes="(min-width: 900px) 55vw, 100vw" />
+      <div class="about__photo"><Photo name="process" ratio="3 / 2" ratioSm="3 / 2" sizes="(min-width: 900px) 55vw, 100vw" /></div>
       <div class="about__text">
         <h2 id="about-title" class="h2">{about.heading}</h2>
         <p>{about.story}</p>
@@ -28,7 +30,7 @@ import { pages, about, commitments, commitmentsHeading, shopInfo } from '../data
     </div>
   </section>
 
-  <section class="section commitment" id="commitment" aria-labelledby="commitment-title">
+  <section class="section commitment on-green" id="commitment" aria-labelledby="commitment-title">
     <div class="wrap commit__grid">
       <h2 id="commitment-title" class="h2">{commitmentsHeading}</h2>
       <dl class="commit">

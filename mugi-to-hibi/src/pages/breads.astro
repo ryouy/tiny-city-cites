@@ -10,9 +10,11 @@ const ordered = [...products.filter((p) => p.photo), ...products.filter((p) => !
 ---
 
 <BaseLayout current="breads" title={pages.breads.title} description={pages.breads.description}>
-  <div class="wrap page-head">
-    <h1 class="page-title">パン</h1>
-    <p>価格はすべて税込です。</p>
+  <div class="page-head">
+    <div class="wrap page-head__in">
+      <h1 class="page-title">パン</h1>
+      <p>価格はすべて税込です。</p>
+    </div>
   </div>
 
   <section class="menu" id="menu" aria-label="パンの一覧">

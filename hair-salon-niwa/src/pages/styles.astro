@@ -8,14 +8,16 @@ import { site, path } from '../data/site';
 ---
 
 <BaseLayout page="スタイル" description="HAIR SALON niwaのスタイル一覧。ショート、ボブ、ミディアム、ロング、メンズで絞り込めます。">
-  <div class="wrap stylespage">
-    <div class="stylespage__head">
+  <div class="phead">
+    <div class="wrap">
       <h1 class="ptitle">スタイル</h1>
       <div class="filter" role="group" aria-label="カテゴリで絞り込み" id="filter">
         {styleFilters.map((f, i) => <button type="button" data-filter={f} aria-pressed={i === 0 ? 'true' : 'false'}>{categoryLabel[f]}</button>)}
       </div>
     </div>
-    <p class="filter-status" id="filter-status" role="status" aria-live="polite">全{hairStyles.length}スタイルを表示中</p>
+  </div>
+  <div class="wrap stylespage">
+        <p class="filter-status" id="filter-status" role="status" aria-live="polite">全{hairStyles.length}スタイルを表示中</p>
     <ul class="grid" id="grid">
       {hairStyles.map((s) => (
         <li data-cat={s.category}><StyleTile style={s} asButton sizes="(min-width: 1000px) 30vw, 50vw" /></li>

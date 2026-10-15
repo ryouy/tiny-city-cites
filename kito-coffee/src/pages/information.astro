@@ -11,10 +11,10 @@ import { site } from '../data/site';
   title="店舗情報 | KITO COFFEE"
   description="KITO COFFEEの営業時間、休業日、座席、駐車場、持ち帰り、支払い方法と地図。"
 >
-  <div class="container page info-page">
-    <div class="info-page__main">
+  <section class="band band--dark page-head">
+    <div class="container">
       <h1 class="h1">店舗情報</h1>
-      <dl class="info-list">
+      <dl class="info-list info-table">
         {
           site.info.map((row) => (
             <div class="info-list__row">
@@ -25,18 +25,23 @@ import { site } from '../data/site';
         }
       </dl>
     </div>
-    <div class="info-page__map">
+  </section>
+
+  <section class="band" aria-label="地図">
+    <div class="container map-wrap">
       <MapEmbed />
     </div>
-  </div>
+  </section>
 
-  <section class="gallery container" aria-labelledby="gallery-title">
-    <h2 id="gallery-title" class="h2">写真</h2>
-    <div class="gallery__grid">
-      <div class="gallery__a"><Photo photo={photos.hero} ratio="2 / 1" ratioSm="3 / 2" pos="50% 62%" sizes="100vw" /></div>
-      <div class="gallery__b"><Photo photo={photos.blend} ratio="1 / 1" pos="50% 48%" sizes="(min-width: 900px) 32vw, 50vw" /></div>
-      <div class="gallery__c"><Photo photo={photos.interior} ratio="1 / 1" pos="40% 45%" sizes="(min-width: 900px) 32vw, 50vw" /></div>
-      <div class="gallery__d"><Photo photo={photos.pourOver} ratio="1 / 1" ratioSm="3 / 2" pos="52% 50%" sizes="(min-width: 900px) 32vw, 100vw" /></div>
+  <section class="band band--dark-2" aria-labelledby="gallery-title">
+    <div class="container">
+      <h2 id="gallery-title" class="h2">写真</h2>
+      <div class="gallery__grid">
+        <div class="gallery__a"><Photo photo={photos.hero} ratio="16 / 10" ratioSm="3 / 2" pos="62% 62%" sizes="(min-width: 900px) 52vw, 100vw" /></div>
+        <div class="gallery__b"><Photo photo={photos.blend} ratio="1 / 1" pos="50% 48%" sizes="(min-width: 900px) 30vw, 50vw" /></div>
+        <div class="gallery__c"><Photo photo={photos.interior} ratio="1 / 1" pos="40% 45%" sizes="(min-width: 900px) 30vw, 50vw" /></div>
+        <div class="gallery__d"><Photo photo={photos.pourOver} ratio="16 / 9" ratioSm="3 / 2" pos="52% 50%" sizes="(min-width: 900px) 40vw, 100vw" /></div>
+      </div>
     </div>
   </section>
 </BaseLayout>

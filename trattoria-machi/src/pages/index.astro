@@ -5,58 +5,73 @@ import MapEmbed from '../components/MapEmbed.astro';
 import { hero, hoursBand, sections, info } from '../data/site';
 const base = import.meta.env.BASE_URL;
 const menu = `${base}menu/`;
+const [lead, ...rest] = sections.story.paras;
+const facts = [
+  { k: '開業', v: '2018年4月' },
+  { k: '席数', v: '28席' },
+  { k: '駐車場', v: '6台' },
+  { k: '定休日', v: '月曜日' },
+];
+const links = [`${menu}#lunch`, `${menu}#pasta`];
 ---
 
 <BaseLayout current="top">
   <main id="main">
     <section class="hero" aria-labelledby="hero-title">
-      <Photo name="hero" priority ratio="16 / 9" sizes="100vw" />
-      <div class="wrap hero__body">
-        <h1 id="hero-title">{hero.h1}</h1>
-        <table class="hours">
-          <thead>
-            <tr><th scope="col">時間帯</th><th scope="col">営業時間</th><th scope="col">予算</th></tr>
-          </thead>
-          <tbody>
-            {hoursBand.map((h) => (
-              <tr>
-                <th scope="row">{h.k}</th>
-                <td class="hours__time">{h.time}</td>
-                <td class="hours__budget">{h.budget}</td>
-              </tr>
+      <div class="hero__photo"><Photo name="hero" priority ratio="1 / 1" sizes="100vw" /></div>
+      <div class="hero__panel">
+        <div class="wrap">
+          <h1 id="hero-title">{hero.h1}</h1>
+          <div class="meals">
+            {hoursBand.map((h, i) => (
+              <article class="meal">
+                <h2>{h.k}</h2>
+                <p class="meal__time">{h.time}</p>
+                <p class="meal__budget"><small>予算</small>{h.budget}</p>
+                <a class="btn" href={links[i]}>{h.label}</a>
+              </article>
             ))}
-          </tbody>
-        </table>
-        <p class="hero__links">
-          <a href={`${menu}#lunch`}>ランチメニューを見る</a>
-          <a href={`${menu}#pasta`}>ディナーメニューを見る</a>
-          <a href="#info">店舗案内</a>
-        </p>
-        <p class="hero__closed">定休日 月曜日</p>
+          </div>
+          <p class="hero__closed">定休日 月曜日<a href="#info">店舗案内</a></p>
+        </div>
       </div>
     </section>
 
-    <section id="about" class="about wrap" aria-labelledby="about-title">
-      <div class="about__photo"><Photo name="interior" ratio="3 / 2" sizes="(min-width: 900px) 480px, 100vw" /></div>
-      <div class="about__text">
-        <h2 id="about-title">{sections.story.h2}</h2>
-        {sections.story.paras.map((t) => <p>{t}</p>)}
+    <section id="about" class="about" aria-labelledby="about-title">
+      <div class="about__photo"><Photo name="interior" ratio="3 / 2" sizes="100vw" /></div>
+      <div class="wrap">
+        <div class="about__card">
+          <h2 id="about-title">{sections.story.h2}</h2>
+          <p class="about__lead">{lead}</p>
+          {rest.map((t) => <p>{t}</p>)}
+        </div>
       </div>
-    </section>
-
-    <section id="info" class="info wrap" aria-labelledby="info-title">
-      <h2 id="info-title">店舗案内</h2>
-      <div class="info__grid">
-        <dl class="info__list">
-          {info.map((r) => (
-            <div>
-              <dt>{r.dt}</dt>
-              <dd>{r.dd.map((d) => <span>{d}</span>)}</dd>
-            </div>
+      <div class="facts">
+        <dl class="wrap facts__in">
+          {facts.map((f) => (
+            <div><dt>{f.k}</dt><dd>{f.v}</dd></div>
           ))}
         </dl>
-        <div class="info__access">
-          <MapEmbed />
+      </div>
+    </section>
+
+    <div class="gingham gingham--lg" aria-hidden="true"></div>
+
+    <section id="info" class="info" aria-labelledby="info-title">
+      <div class="wrap">
+        <h2 id="info-title">店舗案内</h2>
+        <div class="info__grid">
+          <dl class="info__list">
+            {info.map((r) => (
+              <div>
+                <dt>{r.dt}</dt>
+                <dd>{r.dd.map((d) => <span>{d}</span>)}</dd>
+              </div>
+            ))}
+          </dl>
+          <div class="info__access">
+            <MapEmbed />
+          </div>
         </div>
       </div>
     </section>

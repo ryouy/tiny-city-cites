@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Photo from '../components/Photo.astro';
 import StyleTile from '../components/StyleTile.astro';
-import { site, about, firstVisit, infoRows, path } from '../data/site';
+import { about, firstVisit, infoRows, path } from '../data/site';
 import { previewIds, priceRange, byId } from '../data/services';
 import { hairStyles, featuredStyleIds } from '../data/styles';
 import { staff } from '../data/staff';
@@ -17,30 +17,38 @@ const hours = infoRows.filter((r) => ['営業時間', '定休日'].includes(r.k)
       <Photo name="hero" priority ratio="3 / 2" sizes="100vw" position="50% 55%" />
     </div>
     <div class="wrap hero__text">
-      <h1 id="hero-h">{site.hero}</h1>
-      <div>
+      <div class="hero__card">
+        <h1 id="hero-h"><span>福島県会津若松市の</span><span>美容室です。</span><span>2席、完全予約制。</span></h1>
         <p class="hero__cta">
           <a class="btn btn--solid" href={path('menu')}>メニュー・料金を見る</a>
           <a class="textlink" href={path('styles')}>スタイルを見る</a>
         </p>
       </div>
+      <dl class="facts">
+        <div><dt>営業時間</dt><dd>9:30〜18:30</dd></div>
+        <div><dt>定休日</dt><dd>月曜日<small>第1・第3日曜日</small></dd></div>
+        <div><dt>席数</dt><dd>2席<small>半個室風の配置</small></dd></div>
+        <div><dt>駐車場</dt><dd>2台</dd></div>
+      </dl>
     </div>
   </section>
 
-  <section class="section about" aria-labelledby="about-h">
+  <section class="section about reveal" aria-labelledby="about-h">
     <div class="wrap about__grid">
       <div class="about__media"><Photo name="interior" ratio="4 / 5" sizes="(min-width: 900px) 40vw, 100vw" position="50% 40%" /></div>
       <div class="about__text">
         <h2 id="about-h">{about.heading}</h2>
         <p>{about.body}</p>
-        <h3 class="first">{firstVisit.heading}</h3>
-        <p>{firstVisit.body}</p>
+        <div class="first">
+          <h3>{firstVisit.heading}</h3>
+          <p>{firstVisit.body}</p>
+        </div>
         <p><a class="textlink" href={`${path('access')}#faq`}>よくある質問</a></p>
       </div>
     </div>
   </section>
 
-  <section class="section section--tight" aria-labelledby="styles-h">
+  <section class="styles-sec reveal" aria-labelledby="styles-h">
     <div class="wrap">
       <div class="row-head">
         <h2 id="styles-h">スタイル</h2>
@@ -52,7 +60,7 @@ const hours = infoRows.filter((r) => ['営業時間', '定休日'].includes(r.k)
     </div>
   </section>
 
-  <section class="section menu-prev" aria-labelledby="menu-h">
+  <section class="section menu-prev reveal" aria-labelledby="menu-h">
     <div class="wrap menu-prev__grid">
       <div class="menu-prev__head">
         <h2 id="menu-h">メニュー・料金</h2>
@@ -73,17 +81,17 @@ const hours = infoRows.filter((r) => ['営業時間', '定休日'].includes(r.k)
     </div>
   </section>
 
-  <section class="section section--tight bottom" aria-labelledby="bottom-h">
+  <section class="bottom reveal" aria-labelledby="bottom-h">
     <div class="wrap bottom__grid">
       <div>
         <h2 id="bottom-h">スタッフ</h2>
-        <ul class="plain">
-          {staff.map((p) => <li><strong>{p.name}</strong> {p.role}</li>)}
+        <ul class="staff-cards">
+          {staff.map((p) => <li class="staff-card"><strong>{p.name}</strong><span>{p.role}</span></li>)}
         </ul>
         <p class="more"><a class="textlink" href={path('staff')}>スタッフ紹介</a></p>
       </div>
       <div>
-        <h2 class="h2-like">営業時間</h2>
+        <h2>営業時間</h2>
         <dl class="info info--small">
           {hours.map((r) => <div><dt>{r.k}</dt><dd>{r.v.map((l) => <p>{l}</p>)}</dd></div>)}
         </dl>

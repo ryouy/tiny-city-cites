@@ -9,44 +9,56 @@ import { photos } from '../data/photos';
   title="お店について | KITO COFFEE"
   description="KITO COFFEEのこと。お店、コーヒー、お菓子、店主について。"
 >
-  <div class="container page">
-    <h1 class="h1">お店について</h1>
+  <section class="band band--dark page-head">
+    <div class="container">
+      <h1 class="h1">お店について</h1>
+    </div>
+  </section>
 
-    <section class="feature">
-      <div class="feature__photo">
-        <Photo photo={photos.interior} ratio="4 / 5" pos="50% 50%" sizes="(min-width: 900px) 36vw, 100vw" />
-      </div>
-      <div class="feature__text">
-        <h2 class="h2">お店</h2>
+  <section class="band" aria-labelledby="shop-title">
+    <div class="container split">
+      <Photo photo={photos.interior} ratio="4 / 5" ratioSm="4 / 5" pos="50% 50%" sizes="(min-width: 900px) 40vw, 100vw" />
+      <div>
+        <h2 id="shop-title" class="h2">お店</h2>
         <p class="prose">KITO COFFEEは、会津若松市のコーヒースタンドです。席は18席で、ドリンクと焼き菓子は持ち帰りもできます。</p>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="feature">
-      <div class="feature__photo">
-        <Photo photo={photos.pourOver} ratio="3 / 2" pos="50% 50%" sizes="(min-width: 900px) 36vw, 100vw" />
+  <section class="band band--dark" aria-labelledby="coffee-title">
+    <div class="container">
+      <div class="story-wide">
+        <Photo photo={photos.pourOver} ratio="21 / 9" ratioSm="3 / 2" pos="52% 50%" sizes="100vw" />
       </div>
-      <div class="feature__text">
-        <h2 class="h2">コーヒー</h2>
+      <div class="story-two">
+        <h2 id="coffee-title" class="h2">コーヒー</h2>
         <p class="prose">豆は国内の専門ロースターから仕入れています。産地と焙煎度の違う豆を用意し、挽き目と湯温を調整して、一杯ずつハンドドリップで淹れます。</p>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="feature">
-      <div class="feature__photo">
-        <Photo photo={photos.cheesecake} ratio="4 / 3" pos="50% 50%" sizes="(min-width: 900px) 36vw, 100vw" />
+  <section class="band band--tan" aria-labelledby="sweets-title">
+    <div class="container split split--flip">
+      <div class="sweets-photos">
+        <Photo photo={photos.cheesecake} ratio="4 / 3" ratioSm="4 / 3" pos="55% 50%" sizes="(min-width: 900px) 48vw, 100vw" />
+        <div class="sweets-photos__sub">
+          <Photo photo={photos.sweets} ratio="4 / 3" ratioSm="4 / 3" pos="50% 50%" sizes="(min-width: 900px) 28vw, 58vw" />
+        </div>
       </div>
-      <div class="feature__text">
-        <h2 class="h2">お菓子</h2>
+      <div>
+        <h2 id="sweets-title" class="h2">お菓子</h2>
         <p class="prose">バスクチーズケーキ、季節のフルーツタルト、スコーンなどを、店で作っています。</p>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="feature feature--text">
-      <div class="feature__text">
-        <h2 class="h2">店主</h2>
+  <section class="band band--accent" aria-labelledby="owner-title">
+    <div class="container owner">
+      <p class="kanji" aria-hidden="true"><span>木</span><span>糸</span></p>
+      <div>
+        <h2 id="owner-title" class="h2">店主</h2>
         <p class="prose">店名のKITOは、「木」と「糸」から付けました。店主は東京のコーヒー専門店で約6年働いたあと、故郷の会津に戻り、2023年に店を開きました。</p>
       </div>
-    </section>
-  </div>
+    </div>
+  </section>
 </BaseLayout>

@@ -7,11 +7,15 @@ const stepNames = [{ ja: 'スタッフ' }, { ja: 'メニュー' }, { ja: '日時
 const times = ['09:30', '11:00', '13:30', '15:00'];
 ---
 
-<BaseLayout page="ご予約" description="HAIR SALON niwaの予約ページ。入力内容は送信・保存されず、予約は成立しません。">
-  <div class="page-body">
-    <div class="wrap wrap--narrow">
+<BaseLayout page="ご予約" band={false} description="HAIR SALON niwaの予約ページ。入力内容は送信・保存されず、予約は成立しません。">
+  <div class="phead phead--narrow">
+    <div class="wrap">
       <h1 class="ptitle">ご予約</h1>
       <p class="ptitle__note">入力内容は送信・保存されません。予約は成立しません。</p>
+    </div>
+  </div>
+  <div class="page-body">
+    <div class="wrap wrap--narrow">
 
       <div class="wiz" id="wiz" data-labels={JSON.stringify(stepNames.map((s) => s.ja))}>
         <ol class="wiz__steps" id="wiz-steps" aria-label="進行状況">

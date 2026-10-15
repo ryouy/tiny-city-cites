@@ -11,19 +11,19 @@ import { story, infoRows, faq } from '../data/site';
   <main id="main">
     <PageHead title="店舗案内" />
 
-    <section class="sec sec--tight" aria-labelledby="story-title">
+    <section class="sec" aria-labelledby="story-title">
       <div class="wrap story story--rev">
         <div class="story__text">
           <h2 id="story-title">お店について</h2>
           {story.paras.map((t) => <p>{t}</p>)}
         </div>
-        <div class="story__photo"><Photo name="shop" ratio="4 / 5" sizes="(min-width: 900px) 440px, 100vw" /></div>
+        <div class="story__photo reveal"><Photo name="shop" ratio="4 / 5" sizes="(min-width: 900px) 440px, 100vw" /></div>
       </div>
     </section>
 
-    <section class="sec sec--tight" id="info" aria-labelledby="info-title">
+    <section class="sec bg-tint" id="info" aria-labelledby="info-title">
       <div class="wrap info">
-        <div>
+        <div class="info-card">
           <h2 id="info-title">営業情報</h2>
           <dl class="dl">
             {infoRows.map((r) => (
@@ -37,7 +37,7 @@ import { story, infoRows, faq } from '../data/site';
       </div>
     </section>
 
-    <section class="sec sec--tight" aria-labelledby="faq-title">
+    <section class="sec" aria-labelledby="faq-title">
       <div class="wrap faq-wrap">
         <h2 class="h-sub" id="faq-title">よくあるご質問</h2>
         <div class="faq">

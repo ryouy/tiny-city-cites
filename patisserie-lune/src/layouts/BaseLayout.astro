@@ -35,7 +35,11 @@ const currentKey: Record<string, string> = { about: 'about/', menu: 'menu/', ord
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
 
-      </head>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@700;800&display=swap" rel="stylesheet" />
+    <script is:inline>document.documentElement.classList.add('js');</script>
+  </head>
   <body>
     <a class="skip-link" href="#main">本文へスキップ</a>
 
@@ -85,6 +89,17 @@ const currentKey: Record<string, string> = { about: 'about/', menu: 'menu/', ord
         if (toggle?.getAttribute('aria-expanded') === 'true' && top && !top.contains(e.target as Node)) setOpen(false);
       });
       desktop.addEventListener('change', () => setOpen(false));
+
+      const reveals = document.querySelectorAll<HTMLElement>('.reveal');
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver(
+          (entries) => entries.forEach((en) => { if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); } }),
+          { rootMargin: '0px 0px -8% 0px' },
+        );
+        reveals.forEach((el) => io.observe(el));
+      } else {
+        reveals.forEach((el) => el.classList.add('is-in'));
+      }
     </script>
   </body>
 </html>

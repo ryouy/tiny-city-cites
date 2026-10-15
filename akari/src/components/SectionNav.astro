@@ -22,4 +22,24 @@
     );
     sections.forEach((s) => io.observe(s));
   }
+
+  // 控えめなフェードイン(動きを減らす設定のときは最初から表示)
+  const reveals = document.querySelectorAll<HTMLElement>('.reveal');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!('IntersectionObserver' in window) || reduce) {
+    reveals.forEach((el) => el.classList.add('is-in'));
+  } else {
+    const rio = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((en) => {
+          if (en.isIntersecting) {
+            en.target.classList.add('is-in');
+            rio.unobserve(en.target);
+          }
+        });
+      },
+      { rootMargin: '0px 0px -8% 0px' },
+    );
+    reveals.forEach((el) => rio.observe(el));
+  }
 </script>

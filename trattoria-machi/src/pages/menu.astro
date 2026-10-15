@@ -18,10 +18,12 @@ const chips = [
 
 <BaseLayout title={site.menuTitle} description={site.menuDescription} current="menu">
   <main id="main">
-    <header class="menuhead wrap">
-      <h1>お品書き</h1>
-      <p>価格はすべて税込です。</p>
-      <p>{sections.lunch.serve}（ランチ営業 11:30–14:30、L.O.14:00）</p>
+    <header class="menuhead">
+      <div class="wrap menuhead__in">
+        <h1>お品書き</h1>
+        <p>価格はすべて税込です。</p>
+        <p>{sections.lunch.serve}（ランチ営業 11:30–14:30、L.O.14:00）</p>
+      </div>
     </header>
 
     <nav class="jump" aria-label="お品書きのカテゴリ">
@@ -30,8 +32,8 @@ const chips = [
       </ul>
     </nav>
 
-    <div class="wrap menu">
-      <section id="lunch" class="msec" aria-labelledby="h-lunch">
+    <section id="lunch" class="msec msec--lunch" aria-labelledby="h-lunch">
+      <div class="wrap msec__in">
         <div class="msec__photo"><Photo name="pastaCream" ratio="4 / 5" sizes="(min-width: 900px) 40vw, 100vw" /></div>
         <div class="msec__body">
           <h2 id="h-lunch">ランチ <small>{sections.lunch.serve.replace('ランチ提供 ', '')}</small></h2>
@@ -43,9 +45,11 @@ const chips = [
           <p class="mnote">ドリンクは {lunchDrinks} からお選びいただけます。</p>
           <p class="mnote">{lunchExample}</p>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section id="pasta" class="msec" aria-labelledby="h-pasta">
+    <section id="pasta" class="msec msec--pasta msec--rev" aria-labelledby="h-pasta">
+      <div class="wrap msec__in">
         <div class="msec__photo"><Photo name="pastaTomato" ratio="4 / 5" sizes="(min-width: 900px) 40vw, 100vw" /></div>
         <div class="msec__body">
           <h2 id="h-pasta">パスタ <small>ディナー単品</small></h2>
@@ -56,9 +60,11 @@ const chips = [
           </ul>
           <p class="mnote">{pastaNote}</p>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section id="pizza" class="msec" aria-labelledby="h-pizza">
+    <section id="pizza" class="msec msec--pizza" aria-labelledby="h-pizza">
+      <div class="wrap msec__in">
         <div class="msec__photo"><Photo name="pizza" ratio="4 / 5" sizes="(min-width: 900px) 40vw, 100vw" /></div>
         <div class="msec__body">
           <h2 id="h-pizza">ピッツァ</h2>
@@ -69,9 +75,11 @@ const chips = [
           </ul>
           <p class="mnote">{pizzaNote}</p>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section id="antipasti" class="msec" aria-labelledby="h-antipasti">
+    <section id="antipasti" class="msec msec--antipasti msec--rev" aria-labelledby="h-antipasti">
+      <div class="wrap msec__in">
         <div class="msec__photo"><Photo name="antipasti" ratio="4 / 5" sizes="(min-width: 900px) 40vw, 100vw" /></div>
         <div class="msec__body">
           <h2 id="h-antipasti">前菜</h2>
@@ -81,9 +89,11 @@ const chips = [
             ))}
           </ul>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section id="dolce" class="msec" aria-labelledby="h-dolce">
+    <section id="dolce" class="msec msec--dolce" aria-labelledby="h-dolce">
+      <div class="wrap msec__in">
         <div class="msec__photo"><Photo name="tiramisu" ratio="4 / 5" sizes="(min-width: 900px) 40vw, 100vw" /></div>
         <div class="msec__body">
           <h2 id="h-dolce">ドルチェ・ドリンク</h2>
@@ -100,11 +110,13 @@ const chips = [
             ))}
           </ul>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section id="set" class="setwrap" aria-labelledby="set-title">
+    <section id="set" class="setwrap" aria-labelledby="set-title">
+      <div class="wrap">
         <SetSim />
-      </section>
-    </div>
+      </div>
+    </section>
   </main>
 </BaseLayout>

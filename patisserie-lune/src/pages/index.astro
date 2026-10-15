@@ -2,32 +2,41 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Photo from '../components/Photo.astro';
 import Footer from '../components/Footer.astro';
-import { hero, about, wholeCopy, giftCopy } from '../data/site';
-import { cutCakes, yen } from '../data/menu';
+import { hero, about, wholeCopy, giftCopy, infoRows } from '../data/site';
+import { cutCakes, wholeCakes, wholeGroups, bakedGoods, yen } from '../data/menu';
 
 const base = import.meta.env.BASE_URL;
 const featured = cutCakes.filter((c) => c.photo);
+const hours = infoRows.find((r) => r.k === '営業時間')!;
+// ホールケーキは種類ごとの最低価格を表示
+const wholeFrom = wholeGroups.map((g) => ({
+  name: g.name,
+  price: Math.min(...wholeCakes.filter((w) => w.group === g.key).map((w) => w.price)),
+}));
+const gifts = bakedGoods.filter((b) => b.id === 'bake04' || b.id === 'bake05');
 ---
 
 <BaseLayout current="home">
   <main id="main">
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero__photo">
-        <Photo name="hero" priority ratio="4 / 3" position="50% 45%" sizes="100vw" />
+        <Photo name="hero" priority ratio="4 / 3" position="50% 45%" sizes="(min-width: 900px) 58vw, 100vw" />
       </div>
-      <div class="wrap hero__row">
-        <div>
-          <h1 id="hero-title">{hero.copy}</h1>
-          <p class="hero__sub">{hero.sub}</p>
+      <div class="hero__panel">
+        <h1 id="hero-title">{hero.copy}</h1>
+        <p class="hero__sub">{hero.sub}</p>
+        <div class="cta-row">
+          <a class="btn btn--light" href="#cakes">ケーキを見る</a>
+          <a class="btn btn--line" href="#whole-cakes">ホールケーキのご案内</a>
         </div>
-        <dl class="hero__hours">
-          <div><dt>営業時間</dt><dd>10:00–18:00</dd></div>
-          <div><dt>定休日</dt><dd>火曜日・水曜日</dd></div>
-        </dl>
+        <ul class="hero__facts">
+          <li>テイクアウト専門</li>
+          <li>駐車場3台</li>
+        </ul>
       </div>
     </section>
 
-    <section class="sec" id="cakes" aria-labelledby="cakes-title">
+    <section class="sec bg-tint" id="cakes" aria-labelledby="cakes-title">
       <div class="wrap">
         <div class="sec-head">
           <h2 id="cakes-title">カットケーキ</h2>
@@ -35,7 +44,7 @@ const featured = cutCakes.filter((c) => c.photo);
         </div>
         <ul class="showcase">
           {featured.map((c) => (
-            <li>
+            <li class="reveal">
               <Photo name={c.photo!} ratio="4 / 5" sizes="(min-width: 900px) 33vw, 100vw" />
               <div class="showcase__cap">
                 <h3>{c.name}</h3>
@@ -48,31 +57,52 @@ const featured = cutCakes.filter((c) => c.photo);
       </div>
     </section>
 
-    <section class="sec sec--tight" aria-label="ホールケーキと焼き菓子">
-      <div class="wrap duo">
-        <article class="duo__item" id="whole-cakes" aria-labelledby="whole-title">
-          <Photo name="wholeCake" ratio="1 / 1" sizes="(min-width: 900px) 50vw, 100vw" />
+    <section class="sec on-dark" id="whole-cakes" aria-labelledby="whole-title">
+      <div class="wrap feature">
+        <div class="feature__photo reveal"><Photo name="wholeCake" ratio="1 / 1" sizes="(min-width: 900px) 500px, 100vw" /></div>
+        <div class="feature__text">
           <h2 id="whole-title">{wholeCopy.heading}</h2>
           <p>{wholeCopy.body}</p>
-          <a class="tlink" href={`${base}order/`}>ホールケーキのページ</a>
-        </article>
-        <article class="duo__item" id="gifts" aria-labelledby="gift-title">
-          <Photo name="gift" ratio="5 / 4" sizes="(min-width: 900px) 50vw, 100vw" />
-          <h2 id="gift-title">{giftCopy.heading}</h2>
-          <p>{giftCopy.body}</p>
-          <a class="tlink" href={`${base}menu/#baked`}>焼き菓子の一覧</a>
-        </article>
+          <ul class="feature__list">
+            {wholeFrom.map((w) => (
+              <li><span>{w.name}</span><span class="price">{yen(w.price)}<small>税込〜</small></span></li>
+            ))}
+          </ul>
+          <a class="btn btn--light" href={`${base}order/`}>ホールケーキのページ</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="gifts" id="gifts" aria-labelledby="gift-title">
+      <div class="gifts__photo"><Photo name="gift" ratio="5 / 4" sizes="(min-width: 900px) 52vw, 100vw" /></div>
+      <div class="gifts__text">
+        <h2 id="gift-title">{giftCopy.heading}</h2>
+        <p>{giftCopy.body}</p>
+        <ul class="gifts__list">
+          {gifts.map((g) => (
+            <li><span>{g.name}</span><span class="price">{yen(g.price)}<small>税込</small></span></li>
+          ))}
+        </ul>
+        <a class="tlink" href={`${base}menu/#baked`}>焼き菓子の一覧</a>
       </div>
     </section>
 
     <section class="sec" id="about" aria-labelledby="about-title">
       <div class="wrap story">
-        <div class="story__photo"><Photo name="baker" ratio="4 / 5" sizes="(min-width: 900px) 440px, 100vw" /></div>
+        <div class="story__photo reveal"><Photo name="baker" ratio="4 / 5" sizes="(min-width: 900px) 420px, 100vw" /></div>
         <div class="story__text">
           <h2 id="about-title">{about.heading}</h2>
           <p>{about.body}</p>
           <a class="tlink" href={`${base}about/`}>営業情報・FAQ</a>
         </div>
+      </div>
+    </section>
+
+    <section class="hours-strip" aria-label="営業時間">
+      <div class="wrap hours-strip__row">
+        <p class="hours-strip__time">10:00–18:00</p>
+        <p>火曜日・水曜日は定休日です。<br />{hours.v[1]}。</p>
+        <a class="btn btn--light" href={`${base}about/#info`}>営業情報を見る</a>
       </div>
     </section>
   </main>

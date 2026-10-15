@@ -11,27 +11,31 @@ const yen = (n: number) => n.toLocaleString('ja-JP');
 
 <BaseLayout current="home" title={pages.home.title} description={pages.home.description}>
   <section class="hero" aria-labelledby="hero-title">
-    <Photo name="hero" ratio="16 / 9" ratioSm="4 / 3" eager sizes="100vw" class="hero__photo" />
-    <div class="wrap hero__body">
-      <div class="hero__head">
-        <h1 id="hero-title" class="hero__title">{hero.heading}</h1>
-        <p class="hero__lead">{hero.lead}</p>
+    <div class="hero__stage">
+      <Photo name="hero" ratio="16 / 9" ratioSm="4 / 5" eager sizes="100vw" class="hero__photo" />
+      <div class="hero__over">
+        <div class="wrap">
+          <h1 id="hero-title" class="hero__title">{hero.heading}</h1>
+          <p class="hero__lead">{hero.lead}</p>
+        </div>
       </div>
-      <dl class="hours">
-        <div class="hours__row"><dt>営業時間</dt><dd>{hero.hours}<span class="nb hours__note">{hero.hoursNote}</span></dd></div>
-        <div class="hours__row"><dt>定休日</dt><dd>{hero.closed}</dd></div>
-        <div class="hours__row hours__row--sub"><dt>ご利用</dt><dd>{hero.takeout}</dd></div>
-      </dl>
-      <div class="hero__tail">
+    </div>
+    <div class="hero__bar">
+      <div class="wrap hero__barin">
+        <dl class="hours">
+          <div class="hours__row"><dt>営業時間</dt><dd>{hero.hours}<span class="nb hours__note">{hero.hoursNote}</span></dd></div>
+          <div class="hours__row"><dt>定休日</dt><dd>{hero.closed}</dd></div>
+          <div class="hours__row"><dt>ご利用</dt><dd>{hero.takeout}</dd></div>
+        </dl>
         <p class="hero__links">
-          <a href={href('breads/')}>パンを見る</a>
-          <a href={href('shop/')}>お店について</a>
+          <a class="btn btn--solid" href={href('breads/')}>パンを見る</a>
+          <a class="btn btn--line" href={href('shop/')}>お店について</a>
         </p>
       </div>
     </div>
   </section>
 
-  <section class="section today" id="today" aria-labelledby="today-title">
+  <section class="section today on-dark" id="today" aria-labelledby="today-title">
     <div class="wrap today__grid">
       <div>
         <h2 id="today-title" class="h2">今日の焼き上がり</h2>
@@ -79,10 +83,10 @@ const yen = (n: number) => n.toLocaleString('ja-JP');
     </div>
   </section>
 
-  <section class="section guide" aria-labelledby="guide-title">
-    <div class="wrap guide__grid">
+  <section class="section guide on-green" aria-labelledby="guide-title">
+    <div class="guide__grid">
       <Photo name="exterior" ratio="3 / 2" ratioSm="3 / 2" sizes="(min-width: 900px) 50vw, 100vw" />
-      <div>
+      <div class="guide__text">
         <h2 id="guide-title" class="h2">お店のこと</h2>
         <ul class="guide__links">
           <li><a href={href('shop/#about')}>お店について・材料</a></li>

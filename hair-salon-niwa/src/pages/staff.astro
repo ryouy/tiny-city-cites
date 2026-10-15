@@ -6,10 +6,14 @@ import { path, site } from '../data/site';
 ---
 
 <BaseLayout page="スタッフ" description="HAIR SALON niwaのスタイリスト紹介。経歴と得意な施術を掲載しています。">
+  <div class="phead">
+    <div class="wrap">
+      <h1 class="ptitle">スタッフ</h1>
+    </div>
+  </div>
   <div class="wrap staffpage">
     <div class="staffpage__media"><Photo name="hands" ratio="4 / 5" sizes="(min-width: 900px) 44vw, 100vw" position="35% 40%" /></div>
     <div class="staffpage__text">
-      <h1 class="ptitle">スタッフ</h1>
       {staff.map((p) => (
         <section class="profile" aria-labelledby={`p-${p.id}`}>
           <h2 id={`p-${p.id}`}>{p.name}</h2>

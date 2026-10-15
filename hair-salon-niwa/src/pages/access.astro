@@ -7,14 +7,19 @@ import { faq } from '../data/faq';
 ---
 
 <BaseLayout page="アクセス・店舗情報" description="HAIR SALON niwaの営業時間、定休日、駐車場、所在エリア、よくある質問。">
-  <div class="wrap accesspage">
-    <div>
+  <div class="phead">
+    <div class="wrap">
       <h1 class="ptitle">アクセス・店舗情報</h1>
+    </div>
+  </div>
+  <div class="wrap accesspage">
+    <div class="accesspage__info">
       <AccessInfo />
       <p class="more"><a class="btn btn--solid" href={path('reserve')}>{site.cta}</a></p>
     </div>
     <div class="accesspage__map"><MapEmbed /></div>
   </div>
+  <div class="faqband">
   <section class="wrap faqsec" id="faq" aria-labelledby="faq-h">
     <h2 id="faq-h">よくある質問</h2>
     <div class="faq">
@@ -26,4 +31,5 @@ import { faq } from '../data/faq';
       ))}
     </div>
   </section>
+  </div>
 </BaseLayout>

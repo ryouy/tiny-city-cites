@@ -21,8 +21,11 @@ const nav = [
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="robots" content="noindex,nofollow" />
-    <meta name="theme-color" content="#faf7f0" />
+    <meta name="theme-color" content="#fbf1e1" />
     <link rel="icon" href={href('favicon.svg')} type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@600;800&display=swap" rel="stylesheet" />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={site.name} />
@@ -37,6 +40,7 @@ const nav = [
   </head>
   <body>
     <a class="skip-link" href="#main">本文へスキップ</a>
+    <div class="gingham" aria-hidden="true"></div>
 
     <header class="site-header">
       <a class="logo" href={href('')} aria-label={`${site.name} トップページへ`}>

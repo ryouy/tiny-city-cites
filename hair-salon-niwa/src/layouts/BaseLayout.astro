@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-import { site } from '../data/site';
+import { site, path } from '../data/site';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 
@@ -9,8 +9,10 @@ interface Props {
   description?: string;
   /** 画面名(ページ固有 title の前置き)。省略でトップ */
   page?: string;
+  /** 下部の予約案内帯(予約ページでは出さない) */
+  band?: boolean;
 }
-const { title = site.title, description = site.description, page } = Astro.props;
+const { title = site.title, description = site.description, page, band = true } = Astro.props;
 const fullTitle = page ? `${page}｜${site.name}` : title;
 const base = import.meta.env.BASE_URL;
 ---
@@ -52,6 +54,14 @@ const base = import.meta.env.BASE_URL;
     <main id="main">
       <slot />
     </main>
+    {band && (
+      <section class="cta-band" aria-labelledby="band-h">
+        <div class="wrap cta-band__in">
+          <h2 id="band-h">メニューを選んで、日時を決められます。</h2>
+          <a class="btn btn--light" href={path('reserve')}>{site.cta}</a>
+        </div>
+      </section>
+    )}
     <Footer />
     <script>
       const toggle = document.querySelector<HTMLButtonElement>('.nav-toggle');
