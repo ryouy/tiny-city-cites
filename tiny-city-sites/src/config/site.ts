@@ -17,12 +17,12 @@ export type WorkItem = {
 
 export const site = {
   name: 'tiny city sites',
-  tagline: '飲食店・個人商店のホームページ制作',
-  subtagline: '学生が勉強しながら作るので、料金は抑えめです。',
+  tagline: '会津大生がつくる、街のお店のホームページ。',
+  subtagline: '大学で学んだことを、身近なお店のために。',
 
-  title: 'tiny city sites | 飲食店・個人商店のホームページ制作',
+  title: 'tiny city sites | 会津大生がつくる、街のお店のホームページ。',
   description:
-    'tiny city sites は、会津若松を拠点に飲食店・カフェ・個人商店のホームページを制作する個人のWeb制作です。会津大学の学生が取り組んでいるため、料金は抑えめです。',
+    '会津大生がつくる、街のお店のホームページ。会津若松を拠点に、大学で学んだことを身近なお店のために。学びと実績づくりを兼ねて、手頃な価格で制作しています。',
 
   /** 公開URL（例: "https://tiny-city-sites.pages.dev"）。末尾スラッシュなし。確定後に設定。
    *  canonical / OGP URL / sitemap.xml に使われます。環境変数 SITE_URL でも上書き可。 */
