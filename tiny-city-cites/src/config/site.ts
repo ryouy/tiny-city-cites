@@ -53,17 +53,6 @@ export const site = {
   /** 「ご相談・お見積もりは無料です。」を表示するか。無料相談を提供する方針が確定してから true に。 */
   showFreeConsultation: true,
 
-  /** 料金表示。金額が正式に確定するまでは false のままにしてください。 */
-  pricing: {
-    show: false,
-    items: [
-      { label: 'Webサイト制作', price: '49,800円〜' },
-      { label: '保守・更新', price: '月額5,500円〜' },
-    ],
-    note: '※ 金額は目安です。ドメイン費用などは別途ご案内します。',
-    hiddenNote: '内容に合わせてお見積もりいたします。',
-  },
-
   /** Works セクション。false で非表示（ナビゲーションからも消えます）。 */
   works: {
     show: true,

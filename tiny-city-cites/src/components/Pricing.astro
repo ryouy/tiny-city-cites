@@ -1,0 +1,72 @@
+---
+import { site } from '../config/site';
+import { plans, pricing, yen } from '../config/pricing';
+
+const href = site.contact.instagramUrl || '#contact';
+const external = Boolean(site.contact.instagramUrl);
+---
+
+<section class="section" id="pricing" aria-labelledby="pricing-title">
+  <div class="container">
+    <h2 id="pricing-title">{pricing.heading}</h2>
+
+    <div class="plans">
+      {
+        plans.map((p) => (
+          <article class={`plan${p.recommended ? ' plan--rec' : ''}`} aria-labelledby={`plan-${p.id}`}>
+            <h3 id={`plan-${p.id}`}>
+              {p.name}
+              {p.recommended && <span class="plan__badge">{pricing.recommendedLabel}</span>}
+            </h3>
+            <p class="plan__price">
+              <span class="sr-only">初期制作費 税込 </span>
+              <b>{yen(p.price)}</b>
+              <small>(税込)</small>
+            </p>
+            <p class="plan__target">{p.target}</p>
+            <ul class="plan__list">
+              {p.features.map((f) => <li>{f}</li>)}
+            </ul>
+            <p class="plan__rev">
+              <span>{pricing.revisionsLabel}</span>
+              <b>{p.revisions}回まで</b>
+            </p>
+            <div class="plan__care">
+              <p class="plan__care-title">
+                {pricing.careLabel}
+                <b>月額{yen(p.care.price)}</b>
+              </p>
+              <ul>
+                {p.care.items.map((i) => <li>{i}</li>)}
+              </ul>
+            </div>
+            <p class="plan__cta">
+              <a
+                class="btn"
+                href={href}
+                target={external ? '_blank' : undefined}
+                rel={external ? 'noopener noreferrer' : undefined}>{pricing.cta}</a
+              >
+            </p>
+          </article>
+        ))
+      }
+    </div>
+
+    <div class="price-extra">
+      <h3>{pricing.option.title}</h3>
+      <dl>
+        {pricing.option.items.map((o) => <div><dt>{o.label}</dt><dd>{o.price}</dd></div>)}
+      </dl>
+      <p>{pricing.option.note}</p>
+    </div>
+
+    <ul class="price-notes">
+      {pricing.careNotes.map((n) => <li>{n}</li>)}
+      {pricing.terms.map((n) => <li>{n}</li>)}
+    </ul>
+    <div class="price-notes price-notes--main">
+      {pricing.notes.map((n) => <p>{n}</p>)}
+    </div>
+  </div>
+</section>
